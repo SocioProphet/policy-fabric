@@ -32,8 +32,8 @@
     },
     {
       "path": "REPO_MANIFEST.json",
-      "sha256": "d1f70a60672ff6466bbf6bc8b90e86417acee7a5c17a3a079f19d3022a479bc8",
-      "bytes": 7721
+      "sha256": "63dc5608ec97f75bb5c627c71408b414db7f741a62848632f1312becc287fd87",
+      "bytes": 8229
     },
     {
       "path": "contracts/policy_fabric_execution_plan_ir_v1.schema.json",
