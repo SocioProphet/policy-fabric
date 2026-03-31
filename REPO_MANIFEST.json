@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-31T18:29:12Z",
+  "generatedAt": "2026-03-31T18:31:31Z",
   "files": [
     {
       "path": ".gitignore",
@@ -38,8 +38,8 @@
     },
     {
       "path": "REPO_MANIFEST.json",
-      "sha256": "7e21fbc55fb9456d66600124510879e714ab7f63a2e6bc8c7e46417fc28accee",
-      "bytes": 7568
+      "sha256": "d1f70a60672ff6466bbf6bc8b90e86417acee7a5c17a3a079f19d3022a479bc8",
+      "bytes": 7721
     },
     {
       "path": "archive/prior-reference/magen/Magen_Platform_Integration_Blueprint.docx",
@@ -128,13 +128,13 @@
     },
     {
       "path": "dist/policy_fabric_contracts_bundle_latest.zip",
-      "sha256": "c40d3344db33f17b3eaffc5d14d35b93eae10d9389444bd5e820efcfa6080a06",
-      "bytes": 73284
+      "sha256": "bb9be62fe83c85e8171b71d1a2fcfc27a0dc22f3fce03c7ba838c8f79f6f55f8",
+      "bytes": 78343
     },
     {
       "path": "dist/policy_fabric_contracts_bundle_manifest.json",
-      "sha256": "3d58314a2d0cd2e1d4dec9bbfbffc0c951b48a16f2384c40b762d446dd7c7e79",
-      "bytes": 3932
+      "sha256": "74e0f9280b0a7c763ba9efeb8971c14bfe4c951ce15001cbaba1ac823ae3e356",
+      "bytes": 4593
     },
     {
       "path": "docs/assessments/2026-03-31_strengths_and_improvement_targets.md",
@@ -162,9 +162,24 @@
       "bytes": 845
     },
     {
+      "path": "docs/reports/release_snapshot_latest.md",
+      "sha256": "ad421566108d392a25b56ee10ef62205a134d5731fc694b71cbde0f2b1c71cc7",
+      "bytes": 382
+    },
+    {
       "path": "docs/research/2026-03-31_agentplane_alignment.md",
       "sha256": "e4083355c90ef39bf49f13ebd59478bc596f4386a38b3759b929e6403ef29f0e",
       "bytes": 2312
+    },
+    {
+      "path": "docs/specs/error_taxonomy.md",
+      "sha256": "5441b9e4ddea646cc773d423c7ae798604153f7272cd1f81184ff69720687c61",
+      "bytes": 1457
+    },
+    {
+      "path": "docs/specs/semantic_validator_spec.md",
+      "sha256": "e41490cee6fde72d92426236a08fd11880b1c7d63c04b49913dc13ba2dea102b",
+      "bytes": 1946
     },
     {
       "path": "docs/turns/2026-03-31T18:27:26Z_repo-hardening-and-agentplane-alignment.md",
