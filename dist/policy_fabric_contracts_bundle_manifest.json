@@ -86,6 +86,16 @@
       "bytes": 2312
     },
     {
+      "path": "docs/specs/error_taxonomy.md",
+      "sha256": "5441b9e4ddea646cc773d423c7ae798604153f7272cd1f81184ff69720687c61",
+      "bytes": 1457
+    },
+    {
+      "path": "docs/specs/semantic_validator_spec.md",
+      "sha256": "e41490cee6fde72d92426236a08fd11880b1c7d63c04b49913dc13ba2dea102b",
+      "bytes": 1946
+    },
+    {
       "path": "docs/turns/2026-03-31T18:27:26Z_repo-hardening-and-agentplane-alignment.md",
       "sha256": "136d1e5024e5ceb272ffec6fe0b411f376d43408dfbc7bd37f9a5eed6b137989",
       "bytes": 936
