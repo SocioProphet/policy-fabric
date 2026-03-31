@@ -31,6 +31,11 @@
       "bytes": 1760
     },
     {
+      "path": "REPO_MANIFEST.json",
+      "sha256": "d1f70a60672ff6466bbf6bc8b90e86417acee7a5c17a3a079f19d3022a479bc8",
+      "bytes": 7721
+    },
+    {
       "path": "contracts/policy_fabric_execution_plan_ir_v1.schema.json",
       "sha256": "73d0a1988f2698a53675f507d80697c13505afa9dd2387c8c091b53c721280ce",
       "bytes": 13786
@@ -69,6 +74,11 @@
       "path": "docs/reports/doctor_latest.md",
       "sha256": "b7bccb6945fc28b41cf38db06042e9be4c694a4b197f2127aca28b343d0f07ec",
       "bytes": 845
+    },
+    {
+      "path": "docs/reports/release_snapshot_latest.md",
+      "sha256": "ad421566108d392a25b56ee10ef62205a134d5731fc694b71cbde0f2b1c71cc7",
+      "bytes": 382
     },
     {
       "path": "docs/research/2026-03-31_agentplane_alignment.md",

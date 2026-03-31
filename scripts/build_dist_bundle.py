@@ -11,7 +11,7 @@ BUNDLE = DIST_DIR / 'policy_fabric_contracts_bundle_latest.zip'
 MANIFEST = DIST_DIR / 'policy_fabric_contracts_bundle_manifest.json'
 
 include_roots = [
-    'README.md', 'CHANGELOG.md', 'BACKLOG.md',
+    'README.md', 'CHANGELOG.md', 'BACKLOG.md', 'REPO_MANIFEST.json',
     'contracts', 'examples', 'docs', '.policy-fabric'
 ]
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-31T18:28:10Z",
+  "generatedAt": "2026-03-31T18:29:12Z",
   "files": [
     {
       "path": ".gitignore",
@@ -35,6 +35,11 @@
       "path": "README.md",
       "sha256": "f817317a76869e3e90f2b93be4b3839afb67c129dcec32c66040ab70dc8a897d",
       "bytes": 1760
+    },
+    {
+      "path": "REPO_MANIFEST.json",
+      "sha256": "7e21fbc55fb9456d66600124510879e714ab7f63a2e6bc8c7e46417fc28accee",
+      "bytes": 7568
     },
     {
       "path": "archive/prior-reference/magen/Magen_Platform_Integration_Blueprint.docx",
@@ -198,8 +203,8 @@
     },
     {
       "path": "scripts/build_dist_bundle.py",
-      "sha256": "f792f311e54ded058df638dc38b8dc7c073d0b6d078fc8fec84140a94fae7761",
-      "bytes": 1178
+      "sha256": "1f15095756601b9681eaaa01dca32c07534be5cfcf35bd678295c34a7a70fbe4",
+      "bytes": 1200
     },
     {
       "path": "scripts/doctor.py",
