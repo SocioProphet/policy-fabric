@@ -1,0 +1,32 @@
+{
+  "requestId": "req_01JQ9TQ7MA5A0R2K1PK2X6R6C8",
+  "status": "completed",
+  "policyId": "customer-support-mask",
+  "policyVersion": "7.3.0",
+  "mode": "mask",
+  "transformedPayload": {
+    "phones": {
+      "home": "enc:v1:QmFzZTY0Q2lwaGVydGV4dA==",
+      "work": "(456) 194-3754",
+      "mobile": "(395) 383-3875"
+    },
+    "email": "tok:v1:eml_8f10a1a27b7d"
+  },
+  "attestation": {
+    "planHash": "sha256:8d1357e4a8fc1c003a62b889fa736f0a1bdc2f2b9df11d1a52c29c8bb7b0a341",
+    "selectorHits": {
+      "home-phone": 1,
+      "email": 1
+    },
+    "ruleHits": [
+      "encrypt-home-phone",
+      "tokenize-email"
+    ],
+    "providerLatencyMs": {
+      "kms-aes-gcm": 13,
+      "token-vault": 7
+    },
+    "outcome": "success",
+    "warnings": []
+  }
+}

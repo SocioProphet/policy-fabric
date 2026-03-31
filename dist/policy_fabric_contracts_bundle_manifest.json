@@ -1,0 +1,114 @@
+{
+  "files": [
+    {
+      "path": ".policy-fabric/WORKFLOW.md",
+      "sha256": "c8e3ca0b745ac0f499fbffdb263b56e39ef82460dd98380f761032f2a4305622",
+      "bytes": 983
+    },
+    {
+      "path": ".policy-fabric/config.json",
+      "sha256": "809f11bd6047b8cfd32f6327d9c1990461293ee0061b8335a9225caae148a692",
+      "bytes": 566
+    },
+    {
+      "path": ".policy-fabric/reports/doctor_latest.json",
+      "sha256": "e3c6e6b8ef6190f70db623249935e53823f6f1b60a8ea1d2581f05b68832acbd",
+      "bytes": 1391
+    },
+    {
+      "path": "BACKLOG.md",
+      "sha256": "afc3f37b666cf5ea7ae0ddf97eb38c1b33b15f4e22a2777255bfc5deb24ae17c",
+      "bytes": 795
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "e729ba1d864b5c2470e89bc02fefadf8550a81e77a6dc0f8e3ecbf4f2c154282",
+      "bytes": 666
+    },
+    {
+      "path": "README.md",
+      "sha256": "f817317a76869e3e90f2b93be4b3839afb67c129dcec32c66040ab70dc8a897d",
+      "bytes": 1760
+    },
+    {
+      "path": "contracts/policy_fabric_execution_plan_ir_v1.schema.json",
+      "sha256": "73d0a1988f2698a53675f507d80697c13505afa9dd2387c8c091b53c721280ce",
+      "bytes": 13786
+    },
+    {
+      "path": "contracts/policy_fabric_openapi_v2.yaml",
+      "sha256": "83a24c8962d52476b70dcac565673d51d8adc938696be7f0bdbe5252cfdae11f",
+      "bytes": 36402
+    },
+    {
+      "path": "contracts/policy_fabric_policy_v2.schema.json",
+      "sha256": "58d852809e82fb892799355dde888d9f05b35ca1b441d316a676b96426a82eb0",
+      "bytes": 12771
+    },
+    {
+      "path": "docs/assessments/2026-03-31_strengths_and_improvement_targets.md",
+      "sha256": "d894d97e48d7aadb40f73b47850c67eff63a00d1678d0c6d7cc9a2334e050559",
+      "bytes": 1499
+    },
+    {
+      "path": "docs/blueprints/Policy_Fabric_Platform_Blueprint.docx",
+      "sha256": "f6e4c262413cd5873dfcc67277b49cd5f81969d7430b5379a3493c3d687fcf2f",
+      "bytes": 50227
+    },
+    {
+      "path": "docs/comparison/policy_fabric_comparison_matrix.md",
+      "sha256": "099957f772258c10f0651d2c3023a66fd6673ce61a368744a67a84d0acc00281",
+      "bytes": 5306
+    },
+    {
+      "path": "docs/rebrand/policy_fabric_rebrand_notes.md",
+      "sha256": "b99b3b31cb8dac7ed05d5093f1d33ba3f17d89654f4a18cc06fffed58dfd6d1a",
+      "bytes": 1752
+    },
+    {
+      "path": "docs/reports/doctor_latest.md",
+      "sha256": "b7bccb6945fc28b41cf38db06042e9be4c694a4b197f2127aca28b343d0f07ec",
+      "bytes": 845
+    },
+    {
+      "path": "docs/research/2026-03-31_agentplane_alignment.md",
+      "sha256": "e4083355c90ef39bf49f13ebd59478bc596f4386a38b3759b929e6403ef29f0e",
+      "bytes": 2312
+    },
+    {
+      "path": "docs/turns/2026-03-31T18:27:26Z_repo-hardening-and-agentplane-alignment.md",
+      "sha256": "136d1e5024e5ceb272ffec6fe0b411f376d43408dfbc7bd37f9a5eed6b137989",
+      "bytes": 936
+    },
+    {
+      "path": "examples/policy_fabric_compiled_plan_example.json",
+      "sha256": "486883b80a86f322db79db6365154f4cf0a5988071336ec9886ce530c6e486d2",
+      "bytes": 6094
+    },
+    {
+      "path": "examples/policy_fabric_explain_response_example.json",
+      "sha256": "2e20d64e044da2299c55b1382b1ca565fe81ff526800830a6f327fd9dcb4864c",
+      "bytes": 748
+    },
+    {
+      "path": "examples/policy_fabric_policy_v2_enhanced_example.json",
+      "sha256": "f8bb5162c41e6bb8ea84a5011e6a49351c1cd5261d1411208fe2afb1d09b247f",
+      "bytes": 4187
+    },
+    {
+      "path": "examples/policy_fabric_process_request_v2_enhanced_example.json",
+      "sha256": "3b89b899f6b90cc45e89d5dbe7b8f6d4d620f7f3c43e9e7b43093440dd6bbcac",
+      "bytes": 562
+    },
+    {
+      "path": "examples/policy_fabric_process_response_example.json",
+      "sha256": "9219e27357bcdd429f0aeacfc8defcea600cbd5855937fd702b60e306ccf20a4",
+      "bytes": 756
+    },
+    {
+      "path": "examples/policy_fabric_validate_response_example.json",
+      "sha256": "fb8d47833409d675578c454193ad5ae2f98470f526e208a9711d90b9b3474ea3",
+      "bytes": 667
+    }
+  ]
+}

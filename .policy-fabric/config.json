@@ -1,0 +1,26 @@
+{
+  "workflowSurfaceVersion": 1,
+  "workflowMode": "direct",
+  "managedPaths": [
+    "contracts/**",
+    "examples/**",
+    "docs/blueprints/**",
+    "docs/assessments/**",
+    "docs/research/**",
+    "docs/rebrand/**",
+    "docs/comparison/**",
+    "docs/turns/**",
+    "scripts/**",
+    "README.md",
+    "CHANGELOG.md",
+    "BACKLOG.md"
+  ],
+  "generatedPaths": [
+    "docs/reports/**"
+  ],
+  "localOverridePaths": [
+    ".policy-fabric/local-notes/**"
+  ],
+  "doctorCommand": "python scripts/doctor.py",
+  "bundleCommand": "python scripts/build_dist_bundle.py"
+}

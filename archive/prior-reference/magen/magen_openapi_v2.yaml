@@ -1,0 +1,1102 @@
+openapi: 3.1.0
+info:
+  title: Magen Platform API
+  version: 2.0.0
+  summary: Buildable API contract for Magen masking platform v2.
+  description: This contract freezes the canonical service surface discussed in the
+    platform blueprint. Policies are validated and compiled before execution; compiled
+    plans drive sync, async, stream, and sidecar execution uniformly.
+servers:
+- url: https://magen.example.internal
+paths:
+  /v2/process:
+    post:
+      operationId: processPayload
+      summary: Synchronously process a payload using a compiled policy plan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessRequest'
+            examples:
+              default:
+                value:
+                  policyId: customer-support-mask
+                  policyVersion: 7.3.0
+                  mode: mask
+                  tenantId: acme-prod
+                  contentType: application/json
+                  context:
+                    route: support-case-create
+                    environment: prod
+                    purpose: customer-support
+                    region: us-east-1
+                  options:
+                    dryRun: false
+                    emitAudit: true
+                    returnMatches: false
+                  payload:
+                    phones:
+                      home: (855) 003-8973
+                      work: (456) 194-3754
+                      mobile: (395) 383-3875
+                    email: my.example@fake.com
+      responses:
+        '200':
+          description: Payload processed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessResponse'
+              examples:
+                default:
+                  value:
+                    requestId: req_01JQ9TQ7MA5A0R2K1PK2X6R6C8
+                    status: completed
+                    policyId: customer-support-mask
+                    policyVersion: 7.3.0
+                    mode: mask
+                    transformedPayload:
+                      phones:
+                        home: enc:v1:QmFzZTY0Q2lwaGVydGV4dA==
+                        work: (456) 194-3754
+                        mobile: (395) 383-3875
+                      email: tok:v1:eml_8f10a1a27b7d
+                    attestation:
+                      planHash: sha256:8d1357e4a8fc1c003a62b889fa736f0a1bdc2f2b9df11d1a52c29c8bb7b0a341
+                      selectorHits:
+                        home-phone: 1
+                        email: 1
+                      ruleHits:
+                      - encrypt-home-phone
+                      - tokenize-email
+                      providerLatencyMs:
+                        kms-aes-gcm: 13
+                        token-vault: 7
+                      outcome: success
+                      warnings: []
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /v2/jobs:
+    post:
+      operationId: createJob
+      summary: Create an asynchronous processing job for large or bulk payloads.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCreateRequest'
+      responses:
+        '202':
+          description: Job accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAcceptedResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /v2/jobs/{id}:
+    get:
+      operationId: getJob
+      summary: Retrieve job status and results.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Current job state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobStatusResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v2/policies:validate:
+    post:
+      operationId: validatePolicy
+      summary: Validate a policy document against schema and semantic rules.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./magen_policy_v2.schema.json
+            examples:
+              default:
+                value:
+                  apiVersion: magen.platform/v2
+                  policyId: customer-support-mask
+                  version: 7.3.0
+                  owner: platform-data-protection
+                  status: approved
+                  description: Mask phone and email for support-case creation while
+                    preserving non-target fields.
+                  labels:
+                    domain: support
+                    dataClass: pii
+                  rollout:
+                    tenants:
+                    - acme-prod
+                    environments:
+                    - prod
+                    - stage
+                    regions:
+                    - us-east-1
+                    percentage: 100
+                  selectors:
+                  - id: home-phone
+                    type: jsonpath
+                    path: $.phones.home
+                    expectedCardinality: zeroOrOne
+                    matchKind: value
+                    description: Home phone field within support payloads.
+                  - id: email
+                    type: jsonpath
+                    path: $.email
+                    expectedCardinality: zeroOrOne
+                    matchKind: value
+                    description: Primary email address.
+                  rules:
+                  - id: encrypt-home-phone
+                    priority: 100
+                    description: Encrypt home phone for support workflows in production-like
+                      environments.
+                    when:
+                      mode: mask
+                      environmentIn:
+                      - prod
+                      - stage
+                      routeIn:
+                      - support-case-create
+                    match:
+                      selectorRef: home-phone
+                      onNoMatch: skip
+                      expectedCardinality: inherit
+                    transform: &id001
+                      type: encrypt
+                      provider: kms-aes-gcm
+                      capabilityRef: pii-phone-encryption
+                      preserveFormat: false
+                      reversible: true
+                      aadTemplate:
+                      - tenantId
+                      - policyId
+                      - selectorId
+                      - requestId
+                    onFailure: failClosed
+                  - id: tokenize-email
+                    priority: 110
+                    description: Tokenize email for analytics, support, and ops flows.
+                    when:
+                      mode: mask
+                      purposeIn:
+                      - analytics
+                      - customer-support
+                      - ops
+                    match:
+                      selectorRef: email
+                      onNoMatch: skip
+                      expectedCardinality: inherit
+                    transform: &id002
+                      type: tokenize
+                      provider: token-vault
+                      capabilityRef: pii-email-token
+                      preserveFormat: false
+                      reversible: true
+                    onFailure: failClosed
+                  options:
+                    emitAudit: true
+                    loggable: false
+                    returnMatchesByDefault: false
+                    failClosed: true
+                    allowExplainSimulation: true
+                  tests:
+                  - name: support-case-prod-masks-home-phone-and-email
+                    request:
+                      mode: mask
+                      tenantId: acme-prod
+                      contentType: application/json
+                      context:
+                        route: support-case-create
+                        environment: prod
+                        purpose: customer-support
+                        region: us-east-1
+                      payload:
+                        phones:
+                          home: (855) 003-8973
+                          work: (456) 194-3754
+                          mobile: (395) 383-3875
+                        email: my.example@fake.com
+                      options:
+                        dryRun: false
+                        emitAudit: true
+                        returnMatches: false
+                    assert:
+                    - target: payload
+                      path: $.phones.home
+                      operator: changed
+                      description: Home phone must be transformed.
+                    - target: payload
+                      path: $.phones.work
+                      operator: unchanged
+                      description: Non-target work phone must stay intact.
+                    - target: payload
+                      path: $.email
+                      operator: changed
+                      description: Email must be transformed.
+                    - target: attestation
+                      path: $.ruleHits
+                      operator: contains
+                      value: encrypt-home-phone
+                      description: Attestation must show the encryption rule hit.
+      responses:
+        '200':
+          description: Validation result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+              examples:
+                default:
+                  value:
+                    valid: true
+                    normalizedPolicyHash: sha256:41162100d8b250d79cf55e2f4716f6e0db182cc53fb0f4e37ee27d6d180b9a35
+                    issues: []
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /v2/policies:compile:
+    post:
+      operationId: compilePolicy
+      summary: Compile a policy into a deterministic execution plan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompileRequest'
+            examples:
+              default:
+                value:
+                  policy:
+                    apiVersion: magen.platform/v2
+                    policyId: customer-support-mask
+                    version: 7.3.0
+                    owner: platform-data-protection
+                    status: approved
+                    description: Mask phone and email for support-case creation while
+                      preserving non-target fields.
+                    labels:
+                      domain: support
+                      dataClass: pii
+                    rollout:
+                      tenants:
+                      - acme-prod
+                      environments:
+                      - prod
+                      - stage
+                      regions:
+                      - us-east-1
+                      percentage: 100
+                    selectors:
+                    - id: home-phone
+                      type: jsonpath
+                      path: $.phones.home
+                      expectedCardinality: zeroOrOne
+                      matchKind: value
+                      description: Home phone field within support payloads.
+                    - id: email
+                      type: jsonpath
+                      path: $.email
+                      expectedCardinality: zeroOrOne
+                      matchKind: value
+                      description: Primary email address.
+                    rules:
+                    - id: encrypt-home-phone
+                      priority: 100
+                      description: Encrypt home phone for support workflows in production-like
+                        environments.
+                      when:
+                        mode: mask
+                        environmentIn:
+                        - prod
+                        - stage
+                        routeIn:
+                        - support-case-create
+                      match:
+                        selectorRef: home-phone
+                        onNoMatch: skip
+                        expectedCardinality: inherit
+                      transform:
+                        type: encrypt
+                        provider: kms-aes-gcm
+                        capabilityRef: pii-phone-encryption
+                        preserveFormat: false
+                        reversible: true
+                        aadTemplate:
+                        - tenantId
+                        - policyId
+                        - selectorId
+                        - requestId
+                      onFailure: failClosed
+                    - id: tokenize-email
+                      priority: 110
+                      description: Tokenize email for analytics, support, and ops
+                        flows.
+                      when:
+                        mode: mask
+                        purposeIn:
+                        - analytics
+                        - customer-support
+                        - ops
+                      match:
+                        selectorRef: email
+                        onNoMatch: skip
+                        expectedCardinality: inherit
+                      transform:
+                        type: tokenize
+                        provider: token-vault
+                        capabilityRef: pii-email-token
+                        preserveFormat: false
+                        reversible: true
+                      onFailure: failClosed
+                    options:
+                      emitAudit: true
+                      loggable: false
+                      returnMatchesByDefault: false
+                      failClosed: true
+                      allowExplainSimulation: true
+                    tests:
+                    - name: support-case-prod-masks-home-phone-and-email
+                      request:
+                        mode: mask
+                        tenantId: acme-prod
+                        contentType: application/json
+                        context:
+                          route: support-case-create
+                          environment: prod
+                          purpose: customer-support
+                          region: us-east-1
+                        payload:
+                          phones:
+                            home: (855) 003-8973
+                            work: (456) 194-3754
+                            mobile: (395) 383-3875
+                          email: my.example@fake.com
+                        options:
+                          dryRun: false
+                          emitAudit: true
+                          returnMatches: false
+                      assert:
+                      - target: payload
+                        path: $.phones.home
+                        operator: changed
+                        description: Home phone must be transformed.
+                      - target: payload
+                        path: $.phones.work
+                        operator: unchanged
+                        description: Non-target work phone must stay intact.
+                      - target: payload
+                        path: $.email
+                        operator: changed
+                        description: Email must be transformed.
+                      - target: attestation
+                        path: $.ruleHits
+                        operator: contains
+                        value: encrypt-home-phone
+                        description: Attestation must show the encryption rule hit.
+                  contentType: application/json
+                  mode: mask
+      responses:
+        '200':
+          description: Compiled plan and dependency report.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompileResponse'
+              examples:
+                default:
+                  value:
+                    planHash: sha256:8d1357e4a8fc1c003a62b889fa736f0a1bdc2f2b9df11d1a52c29c8bb7b0a341
+                    compiledPlan:
+                      apiVersion: magen.platform.plan/v1
+                      planId: customer-support-mask__7.3.0__application-json__mask
+                      planHash: sha256:8d1357e4a8fc1c003a62b889fa736f0a1bdc2f2b9df11d1a52c29c8bb7b0a341
+                      compilerVersion: 1.0.0
+                      sourcePolicy:
+                        policyId: customer-support-mask
+                        version: 7.3.0
+                      mode: mask
+                      contentType: application/json
+                      tenantScope:
+                        tenantIds:
+                        - acme-prod
+                        regions:
+                        - us-east-1
+                      entryNodeIds:
+                      - n0
+                      exitNodeIds:
+                      - n10
+                      topologicalOrder:
+                      - n0
+                      - n1
+                      - n2
+                      - n3
+                      - n4
+                      - n5
+                      - n6
+                      - n7
+                      - n8
+                      - n9
+                      - n10
+                      nodes:
+                      - id: n0
+                        kind: ingress
+                        name: request-ingress
+                        config:
+                          inputType: requestEnvelope
+                      - id: n1
+                        kind: parse
+                        name: json-parse
+                        config:
+                          adapter: json-dom
+                          contentType: application/json
+                          preserveStructure: true
+                      - id: n2
+                        kind: predicate
+                        name: encrypt-home-phone.when
+                        config:
+                          ruleId: encrypt-home-phone
+                          expression:
+                            mode: mask
+                            environmentIn:
+                            - prod
+                            - stage
+                            routeIn:
+                            - support-case-create
+                      - id: n3
+                        kind: select
+                        name: select-home-phone
+                        config:
+                          selectorRef: home-phone
+                          expectedCardinality: zeroOrOne
+                          matchKind: value
+                      - id: n4
+                        kind: transform
+                        name: encrypt-home-phone.transform
+                        config:
+                          ruleId: encrypt-home-phone
+                          transform: *id001
+                        effect:
+                          reversible: true
+                          shapePreserving: false
+                          deterministic: false
+                          providerClass: crypto
+                          outputSensitivity: protected
+                      - id: n5
+                        kind: predicate
+                        name: tokenize-email.when
+                        config:
+                          ruleId: tokenize-email
+                          expression:
+                            mode: mask
+                            purposeIn:
+                            - analytics
+                            - customer-support
+                            - ops
+                      - id: n6
+                        kind: select
+                        name: select-email
+                        config:
+                          selectorRef: email
+                          expectedCardinality: zeroOrOne
+                          matchKind: value
+                      - id: n7
+                        kind: transform
+                        name: tokenize-email.transform
+                        config:
+                          ruleId: tokenize-email
+                          transform: *id002
+                        effect:
+                          reversible: true
+                          shapePreserving: false
+                          deterministic: true
+                          providerClass: tokenVault
+                          outputSensitivity: protected
+                      - id: n8
+                        kind: rebuild
+                        name: json-rebuild
+                        config:
+                          adapter: json-dom
+                          contentType: application/json
+                      - id: n9
+                        kind: audit
+                        name: emit-attestation
+                        config:
+                          emitSummary: true
+                          fields:
+                          - tenantId
+                          - policyId
+                          - policyVersion
+                          - planHash
+                          - mode
+                          - ruleHits
+                          - selectorHits
+                          - providerLatencyMs
+                          - outcome
+                      - id: n10
+                        kind: egress
+                        name: return-response
+                        config:
+                          includePayload: true
+                          includeAttestation: true
+                      edges:
+                      - from: n0
+                        to: n1
+                        condition: always
+                      - from: n1
+                        to: n2
+                        condition: always
+                      - from: n1
+                        to: n5
+                        condition: always
+                      - from: n2
+                        to: n3
+                        condition: onTrue
+                      - from: n3
+                        to: n4
+                        condition: onSuccess
+                      - from: n5
+                        to: n6
+                        condition: onTrue
+                      - from: n6
+                        to: n7
+                        condition: onSuccess
+                      - from: n4
+                        to: n8
+                        condition: onSuccess
+                      - from: n7
+                        to: n8
+                        condition: onSuccess
+                      - from: n8
+                        to: n9
+                        condition: always
+                      - from: n9
+                        to: n10
+                        condition: always
+                      dependencyReport:
+                        providers:
+                        - kms-aes-gcm
+                        - token-vault
+                        adapters:
+                        - json-dom
+                        selectors:
+                        - home-phone
+                        - email
+                        effectSummary:
+                        - reversible: true
+                          shapePreserving: false
+                          deterministic: false
+                          providerClass: crypto
+                          outputSensitivity: protected
+                        - reversible: true
+                          shapePreserving: false
+                          deterministic: true
+                          providerClass: tokenVault
+                          outputSensitivity: protected
+                      attestationTemplate:
+                        fields:
+                        - tenantId
+                        - policyId
+                        - policyVersion
+                        - planHash
+                        - mode
+                        - ruleHits
+                        - selectorHits
+                        - providerLatencyMs
+                        - outcome
+                        includeRuleHits: true
+                        includeSelectorHits: true
+                        includeProviderLatency: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /v2/explain:
+    post:
+      operationId: explainPolicyBehavior
+      summary: Preview which rules and selectors would match a sample payload.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExplainRequest'
+            examples:
+              default:
+                value:
+                  policyId: customer-support-mask
+                  policyVersion: 7.3.0
+                  mode: mask
+                  tenantId: acme-prod
+                  contentType: application/json
+                  context:
+                    route: support-case-create
+                    environment: prod
+                    purpose: customer-support
+                    region: us-east-1
+                  options:
+                    dryRun: true
+                    emitAudit: true
+                    returnMatches: false
+                  payload:
+                    phones:
+                      home: (855) 003-8973
+                      work: (456) 194-3754
+                      mobile: (395) 383-3875
+                    email: my.example@fake.com
+      responses:
+        '200':
+          description: Projected rule matches and effects without mutating the payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExplainResponse'
+              examples:
+                default:
+                  value:
+                    policyId: customer-support-mask
+                    policyVersion: 7.3.0
+                    planHash: sha256:8d1357e4a8fc1c003a62b889fa736f0a1bdc2f2b9df11d1a52c29c8bb7b0a341
+                    matchedRules:
+                    - encrypt-home-phone
+                    - tokenize-email
+                    selectorResults:
+                      home-phone:
+                        matches: 1
+                        paths:
+                        - $.phones.home
+                      email:
+                        matches: 1
+                        paths:
+                        - $.email
+                    projectedEffects:
+                    - ruleId: encrypt-home-phone
+                      type: encrypt
+                      reversible: true
+                      shapePreserving: false
+                    - ruleId: tokenize-email
+                      type: tokenize
+                      reversible: true
+                      shapePreserving: false
+                    warnings: []
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+components:
+  responses:
+    BadRequest:
+      description: Malformed request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Caller is not authorized for the requested action.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Version, idempotency, or rollout conflict.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unprocessable:
+      description: Semantic validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: Unexpected service failure.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    Mode:
+      type: string
+      enum:
+      - mask
+      - reidentify
+    RequestContext:
+      type: object
+      additionalProperties: true
+      properties:
+        route:
+          type: string
+        environment:
+          type: string
+        purpose:
+          type: string
+        region:
+          type: string
+        riskScore:
+          type: number
+          minimum: 0
+    ProcessOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        dryRun:
+          type: boolean
+        emitAudit:
+          type: boolean
+        returnMatches:
+          type: boolean
+        idempotencyKey:
+          type: string
+    ProcessRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - policyId
+      - policyVersion
+      - mode
+      - tenantId
+      - contentType
+      - payload
+      properties:
+        policyId:
+          type: string
+        policyVersion:
+          type: string
+        mode:
+          $ref: '#/components/schemas/Mode'
+        tenantId:
+          type: string
+        contentType:
+          type: string
+        context:
+          $ref: '#/components/schemas/RequestContext'
+        options:
+          $ref: '#/components/schemas/ProcessOptions'
+        payload: {}
+    Attestation:
+      type: object
+      additionalProperties: false
+      required:
+      - planHash
+      - ruleHits
+      - selectorHits
+      - providerLatencyMs
+      - outcome
+      - warnings
+      properties:
+        planHash:
+          type: string
+        selectorHits:
+          type: object
+          additionalProperties:
+            type: integer
+            minimum: 0
+        ruleHits:
+          type: array
+          items:
+            type: string
+        providerLatencyMs:
+          type: object
+          additionalProperties:
+            type: number
+            minimum: 0
+        outcome:
+          type: string
+          enum:
+          - success
+          - warning
+          - failure
+        warnings:
+          type: array
+          items:
+            type: string
+    ProcessResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - requestId
+      - status
+      - policyId
+      - policyVersion
+      - mode
+      - transformedPayload
+      - attestation
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+          enum:
+          - completed
+          - partial
+          - failed
+        policyId:
+          type: string
+        policyVersion:
+          type: string
+        mode:
+          $ref: '#/components/schemas/Mode'
+        transformedPayload: {}
+        attestation:
+          $ref: '#/components/schemas/Attestation'
+        matches:
+          type: array
+          items:
+            type: object
+    JobCreateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - policyId
+      - policyVersion
+      - mode
+      - tenantId
+      - contentType
+      - input
+      properties:
+        policyId:
+          type: string
+        policyVersion:
+          type: string
+        mode:
+          $ref: '#/components/schemas/Mode'
+        tenantId:
+          type: string
+        contentType:
+          type: string
+        context:
+          $ref: '#/components/schemas/RequestContext'
+        input:
+          type: object
+          additionalProperties: false
+          properties:
+            uri:
+              type: string
+            inlinePayload: {}
+          oneOf:
+          - required:
+            - uri
+          - required:
+            - inlinePayload
+        options:
+          type: object
+          additionalProperties: false
+          properties:
+            emitAudit:
+              type: boolean
+            outputUri:
+              type: string
+            chunking:
+              type: string
+              enum:
+              - none
+              - record
+              - document
+    JobAcceptedResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - jobId
+      - status
+      properties:
+        jobId:
+          type: string
+        status:
+          const: accepted
+        pollUrl:
+          type: string
+    JobStatusResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - jobId
+      - status
+      - progress
+      properties:
+        jobId:
+          type: string
+        status:
+          type: string
+          enum:
+          - accepted
+          - running
+          - completed
+          - failed
+          - cancelled
+        progress:
+          type: object
+          additionalProperties: false
+          required:
+          - recordsProcessed
+          properties:
+            recordsProcessed:
+              type: integer
+              minimum: 0
+            recordsFailed:
+              type: integer
+              minimum: 0
+            percent:
+              type: number
+              minimum: 0
+              maximum: 100
+        resultUri:
+          type: string
+        error:
+          $ref: '#/components/schemas/ErrorResponse'
+    ValidationIssue:
+      type: object
+      additionalProperties: false
+      required:
+      - severity
+      - code
+      - message
+      properties:
+        severity:
+          type: string
+          enum:
+          - error
+          - warning
+          - info
+        code:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+    ValidationResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - valid
+      - issues
+      properties:
+        valid:
+          type: boolean
+        normalizedPolicyHash:
+          type: string
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationIssue'
+    CompileRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - policy
+      - contentType
+      - mode
+      properties:
+        policy:
+          $ref: ./magen_policy_v2.schema.json
+        contentType:
+          type: string
+        mode:
+          $ref: '#/components/schemas/Mode'
+    CompileResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - planHash
+      - compiledPlan
+      properties:
+        planHash:
+          type: string
+        compiledPlan:
+          $ref: ./magen_execution_plan_ir_v1.schema.json
+    ExplainRequest:
+      allOf:
+      - $ref: '#/components/schemas/ProcessRequest'
+      - type: object
+        properties:
+          options:
+            allOf:
+            - $ref: '#/components/schemas/ProcessOptions'
+            - type: object
+              properties:
+                dryRun:
+                  const: true
+    ExplainResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - policyId
+      - policyVersion
+      - planHash
+      - matchedRules
+      - selectorResults
+      - projectedEffects
+      - warnings
+      properties:
+        policyId:
+          type: string
+        policyVersion:
+          type: string
+        planHash:
+          type: string
+        matchedRules:
+          type: array
+          items:
+            type: string
+        selectorResults:
+          type: object
+          additionalProperties:
+            type: object
+        projectedEffects:
+          type: array
+          items:
+            type: object
+        warnings:
+          type: array
+          items:
+            type: string
+    ErrorResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - errorCode
+      - message
+      properties:
+        errorCode:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationIssue'
+        retryable:
+          type: boolean

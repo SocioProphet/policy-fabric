@@ -1,0 +1,94 @@
+{
+  "apiVersion": "magen.platform/v2",
+  "policyId": "customer-support-mask",
+  "version": "7.2.0",
+  "owner": "platform-data-protection",
+  "status": "draft",
+  "selectors": [
+    {
+      "id": "home-phone",
+      "type": "jsonpath",
+      "path": "$.phones.home"
+    },
+    {
+      "id": "email",
+      "type": "jsonpath",
+      "path": "$.email"
+    }
+  ],
+  "rules": [
+    {
+      "id": "encrypt-home-phone",
+      "when": {
+        "mode": "mask",
+        "environmentIn": [
+          "prod",
+          "stage"
+        ]
+      },
+      "match": {
+        "selectorRef": "home-phone"
+      },
+      "transform": {
+        "type": "encrypt",
+        "provider": "kms-aes-gcm",
+        "capabilityRef": "pii-phone-encryption",
+        "preserveFormat": false,
+        "aadTemplate": [
+          "tenantId",
+          "policyId",
+          "selectorId"
+        ]
+      }
+    },
+    {
+      "id": "tokenize-email",
+      "when": {
+        "mode": "mask",
+        "purposeIn": [
+          "analytics",
+          "customer-support",
+          "ops"
+        ]
+      },
+      "match": {
+        "selectorRef": "email"
+      },
+      "transform": {
+        "type": "tokenize",
+        "provider": "token-vault",
+        "capabilityRef": "pii-email-token",
+        "preserveFormat": false
+      }
+    }
+  ],
+  "options": {
+    "emitAudit": true,
+    "loggable": false,
+    "returnMatchesByDefault": false
+  },
+  "tests": [
+    {
+      "name": "home-phone-is-encrypted",
+      "input": {
+        "phones": {
+          "home": "(855) 003-8973",
+          "work": "(456) 194-3754"
+        },
+        "email": "my.example@fake.com"
+      },
+      "assert": [
+        {
+          "path": "$.phones.home",
+          "operator": "notEquals",
+          "value": "(855) 003-8973"
+        },
+        {
+          "path": "$.email",
+          "operator": "notEquals",
+          "value": "my.example@fake.com"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "name": "exists:contracts/policy_fabric_policy_v2.schema.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:contracts/policy_fabric_execution_plan_ir_v1.schema.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:contracts/policy_fabric_openapi_v2.yaml",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:examples/policy_fabric_policy_v2_enhanced_example.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:examples/policy_fabric_compiled_plan_example.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:.policy-fabric/config.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:.policy-fabric/WORKFLOW.md",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "validate:policy-example",
+      "ok": true,
+      "detail": "policy example validates against policy schema"
+    },
+    {
+      "name": "validate:plan-example",
+      "ok": true,
+      "detail": "compiled plan validates against plan schema"
+    },
+    {
+      "name": "parse:openapi",
+      "ok": true,
+      "detail": "openapi parses and contains /v2/process"
+    }
+  ]
+}

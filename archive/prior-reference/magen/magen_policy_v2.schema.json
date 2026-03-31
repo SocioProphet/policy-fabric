@@ -1,0 +1,597 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.internal/magen/schemas/magen_policy_v2.schema.json",
+  "title": "Magen Policy v2",
+  "description": "Governed policy authoring contract for Magen platform v2.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "policyId",
+    "version",
+    "owner",
+    "status",
+    "selectors",
+    "rules",
+    "options"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "magen.platform/v2"
+    },
+    "policyId": {
+      "$ref": "#/$defs/idString"
+    },
+    "version": {
+      "$ref": "#/$defs/semver"
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "review",
+        "approved",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "rollout": {
+      "$ref": "#/$defs/rollout"
+    },
+    "selectors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/selector"
+      }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/rule"
+      }
+    },
+    "options": {
+      "$ref": "#/$defs/options"
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/testFixture"
+      }
+    }
+  },
+  "x-semanticValidationRules": [
+    "selectors[].id MUST be unique within a policy.",
+    "rules[].id MUST be unique within a policy.",
+    "rules[].match.selectorRef MUST refer to an existing selectors[].id.",
+    "transform.provider MUST be authorized to serve transform.type for the target tenant and region.",
+    "Transforms with type decrypt or detokenize MUST only appear in policies or routes explicitly approved for re-identification.",
+    "If selector.expectedCardinality is exactlyOne or zeroOrOne and the runtime match count exceeds 1, execution SHOULD fail closed unless explicitly overridden.",
+    "Semver version SHOULD increase for any semantic policy change.",
+    "Approved policies SHOULD carry rollout constraints and test fixtures."
+  ],
+  "$defs": {
+    "idString": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{1,127}$"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "rollout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tenants": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "environments": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "regions": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/idString"
+        },
+        "type": {
+          "enum": [
+            "jsonpath",
+            "xpath",
+            "pointer",
+            "regex",
+            "textSpan",
+            "schemaRef",
+            "composite"
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "pattern": {
+          "type": "string"
+        },
+        "flags": {
+          "type": "string"
+        },
+        "schemaRef": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "expectedCardinality": {
+          "enum": [
+            "zeroOrOne",
+            "exactlyOne",
+            "zeroToMany",
+            "oneToMany"
+          ]
+        },
+        "matchKind": {
+          "enum": [
+            "value",
+            "span",
+            "object"
+          ]
+        },
+        "captureGroups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "jsonpath"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "path"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "xpath"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "path"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "pointer"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "path"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "regex"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "pattern"
+            ]
+          }
+        }
+      ]
+    },
+    "predicate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "mask",
+            "reidentify"
+          ]
+        },
+        "tenantIn": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "environmentIn": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "purposeIn": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "routeIn": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "riskScoreGte": {
+          "type": "number",
+          "minimum": 0
+        },
+        "riskScoreLte": {
+          "type": "number",
+          "minimum": 0
+        },
+        "explainAllowed": {
+          "type": "boolean"
+        },
+        "allOf": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/predicate"
+          }
+        },
+        "anyOf": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/predicate"
+          }
+        },
+        "not": {
+          "$ref": "#/$defs/predicate"
+        }
+      }
+    },
+    "match": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selectorRef"
+      ],
+      "properties": {
+        "selectorRef": {
+          "$ref": "#/$defs/idString"
+        },
+        "onNoMatch": {
+          "enum": [
+            "skip",
+            "error"
+          ]
+        },
+        "expectedCardinality": {
+          "enum": [
+            "inherit",
+            "zeroOrOne",
+            "exactlyOne",
+            "zeroToMany",
+            "oneToMany"
+          ]
+        }
+      }
+    },
+    "transform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "provider",
+        "capabilityRef"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "redact",
+            "encrypt",
+            "tokenize",
+            "formatPreservingEncrypt",
+            "formatPreservingTokenize",
+            "partialMask",
+            "hash",
+            "decrypt",
+            "detokenize"
+          ]
+        },
+        "provider": {
+          "$ref": "#/$defs/idString"
+        },
+        "capabilityRef": {
+          "$ref": "#/$defs/idString"
+        },
+        "preserveFormat": {
+          "type": "boolean"
+        },
+        "reversible": {
+          "type": "boolean"
+        },
+        "aadTemplate": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "array",
+              "object",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "when",
+        "match",
+        "transform"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/idString"
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": {
+          "type": "string"
+        },
+        "when": {
+          "$ref": "#/$defs/predicate"
+        },
+        "match": {
+          "$ref": "#/$defs/match"
+        },
+        "transform": {
+          "$ref": "#/$defs/transform"
+        },
+        "onFailure": {
+          "enum": [
+            "failClosed",
+            "skipRule",
+            "markWarning"
+          ]
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "emitAudit": {
+          "type": "boolean"
+        },
+        "loggable": {
+          "type": "boolean"
+        },
+        "returnMatchesByDefault": {
+          "type": "boolean"
+        },
+        "failClosed": {
+          "type": "boolean"
+        },
+        "allowExplainSimulation": {
+          "type": "boolean"
+        }
+      }
+    },
+    "simpleTestFixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "input",
+        "assert"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "input": {},
+        "assert": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/assertion"
+          }
+        }
+      }
+    },
+    "richTestFixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "request",
+        "assert"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request": {
+          "$ref": "#/$defs/testRequest"
+        },
+        "assert": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/assertion"
+          }
+        }
+      }
+    },
+    "testRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "contentType",
+        "payload"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "mask",
+            "reidentify"
+          ]
+        },
+        "tenantId": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "context": {
+          "$ref": "#/$defs/requestContext"
+        },
+        "payload": {},
+        "options": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "dryRun": {
+              "type": "boolean"
+            },
+            "emitAudit": {
+              "type": "boolean"
+            },
+            "returnMatches": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "requestContext": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "route": {
+          "type": "string"
+        },
+        "environment": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "riskScore": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "operator"
+      ],
+      "properties": {
+        "target": {
+          "enum": [
+            "payload",
+            "attestation"
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "operator": {
+          "enum": [
+            "equals",
+            "notEquals",
+            "exists",
+            "notExists",
+            "changed",
+            "unchanged",
+            "matchesRegex",
+            "notMatchesRegex",
+            "countEquals",
+            "contains"
+          ]
+        },
+        "value": {},
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "testFixture": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/simpleTestFixture"
+        },
+        {
+          "$ref": "#/$defs/richTestFixture"
+        }
+      ]
+    }
+  }
+}

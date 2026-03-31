@@ -1,0 +1,657 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.internal/magen/schemas/magen_execution_plan_ir_v1.schema.json",
+  "title": "Magen Compiled Execution Plan IR v1",
+  "description": "Deterministic compiled execution plan used uniformly across sync, async, stream, and sidecar execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "planId",
+    "planHash",
+    "compilerVersion",
+    "sourcePolicy",
+    "mode",
+    "contentType",
+    "nodes",
+    "edges",
+    "entryNodeIds",
+    "exitNodeIds",
+    "dependencyReport",
+    "attestationTemplate"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "magen.platform.plan/v1"
+    },
+    "planId": {
+      "type": "string"
+    },
+    "planHash": {
+      "type": "string"
+    },
+    "compilerVersion": {
+      "type": "string"
+    },
+    "sourcePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policyId",
+        "version"
+      ],
+      "properties": {
+        "policyId": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "mode": {
+      "enum": [
+        "mask",
+        "reidentify"
+      ]
+    },
+    "contentType": {
+      "type": "string"
+    },
+    "tenantScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tenantIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "entryNodeIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "exitNodeIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "topologicalOrder": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    },
+    "dependencyReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "providers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "adapters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "selectors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "effectSummary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          }
+        }
+      }
+    },
+    "attestationTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fields"
+      ],
+      "properties": {
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "includeRuleHits": {
+          "type": "boolean"
+        },
+        "includeSelectorHits": {
+          "type": "boolean"
+        },
+        "includeProviderLatency": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "x-semanticValidationRules": [
+    "nodes[].id MUST be unique.",
+    "edges[].from and edges[].to MUST refer to existing nodes[].id values.",
+    "planHash MUST be computed from the normalized plan, not the raw policy text.",
+    "Transform node effect declarations MUST be consistent with the referenced provider capability.",
+    "Reidentify plans SHOULD only contain decrypt or detokenize transform kinds and MUST be separately authorized."
+  ],
+  "$defs": {
+    "effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reversible",
+        "shapePreserving",
+        "deterministic",
+        "providerClass",
+        "outputSensitivity"
+      ],
+      "properties": {
+        "reversible": {
+          "type": "boolean"
+        },
+        "shapePreserving": {
+          "type": "boolean"
+        },
+        "deterministic": {
+          "type": "boolean"
+        },
+        "providerClass": {
+          "enum": [
+            "crypto",
+            "tokenVault",
+            "localRedaction",
+            "hashing"
+          ]
+        },
+        "outputSensitivity": {
+          "enum": [
+            "public",
+            "masked",
+            "protected",
+            "restricted"
+          ]
+        }
+      }
+    },
+    "predicateRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expression"
+      ],
+      "properties": {
+        "expression": {
+          "type": "object"
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "condition": {
+          "enum": [
+            "always",
+            "onTrue",
+            "onFalse",
+            "onSuccess",
+            "onWarning",
+            "onFailure"
+          ]
+        }
+      }
+    },
+    "ingressNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "config"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "ingress"
+        },
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "inputType"
+          ],
+          "properties": {
+            "inputType": {
+              "const": "requestEnvelope"
+            }
+          }
+        }
+      }
+    },
+    "parseNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "config"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "parse"
+        },
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "adapter",
+            "contentType",
+            "preserveStructure"
+          ],
+          "properties": {
+            "adapter": {
+              "type": "string"
+            },
+            "contentType": {
+              "type": "string"
+            },
+            "preserveStructure": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "predicateNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "config"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "predicate"
+        },
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ruleId",
+            "expression"
+          ],
+          "properties": {
+            "ruleId": {
+              "type": "string"
+            },
+            "expression": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "selectNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "config"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "select"
+        },
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "selectorRef"
+          ],
+          "properties": {
+            "selectorRef": {
+              "type": "string"
+            },
+            "expectedCardinality": {
+              "enum": [
+                "zeroOrOne",
+                "exactlyOne",
+                "zeroToMany",
+                "oneToMany"
+              ]
+            },
+            "matchKind": {
+              "enum": [
+                "value",
+                "span",
+                "object"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "transformNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "config",
+        "effect"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "transform"
+        },
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ruleId",
+            "transform"
+          ],
+          "properties": {
+            "ruleId": {
+              "type": "string"
+            },
+            "transform": {
+              "$ref": "#/$defs/policyTransform"
+            }
+          }
+        },
+        "effect": {
+          "$ref": "#/$defs/effect"
+        }
+      }
+    },
+    "rebuildNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "config"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "rebuild"
+        },
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "adapter",
+            "contentType"
+          ],
+          "properties": {
+            "adapter": {
+              "type": "string"
+            },
+            "contentType": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "auditNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "config"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "audit"
+        },
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "emitSummary",
+            "fields"
+          ],
+          "properties": {
+            "emitSummary": {
+              "type": "boolean"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "egressNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "config"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "egress"
+        },
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "includePayload",
+            "includeAttestation"
+          ],
+          "properties": {
+            "includePayload": {
+              "type": "boolean"
+            },
+            "includeAttestation": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "node": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ingressNode"
+        },
+        {
+          "$ref": "#/$defs/parseNode"
+        },
+        {
+          "$ref": "#/$defs/predicateNode"
+        },
+        {
+          "$ref": "#/$defs/selectNode"
+        },
+        {
+          "$ref": "#/$defs/transformNode"
+        },
+        {
+          "$ref": "#/$defs/rebuildNode"
+        },
+        {
+          "$ref": "#/$defs/auditNode"
+        },
+        {
+          "$ref": "#/$defs/egressNode"
+        }
+      ]
+    },
+    "policyTransform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "provider",
+        "capabilityRef"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "redact",
+            "encrypt",
+            "tokenize",
+            "formatPreservingEncrypt",
+            "formatPreservingTokenize",
+            "partialMask",
+            "hash",
+            "decrypt",
+            "detokenize"
+          ]
+        },
+        "provider": {
+          "$ref": "#/$defs/idString"
+        },
+        "capabilityRef": {
+          "$ref": "#/$defs/idString"
+        },
+        "preserveFormat": {
+          "type": "boolean"
+        },
+        "reversible": {
+          "type": "boolean"
+        },
+        "aadTemplate": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "array",
+              "object",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "idString": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{1,127}$"
+    }
+  }
+}

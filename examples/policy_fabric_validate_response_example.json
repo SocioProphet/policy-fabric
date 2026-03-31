@@ -1,0 +1,29 @@
+{
+  "requestId": "f7ea8caa-0f5d-4b3e-92ef-7d4cb2405f5a",
+  "status": "valid",
+  "policyId": "customer-support-mask",
+  "policyVersion": "7.3.0",
+  "schemaVersion": "policy.fabric/v2",
+  "structuralChecks": {
+    "passed": true,
+    "errorCount": 0
+  },
+  "semanticChecks": {
+    "passed": true,
+    "warnings": [
+      {
+        "code": "selector-cardinality-advisory",
+        "message": "Selector 'email' is zeroOrOne; promote to exactlyOne if the route contract guarantees presence."
+      }
+    ]
+  },
+  "normalizationPreview": {
+    "canonicalRuleOrder": [
+      "encrypt-home-phone",
+      "tokenize-email"
+    ],
+    "derivedModes": [
+      "mask"
+    ]
+  }
+}

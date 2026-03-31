@@ -1,0 +1,168 @@
+{
+  "apiVersion": "policy.fabric/v2",
+  "policyId": "customer-support-mask",
+  "version": "7.3.0",
+  "owner": "platform-data-protection",
+  "status": "approved",
+  "description": "Mask phone and email for support-case creation while preserving non-target fields.",
+  "labels": {
+    "domain": "support",
+    "dataClass": "pii"
+  },
+  "rollout": {
+    "tenants": [
+      "acme-prod"
+    ],
+    "environments": [
+      "prod",
+      "stage"
+    ],
+    "regions": [
+      "us-east-1"
+    ],
+    "percentage": 100
+  },
+  "selectors": [
+    {
+      "id": "home-phone",
+      "type": "jsonpath",
+      "path": "$.phones.home",
+      "expectedCardinality": "zeroOrOne",
+      "matchKind": "value",
+      "description": "Home phone field within support payloads."
+    },
+    {
+      "id": "email",
+      "type": "jsonpath",
+      "path": "$.email",
+      "expectedCardinality": "zeroOrOne",
+      "matchKind": "value",
+      "description": "Primary email address."
+    }
+  ],
+  "rules": [
+    {
+      "id": "encrypt-home-phone",
+      "priority": 100,
+      "description": "Encrypt home phone for support workflows in production-like environments.",
+      "when": {
+        "mode": "mask",
+        "environmentIn": [
+          "prod",
+          "stage"
+        ],
+        "routeIn": [
+          "support-case-create"
+        ]
+      },
+      "match": {
+        "selectorRef": "home-phone",
+        "onNoMatch": "skip",
+        "expectedCardinality": "inherit"
+      },
+      "transform": {
+        "type": "encrypt",
+        "provider": "kms-aes-gcm",
+        "capabilityRef": "pii-phone-encryption",
+        "preserveFormat": false,
+        "reversible": true,
+        "aadTemplate": [
+          "tenantId",
+          "policyId",
+          "selectorId",
+          "requestId"
+        ]
+      },
+      "onFailure": "failClosed"
+    },
+    {
+      "id": "tokenize-email",
+      "priority": 110,
+      "description": "Tokenize email for analytics, support, and ops flows.",
+      "when": {
+        "mode": "mask",
+        "purposeIn": [
+          "analytics",
+          "customer-support",
+          "ops"
+        ]
+      },
+      "match": {
+        "selectorRef": "email",
+        "onNoMatch": "skip",
+        "expectedCardinality": "inherit"
+      },
+      "transform": {
+        "type": "tokenize",
+        "provider": "token-vault",
+        "capabilityRef": "pii-email-token",
+        "preserveFormat": false,
+        "reversible": true
+      },
+      "onFailure": "failClosed"
+    }
+  ],
+  "options": {
+    "emitAudit": true,
+    "loggable": false,
+    "returnMatchesByDefault": false,
+    "failClosed": true,
+    "allowExplainSimulation": true
+  },
+  "tests": [
+    {
+      "name": "support-case-prod-masks-home-phone-and-email",
+      "request": {
+        "mode": "mask",
+        "tenantId": "acme-prod",
+        "contentType": "application/json",
+        "context": {
+          "route": "support-case-create",
+          "environment": "prod",
+          "purpose": "customer-support",
+          "region": "us-east-1"
+        },
+        "payload": {
+          "phones": {
+            "home": "(855) 003-8973",
+            "work": "(456) 194-3754",
+            "mobile": "(395) 383-3875"
+          },
+          "email": "my.example@fake.com"
+        },
+        "options": {
+          "dryRun": false,
+          "emitAudit": true,
+          "returnMatches": false
+        }
+      },
+      "assert": [
+        {
+          "target": "payload",
+          "path": "$.phones.home",
+          "operator": "changed",
+          "description": "Home phone must be transformed."
+        },
+        {
+          "target": "payload",
+          "path": "$.phones.work",
+          "operator": "unchanged",
+          "description": "Non-target work phone must stay intact."
+        },
+        {
+          "target": "payload",
+          "path": "$.email",
+          "operator": "changed",
+          "description": "Email must be transformed."
+        },
+        {
+          "target": "attestation",
+          "path": "$.ruleHits",
+          "operator": "contains",
+          "value": "encrypt-home-phone",
+          "description": "Attestation must show the encryption rule hit."
+        }
+      ]
+    }
+  ]
+}

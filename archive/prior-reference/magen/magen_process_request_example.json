@@ -1,0 +1,25 @@
+{
+  "policyId": "customer-support-mask",
+  "policyVersion": "7.2.0",
+  "mode": "mask",
+  "tenantId": "acme-prod",
+  "contentType": "application/json",
+  "context": {
+    "route": "support-case-create",
+    "environment": "prod",
+    "purpose": "customer-support"
+  },
+  "options": {
+    "dryRun": false,
+    "emitAudit": true,
+    "returnMatches": false
+  },
+  "payload": {
+    "phones": {
+      "home": "(855) 003-8973",
+      "work": "(456) 194-3754",
+      "mobile": "(395) 383-3875"
+    },
+    "email": "my.example@fake.com"
+  }
+}

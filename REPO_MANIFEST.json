@@ -1,0 +1,210 @@
+{
+  "generatedAt": "2026-03-31T18:28:10Z",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "6cb589ae577b32e1cae5025e4e49f2265730cb3bf5c11a5b95c04daba5211f08",
+      "bytes": 58
+    },
+    {
+      "path": ".policy-fabric/WORKFLOW.md",
+      "sha256": "c8e3ca0b745ac0f499fbffdb263b56e39ef82460dd98380f761032f2a4305622",
+      "bytes": 983
+    },
+    {
+      "path": ".policy-fabric/config.json",
+      "sha256": "809f11bd6047b8cfd32f6327d9c1990461293ee0061b8335a9225caae148a692",
+      "bytes": 566
+    },
+    {
+      "path": ".policy-fabric/reports/doctor_latest.json",
+      "sha256": "e3c6e6b8ef6190f70db623249935e53823f6f1b60a8ea1d2581f05b68832acbd",
+      "bytes": 1391
+    },
+    {
+      "path": "BACKLOG.md",
+      "sha256": "afc3f37b666cf5ea7ae0ddf97eb38c1b33b15f4e22a2777255bfc5deb24ae17c",
+      "bytes": 795
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "e729ba1d864b5c2470e89bc02fefadf8550a81e77a6dc0f8e3ecbf4f2c154282",
+      "bytes": 666
+    },
+    {
+      "path": "README.md",
+      "sha256": "f817317a76869e3e90f2b93be4b3839afb67c129dcec32c66040ab70dc8a897d",
+      "bytes": 1760
+    },
+    {
+      "path": "archive/prior-reference/magen/Magen_Platform_Integration_Blueprint.docx",
+      "sha256": "47c962495b8fbd5b25d0e8fb01675ba77481357b0c195cde7bf1e166c7693e1c",
+      "bytes": 50232
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_comparison_matrix.md",
+      "sha256": "0ea3eb781585f8fffa06e8a9e1a07d434f1883e78ffb143ce3a8b30b5d3b6668",
+      "bytes": 5255
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_compiled_plan_example.json",
+      "sha256": "951a150add34cb1d4249d4736e566f10071387294bcc2af76c7e185f61a3a54d",
+      "bytes": 6094
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_contracts_README.md",
+      "sha256": "19e569dbaedf5fbf3c9bfd65b16dd26ef632278e2d51103297d13f9047b3ab4b",
+      "bytes": 2612
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_execution_plan_ir_v1.schema.json",
+      "sha256": "db182632b929b737d86e30b875cfddb1e9c20645bb45ce94491bca2c8990371b",
+      "bytes": 13762
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_explain_response_example.json",
+      "sha256": "05543bf661130ee212cb197a6654a25a7908bd20c747a7d63052687f1df65efc",
+      "bytes": 747
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_openapi_v2.yaml",
+      "sha256": "4baedeb6e3115b50118cdb5844bf73231a2e6571d6cf0cf1826c0fced9409af2",
+      "bytes": 36354
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_platform_contracts_bundle.zip",
+      "sha256": "606a8233be94ce6ea16113a7938cbbd6bcb349158d4bb99b1f1648e94529ceb0",
+      "bytes": 17985
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_policy_v2.schema.json",
+      "sha256": "db07592f08afebd37433398d704632a246c947d39ac42089990678b0fe92ede8",
+      "bytes": 12735
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_policy_v2_enhanced_example.json",
+      "sha256": "a9466eedfdf3e766115de596db8b93bea0b642d3aedd62495273d74d87a69d6a",
+      "bytes": 4187
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_policy_v2_example.json",
+      "sha256": "b052a7b87712cceb699767158f1674eb6556786dded5627cd8c504bc03aae84d",
+      "bytes": 1920
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_process_request_example.json",
+      "sha256": "7d582f5db63b1d6394b86f1c9725fb95ba00667b3448d1b7f9d6687c9caff652",
+      "bytes": 534
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_process_request_v2_enhanced_example.json",
+      "sha256": "5b0d9a8e0f194b8f7e030056517b882a0448e726fdf948f37a109ecad1b59174",
+      "bytes": 561
+    },
+    {
+      "path": "archive/prior-reference/magen/magen_process_response_example.json",
+      "sha256": "0425885582ffb082aa85febe9c7e6134524f0afff69fa4faffc4ccf8b6428dd9",
+      "bytes": 755
+    },
+    {
+      "path": "contracts/policy_fabric_execution_plan_ir_v1.schema.json",
+      "sha256": "73d0a1988f2698a53675f507d80697c13505afa9dd2387c8c091b53c721280ce",
+      "bytes": 13786
+    },
+    {
+      "path": "contracts/policy_fabric_openapi_v2.yaml",
+      "sha256": "83a24c8962d52476b70dcac565673d51d8adc938696be7f0bdbe5252cfdae11f",
+      "bytes": 36402
+    },
+    {
+      "path": "contracts/policy_fabric_policy_v2.schema.json",
+      "sha256": "58d852809e82fb892799355dde888d9f05b35ca1b441d316a676b96426a82eb0",
+      "bytes": 12771
+    },
+    {
+      "path": "dist/policy_fabric_contracts_bundle_latest.zip",
+      "sha256": "c40d3344db33f17b3eaffc5d14d35b93eae10d9389444bd5e820efcfa6080a06",
+      "bytes": 73284
+    },
+    {
+      "path": "dist/policy_fabric_contracts_bundle_manifest.json",
+      "sha256": "3d58314a2d0cd2e1d4dec9bbfbffc0c951b48a16f2384c40b762d446dd7c7e79",
+      "bytes": 3932
+    },
+    {
+      "path": "docs/assessments/2026-03-31_strengths_and_improvement_targets.md",
+      "sha256": "d894d97e48d7aadb40f73b47850c67eff63a00d1678d0c6d7cc9a2334e050559",
+      "bytes": 1499
+    },
+    {
+      "path": "docs/blueprints/Policy_Fabric_Platform_Blueprint.docx",
+      "sha256": "f6e4c262413cd5873dfcc67277b49cd5f81969d7430b5379a3493c3d687fcf2f",
+      "bytes": 50227
+    },
+    {
+      "path": "docs/comparison/policy_fabric_comparison_matrix.md",
+      "sha256": "099957f772258c10f0651d2c3023a66fd6673ce61a368744a67a84d0acc00281",
+      "bytes": 5306
+    },
+    {
+      "path": "docs/rebrand/policy_fabric_rebrand_notes.md",
+      "sha256": "b99b3b31cb8dac7ed05d5093f1d33ba3f17d89654f4a18cc06fffed58dfd6d1a",
+      "bytes": 1752
+    },
+    {
+      "path": "docs/reports/doctor_latest.md",
+      "sha256": "b7bccb6945fc28b41cf38db06042e9be4c694a4b197f2127aca28b343d0f07ec",
+      "bytes": 845
+    },
+    {
+      "path": "docs/research/2026-03-31_agentplane_alignment.md",
+      "sha256": "e4083355c90ef39bf49f13ebd59478bc596f4386a38b3759b929e6403ef29f0e",
+      "bytes": 2312
+    },
+    {
+      "path": "docs/turns/2026-03-31T18:27:26Z_repo-hardening-and-agentplane-alignment.md",
+      "sha256": "136d1e5024e5ceb272ffec6fe0b411f376d43408dfbc7bd37f9a5eed6b137989",
+      "bytes": 936
+    },
+    {
+      "path": "examples/policy_fabric_compiled_plan_example.json",
+      "sha256": "486883b80a86f322db79db6365154f4cf0a5988071336ec9886ce530c6e486d2",
+      "bytes": 6094
+    },
+    {
+      "path": "examples/policy_fabric_explain_response_example.json",
+      "sha256": "2e20d64e044da2299c55b1382b1ca565fe81ff526800830a6f327fd9dcb4864c",
+      "bytes": 748
+    },
+    {
+      "path": "examples/policy_fabric_policy_v2_enhanced_example.json",
+      "sha256": "f8bb5162c41e6bb8ea84a5011e6a49351c1cd5261d1411208fe2afb1d09b247f",
+      "bytes": 4187
+    },
+    {
+      "path": "examples/policy_fabric_process_request_v2_enhanced_example.json",
+      "sha256": "3b89b899f6b90cc45e89d5dbe7b8f6d4d620f7f3c43e9e7b43093440dd6bbcac",
+      "bytes": 562
+    },
+    {
+      "path": "examples/policy_fabric_process_response_example.json",
+      "sha256": "9219e27357bcdd429f0aeacfc8defcea600cbd5855937fd702b60e306ccf20a4",
+      "bytes": 756
+    },
+    {
+      "path": "examples/policy_fabric_validate_response_example.json",
+      "sha256": "fb8d47833409d675578c454193ad5ae2f98470f526e208a9711d90b9b3474ea3",
+      "bytes": 667
+    },
+    {
+      "path": "scripts/build_dist_bundle.py",
+      "sha256": "f792f311e54ded058df638dc38b8dc7c073d0b6d078fc8fec84140a94fae7761",
+      "bytes": 1178
+    },
+    {
+      "path": "scripts/doctor.py",
+      "sha256": "7bc8706fb6cf6afe22f88b61c6e551b27be365ccaa9d8c6a51fab7eddcf12db8",
+      "bytes": 2917
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "apiVersion": "magen.platform.plan/v1",
+  "planId": "customer-support-mask__7.3.0__application-json__mask",
+  "planHash": "sha256:8d1357e4a8fc1c003a62b889fa736f0a1bdc2f2b9df11d1a52c29c8bb7b0a341",
+  "compilerVersion": "1.0.0",
+  "sourcePolicy": {
+    "policyId": "customer-support-mask",
+    "version": "7.3.0"
+  },
+  "mode": "mask",
+  "contentType": "application/json",
+  "tenantScope": {
+    "tenantIds": [
+      "acme-prod"
+    ],
+    "regions": [
+      "us-east-1"
+    ]
+  },
+  "entryNodeIds": [
+    "n0"
+  ],
+  "exitNodeIds": [
+    "n10"
+  ],
+  "topologicalOrder": [
+    "n0",
+    "n1",
+    "n2",
+    "n3",
+    "n4",
+    "n5",
+    "n6",
+    "n7",
+    "n8",
+    "n9",
+    "n10"
+  ],
+  "nodes": [
+    {
+      "id": "n0",
+      "kind": "ingress",
+      "name": "request-ingress",
+      "config": {
+        "inputType": "requestEnvelope"
+      }
+    },
+    {
+      "id": "n1",
+      "kind": "parse",
+      "name": "json-parse",
+      "config": {
+        "adapter": "json-dom",
+        "contentType": "application/json",
+        "preserveStructure": true
+      }
+    },
+    {
+      "id": "n2",
+      "kind": "predicate",
+      "name": "encrypt-home-phone.when",
+      "config": {
+        "ruleId": "encrypt-home-phone",
+        "expression": {
+          "mode": "mask",
+          "environmentIn": [
+            "prod",
+            "stage"
+          ],
+          "routeIn": [
+            "support-case-create"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n3",
+      "kind": "select",
+      "name": "select-home-phone",
+      "config": {
+        "selectorRef": "home-phone",
+        "expectedCardinality": "zeroOrOne",
+        "matchKind": "value"
+      }
+    },
+    {
+      "id": "n4",
+      "kind": "transform",
+      "name": "encrypt-home-phone.transform",
+      "config": {
+        "ruleId": "encrypt-home-phone",
+        "transform": {
+          "type": "encrypt",
+          "provider": "kms-aes-gcm",
+          "capabilityRef": "pii-phone-encryption",
+          "preserveFormat": false,
+          "reversible": true,
+          "aadTemplate": [
+            "tenantId",
+            "policyId",
+            "selectorId",
+            "requestId"
+          ]
+        }
+      },
+      "effect": {
+        "reversible": true,
+        "shapePreserving": false,
+        "deterministic": false,
+        "providerClass": "crypto",
+        "outputSensitivity": "protected"
+      }
+    },
+    {
+      "id": "n5",
+      "kind": "predicate",
+      "name": "tokenize-email.when",
+      "config": {
+        "ruleId": "tokenize-email",
+        "expression": {
+          "mode": "mask",
+          "purposeIn": [
+            "analytics",
+            "customer-support",
+            "ops"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n6",
+      "kind": "select",
+      "name": "select-email",
+      "config": {
+        "selectorRef": "email",
+        "expectedCardinality": "zeroOrOne",
+        "matchKind": "value"
+      }
+    },
+    {
+      "id": "n7",
+      "kind": "transform",
+      "name": "tokenize-email.transform",
+      "config": {
+        "ruleId": "tokenize-email",
+        "transform": {
+          "type": "tokenize",
+          "provider": "token-vault",
+          "capabilityRef": "pii-email-token",
+          "preserveFormat": false,
+          "reversible": true
+        }
+      },
+      "effect": {
+        "reversible": true,
+        "shapePreserving": false,
+        "deterministic": true,
+        "providerClass": "tokenVault",
+        "outputSensitivity": "protected"
+      }
+    },
+    {
+      "id": "n8",
+      "kind": "rebuild",
+      "name": "json-rebuild",
+      "config": {
+        "adapter": "json-dom",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "id": "n9",
+      "kind": "audit",
+      "name": "emit-attestation",
+      "config": {
+        "emitSummary": true,
+        "fields": [
+          "tenantId",
+          "policyId",
+          "policyVersion",
+          "planHash",
+          "mode",
+          "ruleHits",
+          "selectorHits",
+          "providerLatencyMs",
+          "outcome"
+        ]
+      }
+    },
+    {
+      "id": "n10",
+      "kind": "egress",
+      "name": "return-response",
+      "config": {
+        "includePayload": true,
+        "includeAttestation": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "n0",
+      "to": "n1",
+      "condition": "always"
+    },
+    {
+      "from": "n1",
+      "to": "n2",
+      "condition": "always"
+    },
+    {
+      "from": "n1",
+      "to": "n5",
+      "condition": "always"
+    },
+    {
+      "from": "n2",
+      "to": "n3",
+      "condition": "onTrue"
+    },
+    {
+      "from": "n3",
+      "to": "n4",
+      "condition": "onSuccess"
+    },
+    {
+      "from": "n5",
+      "to": "n6",
+      "condition": "onTrue"
+    },
+    {
+      "from": "n6",
+      "to": "n7",
+      "condition": "onSuccess"
+    },
+    {
+      "from": "n4",
+      "to": "n8",
+      "condition": "onSuccess"
+    },
+    {
+      "from": "n7",
+      "to": "n8",
+      "condition": "onSuccess"
+    },
+    {
+      "from": "n8",
+      "to": "n9",
+      "condition": "always"
+    },
+    {
+      "from": "n9",
+      "to": "n10",
+      "condition": "always"
+    }
+  ],
+  "dependencyReport": {
+    "providers": [
+      "kms-aes-gcm",
+      "token-vault"
+    ],
+    "adapters": [
+      "json-dom"
+    ],
+    "selectors": [
+      "home-phone",
+      "email"
+    ],
+    "effectSummary": [
+      {
+        "reversible": true,
+        "shapePreserving": false,
+        "deterministic": false,
+        "providerClass": "crypto",
+        "outputSensitivity": "protected"
+      },
+      {
+        "reversible": true,
+        "shapePreserving": false,
+        "deterministic": true,
+        "providerClass": "tokenVault",
+        "outputSensitivity": "protected"
+      }
+    ]
+  },
+  "attestationTemplate": {
+    "fields": [
+      "tenantId",
+      "policyId",
+      "policyVersion",
+      "planHash",
+      "mode",
+      "ruleHits",
+      "selectorHits",
+      "providerLatencyMs",
+      "outcome"
+    ],
+    "includeRuleHits": true,
+    "includeSelectorHits": true,
+    "includeProviderLatency": true
+  }
+}
