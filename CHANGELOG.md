@@ -18,3 +18,13 @@
 - updated repository focus/backlog to reflect managed ownership, reconcile/upgrade, and profile-based workflow lessons
 - extended `scripts/doctor.py` to validate release-pack, validation-report, and replay-report examples in addition to core contracts
 - refreshed doctor reports, repository manifest, distributable bundle, and Git-backed snapshot
+
+## 2026-04-01T16:10:00Z
+
+- added a formal ownership contract under `.policy-fabric/ownership.json`
+- added workflow profiles under `.policy-fabric/profiles.json` and selected the `normal` profile in repo config
+- added reconcile guidance and a real `scripts/reconcile.py` repair step
+- strengthened `scripts/doctor.py` with ownership/profile drift checks, release-pack digest checks, replay-evidence checks, and bundle-exclusion checks
+- began emitting machine-readable validation evidence at `docs/reports/validation_report_latest.json`
+- updated bundle generation to exclude sanctioned local-override notes from distributable bundles
+- refreshed repository governance docs, backlog, assessments, and turn notes

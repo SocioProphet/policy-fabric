@@ -1,10 +1,6 @@
 {
-  "workflowSurfaceVersion": 2,
-  "workflowMode": "direct",
-  "workflowProfile": "normal",
-  "managedOwnershipContract": ".policy-fabric/ownership.json",
-  "profilesContract": ".policy-fabric/profiles.json",
-  "managedPaths": [
+  "ownershipContractVersion": 1,
+  "frameworkManagedPaths": [
     "contracts/**",
     "examples/**",
     "docs/blueprints/**",
@@ -37,9 +33,9 @@
   "archiveProtectedPaths": [
     "archive/prior-reference/**"
   ],
-  "doctorCommand": "python scripts/doctor.py",
-  "reconcileCommand": "python scripts/reconcile.py",
-  "bundleCommand": "python scripts/build_dist_bundle.py",
-  "doctorReportPath": "docs/reports/doctor_latest.md",
-  "validationReportPath": "docs/reports/validation_report_latest.json"
+  "bundleExclusions": [
+    ".policy-fabric/local-notes/**",
+    ".git/**",
+    "dist/policy_fabric_contracts_bundle_latest.zip"
+  ]
 }

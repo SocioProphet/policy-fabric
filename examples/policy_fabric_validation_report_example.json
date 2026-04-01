@@ -22,7 +22,7 @@
       "id": "policy-schema",
       "status": "pass",
       "severity": "info",
-      "code": "SCHEMA_OK",
+      "code": "PFD010_SCHEMA_OK",
       "message": "Policy example validates against policy schema.",
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     },
@@ -30,7 +30,7 @@
       "id": "plan-schema",
       "status": "pass",
       "severity": "info",
-      "code": "SCHEMA_OK",
+      "code": "PFD010_SCHEMA_OK",
       "message": "Compiled plan example validates against plan schema.",
       "artifactRef": "examples/policy_fabric_compiled_plan_example.json"
     },
@@ -38,7 +38,7 @@
       "id": "openapi-parse",
       "status": "pass",
       "severity": "info",
-      "code": "OPENAPI_OK",
+      "code": "PFD020_OPENAPI_OK",
       "message": "OpenAPI parses and exposes /v2/process.",
       "artifactRef": "contracts/policy_fabric_openapi_v2.yaml"
     },
@@ -46,7 +46,7 @@
       "id": "release-pack-schema",
       "status": "pass",
       "severity": "info",
-      "code": "SCHEMA_OK",
+      "code": "PFD010_SCHEMA_OK",
       "message": "Release pack example validates against release pack schema.",
       "artifactRef": "examples/policy_fabric_release_pack_example.json"
     },
@@ -54,7 +54,7 @@
       "id": "replay-report-schema",
       "status": "pass",
       "severity": "info",
-      "code": "SCHEMA_OK",
+      "code": "PFD010_SCHEMA_OK",
       "message": "Replay report example validates against replay report schema.",
       "artifactRef": "examples/policy_fabric_replay_report_example.json"
     },
@@ -62,7 +62,7 @@
       "id": "validation-report-schema",
       "status": "pass",
       "severity": "info",
-      "code": "SCHEMA_OK",
+      "code": "PFD010_SCHEMA_OK",
       "message": "Validation report example validates against validation report schema.",
       "artifactRef": "examples/policy_fabric_validation_report_example.json"
     }

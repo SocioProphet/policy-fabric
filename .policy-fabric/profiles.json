@@ -1,0 +1,36 @@
+{
+  "profilesVersion": 1,
+  "profiles": {
+    "solo": {
+      "description": "Fast local authoring with soft warnings and no release promotion.",
+      "allowedWorkflowModes": [
+        "direct"
+      ],
+      "doctorFailOnWarn": false,
+      "requiresTurnNote": true,
+      "requiresHumanGateForProd": true,
+      "requiresReconcileBeforeBundle": true
+    },
+    "normal": {
+      "description": "Team working mode for cumulative repository edits and validation.",
+      "allowedWorkflowModes": [
+        "direct",
+        "branch_pr"
+      ],
+      "doctorFailOnWarn": false,
+      "requiresTurnNote": true,
+      "requiresHumanGateForProd": true,
+      "requiresReconcileBeforeBundle": true
+    },
+    "release-gated": {
+      "description": "Promotion-ready mode with stricter release expectations and evidence retention.",
+      "allowedWorkflowModes": [
+        "branch_pr"
+      ],
+      "doctorFailOnWarn": true,
+      "requiresTurnNote": true,
+      "requiresHumanGateForProd": true,
+      "requiresReconcileBeforeBundle": true
+    }
+  }
+}

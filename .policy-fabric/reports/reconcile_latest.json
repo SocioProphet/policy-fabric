@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-04-01T14:36:23.908207Z",
+  "git": {
+    "rev": "9f71b2c",
+    "dirty": true
+  },
+  "fileCount": 66,
+  "localOverridePaths": [
+    ".policy-fabric/local-notes/**"
+  ],
+  "generatedPaths": [
+    "docs/reports/**",
+    ".policy-fabric/reports/**",
+    "REPO_MANIFEST.json",
+    "dist/**"
+  ]
+}

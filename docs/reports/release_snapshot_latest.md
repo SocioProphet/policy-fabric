@@ -1,9 +1,10 @@
 # Release Snapshot
 
-Current HEAD: `ac79e7e`
+This export is the current cumulative Policy Fabric working repository snapshot.
 
-## Notes
+## Snapshot notes
 
-- This snapshot includes the AgentPlane official-site correction turn.
-- Doctor checks passed for core contracts plus release-pack and evidence-report examples.
-- The latest distributable bundle is rebuilt from repo contents via `scripts/build_dist_bundle.py`.
+- repository governance is now enforced through managed ownership, workflow profiles, reconcile, and doctor
+- the most recent validation pass succeeded with managed-ownership and release-pack semantic checks enabled
+- inspect `.git` inside the snapshot for exact commit history and final HEAD
+- inspect `docs/reports/validation_report_latest.json` for the machine-readable validation evidence

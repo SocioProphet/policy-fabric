@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import fnmatch
 import hashlib
 import json
 import zipfile
@@ -9,11 +11,18 @@ DIST_DIR = ROOT / 'dist'
 DIST_DIR.mkdir(exist_ok=True)
 BUNDLE = DIST_DIR / 'policy_fabric_contracts_bundle_latest.zip'
 MANIFEST = DIST_DIR / 'policy_fabric_contracts_bundle_manifest.json'
+OWNERSHIP = json.loads((ROOT / '.policy-fabric/ownership.json').read_text())
+EXCLUSIONS = OWNERSHIP.get('bundleExclusions', [])
 
 include_roots = [
     'README.md', 'CHANGELOG.md', 'BACKLOG.md', 'REPO_MANIFEST.json',
     'contracts', 'examples', 'docs', '.policy-fabric'
 ]
+
+
+def excluded(rel: str) -> bool:
+    return any(fnmatch.fnmatch(rel, pattern) for pattern in EXCLUSIONS)
+
 
 files = []
 for rel in include_roots:
@@ -27,13 +36,13 @@ files = sorted({f.resolve() for f in files})
 manifest = {'files': []}
 with zipfile.ZipFile(BUNDLE, 'w', compression=zipfile.ZIP_DEFLATED) as zf:
     for path in files:
-        arc = path.relative_to(ROOT)
-        if 'dist/' in str(arc):
+        arc = path.relative_to(ROOT).as_posix()
+        if arc.startswith('dist/') or excluded(arc):
             continue
         data = path.read_bytes()
         sha = hashlib.sha256(data).hexdigest()
-        manifest['files'].append({'path': str(arc), 'sha256': sha, 'bytes': len(data)})
-        zf.writestr(str(arc), data)
+        manifest['files'].append({'path': arc, 'sha256': sha, 'bytes': len(data)})
+        zf.writestr(arc, data)
 
 MANIFEST.write_text(json.dumps(manifest, indent=2) + '\n')
 print(BUNDLE)

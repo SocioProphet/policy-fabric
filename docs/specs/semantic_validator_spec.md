@@ -1,3 +1,4 @@
+
 # Semantic Validator Spec (Draft)
 
 ## Goal
@@ -5,6 +6,14 @@
 Define the non-JSON-Schema validation rules required before a Policy Fabric policy may be approved, compiled, or released.
 
 ## Validation phases
+
+### Phase 0: Repository governance and release-pack integrity
+- ownership contract must classify every tracked file
+- ownership classes must not overlap on actual tracked files
+- selected workflow profile must exist and permit the current workflow mode
+- release-pack referenced artifact digests must match the bytes on disk
+- replay retention must imply replay corpus reference and replay-report expectation
+- local override surfaces must stay out of the distributable bundle
 
 ### Phase 1: Structural parse
 - JSON Schema validation for authored policy
@@ -46,10 +55,11 @@ Each validation finding should include:
 
 ## Recommended command surface
 
-- `policy-fabric validate policy.json`
-- `policy-fabric doctor`
-- `policy-fabric compile policy.json --strict`
+- `python scripts/reconcile.py`
+- `python scripts/doctor.py`
+- future: `policy-fabric validate policy.json`
+- future: `policy-fabric compile policy.json --strict`
 
 ## Relationship to current repo
 
-The current `scripts/doctor.py` only performs structural checks. This spec defines the next layer that should be implemented.
+The current `scripts/doctor.py` now implements Phase 0 plus structural checks. Policy/compiler/runtime semantics remain the next major layer to implement.

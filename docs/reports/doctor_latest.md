@@ -2,22 +2,41 @@
 
 Overall status: PASS
 
-- [OK] exists:contracts/policy_fabric_policy_v2.schema.json — required file present
-- [OK] exists:contracts/policy_fabric_execution_plan_ir_v1.schema.json — required file present
-- [OK] exists:contracts/policy_fabric_openapi_v2.yaml — required file present
-- [OK] exists:contracts/policy_fabric_release_pack_v1.schema.json — required file present
-- [OK] exists:contracts/policy_fabric_validation_report_v1.schema.json — required file present
-- [OK] exists:contracts/policy_fabric_replay_report_v1.schema.json — required file present
-- [OK] exists:examples/policy_fabric_policy_v2_enhanced_example.json — required file present
-- [OK] exists:examples/policy_fabric_compiled_plan_example.json — required file present
-- [OK] exists:examples/policy_fabric_release_pack_example.json — required file present
-- [OK] exists:examples/policy_fabric_validation_report_example.json — required file present
-- [OK] exists:examples/policy_fabric_replay_report_example.json — required file present
-- [OK] exists:.policy-fabric/config.json — required file present
-- [OK] exists:.policy-fabric/WORKFLOW.md — required file present
-- [OK] validate:policy-example — policy example validates against policy schema
-- [OK] validate:plan-example — compiled plan validates against plan schema
-- [OK] validate:release-pack-example — release pack example validates against release pack schema
-- [OK] validate:validation-report-example — validation report example validates against validation report schema
-- [OK] validate:replay-report-example — replay report example validates against replay report schema
-- [OK] parse:openapi — openapi parses and contains expected core surfaces
+- [OK] exists:contracts/policy_fabric_policy_v2.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:contracts/policy_fabric_execution_plan_ir_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:contracts/policy_fabric_openapi_v2.yaml — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:contracts/policy_fabric_release_pack_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:contracts/policy_fabric_validation_report_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:contracts/policy_fabric_replay_report_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/policy_fabric_policy_v2_enhanced_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/policy_fabric_compiled_plan_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/policy_fabric_release_pack_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/policy_fabric_validation_report_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/policy_fabric_replay_report_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.policy-fabric/config.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.policy-fabric/WORKFLOW.md — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.policy-fabric/ownership.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.policy-fabric/profiles.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.policy-fabric/RECONCILE.md — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:scripts/reconcile.py — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] validate:policy-example — PFD010_SCHEMA_OK — policy example validates against policy schema
+- [OK] validate:plan-example — PFD010_SCHEMA_OK — compiled plan validates against plan schema
+- [OK] validate:release-pack-example — PFD010_SCHEMA_OK — release pack example validates against release pack schema
+- [OK] validate:validation-report-example — PFD010_SCHEMA_OK — validation report example validates against validation report schema
+- [OK] validate:replay-report-example — PFD010_SCHEMA_OK — replay report example validates against replay report schema
+- [OK] parse:openapi — PFD020_OPENAPI_OK — openapi parses and contains expected core surfaces
+- [OK] ownership:managed-sync — PFD030_OWNERSHIP_SYNC_OK — config managed paths match ownership contract
+- [OK] ownership:generated-sync — PFD030_OWNERSHIP_SYNC_OK — config generated paths match ownership contract
+- [OK] ownership:local-sync — PFD030_OWNERSHIP_SYNC_OK — config local override paths match ownership contract
+- [OK] profiles:selected-profile — PFD040_PROFILE_OK — selected workflow profile `normal` exists
+- [OK] profiles:mode-allowed — PFD040_PROFILE_OK — workflow mode allowed by selected profile
+- [OK] docs:workflow-sync — PFD050_DOC_SYNC_OK — workflow documentation references governed commands and contracts
+- [OK] docs:reconcile-sync — PFD050_DOC_SYNC_OK — reconcile documentation references repair surfaces and commands
+- [OK] ownership:no-overlap — PFD032_OWNERSHIP_OVERLAP_FREE — ownership categories do not overlap on actual files
+- [OK] ownership:no-unclassified — PFD034_OWNERSHIP_CLASSIFICATION_OK — all tracked files are classified by the ownership contract
+- [OK] release-pack:digest-integrity — PFD060_RELEASE_PACK_DIGEST_OK — release-pack artifact digests match referenced files
+- [OK] release-pack:promotion-gate — PFD062_PROMOTION_GATE_OK — promotion gate semantics satisfy current lane requirements
+- [OK] release-pack:replay-evidence — PFD064_REPLAY_EVIDENCE_OK — replay evidence requirements are satisfied
+- [OK] release-pack:secret-refs — PFD066_SECRET_REF_OK — release pack uses reference-style secret declarations
+- [OK] release-pack:git-source-drift — PFD069_RELEASE_PACK_GIT_OK — release-pack git source is intentionally working or matches current rev semantics
+- [OK] bundle:local-overrides-excluded — PFD080_BUNDLE_EXCLUSION_OK — local override files are excluded from the distributable bundle
