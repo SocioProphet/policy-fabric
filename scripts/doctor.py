@@ -12,6 +12,7 @@ from pathlib import Path
 try:
     import jsonschema
     import yaml
+    from policy_semantic_validator import collect_policy_semantic_findings
 except Exception as exc:  # pragma: no cover
     print(f"dependency error: {exc}", file=sys.stderr)
     raise
@@ -31,7 +32,7 @@ report = {
     'kind': 'ValidationReport',
     'metadata': {
         'generatedAt': NOW,
-        'generator': 'policy-fabric-doctor/0.3.0',
+        'generator': 'policy-fabric-doctor/0.4.0',
         'runId': f'doctor-{NOW}',
     },
     'subject': {
@@ -87,11 +88,13 @@ required = [
     'contracts/policy_fabric_execution_plan_ir_v1.schema.json',
     'contracts/policy_fabric_openapi_v2.yaml',
     'contracts/policy_fabric_release_pack_v1.schema.json',
+    'contracts/policy_fabric_capability_catalog_v1.schema.json',
     'contracts/policy_fabric_validation_report_v1.schema.json',
     'contracts/policy_fabric_replay_report_v1.schema.json',
     'examples/policy_fabric_policy_v2_enhanced_example.json',
     'examples/policy_fabric_compiled_plan_example.json',
     'examples/policy_fabric_release_pack_example.json',
+    'examples/policy_fabric_capability_catalog_example.json',
     'examples/policy_fabric_validation_report_example.json',
     'examples/policy_fabric_replay_report_example.json',
     '.policy-fabric/config.json',
@@ -112,6 +115,7 @@ pairs = [
     ('validate:policy-example', 'contracts/policy_fabric_policy_v2.schema.json', 'examples/policy_fabric_policy_v2_enhanced_example.json', 'policy example validates against policy schema'),
     ('validate:plan-example', 'contracts/policy_fabric_execution_plan_ir_v1.schema.json', 'examples/policy_fabric_compiled_plan_example.json', 'compiled plan validates against plan schema'),
     ('validate:release-pack-example', 'contracts/policy_fabric_release_pack_v1.schema.json', 'examples/policy_fabric_release_pack_example.json', 'release pack example validates against release pack schema'),
+    ('validate:capability-catalog-example', 'contracts/policy_fabric_capability_catalog_v1.schema.json', 'examples/policy_fabric_capability_catalog_example.json', 'capability catalog example validates against capability catalog schema'),
     ('validate:validation-report-example', 'contracts/policy_fabric_validation_report_v1.schema.json', 'examples/policy_fabric_validation_report_example.json', 'validation report example validates against validation report schema'),
     ('validate:replay-report-example', 'contracts/policy_fabric_replay_report_v1.schema.json', 'examples/policy_fabric_replay_report_example.json', 'replay report example validates against replay report schema'),
 ]
@@ -220,6 +224,8 @@ try:
     ]
     if 'openapi' in release_pack['spec']:
         artifacts.append(('spec.openapi', release_pack['spec']['openapi']['artifactRef'], release_pack['spec']['openapi']['sha256']))
+    if 'capabilityCatalog' in release_pack['spec']:
+        artifacts.append(('spec.capabilityCatalog', release_pack['spec']['capabilityCatalog']['artifactRef'], release_pack['spec']['capabilityCatalog']['sha256']))
     for fixture in release_pack['spec'].get('fixtures', []):
         artifacts.append((f"fixture:{fixture['name']}", fixture['artifactRef'], fixture['sha256']))
 
@@ -275,6 +281,12 @@ try:
         ok('release-pack:git-source-drift', 'PFD069_RELEASE_PACK_GIT_OK', 'release-pack git source is intentionally working or matches current rev semantics', 'examples/policy_fabric_release_pack_example.json')
 except Exception as exc:
     fail('release-pack:semantic-parse', 'PFD070_RELEASE_PACK_PARSE_ERROR', str(exc), 'examples/policy_fabric_release_pack_example.json')
+
+try:
+    for item in collect_policy_semantic_findings(ROOT):
+        report['checks'].append(item)
+except Exception as exc:
+    fail('policy:semantic-validator-crash', 'PFV099', str(exc), 'scripts/policy_semantic_validator.py')
 
 bundle_manifest_path = ROOT / 'dist/policy_fabric_contracts_bundle_manifest.json'
 if bundle_manifest_path.exists():

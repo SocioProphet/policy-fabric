@@ -24,11 +24,15 @@ Define the non-JSON-Schema validation rules required before a Policy Fabric poli
 - selector ids must be unique
 - rule ids must be unique
 - every `selectorRef` must resolve
-- every provider/capability reference must resolve to an allowed capability catalog entry
+- capability-catalog provider ids must be unique
+- capability-catalog capability ids must be unique
+- every capability provider reference must resolve
+- every provider/capability reference in policy rules must resolve to an allowed capability catalog entry
 
 ### Phase 3: Safety and governance
 - `reidentify` transforms require elevated approval state and dedicated trust boundary
 - rollout tenants, environments, and regions must be non-empty where required
+- approved policy rollout tenants and regions must stay within provider/capability allow-lists
 - reversible transforms must not appear in irreversible-only deployment lanes
 - provider classes must be authorized for the requested transform types
 
@@ -40,8 +44,9 @@ Define the non-JSON-Schema validation rules required before a Policy Fabric poli
 
 ### Phase 5: Test and attestation readiness
 - approved policies should carry at least one positive fixture
-- risky transforms should also carry at least one negative or failure-mode fixture
-- attestation templates must expose required identifiers for audit and explain mode
+- risky transforms should also carry at least one attestation-aware fixture
+- risky transforms should also carry at least one negative or failure-mode fixture (still pending implementation)
+- compiled audit nodes must expose required identifiers for audit and explain mode
 
 ## Output envelope
 
@@ -62,4 +67,4 @@ Each validation finding should include:
 
 ## Relationship to current repo
 
-The current `scripts/doctor.py` now implements Phase 0 plus structural checks. Policy/compiler/runtime semantics remain the next major layer to implement.
+The current `scripts/doctor.py` plus `scripts/policy_semantic_validator.py` now implement Phase 0, structural checks, capability-catalog reference integrity, rollout/provider authorization checks, exact-target conflict detection, and attestation/test readiness checks. Deeper selector-overlap analysis, richer negative-fixture enforcement, and runtime semantics remain the next major layer to implement.

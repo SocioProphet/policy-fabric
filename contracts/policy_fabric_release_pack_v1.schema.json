@@ -28,6 +28,7 @@
   "x-semanticValidationRules": [
     "spec.policy.artifactRef and spec.plan.artifactRef SHOULD point at files included in the same release boundary.",
     "spec.policy.sha256 SHOULD match the referenced policy artifact bytes.",
+    "spec.capabilityCatalog.sha256 SHOULD match the referenced capability-catalog artifact bytes when included.",
     "spec.plan.sha256 SHOULD match the referenced compiled plan artifact bytes.",
     "spec.fixtures[].sha256 SHOULD match the referenced fixture artifact bytes.",
     "spec.promotion.lane=prod SHOULD require spec.promotion.humanGateRequired=true.",
@@ -270,6 +271,9 @@
         },
         "secrets": {
           "$ref": "#/$defs/secretRefs"
+        },
+        "capabilityCatalog": {
+          "$ref": "#/$defs/artifactRef"
         }
       }
     }

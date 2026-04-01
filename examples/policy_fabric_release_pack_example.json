@@ -91,6 +91,12 @@
         "TOKEN_VAULT_REF"
       ],
       "secretRefRoot": "secrets://policy-fabric"
+    },
+    "capabilityCatalog": {
+      "artifactRef": "examples/policy_fabric_capability_catalog_example.json",
+      "sha256": "56b66799a30b64630a616703cd35370ff32f7bd03db0ed98cdcefe5dead7895d",
+      "mediaType": "application/json",
+      "description": "Provider and capability authorization catalog referenced during semantic validation."
     }
   }
 }

@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-04-01T14:36:26.987941Z",
-    "generator": "policy-fabric-doctor/0.3.0",
-    "runId": "doctor-2026-04-01T14:36:26.987941Z"
+    "generatedAt": "2026-04-01T18:32:08.005589Z",
+    "generator": "policy-fabric-doctor/0.4.0",
+    "runId": "doctor-2026-04-01T18:32:08.005589Z"
   },
   "subject": {
     "type": "releasePack",
@@ -13,7 +13,7 @@
   },
   "summary": {
     "status": "pass",
-    "checkCount": 38,
+    "checkCount": 54,
     "failCount": 0,
     "warnCount": 0
   },
@@ -49,6 +49,14 @@
       "code": "PFD001_REQUIRED_FILE_PRESENT",
       "message": "required file present",
       "artifactRef": "contracts/policy_fabric_release_pack_v1.schema.json"
+    },
+    {
+      "id": "exists:contracts/policy_fabric_capability_catalog_v1.schema.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "contracts/policy_fabric_capability_catalog_v1.schema.json"
     },
     {
       "id": "exists:contracts/policy_fabric_validation_report_v1.schema.json",
@@ -89,6 +97,14 @@
       "code": "PFD001_REQUIRED_FILE_PRESENT",
       "message": "required file present",
       "artifactRef": "examples/policy_fabric_release_pack_example.json"
+    },
+    {
+      "id": "exists:examples/policy_fabric_capability_catalog_example.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "examples/policy_fabric_capability_catalog_example.json"
     },
     {
       "id": "exists:examples/policy_fabric_validation_report_example.json",
@@ -177,6 +193,14 @@
       "code": "PFD010_SCHEMA_OK",
       "message": "release pack example validates against release pack schema",
       "artifactRef": "examples/policy_fabric_release_pack_example.json"
+    },
+    {
+      "id": "validate:capability-catalog-example",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD010_SCHEMA_OK",
+      "message": "capability catalog example validates against capability catalog schema",
+      "artifactRef": "examples/policy_fabric_capability_catalog_example.json"
     },
     {
       "id": "validate:validation-report-example",
@@ -313,6 +337,110 @@
       "code": "PFD069_RELEASE_PACK_GIT_OK",
       "message": "release-pack git source is intentionally working or matches current rev semantics",
       "artifactRef": "examples/policy_fabric_release_pack_example.json"
+    },
+    {
+      "id": "catalog:duplicate-providers",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFCAT000_CATALOG_SEMANTICS_OK",
+      "message": "capability catalog provider ids are unique",
+      "artifactRef": "examples/policy_fabric_capability_catalog_example.json"
+    },
+    {
+      "id": "catalog:duplicate-capabilities",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFCAT000_CATALOG_SEMANTICS_OK",
+      "message": "capability catalog capability ids are unique",
+      "artifactRef": "examples/policy_fabric_capability_catalog_example.json"
+    },
+    {
+      "id": "catalog:provider-resolution",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFCAT000_CATALOG_SEMANTICS_OK",
+      "message": "capability catalog provider references and transform types are internally consistent",
+      "artifactRef": "examples/policy_fabric_capability_catalog_example.json"
+    },
+    {
+      "id": "policy:duplicate-selectors",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "policy selector ids are unique",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:duplicate-rules",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "policy rule ids are unique",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:selector-refs",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "all enabled rule selectorRef values resolve to declared selectors",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:rollout-scope",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "approved policy rollout scope is present and non-empty where required",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:provider-capability-authorization",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "enabled rules use authorized provider and capability pairs within rollout scope",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:reidentify-governance",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "re-identification boundary rules are satisfied or no re-identification transforms are present",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:selector-conflicts",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "no enabled rules conflict on the same exact selector identity",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:illegal-transform-chains",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "no illegal exact-target transform chains were detected",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:attestation-readiness",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "compiled plan attestation fields are aligned to audit and explain requirements",
+      "artifactRef": "examples/policy_fabric_compiled_plan_example.json"
+    },
+    {
+      "id": "policy:test-readiness",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "policy fixtures cover approved-state minimums and attestation-aware assertions",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     },
     {
       "id": "bundle:local-overrides-excluded",

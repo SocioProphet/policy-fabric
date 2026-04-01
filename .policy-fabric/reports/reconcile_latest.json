@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-04-01T14:36:23.908207Z",
+  "generatedAt": "2026-04-01T18:32:04.840788Z",
   "git": {
-    "rev": "9f71b2c",
+    "rev": "db6a2a9",
     "dirty": true
   },
-  "fileCount": 66,
+  "fileCount": 72,
   "localOverridePaths": [
     ".policy-fabric/local-notes/**"
   ],

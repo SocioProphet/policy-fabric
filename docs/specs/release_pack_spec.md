@@ -54,3 +54,7 @@ A v1 release pack must identify:
 ## Expected next step
 
 Add semantic validation rules for digest consistency, lane restrictions, evidence completeness, and replay-corpus availability.
+
+## New dependency surface
+
+The release pack may now include `spec.capabilityCatalog`, which binds the promoted policy and compiled plan to a specific provider/capability authorization snapshot. This keeps semantic validation inputs inside the same governed release boundary.

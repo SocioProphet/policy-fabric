@@ -41,7 +41,17 @@ Define stable machine-readable reason codes so repository validation, compile, e
 - `PFD082_BUNDLE_MANIFEST_PARSE_ERROR` bundle manifest could not be parsed
 - `PFD083_BUNDLE_MANIFEST_MISSING` bundle manifest missing so exclusion check deferred
 
+## Capability catalog validation codes
+
+- `PFCAT000_CATALOG_SEMANTICS_OK` capability catalog semantic cluster passed
+- `PFCAT001` duplicate provider id
+- `PFCAT002` duplicate capability id
+- `PFCAT003` capability references unknown provider
+- `PFCAT004` capability transform type not allowed by provider
+
 ## Policy validation codes
+
+- `PFV000_POLICY_SEMANTICS_OK` policy semantic cluster passed
 
 - `PFV001` duplicate selector id
 - `PFV002` duplicate rule id
@@ -53,6 +63,7 @@ Define stable machine-readable reason codes so repository validation, compile, e
 - `PFV008` illegal transform chain
 - `PFV009` attestation template missing required fields
 - `PFV010` required test fixtures missing for approved policy
+- `PFV099` policy semantic validator crashed
 
 ## Compile codes
 

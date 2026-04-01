@@ -1,0 +1,92 @@
+{
+  "apiVersion": "policy.fabric.catalog/v1",
+  "kind": "CapabilityCatalog",
+  "metadata": {
+    "name": "default-capability-catalog",
+    "version": "1.0.0",
+    "updatedAt": "2026-04-01T18:05:00Z",
+    "owner": "platform-security",
+    "description": "Default provider and capability authorization catalog for active Policy Fabric examples."
+  },
+  "providers": [
+    {
+      "id": "kms-aes-gcm",
+      "providerClass": "crypto",
+      "allowedTransformTypes": [
+        "encrypt",
+        "decrypt",
+        "formatPreservingEncrypt",
+        "hash"
+      ],
+      "allowedTenants": [
+        "acme-prod"
+      ],
+      "allowedRegions": [
+        "us-east-1",
+        "us-west-2"
+      ],
+      "description": "Managed KMS-backed cryptographic provider."
+    },
+    {
+      "id": "token-vault",
+      "providerClass": "tokenVault",
+      "allowedTransformTypes": [
+        "tokenize",
+        "detokenize",
+        "formatPreservingTokenize"
+      ],
+      "allowedTenants": [
+        "acme-prod"
+      ],
+      "allowedRegions": [
+        "us-east-1"
+      ],
+      "description": "Managed token vault provider."
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "pii-phone-encryption",
+      "provider": "kms-aes-gcm",
+      "transformType": "encrypt",
+      "reidentification": false,
+      "allowedTenants": [
+        "acme-prod"
+      ],
+      "allowedRegions": [
+        "us-east-1"
+      ],
+      "description": "Encrypt phone numbers for approved support flows."
+    },
+    {
+      "id": "pii-email-token",
+      "provider": "token-vault",
+      "transformType": "tokenize",
+      "reidentification": false,
+      "allowedTenants": [
+        "acme-prod"
+      ],
+      "allowedRegions": [
+        "us-east-1"
+      ],
+      "description": "Tokenize primary email addresses for support, analytics, and ops workflows."
+    },
+    {
+      "id": "pii-email-detokenize-support-breakglass",
+      "provider": "token-vault",
+      "transformType": "detokenize",
+      "reidentification": true,
+      "allowedTenants": [
+        "acme-prod"
+      ],
+      "allowedRegions": [
+        "us-east-1"
+      ],
+      "requiredLabels": {
+        "reidentificationApproved": "true",
+        "trustBoundary": "isolated-reidentify"
+      },
+      "description": "Break-glass support re-identification capability for tightly controlled workflows."
+    }
+  ]
+}

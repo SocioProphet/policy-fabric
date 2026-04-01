@@ -28,3 +28,12 @@
 - began emitting machine-readable validation evidence at `docs/reports/validation_report_latest.json`
 - updated bundle generation to exclude sanctioned local-override notes from distributable bundles
 - refreshed repository governance docs, backlog, assessments, and turn notes
+
+## 2026-04-01T18:05:00Z
+
+- added `contracts/policy_fabric_capability_catalog_v1.schema.json` and a governed catalog example for provider/capability authorization
+- added `scripts/policy_semantic_validator.py` and wired it into `scripts/doctor.py`
+- extended release packs to optionally pin a capability-catalog artifact and digest
+- implemented authored-policy semantic checks for duplicate ids, selectorRef resolution, provider/capability authorization, rollout scope, re-identification governance, exact-target conflicts, attestation readiness, and fixture readiness
+- updated semantic-validator, release-pack, and capability-catalog specs
+- refreshed assessment, backlog, reports, bundle, and repo snapshot exports

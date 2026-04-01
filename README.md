@@ -36,4 +36,4 @@ It keeps the active contracts, aligned examples, supporting design notes, and ar
 
 ## Current focus
 
-The current focus is converting the repository from a passive working copy into a self-policing contract workspace: managed ownership, workflow profiles, reconcile/repair behavior, release-pack semantic checks, and evidence-producing validation reports.
+The current focus is pushing semantic enforcement into the authored-policy layer: managed ownership and release-pack governance are in place, and the next maturity step is provider/capability authorization, rollout-bound policy validation, attestation readiness, and stronger fixture enforcement.

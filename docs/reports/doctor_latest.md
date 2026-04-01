@@ -6,11 +6,13 @@ Overall status: PASS
 - [OK] exists:contracts/policy_fabric_execution_plan_ir_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:contracts/policy_fabric_openapi_v2.yaml — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:contracts/policy_fabric_release_pack_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:contracts/policy_fabric_capability_catalog_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:contracts/policy_fabric_validation_report_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:contracts/policy_fabric_replay_report_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:examples/policy_fabric_policy_v2_enhanced_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:examples/policy_fabric_compiled_plan_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:examples/policy_fabric_release_pack_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/policy_fabric_capability_catalog_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:examples/policy_fabric_validation_report_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:examples/policy_fabric_replay_report_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:.policy-fabric/config.json — PFD001_REQUIRED_FILE_PRESENT — required file present
@@ -22,6 +24,7 @@ Overall status: PASS
 - [OK] validate:policy-example — PFD010_SCHEMA_OK — policy example validates against policy schema
 - [OK] validate:plan-example — PFD010_SCHEMA_OK — compiled plan validates against plan schema
 - [OK] validate:release-pack-example — PFD010_SCHEMA_OK — release pack example validates against release pack schema
+- [OK] validate:capability-catalog-example — PFD010_SCHEMA_OK — capability catalog example validates against capability catalog schema
 - [OK] validate:validation-report-example — PFD010_SCHEMA_OK — validation report example validates against validation report schema
 - [OK] validate:replay-report-example — PFD010_SCHEMA_OK — replay report example validates against replay report schema
 - [OK] parse:openapi — PFD020_OPENAPI_OK — openapi parses and contains expected core surfaces
@@ -39,4 +42,17 @@ Overall status: PASS
 - [OK] release-pack:replay-evidence — PFD064_REPLAY_EVIDENCE_OK — replay evidence requirements are satisfied
 - [OK] release-pack:secret-refs — PFD066_SECRET_REF_OK — release pack uses reference-style secret declarations
 - [OK] release-pack:git-source-drift — PFD069_RELEASE_PACK_GIT_OK — release-pack git source is intentionally working or matches current rev semantics
+- [OK] catalog:duplicate-providers — PFCAT000_CATALOG_SEMANTICS_OK — capability catalog provider ids are unique
+- [OK] catalog:duplicate-capabilities — PFCAT000_CATALOG_SEMANTICS_OK — capability catalog capability ids are unique
+- [OK] catalog:provider-resolution — PFCAT000_CATALOG_SEMANTICS_OK — capability catalog provider references and transform types are internally consistent
+- [OK] policy:duplicate-selectors — PFV000_POLICY_SEMANTICS_OK — policy selector ids are unique
+- [OK] policy:duplicate-rules — PFV000_POLICY_SEMANTICS_OK — policy rule ids are unique
+- [OK] policy:selector-refs — PFV000_POLICY_SEMANTICS_OK — all enabled rule selectorRef values resolve to declared selectors
+- [OK] policy:rollout-scope — PFV000_POLICY_SEMANTICS_OK — approved policy rollout scope is present and non-empty where required
+- [OK] policy:provider-capability-authorization — PFV000_POLICY_SEMANTICS_OK — enabled rules use authorized provider and capability pairs within rollout scope
+- [OK] policy:reidentify-governance — PFV000_POLICY_SEMANTICS_OK — re-identification boundary rules are satisfied or no re-identification transforms are present
+- [OK] policy:selector-conflicts — PFV000_POLICY_SEMANTICS_OK — no enabled rules conflict on the same exact selector identity
+- [OK] policy:illegal-transform-chains — PFV000_POLICY_SEMANTICS_OK — no illegal exact-target transform chains were detected
+- [OK] policy:attestation-readiness — PFV000_POLICY_SEMANTICS_OK — compiled plan attestation fields are aligned to audit and explain requirements
+- [OK] policy:test-readiness — PFV000_POLICY_SEMANTICS_OK — policy fixtures cover approved-state minimums and attestation-aware assertions
 - [OK] bundle:local-overrides-excluded — PFD080_BUNDLE_EXCLUSION_OK — local override files are excluded from the distributable bundle

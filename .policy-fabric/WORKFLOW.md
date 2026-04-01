@@ -26,7 +26,8 @@ Current profile: `normal`.
 2. Run `python scripts/reconcile.py`.
 3. Run `python scripts/doctor.py`.
 4. Review `docs/reports/doctor_latest.md` and `docs/reports/validation_report_latest.json`.
-5. Run `python scripts/build_dist_bundle.py`.
+5. Note that `scripts/doctor.py` now includes `scripts/policy_semantic_validator.py` for capability-catalog and authored-policy semantic checks.
+6. Run `python scripts/build_dist_bundle.py`.
 6. Record the change in `CHANGELOG.md` and `docs/turns/`.
 7. Commit the repository state.
 

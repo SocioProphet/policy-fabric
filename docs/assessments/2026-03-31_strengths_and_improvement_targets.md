@@ -11,18 +11,18 @@
 
 ## Where the work is currently weak
 
-1. Semantic validation is still only partly implemented for authored policy semantics; most of the new enforcement is at the repository and release-pack layer.
+1. Semantic validation is now materially implemented for authored-policy reference integrity, provider/capability authorization, rollout scope, re-identification governance, exact-target conflict detection, attestation readiness, and fixture readiness, but deeper selector-overlap analysis is still pending.
 2. The error model is still stronger in doctor/reporting than in compile and runtime surfaces.
-3. The policy test DSL is still too weak for serious rollout gating.
+3. The policy test DSL still lacks explicit negative fixture classification and richer shape/count assertions for serious rollout gating.
 4. There is not yet a corpus-based impact analysis workflow.
 5. Release provenance is not yet cryptographically bound.
 
 ## Best next improvements
 
-1. Freeze a semantic validator spec with stable reason codes across repo, compile, explain, and runtime surfaces.
-2. Add conflict detection and precedence semantics for policy authoring.
-3. Expand policy tests with richer assertions and negative cases.
-4. Add signed release bundles and semantic diffs.
+1. Deepen selector-overlap and precedence semantics beyond exact-target conflict detection.
+2. Extend stable reason codes into compile, explain, and runtime surfaces.
+3. Expand policy tests with richer assertions and explicit negative/failure fixtures.
+4. Add signed release bundles, catalog-aware semantic diffs, and provenance.
 5. Add execution and release receipts to complete the evidence chain.
 
 ## New synthesis from official AgentPlane docs
@@ -30,3 +30,9 @@
 1. The repo-native operating model is now materially implemented: ownership, profiles, reconcile, and evidence are no longer just aspirations.
 2. The weakest remaining gap is now policy/runtime semantics, not repository hygiene.
 3. The best near-term improvement is to extend the same discipline from release-pack semantics into the authored-policy compiler and runtime.
+
+## New synthesis from this turn
+
+1. The repo now validates the policy layer against a governed capability catalog instead of treating provider/capability references as opaque strings.
+2. Policy Fabric is now stronger at design-time semantic enforcement than at runtime enforcement, which makes compile/runtime reason-code parity the next major gap.
+3. Release packs now pin the authorization catalog as part of the promotion boundary, which reduces hidden dependency drift.
