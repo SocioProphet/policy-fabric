@@ -1,0 +1,50 @@
+{
+  "apiVersion": "policy.fabric.replay/v1",
+  "kind": "ReplayReport",
+  "metadata": {
+    "generatedAt": "2026-04-01T12:41:00Z",
+    "generator": "policy-fabric-replay/0.1.0",
+    "mode": "sample",
+    "corpusRef": "corpora/support-case-sampled-2026q1"
+  },
+  "subject": {
+    "policyId": "customer-support-mask",
+    "version": "7.3.0",
+    "planHash": "sha256:8d1357e4a8fc1c003a62b889fa736f0a1bdc2f2b9df11d1a52c29c8bb7b0a341"
+  },
+  "summary": {
+    "status": "pass",
+    "caseCount": 3,
+    "passCount": 3,
+    "failCount": 0,
+    "driftCount": 0,
+    "durationMs": 842
+  },
+  "cases": [
+    {
+      "caseId": "support-case-prod-001",
+      "status": "pass",
+      "reasonCodes": [
+        "EXPECTED_TRANSFORMS_APPLIED"
+      ],
+      "notes": "Home phone and email changed; work phone unchanged.",
+      "attestationRef": "attestations/support-case-prod-001.json"
+    },
+    {
+      "caseId": "support-case-stage-002",
+      "status": "pass",
+      "reasonCodes": [
+        "EXPECTED_TRANSFORMS_APPLIED"
+      ],
+      "notes": "Stage route preserved semantics."
+    },
+    {
+      "caseId": "support-case-prod-003",
+      "status": "pass",
+      "reasonCodes": [
+        "NO_DRIFT_DETECTED"
+      ],
+      "notes": "No semantic drift versus prior approved plan."
+    }
+  ]
+}

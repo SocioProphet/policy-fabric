@@ -23,3 +23,9 @@
 3. Expand policy tests with richer assertions and negative cases.
 4. Add signed release bundles and semantic diffs.
 5. Add a formal repository release process and doctor/upgrade workflow.
+
+## New synthesis from official AgentPlane docs
+
+1. The repo-native operating model is now more deliberate: we have a clearer target for managed ownership, upgrade/reconcile behavior, and workflow evidence.
+2. The weakest remaining gap is still semantic enforcement: our artifacts are ahead of our repair and drift-check logic.
+3. The best near-term improvement is to implement managed ownership checks and semantic drift checks in `doctor.py`.

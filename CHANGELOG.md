@@ -10,3 +10,11 @@
 - added `scripts/build_dist_bundle.py` for reproducible bundle generation
 - added assessment and research notes, including AgentPlane alignment analysis
 - exported a fresh distributable contract bundle and a Git-backed repository snapshot
+
+## 2026-04-01T13:35:00Z
+
+- corrected AgentPlane research source to the official public site/docs rather than a GitHub repo interpretation
+- added an official-site lessons note under `docs/research/2026-04-01_agentplane_official_site_lessons.md`
+- updated repository focus/backlog to reflect managed ownership, reconcile/upgrade, and profile-based workflow lessons
+- extended `scripts/doctor.py` to validate release-pack, validation-report, and replay-report examples in addition to core contracts
+- refreshed doctor reports, repository manifest, distributable bundle, and Git-backed snapshot

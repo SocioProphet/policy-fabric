@@ -1,0 +1,96 @@
+{
+  "apiVersion": "policy.fabric.pack/v1",
+  "kind": "ReleasePack",
+  "metadata": {
+    "name": "customer-support-mask-release-pack",
+    "version": "1.0.0",
+    "createdAt": "2026-03-31T19:15:20Z",
+    "owner": "platform-data-protection",
+    "source": {
+      "git": {
+        "rev": "WORKING",
+        "dirty": true
+      }
+    },
+    "description": "Governed promotion artifact for the customer-support masking policy and compiled plan.",
+    "labels": {
+      "domain": "support",
+      "artifactClass": "release-pack"
+    }
+  },
+  "spec": {
+    "policy": {
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json",
+      "sha256": "f8bb5162c41e6bb8ea84a5011e6a49351c1cd5261d1411208fe2afb1d09b247f",
+      "mediaType": "application/json",
+      "description": "Approved authored policy artifact."
+    },
+    "plan": {
+      "artifactRef": "examples/policy_fabric_compiled_plan_example.json",
+      "sha256": "486883b80a86f322db79db6365154f4cf0a5988071336ec9886ce530c6e486d2",
+      "mediaType": "application/json",
+      "description": "Compiled execution plan aligned to the authored policy."
+    },
+    "openapi": {
+      "artifactRef": "contracts/policy_fabric_openapi_v2.yaml",
+      "sha256": "83a24c8962d52476b70dcac565673d51d8adc938696be7f0bdbe5252cfdae11f",
+      "mediaType": "application/yaml",
+      "description": "Service contract expected by validation and explain flows."
+    },
+    "fixtures": [
+      {
+        "name": "request-fixture",
+        "artifactRef": "examples/policy_fabric_process_request_v2_enhanced_example.json",
+        "sha256": "3b89b899f6b90cc45e89d5dbe7b8f6d4d620f7f3c43e9e7b43093440dd6bbcac",
+        "role": "request",
+        "description": "Representative input request for validation and replay."
+      },
+      {
+        "name": "response-fixture",
+        "artifactRef": "examples/policy_fabric_process_response_example.json",
+        "sha256": "9219e27357bcdd429f0aeacfc8defcea600cbd5855937fd702b60e306ccf20a4",
+        "role": "response",
+        "description": "Representative runtime response used for regression comparison."
+      },
+      {
+        "name": "explain-fixture",
+        "artifactRef": "examples/policy_fabric_explain_response_example.json",
+        "sha256": "2e20d64e044da2299c55b1382b1ca565fe81ff526800830a6f327fd9dcb4864c",
+        "role": "explain",
+        "description": "Explain output expected from the same request path."
+      },
+      {
+        "name": "validate-fixture",
+        "artifactRef": "examples/policy_fabric_validate_response_example.json",
+        "sha256": "fb8d47833409d675578c454193ad5ae2f98470f526e208a9711d90b9b3474ea3",
+        "role": "validate",
+        "description": "Validation response proving schema-aligned acceptance."
+      }
+    ],
+    "evidence": {
+      "outDir": "./artifacts/release-packs/customer-support-mask-release-pack",
+      "retainReplayArtifacts": true,
+      "replayCorpusRef": "docs/specs/release_pack_spec.md",
+      "expectedArtifacts": [
+        "validation-report",
+        "attestation",
+        "explain-report",
+        "replay-report",
+        "release-receipt"
+      ]
+    },
+    "promotion": {
+      "lane": "stage",
+      "humanGateRequired": true,
+      "approverGroup": "platform-change-review",
+      "signedBundleRequired": false
+    },
+    "secrets": {
+      "required": [
+        "KMS_KEY_REF",
+        "TOKEN_VAULT_REF"
+      ],
+      "secretRefRoot": "secrets://policy-fabric"
+    }
+  }
+}

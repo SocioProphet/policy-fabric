@@ -1,5 +1,4 @@
 {
-  "generatedAt": "2026-03-31T18:31:31Z",
   "files": [
     {
       "path": ".gitignore",
@@ -18,28 +17,28 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "e3c6e6b8ef6190f70db623249935e53823f6f1b60a8ea1d2581f05b68832acbd",
-      "bytes": 1391
+      "sha256": "7940e23e39316593976116bff05a769e74cb098a65f8f30e5cc5ca55a118106c",
+      "bytes": 2770
     },
     {
       "path": "BACKLOG.md",
-      "sha256": "afc3f37b666cf5ea7ae0ddf97eb38c1b33b15f4e22a2777255bfc5deb24ae17c",
-      "bytes": 795
+      "sha256": "1cbeb8b0ed182cab75430a2060b354412f3eac946e48a90420386e7b987bd537",
+      "bytes": 972
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "e729ba1d864b5c2470e89bc02fefadf8550a81e77a6dc0f8e3ecbf4f2c154282",
-      "bytes": 666
+      "sha256": "eaa854893f7ac2dd3ac5bc127423a02c519b985879b29e08349189b069c3a884",
+      "bytes": 1259
     },
     {
       "path": "README.md",
-      "sha256": "f817317a76869e3e90f2b93be4b3839afb67c129dcec32c66040ab70dc8a897d",
-      "bytes": 1760
+      "sha256": "ae73f28ca80a8f247a172da270372f86ec06bbdb4202f1678ed910abd5d80d4a",
+      "bytes": 1849
     },
     {
       "path": "REPO_MANIFEST.json",
-      "sha256": "d1f70a60672ff6466bbf6bc8b90e86417acee7a5c17a3a079f19d3022a479bc8",
-      "bytes": 7721
+      "sha256": "63dc5608ec97f75bb5c627c71408b414db7f741a62848632f1312becc287fd87",
+      "bytes": 8229
     },
     {
       "path": "archive/prior-reference/magen/Magen_Platform_Integration_Blueprint.docx",
@@ -127,19 +126,24 @@
       "bytes": 12771
     },
     {
-      "path": "dist/policy_fabric_contracts_bundle_latest.zip",
-      "sha256": "bb9be62fe83c85e8171b71d1a2fcfc27a0dc22f3fce03c7ba838c8f79f6f55f8",
-      "bytes": 78343
+      "path": "contracts/policy_fabric_release_pack_v1.schema.json",
+      "sha256": "059f3c074a018b5f1e52f764f41ef6d951f09d0c699fa549db04653bda2ba13f",
+      "bytes": 6486
     },
     {
-      "path": "dist/policy_fabric_contracts_bundle_manifest.json",
-      "sha256": "74e0f9280b0a7c763ba9efeb8971c14bfe4c951ce15001cbaba1ac823ae3e356",
-      "bytes": 4593
+      "path": "contracts/policy_fabric_replay_report_v1.schema.json",
+      "sha256": "01976184587ca4f2efdc6fc76d67ce003b2025c96690b9f85ae9a5ad2845cfaa",
+      "bytes": 3062
+    },
+    {
+      "path": "contracts/policy_fabric_validation_report_v1.schema.json",
+      "sha256": "0a89620ba05694be630b877ff804e98523d6b049e3f5833ac59bebb6e905d36d",
+      "bytes": 2952
     },
     {
       "path": "docs/assessments/2026-03-31_strengths_and_improvement_targets.md",
-      "sha256": "d894d97e48d7aadb40f73b47850c67eff63a00d1678d0c6d7cc9a2334e050559",
-      "bytes": 1499
+      "sha256": "de920bebcd2308acddbe6989182271d8b6c8c36f707b0203daa9e27977e46a47",
+      "bytes": 1944
     },
     {
       "path": "docs/blueprints/Policy_Fabric_Platform_Blueprint.docx",
@@ -158,13 +162,13 @@
     },
     {
       "path": "docs/reports/doctor_latest.md",
-      "sha256": "b7bccb6945fc28b41cf38db06042e9be4c694a4b197f2127aca28b343d0f07ec",
-      "bytes": 845
+      "sha256": "4cfe52c19976d16553eae405453280209ce93facc3836dfeed12c44d919abb81",
+      "bytes": 1729
     },
     {
       "path": "docs/reports/release_snapshot_latest.md",
-      "sha256": "ad421566108d392a25b56ee10ef62205a134d5731fc694b71cbde0f2b1c71cc7",
-      "bytes": 382
+      "sha256": "53fe9a9b0f844eacf822482d5c0e0ed848b27216881d834b1375590802b97125",
+      "bytes": 490
     },
     {
       "path": "docs/research/2026-03-31_agentplane_alignment.md",
@@ -172,9 +176,24 @@
       "bytes": 2312
     },
     {
+      "path": "docs/research/2026-04-01_agentplane_lessons.md",
+      "sha256": "d497189749cf5d9bfd4b3b4ffc8008b28183c08c2e8c5aa286246bfd412d1a86",
+      "bytes": 3007
+    },
+    {
+      "path": "docs/research/2026-04-01_agentplane_official_site_lessons.md",
+      "sha256": "7530583af2ef7e9eeb844e221e4ad8778ea195f87c4f21071ff98e650c3a2be4",
+      "bytes": 3794
+    },
+    {
       "path": "docs/specs/error_taxonomy.md",
       "sha256": "5441b9e4ddea646cc773d423c7ae798604153f7272cd1f81184ff69720687c61",
       "bytes": 1457
+    },
+    {
+      "path": "docs/specs/release_pack_spec.md",
+      "sha256": "beb5afccf974b24c4aec93d602fcbe86d68befd5bd9cdae35c92d964bbd8b6af",
+      "bytes": 1857
     },
     {
       "path": "docs/specs/semantic_validator_spec.md",
@@ -185,6 +204,11 @@
       "path": "docs/turns/2026-03-31T18:27:26Z_repo-hardening-and-agentplane-alignment.md",
       "sha256": "136d1e5024e5ceb272ffec6fe0b411f376d43408dfbc7bd37f9a5eed6b137989",
       "bytes": 936
+    },
+    {
+      "path": "docs/turns/2026-04-01T13-35-00Z_agentplane-official-site-correction.md",
+      "sha256": "0018e16c19b941d85240556632afa84205cc46a568e209b43d884751cd80fc6f",
+      "bytes": 713
     },
     {
       "path": "examples/policy_fabric_compiled_plan_example.json",
@@ -212,9 +236,24 @@
       "bytes": 756
     },
     {
+      "path": "examples/policy_fabric_release_pack_example.json",
+      "sha256": "dc965d571749251a791c834ff1ebdf4e270e9a16d4aefe6f0d60e4a00bf96a9d",
+      "bytes": 3454
+    },
+    {
+      "path": "examples/policy_fabric_replay_report_example.json",
+      "sha256": "ba8adb5e4a301f53fb252544b2a4dacd768dca47a2635c3bb30ab55f9615c683",
+      "bytes": 1281
+    },
+    {
       "path": "examples/policy_fabric_validate_response_example.json",
       "sha256": "fb8d47833409d675578c454193ad5ae2f98470f526e208a9711d90b9b3474ea3",
       "bytes": 667
+    },
+    {
+      "path": "examples/policy_fabric_validation_report_example.json",
+      "sha256": "bb51d66fa42c8d199d9a60b2e80ce5f7303c92e0ab74d7c92b56fad777f6b577",
+      "bytes": 2107
     },
     {
       "path": "scripts/build_dist_bundle.py",
@@ -223,8 +262,8 @@
     },
     {
       "path": "scripts/doctor.py",
-      "sha256": "7bc8706fb6cf6afe22f88b61c6e551b27be365ccaa9d8c6a51fab7eddcf12db8",
-      "bytes": 2917
+      "sha256": "997f954ccac07887d7af97c0123356523f9af69b0bfecec7972322403d214e9a",
+      "bytes": 3874
     }
   ]
 }

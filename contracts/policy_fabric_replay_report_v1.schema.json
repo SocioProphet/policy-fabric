@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.internal/policy-fabric/schemas/policy_fabric_replay_report_v1.schema.json",
+  "title": "Policy Fabric Replay Report v1",
+  "description": "Machine-readable replay evidence over a sampled or full payload corpus before promotion.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "subject",
+    "summary",
+    "cases"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "policy.fabric.replay/v1"
+    },
+    "kind": {
+      "const": "ReplayReport"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generatedAt",
+        "generator",
+        "mode"
+      ],
+      "properties": {
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "generator": {
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "sample",
+            "full"
+          ]
+        },
+        "corpusRef": {
+          "type": "string"
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policyId",
+        "version",
+        "planHash"
+      ],
+      "properties": {
+        "policyId": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "planHash": {
+          "type": "string"
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "caseCount",
+        "passCount",
+        "failCount",
+        "driftCount"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "pass",
+            "warn",
+            "fail"
+          ]
+        },
+        "caseCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "passCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "driftCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "caseId",
+          "status",
+          "reasonCodes"
+        ],
+        "properties": {
+          "caseId": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pass",
+              "warn",
+              "fail"
+            ]
+          },
+          "reasonCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "notes": {
+            "type": "string"
+          },
+          "attestationRef": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -17,12 +17,42 @@
       "detail": "required file present"
     },
     {
+      "name": "exists:contracts/policy_fabric_release_pack_v1.schema.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:contracts/policy_fabric_validation_report_v1.schema.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:contracts/policy_fabric_replay_report_v1.schema.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
       "name": "exists:examples/policy_fabric_policy_v2_enhanced_example.json",
       "ok": true,
       "detail": "required file present"
     },
     {
       "name": "exists:examples/policy_fabric_compiled_plan_example.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:examples/policy_fabric_release_pack_example.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:examples/policy_fabric_validation_report_example.json",
+      "ok": true,
+      "detail": "required file present"
+    },
+    {
+      "name": "exists:examples/policy_fabric_replay_report_example.json",
       "ok": true,
       "detail": "required file present"
     },
@@ -47,9 +77,24 @@
       "detail": "compiled plan validates against plan schema"
     },
     {
+      "name": "validate:release-pack-example",
+      "ok": true,
+      "detail": "release pack example validates against release pack schema"
+    },
+    {
+      "name": "validate:validation-report-example",
+      "ok": true,
+      "detail": "validation report example validates against validation report schema"
+    },
+    {
+      "name": "validate:replay-report-example",
+      "ok": true,
+      "detail": "replay report example validates against replay report schema"
+    },
+    {
       "name": "parse:openapi",
       "ok": true,
-      "detail": "openapi parses and contains /v2/process"
+      "detail": "openapi parses and contains expected core surfaces"
     }
   ]
 }

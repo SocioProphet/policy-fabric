@@ -32,4 +32,4 @@ It keeps the active contracts, aligned examples, supporting design notes, and ar
 
 ## Current focus
 
-The current focus is turning the architecture into a fully buildable platform contract with stronger semantic validation, richer policy testing, and a repo-native operating model for contract evolution.
+The current focus is turning the architecture into a fully buildable platform contract with stronger semantic validation, richer policy testing, a repo-native operating model for contract evolution, and an AgentPlane-inspired repair/ownership discipline grounded in the official public docs.

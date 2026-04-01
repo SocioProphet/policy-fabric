@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.internal/policy-fabric/schemas/policy_fabric_release_pack_v1.schema.json",
+  "title": "Policy Fabric Release Pack v1",
+  "description": "Governed promotion artifact for Policy Fabric policies, compiled plans, fixtures, and replay evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "policy.fabric.pack/v1"
+    },
+    "kind": {
+      "const": "ReleasePack"
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "spec": {
+      "$ref": "#/$defs/spec"
+    }
+  },
+  "x-semanticValidationRules": [
+    "spec.policy.artifactRef and spec.plan.artifactRef SHOULD point at files included in the same release boundary.",
+    "spec.policy.sha256 SHOULD match the referenced policy artifact bytes.",
+    "spec.plan.sha256 SHOULD match the referenced compiled plan artifact bytes.",
+    "spec.fixtures[].sha256 SHOULD match the referenced fixture artifact bytes.",
+    "spec.promotion.lane=prod SHOULD require spec.promotion.humanGateRequired=true.",
+    "spec.evidence.replayCorpusRef MUST be present when spec.evidence.retainReplayArtifacts=true.",
+    "spec.secrets MUST contain references only and MUST NOT embed secret values."
+  ],
+  "$defs": {
+    "idString": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{1,127}$"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9._-]+)?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactRef",
+        "sha256"
+      ],
+      "properties": {
+        "artifactRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "mediaType": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "createdAt",
+        "owner"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/idString"
+        },
+        "version": {
+          "$ref": "#/$defs/semver"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "git": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "rev",
+                "dirty"
+              ],
+              "properties": {
+                "rev": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dirty": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "secretRefs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "secretRefRoot": {
+          "type": "string"
+        }
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "artifactRef",
+        "sha256",
+        "role"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/idString"
+        },
+        "artifactRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "role": {
+          "enum": [
+            "request",
+            "response",
+            "explain",
+            "validate",
+            "corpus"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outDir",
+        "retainReplayArtifacts"
+      ],
+      "properties": {
+        "outDir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retainReplayArtifacts": {
+          "type": "boolean"
+        },
+        "replayCorpusRef": {
+          "type": "string"
+        },
+        "expectedArtifacts": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "validation-report",
+              "attestation",
+              "explain-report",
+              "replay-report",
+              "release-receipt"
+            ]
+          }
+        }
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lane",
+        "humanGateRequired"
+      ],
+      "properties": {
+        "lane": {
+          "enum": [
+            "dev",
+            "stage",
+            "prod"
+          ]
+        },
+        "humanGateRequired": {
+          "type": "boolean"
+        },
+        "approverGroup": {
+          "type": "string"
+        },
+        "signedBundleRequired": {
+          "type": "boolean"
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "plan",
+        "fixtures",
+        "evidence",
+        "promotion"
+      ],
+      "properties": {
+        "policy": {
+          "$ref": "#/$defs/artifactRef"
+        },
+        "plan": {
+          "$ref": "#/$defs/artifactRef"
+        },
+        "openapi": {
+          "$ref": "#/$defs/artifactRef"
+        },
+        "fixtures": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/fixture"
+          }
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "promotion": {
+          "$ref": "#/$defs/promotion"
+        },
+        "secrets": {
+          "$ref": "#/$defs/secretRefs"
+        }
+      }
+    }
+  }
+}

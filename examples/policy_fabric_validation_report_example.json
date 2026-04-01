@@ -1,0 +1,70 @@
+{
+  "apiVersion": "policy.fabric.validation/v1",
+  "kind": "ValidationReport",
+  "metadata": {
+    "generatedAt": "2026-04-01T12:40:00Z",
+    "generator": "policy-fabric-doctor/0.2.0",
+    "runId": "doctor-2026-04-01-001"
+  },
+  "subject": {
+    "type": "releasePack",
+    "ref": "examples/policy_fabric_release_pack_example.json",
+    "version": "1.0.0"
+  },
+  "summary": {
+    "status": "pass",
+    "checkCount": 6,
+    "failCount": 0,
+    "warnCount": 0
+  },
+  "checks": [
+    {
+      "id": "policy-schema",
+      "status": "pass",
+      "severity": "info",
+      "code": "SCHEMA_OK",
+      "message": "Policy example validates against policy schema.",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "plan-schema",
+      "status": "pass",
+      "severity": "info",
+      "code": "SCHEMA_OK",
+      "message": "Compiled plan example validates against plan schema.",
+      "artifactRef": "examples/policy_fabric_compiled_plan_example.json"
+    },
+    {
+      "id": "openapi-parse",
+      "status": "pass",
+      "severity": "info",
+      "code": "OPENAPI_OK",
+      "message": "OpenAPI parses and exposes /v2/process.",
+      "artifactRef": "contracts/policy_fabric_openapi_v2.yaml"
+    },
+    {
+      "id": "release-pack-schema",
+      "status": "pass",
+      "severity": "info",
+      "code": "SCHEMA_OK",
+      "message": "Release pack example validates against release pack schema.",
+      "artifactRef": "examples/policy_fabric_release_pack_example.json"
+    },
+    {
+      "id": "replay-report-schema",
+      "status": "pass",
+      "severity": "info",
+      "code": "SCHEMA_OK",
+      "message": "Replay report example validates against replay report schema.",
+      "artifactRef": "examples/policy_fabric_replay_report_example.json"
+    },
+    {
+      "id": "validation-report-schema",
+      "status": "pass",
+      "severity": "info",
+      "code": "SCHEMA_OK",
+      "message": "Validation report example validates against validation report schema.",
+      "artifactRef": "examples/policy_fabric_validation_report_example.json"
+    }
+  ]
+}

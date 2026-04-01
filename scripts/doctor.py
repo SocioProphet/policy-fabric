@@ -16,8 +16,14 @@ required = [
     ROOT / 'contracts/policy_fabric_policy_v2.schema.json',
     ROOT / 'contracts/policy_fabric_execution_plan_ir_v1.schema.json',
     ROOT / 'contracts/policy_fabric_openapi_v2.yaml',
+    ROOT / 'contracts/policy_fabric_release_pack_v1.schema.json',
+    ROOT / 'contracts/policy_fabric_validation_report_v1.schema.json',
+    ROOT / 'contracts/policy_fabric_replay_report_v1.schema.json',
     ROOT / 'examples/policy_fabric_policy_v2_enhanced_example.json',
     ROOT / 'examples/policy_fabric_compiled_plan_example.json',
+    ROOT / 'examples/policy_fabric_release_pack_example.json',
+    ROOT / 'examples/policy_fabric_validation_report_example.json',
+    ROOT / 'examples/policy_fabric_replay_report_example.json',
     ROOT / '.policy-fabric/config.json',
     ROOT / '.policy-fabric/WORKFLOW.md',
 ]
@@ -36,26 +42,27 @@ for path in required:
         'required file present' if path.exists() else 'missing required file',
     )
 
-try:
-    policy_schema = json.loads((ROOT / 'contracts/policy_fabric_policy_v2.schema.json').read_text())
-    policy_example = json.loads((ROOT / 'examples/policy_fabric_policy_v2_enhanced_example.json').read_text())
-    jsonschema.validate(policy_example, policy_schema)
-    add('validate:policy-example', True, 'policy example validates against policy schema')
-except Exception as exc:
-    add('validate:policy-example', False, str(exc))
-
-try:
-    plan_schema = json.loads((ROOT / 'contracts/policy_fabric_execution_plan_ir_v1.schema.json').read_text())
-    plan_example = json.loads((ROOT / 'examples/policy_fabric_compiled_plan_example.json').read_text())
-    jsonschema.validate(plan_example, plan_schema)
-    add('validate:plan-example', True, 'compiled plan validates against plan schema')
-except Exception as exc:
-    add('validate:plan-example', False, str(exc))
+pairs = [
+    ('validate:policy-example', 'contracts/policy_fabric_policy_v2.schema.json', 'examples/policy_fabric_policy_v2_enhanced_example.json', 'policy example validates against policy schema'),
+    ('validate:plan-example', 'contracts/policy_fabric_execution_plan_ir_v1.schema.json', 'examples/policy_fabric_compiled_plan_example.json', 'compiled plan validates against plan schema'),
+    ('validate:release-pack-example', 'contracts/policy_fabric_release_pack_v1.schema.json', 'examples/policy_fabric_release_pack_example.json', 'release pack example validates against release pack schema'),
+    ('validate:validation-report-example', 'contracts/policy_fabric_validation_report_v1.schema.json', 'examples/policy_fabric_validation_report_example.json', 'validation report example validates against validation report schema'),
+    ('validate:replay-report-example', 'contracts/policy_fabric_replay_report_v1.schema.json', 'examples/policy_fabric_replay_report_example.json', 'replay report example validates against replay report schema'),
+]
+for name, schema_rel, example_rel, ok_msg in pairs:
+    try:
+        schema = json.loads((ROOT / schema_rel).read_text())
+        example = json.loads((ROOT / example_rel).read_text())
+        jsonschema.validate(example, schema)
+        add(name, True, ok_msg)
+    except Exception as exc:
+        add(name, False, str(exc))
 
 try:
     spec = yaml.safe_load((ROOT / 'contracts/policy_fabric_openapi_v2.yaml').read_text())
-    ok = spec.get('openapi') == '3.1.0' and '/v2/process' in spec.get('paths', {})
-    add('parse:openapi', ok, 'openapi parses and contains /v2/process' if ok else 'openapi missing expected core surface')
+    paths = spec.get('paths', {})
+    ok = spec.get('openapi') == '3.1.0' and '/v2/process' in paths and '/v2/explain' in paths
+    add('parse:openapi', ok, 'openapi parses and contains expected core surfaces' if ok else 'openapi missing expected core surfaces')
 except Exception as exc:
     add('parse:openapi', False, str(exc))
 
