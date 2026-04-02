@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-04-02T12:35:05.201918Z",
-    "generator": "policy-fabric-doctor/0.4.0",
-    "runId": "doctor-2026-04-02T12:35:05.201918Z"
+    "generatedAt": "2026-04-02T14:27:59.360860Z",
+    "generator": "policy-fabric-doctor/0.5.0",
+    "runId": "doctor-2026-04-02T14:27:59.360860Z"
   },
   "subject": {
     "type": "releasePack",
@@ -13,7 +13,7 @@
   },
   "summary": {
     "status": "pass",
-    "checkCount": 56,
+    "checkCount": 62,
     "failCount": 0,
     "warnCount": 0
   },
@@ -163,6 +163,14 @@
       "artifactRef": ".policy-fabric/RECONCILE.md"
     },
     {
+      "id": "exists:.policy-fabric/agentplane_bridge.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": ".policy-fabric/agentplane_bridge.json"
+    },
+    {
       "id": "exists:AGENTS.md",
       "status": "pass",
       "severity": "info",
@@ -177,6 +185,14 @@
       "code": "PFD001_REQUIRED_FILE_PRESENT",
       "message": "required file present",
       "artifactRef": "scripts/reconcile.py"
+    },
+    {
+      "id": "exists:scripts/agentplane_probe.py",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "scripts/agentplane_probe.py"
     },
     {
       "id": "validate:policy-example",
@@ -457,6 +473,38 @@
       "code": "PFV000_POLICY_SEMANTICS_OK",
       "message": "policy fixtures cover approved-state minimums and attestation-aware assertions",
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "agentplane-bridge:contract-shape",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD090_AGENTPLANE_BRIDGE_OK",
+      "message": "AgentPlane bridge contract targets official AgentPlane with a hybrid bridge model",
+      "artifactRef": ".policy-fabric/agentplane_bridge.json"
+    },
+    {
+      "id": "agentplane-bridge:expected-findings",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK",
+      "message": "AgentPlane bridge contract records expected current-state findings",
+      "artifactRef": ".policy-fabric/agentplane_bridge.json"
+    },
+    {
+      "id": "agentplane-probe:report-shape",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD095_AGENTPLANE_PROBE_OK",
+      "message": "AgentPlane probe report present with expected API version",
+      "artifactRef": "docs/reports/agentplane_probe_latest.json"
+    },
+    {
+      "id": "agentplane-probe:report-status",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD097_AGENTPLANE_PROBE_STATUS_OK",
+      "message": "AgentPlane probe report is non-failing",
+      "artifactRef": "docs/reports/agentplane_probe_latest.json"
     },
     {
       "id": "bundle:local-overrides-excluded",

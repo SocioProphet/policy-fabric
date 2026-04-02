@@ -1,0 +1,123 @@
+{
+  "bridgeContractVersion": 1,
+  "target": "official-agentplane",
+  "status": "probe-complete-init-not-executed",
+  "trialMode": "no-touch-disposable-clone-probe",
+  "officialReferences": {
+    "homepage": "https://agentplane.org/",
+    "prerequisites": "https://agentplane.org/docs/user/prerequisites/",
+    "legacyRecovery": "https://agentplane.org/docs/help/legacy-upgrade-recovery/",
+    "releaseNotesV032": "https://agentplane.org/docs/releases/v0.3.2/",
+    "githubReadme": "https://github.com/basilisk-labs/agentplane"
+  },
+  "officialExpectedInitSurfaces": [
+    {
+      "path": "AGENTS.md",
+      "required": false,
+      "notes": "Official init may create AGENTS.md or CLAUDE.md as the policy gateway."
+    },
+    {
+      "path": ".agentplane/config.json",
+      "required": true,
+      "notes": "Repo-local AgentPlane configuration."
+    },
+    {
+      "path": ".agentplane/WORKFLOW.md",
+      "required": true,
+      "notes": "Materialized workflow contract."
+    },
+    {
+      "path": ".agentplane/tasks/",
+      "required": true,
+      "notes": "Task storage for local backend."
+    },
+    {
+      "path": ".agentplane/tasks.json",
+      "required": false,
+      "notes": "Optional exported task snapshot."
+    },
+    {
+      "path": ".agentplane/policy/**",
+      "required": true,
+      "notes": "Framework-managed policy tree."
+    },
+    {
+      "path": ".agentplane/policy/incidents.md",
+      "required": false,
+      "notes": "Sanctioned local override area inside official AgentPlane."
+    },
+    {
+      "path": ".agentplane/workflows/last-known-good.md",
+      "required": false,
+      "notes": "Runtime recovery artifact restored by upgrade/recovery."
+    }
+  ],
+  "policyFabricCurrentSurfaces": [
+    {
+      "path": "AGENTS.md",
+      "role": "policy-fabric-root-gateway",
+      "collisionRisk": "high"
+    },
+    {
+      "path": ".policy-fabric/config.json",
+      "role": "product-specific repo workflow config",
+      "collisionRisk": "none"
+    },
+    {
+      "path": ".policy-fabric/WORKFLOW.md",
+      "role": "authoritative Policy Fabric repo workflow",
+      "collisionRisk": "none"
+    },
+    {
+      "path": ".policy-fabric/ownership.json",
+      "role": "ownership contract",
+      "collisionRisk": "none"
+    },
+    {
+      "path": ".policy-fabric/profiles.json",
+      "role": "workflow profile contract",
+      "collisionRisk": "none"
+    },
+    {
+      "path": "scripts/doctor.py",
+      "role": "Policy Fabric validation and drift enforcement",
+      "collisionRisk": "none"
+    }
+  ],
+  "bridgeModel": {
+    "type": "hybrid",
+    "authoritativeProductGovernanceSurface": ".policy-fabric/",
+    "authoritativeAgentWorkflowSurfaceAfterInit": ".agentplane/",
+    "rootGatewayStrategy": "retain AGENTS.md as the shared root gateway, but let official AgentPlane init/upgrade own any framework-managed AgentPlane sections on a dedicated integration branch",
+    "managedOwnershipRule": "Do not hand-author .agentplane/policy/** before official init. After official init, classify .agentplane/policy/** as AgentPlane-managed and .agentplane/policy/incidents.md as sanctioned local override.",
+    "repoLoopAfterAdoption": [
+      "python scripts/reconcile.py",
+      "python scripts/agentplane_probe.py",
+      "python scripts/doctor.py",
+      "python scripts/build_dist_bundle.py"
+    ]
+  },
+  "currentProbeFindings": [
+    {
+      "id": "bridge-root-gateway-collision",
+      "severity": "warn",
+      "message": "Policy Fabric already has AGENTS.md, and official AgentPlane init also manages a root gateway."
+    },
+    {
+      "id": "bridge-workflow-parallel-surface",
+      "severity": "info",
+      "message": "Policy Fabric already has a repo-native workflow surface under .policy-fabric/."
+    },
+    {
+      "id": "bridge-official-workspace-absent",
+      "severity": "info",
+      "message": "No .agentplane/ tree exists yet, so no mixed-state workspace is present."
+    },
+    {
+      "id": "bridge-cli-install-blocked-in-container",
+      "severity": "warn",
+      "message": "Disposable-clone probing in this container could inspect prerequisites and package metadata, but could not complete an npm-executed official CLI init because the container npm execution path returned an authentication failure for package execution."
+    }
+  ],
+  "nextAction": "Run official AgentPlane init in a disposable clone from a clean environment where npm package execution works, then merge the observed managed surfaces back into the ownership contract and doctor checks."
+}

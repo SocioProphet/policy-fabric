@@ -26,8 +26,8 @@ The repo keeps the active contracts, aligned examples, supporting design notes, 
 - `contracts/` — active machine-readable service and schema contracts.
 - `examples/` — aligned example payloads and responses.
 - `docs/` — blueprint, assessments, research, comparison, rebrand notes, specs, reports, and turn logs.
-- `.policy-fabric/` — repo-local workflow, ownership, profile, repair, and generated-report surfaces.
-- `scripts/` — reconcile, doctor, semantic validation, and bundle-build utilities.
+- `.policy-fabric/` — repo-local workflow, ownership, profile, repair, generated-report, and AgentPlane-bridge surfaces.
+- `scripts/` — reconcile, AgentPlane bridge probing, doctor, semantic validation, and bundle-build utilities.
 - `AGENTS.md` — root gateway for coding-agent workflows, including AgentPlane-oriented startup guidance.
 
 ## Generated outputs
@@ -39,10 +39,11 @@ The repo keeps the active contracts, aligned examples, supporting design notes, 
 
 1. Edit tracked files in the repository.
 2. Run `python scripts/reconcile.py`.
-3. Run `python scripts/doctor.py`.
-4. Review `docs/reports/doctor_latest.md` and `docs/reports/validation_report_latest.json`.
-5. Run `python scripts/build_dist_bundle.py`.
-6. Commit the result and export the latest snapshot zip.
+3. Run `python scripts/agentplane_probe.py` when the change affects the AgentPlane bridge or repo workflow surfaces.
+4. Run `python scripts/doctor.py`.
+5. Review `docs/reports/doctor_latest.md`, `docs/reports/validation_report_latest.json`, and `docs/reports/agentplane_probe_latest.md` as applicable.
+6. Run `python scripts/build_dist_bundle.py`.
+7. Commit the result and export the latest snapshot zip.
 
 ## How this relates to AgentPlane
 
@@ -56,7 +57,7 @@ The intended relationship is:
 - Policy Fabric Control Repository stays the authoritative design/contracts repo.
 - AgentPlane, if adopted, should govern repository workflow, repair, recovery, and promotion discipline around this repo rather than replace the Policy Fabric runtime model.
 
-See `AGENTS.md` and `docs/specs/agentplane_integration_plan.md` for the explicit bridge.
+See `AGENTS.md`, `.policy-fabric/agentplane_bridge.json`, and `docs/specs/agentplane_integration_plan.md` for the explicit bridge.
 
 ## Current focus
 

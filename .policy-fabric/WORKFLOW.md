@@ -28,12 +28,13 @@ Current profile: `normal`.
 
 1. Edit tracked files.
 2. Run `python scripts/reconcile.py`.
-3. Run `python scripts/doctor.py`.
-4. Review `docs/reports/doctor_latest.md` and `docs/reports/validation_report_latest.json`.
-5. Note that `scripts/doctor.py` now includes `scripts/policy_semantic_validator.py` for capability-catalog and authored-policy semantic checks.
-6. Run `python scripts/build_dist_bundle.py`.
-6. Record the change in `CHANGELOG.md` and `docs/turns/`.
-7. Commit the repository state.
+3. Run `python scripts/agentplane_probe.py` when evaluating or changing the official AgentPlane bridge.
+4. Run `python scripts/doctor.py`.
+5. Review `docs/reports/doctor_latest.md`, `docs/reports/validation_report_latest.json`, and `docs/reports/agentplane_probe_latest.md` as applicable.
+6. Note that `scripts/doctor.py` now includes `scripts/policy_semantic_validator.py` for capability-catalog and authored-policy semantic checks.
+7. Run `python scripts/build_dist_bundle.py`.
+8. Record the change in `CHANGELOG.md` and `docs/turns/`.
+9. Commit the repository state.
 
 ## Why this exists
 

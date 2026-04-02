@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-04-02 — official AgentPlane no-touch probe and bridge contract
+
+- added `.policy-fabric/agentplane_bridge.json` as the machine-readable bridge contract for official AgentPlane adoption
+- added `scripts/agentplane_probe.py` to record local prerequisite state, surface collisions, and current CLI execution status
+- added `docs/specs/agentplane_bridge_contract.md` and `docs/assessments/2026-04-02_agentplane_no_touch_probe.md`
+- updated README, AGENTS, workflow, config, and ownership to include the AgentPlane probe loop
+- generated machine-readable and human-readable AgentPlane probe reports
+- refreshed bundle and repo snapshot exports after the bridge pass
+
 ## 2026-04-02 — identity and AgentPlane bridge pass
 
 - named the rolling repository role **Policy Fabric Control Repository** while preserving the existing filesystem path for continuity

@@ -20,7 +20,8 @@
     "README.md",
     "CHANGELOG.md",
     "BACKLOG.md",
-    ".gitignore"
+    ".gitignore",
+    ".policy-fabric/agentplane_bridge.json"
   ],
   "generatedPaths": [
     "docs/reports/**",

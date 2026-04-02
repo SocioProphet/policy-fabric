@@ -141,6 +141,8 @@ Initialize AgentPlane there using the official CLI.
 Observe what managed files it generates and how they overlap with the existing repo-governance surfaces.
 Do not do this first in the primary working tree.
 
+**Phase 1 status:** a no-touch compatibility probe is complete, and the bridge contract is now explicit in `.policy-fabric/agentplane_bridge.json`. A full official CLI init is still pending because the current container environment could inspect docs and repo metadata but did not complete npm-based package execution cleanly.
+
 ### Phase 2 — bridge design
 
 Decide whether to:

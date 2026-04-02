@@ -32,7 +32,7 @@ report = {
     'kind': 'ValidationReport',
     'metadata': {
         'generatedAt': NOW,
-        'generator': 'policy-fabric-doctor/0.4.0',
+        'generator': 'policy-fabric-doctor/0.5.0',
         'runId': f'doctor-{NOW}',
     },
     'subject': {
@@ -102,8 +102,10 @@ required = [
     '.policy-fabric/ownership.json',
     '.policy-fabric/profiles.json',
     '.policy-fabric/RECONCILE.md',
+    '.policy-fabric/agentplane_bridge.json',
     'AGENTS.md',
     'scripts/reconcile.py',
+    'scripts/agentplane_probe.py',
 ]
 for rel in required:
     p = ROOT / rel
@@ -170,7 +172,7 @@ try:
 
     workflow_text = (ROOT / '.policy-fabric/WORKFLOW.md').read_text()
     reconcile_text = (ROOT / '.policy-fabric/RECONCILE.md').read_text()
-    workflow_tokens = ['ownership.json', 'profiles.json', 'scripts/reconcile.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py']
+    workflow_tokens = ['ownership.json', 'profiles.json', 'scripts/reconcile.py', 'scripts/agentplane_probe.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py']
     missing_workflow_tokens = [token for token in workflow_tokens if token not in workflow_text]
     if not missing_workflow_tokens:
         ok('docs:workflow-sync', 'PFD050_DOC_SYNC_OK', 'workflow documentation references governed commands and contracts', '.policy-fabric/WORKFLOW.md')
@@ -185,7 +187,7 @@ try:
         fail('docs:reconcile-sync', 'PFD051_DOC_SYNC_DRIFT', f'reconcile documentation missing tokens: {missing_reconcile_tokens}', '.policy-fabric/RECONCILE.md')
 
     agents_text = (ROOT / 'AGENTS.md').read_text()
-    agents_tokens = ['Policy Fabric', 'scripts/reconcile.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py', '.policy-fabric/WORKFLOW.md']
+    agents_tokens = ['Policy Fabric', 'scripts/reconcile.py', 'scripts/agentplane_probe.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py', '.policy-fabric/WORKFLOW.md', '.policy-fabric/agentplane_bridge.json']
     missing_agents_tokens = [token for token in agents_tokens if token not in agents_text]
     if not missing_agents_tokens:
         ok('docs:agents-gateway-sync', 'PFD050_DOC_SYNC_OK', 'AGENTS.md references the active repository workflow surfaces', 'AGENTS.md')
@@ -296,6 +298,47 @@ try:
         report['checks'].append(item)
 except Exception as exc:
     fail('policy:semantic-validator-crash', 'PFV099', str(exc), 'scripts/policy_semantic_validator.py')
+
+
+try:
+    bridge = load_json('.policy-fabric/agentplane_bridge.json')
+    if bridge.get('target') == 'official-agentplane' and bridge.get('bridgeModel', {}).get('type') == 'hybrid':
+        ok('agentplane-bridge:contract-shape', 'PFD090_AGENTPLANE_BRIDGE_OK', 'AgentPlane bridge contract targets official AgentPlane with a hybrid bridge model', '.policy-fabric/agentplane_bridge.json')
+    else:
+        fail('agentplane-bridge:contract-shape', 'PFD091_AGENTPLANE_BRIDGE_INVALID', 'AgentPlane bridge contract target/model drift detected', '.policy-fabric/agentplane_bridge.json')
+
+    current_findings = bridge.get('currentProbeFindings', [])
+    ids = {item.get('id') for item in current_findings}
+    required_ids = {
+        'bridge-root-gateway-collision',
+        'bridge-workflow-parallel-surface',
+        'bridge-official-workspace-absent',
+    }
+    if required_ids.issubset(ids):
+        ok('agentplane-bridge:expected-findings', 'PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK', 'AgentPlane bridge contract records expected current-state findings', '.policy-fabric/agentplane_bridge.json')
+    else:
+        fail('agentplane-bridge:expected-findings', 'PFD093_AGENTPLANE_BRIDGE_FINDINGS_MISSING', f'missing bridge findings: {sorted(required_ids - ids)}', '.policy-fabric/agentplane_bridge.json')
+except Exception as exc:
+    fail('agentplane-bridge:parse', 'PFD094_AGENTPLANE_BRIDGE_PARSE_ERROR', str(exc), '.policy-fabric/agentplane_bridge.json')
+
+probe_path = ROOT / 'docs/reports/agentplane_probe_latest.json'
+if probe_path.exists():
+    try:
+        probe = load_json('docs/reports/agentplane_probe_latest.json')
+        if probe.get('apiVersion') == 'policy.fabric.agentplane-probe/v1':
+            ok('agentplane-probe:report-shape', 'PFD095_AGENTPLANE_PROBE_OK', 'AgentPlane probe report present with expected API version', 'docs/reports/agentplane_probe_latest.json')
+        else:
+            fail('agentplane-probe:report-shape', 'PFD096_AGENTPLANE_PROBE_INVALID', 'AgentPlane probe report API version mismatch', 'docs/reports/agentplane_probe_latest.json')
+
+        summary = probe.get('summary', {})
+        if summary.get('status') in {'pass', 'warn'}:
+            ok('agentplane-probe:report-status', 'PFD097_AGENTPLANE_PROBE_STATUS_OK', 'AgentPlane probe report is non-failing', 'docs/reports/agentplane_probe_latest.json')
+        else:
+            fail('agentplane-probe:report-status', 'PFD098_AGENTPLANE_PROBE_STATUS_FAIL', 'AgentPlane probe report is failing', 'docs/reports/agentplane_probe_latest.json')
+    except Exception as exc:
+        fail('agentplane-probe:parse', 'PFD099_AGENTPLANE_PROBE_PARSE_ERROR', str(exc), 'docs/reports/agentplane_probe_latest.json')
+else:
+    warn('agentplane-probe:missing', 'PFD100_AGENTPLANE_PROBE_MISSING', 'AgentPlane probe report missing; run python scripts/agentplane_probe.py', 'docs/reports/agentplane_probe_latest.json')
 
 bundle_manifest_path = ROOT / 'dist/policy_fabric_contracts_bundle_manifest.json'
 if bundle_manifest_path.exists():

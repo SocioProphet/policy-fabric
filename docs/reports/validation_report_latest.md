@@ -2,8 +2,10 @@
 
 Overall status: PASS
 
-Check count: `56`; fails: `0`; warnings: `0`
+Check count: `62`; fails: `0`; warnings: `0`
 
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
@@ -59,4 +61,8 @@ Check count: `56`; fails: `0`; warnings: `0`
 - `PFV000_POLICY_SEMANTICS_OK` — pass — no illegal exact-target transform chains were detected
 - `PFV000_POLICY_SEMANTICS_OK` — pass — compiled plan attestation fields are aligned to audit and explain requirements
 - `PFV000_POLICY_SEMANTICS_OK` — pass — policy fixtures cover approved-state minimums and attestation-aware assertions
+- `PFD090_AGENTPLANE_BRIDGE_OK` — pass — AgentPlane bridge contract targets official AgentPlane with a hybrid bridge model
+- `PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK` — pass — AgentPlane bridge contract records expected current-state findings
+- `PFD095_AGENTPLANE_PROBE_OK` — pass — AgentPlane probe report present with expected API version
+- `PFD097_AGENTPLANE_PROBE_STATUS_OK` — pass — AgentPlane probe report is non-failing
 - `PFD080_BUNDLE_EXCLUSION_OK` — pass — local override files are excluded from the distributable bundle

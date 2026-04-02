@@ -1,0 +1,132 @@
+{
+  "apiVersion": "policy.fabric.agentplane-probe/v1",
+  "kind": "AgentPlaneProbeReport",
+  "metadata": {
+    "generatedAt": "2026-04-02T14:27:51.107921Z",
+    "generator": "policy-fabric-agentplane-probe/0.1.0"
+  },
+  "subject": {
+    "type": "repository",
+    "ref": ".",
+    "target": "official-agentplane",
+    "trialMode": "no-touch-disposable-clone-probe"
+  },
+  "summary": {
+    "status": "warn",
+    "checkCount": 10,
+    "failCount": 0,
+    "warnCount": 4,
+    "nextAction": "Run official AgentPlane init in a disposable clone from a clean environment where npm package execution works, then merge the observed managed surfaces back into the ownership contract and doctor checks."
+  },
+  "checks": [
+    {
+      "id": "bridge-contract:present",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFA001_BRIDGE_CONTRACT_PRESENT",
+      "message": "AgentPlane bridge contract present",
+      "artifactRef": ".policy-fabric/agentplane_bridge.json"
+    },
+    {
+      "id": "prereq:node",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFA010_NODE_OK",
+      "message": "node available for official AgentPlane prerequisite check",
+      "details": {
+        "stdout": "v22.16.0",
+        "stderr": ""
+      }
+    },
+    {
+      "id": "prereq:npm",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFA012_NPM_OK",
+      "message": "npm available for official AgentPlane prerequisite check",
+      "details": {
+        "stdout": "10.9.2",
+        "stderr": ""
+      }
+    },
+    {
+      "id": "cli:on-path",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFA021_CLI_NOT_ON_PATH",
+      "message": "agentplane executable not on PATH in current container",
+      "details": {
+        "path": ""
+      }
+    },
+    {
+      "id": "cli:npm-view",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFA022_PACKAGE_VISIBLE",
+      "message": "npm package metadata for agentplane is visible in the current container",
+      "details": {
+        "stdout": "0.3.7",
+        "stderr": ""
+      }
+    },
+    {
+      "id": "cli:npx-help",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFA025_NPX_HELP_BLOCKED",
+      "message": "npx agentplane --help did not execute cleanly in the current container",
+      "details": {
+        "stdout": "",
+        "stderr": "npm error code E401\nnpm error Incorrect or missing password.\nnpm error If you were trying to login, change your password, create an\nnpm error authentication token or enable two-factor authentication then\nnpm error that means you likely typed your password in incorrectly.\nnpm error Please try again, or recover your password at:\nnpm error   https://www.npmjs.com/forgot\nnpm error\nnpm error If you were doing some other operation then your saved credentials are\nnpm error probably out of date. To corr"
+      }
+    },
+    {
+      "id": "surface:agents-md",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFA030_ROOT_GATEWAY_COLLISION",
+      "message": "AGENTS.md already exists and is the main collision point with official AgentPlane init",
+      "artifactRef": "AGENTS.md"
+    },
+    {
+      "id": "surface:policy-fabric",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFA032_POLICY_FABRIC_SURFACE_PRESENT",
+      "message": ".policy-fabric workflow surface present",
+      "artifactRef": ".policy-fabric/"
+    },
+    {
+      "id": "surface:agentplane-dir",
+      "status": "info",
+      "severity": "info",
+      "code": "PFA034_AGENTPLANE_SURFACE_ABSENT",
+      "message": "no .agentplane tree exists yet; no mixed-state workspace is present",
+      "artifactRef": ".agentplane/"
+    },
+    {
+      "id": "bridge:collision-summary",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFA040_BRIDGE_COLLISIONS_IDENTIFIED",
+      "message": "bridge contract identifies collisions or execution blockers that must be resolved before official init",
+      "artifactRef": ".policy-fabric/agentplane_bridge.json",
+      "details": {
+        "count": 2,
+        "findings": [
+          {
+            "id": "bridge-root-gateway-collision",
+            "severity": "warn",
+            "message": "Policy Fabric already has AGENTS.md, and official AgentPlane init also manages a root gateway."
+          },
+          {
+            "id": "bridge-cli-install-blocked-in-container",
+            "severity": "warn",
+            "message": "Disposable-clone probing in this container could inspect prerequisites and package metadata, but could not complete an npm-executed official CLI init because the container npm execution path returned an authentication failure for package execution."
+          }
+        ]
+      }
+    }
+  ]
+}

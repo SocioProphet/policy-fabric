@@ -24,7 +24,8 @@
     "README.md",
     "CHANGELOG.md",
     "BACKLOG.md",
-    ".gitignore"
+    ".gitignore",
+    ".policy-fabric/agentplane_bridge.json"
   ],
   "generatedPaths": [
     "docs/reports/**",
@@ -42,5 +43,8 @@
   "reconcileCommand": "python scripts/reconcile.py",
   "bundleCommand": "python scripts/build_dist_bundle.py",
   "doctorReportPath": "docs/reports/doctor_latest.md",
-  "validationReportPath": "docs/reports/validation_report_latest.json"
+  "validationReportPath": "docs/reports/validation_report_latest.json",
+  "agentplaneBridgeContract": ".policy-fabric/agentplane_bridge.json",
+  "agentplaneProbeCommand": "python scripts/agentplane_probe.py",
+  "agentplaneProbeReportPath": "docs/reports/agentplane_probe_latest.json"
 }

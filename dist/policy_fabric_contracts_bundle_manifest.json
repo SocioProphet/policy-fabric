@@ -7,18 +7,23 @@
     },
     {
       "path": ".policy-fabric/WORKFLOW.md",
-      "sha256": "2168061c42e2cebe12ae43210ecbc15477dfa5829d54a469dfb180485fbbb088",
-      "bytes": 2119
+      "sha256": "d03522cdd074c3b4e6989f899e78489adc86d66642ba4b01c5d7a0bf314a31c1",
+      "bytes": 2281
+    },
+    {
+      "path": ".policy-fabric/agentplane_bridge.json",
+      "sha256": "b22e103ec9d5132de3cbe3b5cac1a8d2e7e10fa057c53f41e3371cbe19c35775",
+      "bytes": 4514
     },
     {
       "path": ".policy-fabric/config.json",
-      "sha256": "be8238e698a86f28a4de2243ca750bb945e1d9bdd2bd309a00be0aced8188db5",
-      "bytes": 1267
+      "sha256": "445dc661be6427732c6284fa0bd6788494741a0b4007b564e78325338ccc9d2a",
+      "bytes": 1525
     },
     {
       "path": ".policy-fabric/ownership.json",
-      "sha256": "4aa02dbfaee458f4809e5a7778b0f4192f07004ac70e5fc14711852b29b54e27",
-      "bytes": 951
+      "sha256": "01670fb5d292144a73328f7bb02a4a4bb9cfdbbbe298c03c9096fd9ee6674a50",
+      "bytes": 996
     },
     {
       "path": ".policy-fabric/profiles.json",
@@ -27,33 +32,33 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "246a8db8c531718ee000d626dc063f04c5db8f4bfe1b25d50b472f9ac59940b4",
-      "bytes": 16633
+      "sha256": "739fcfda7c36f7a47f05217df52e055736e022313e39b47acbe6f5651ffa764c",
+      "bytes": 18371
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "7b67910cd0a263374e3db51c3d229a639988bd50db6f0f452c39f174e5e5e8e2",
+      "sha256": "34c0cf3208523ed9a7d1f3ab81af169fe72f75c8d37f167659789c23e0b00f0e",
       "bytes": 316
     },
     {
       "path": "BACKLOG.md",
-      "sha256": "d4766fc80c575be5a16d49fbd45f06154a8348c57709ca7394be65d786cfc981",
-      "bytes": 1320
+      "sha256": "c6fbda4a5621cd1a1bf9ae14b95d3b85196957adde9ebd3c52d7c71485c1052e",
+      "bytes": 1462
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "6f96ae82684c3dd641eebaa9facf83524c2b0bb3460e607e1802566f4669ab59",
-      "bytes": 3454
+      "sha256": "4ce0fb90cee5ff1c641859815902e9d8167f4a821d7fa17672c194a88c5e34b9",
+      "bytes": 4126
     },
     {
       "path": "README.md",
-      "sha256": "f6597bbb99d5ff32bd92c712c354006c880f641eb0907f38dac0ce48c1007ff7",
-      "bytes": 3534
+      "sha256": "f28b0ad3b0e88aeb186bf7c9589fd7a5ec623ef8a04a3aebdfe757e13c6af0f9",
+      "bytes": 3797
     },
     {
       "path": "REPO_MANIFEST.json",
-      "sha256": "a2f0a0b18f4daebd1d5ac86d2e1fdd4cf34071e08ddac64b5397aeec535dedf2",
-      "bytes": 18537
+      "sha256": "6292dcb26ea4972d417dcd4656c06f8e0d94042415ea81bf7994ebfbf1d58549",
+      "bytes": 20646
     },
     {
       "path": "contracts/policy_fabric_capability_catalog_v1.schema.json",
@@ -96,9 +101,14 @@
       "bytes": 2816
     },
     {
+      "path": "docs/assessments/2026-04-02_agentplane_no_touch_probe.md",
+      "sha256": "1561a5741e4c39d520b0175596feea65f8b1350ac8144f9cc1feab24ec4b15f8",
+      "bytes": 1847
+    },
+    {
       "path": "docs/assessments/2026-04-02_original_goal_current_state_and_agentplane_path.md",
-      "sha256": "360b9b56e1e4a6875e867a3feee1324352350a643447589cf86fb9b7b56d678f",
-      "bytes": 2626
+      "sha256": "985d4e95bd9212c8ba725ea96aae7bd77e12abfdda4812dba33ac7cb1877e251",
+      "bytes": 3046
     },
     {
       "path": "docs/blueprints/Policy_Fabric_Platform_Blueprint.docx",
@@ -116,13 +126,23 @@
       "bytes": 1752
     },
     {
+      "path": "docs/reports/agentplane_probe_latest.json",
+      "sha256": "48a9fb2ccefa5e386d5897084b92fce04b9b9b6298b8214710a9d252a64cc74a",
+      "bytes": 4732
+    },
+    {
+      "path": "docs/reports/agentplane_probe_latest.md",
+      "sha256": "831bafec03649935bb8832c74253b0ef61a6f877c533e858aa0f9a29319bfd67",
+      "bytes": 2271
+    },
+    {
       "path": "docs/reports/doctor_latest.md",
-      "sha256": "ba85d9b0f905d7a0a99f95423dac62f2c1ca8352c80f08d4f185b4abe4272862",
-      "bytes": 6814
+      "sha256": "a19740a9556aa73d6fd83240a36862e87e883e7bc1282ce5d68fdcd86cce6273",
+      "bytes": 7588
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "95d0f109a14e6d1a466871311ca57e7c131f1291f2bb0548e17cf099fd1d5968",
+      "sha256": "db3b0b562a9ccda1b6f9dc70cf9fdfb963f1a3102c7ca74e6afc9f24e1916a41",
       "bytes": 154
     },
     {
@@ -132,13 +152,13 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "246a8db8c531718ee000d626dc063f04c5db8f4bfe1b25d50b472f9ac59940b4",
-      "bytes": 16633
+      "sha256": "739fcfda7c36f7a47f05217df52e055736e022313e39b47acbe6f5651ffa764c",
+      "bytes": 18371
     },
     {
       "path": "docs/reports/validation_report_latest.md",
-      "sha256": "1f9421a5b921c9fdff7f688a6df45598c54c24835f4a48212681c762be2cf956",
-      "bytes": 5036
+      "sha256": "c09fc8d45c616417f6c66d2c5fe1e2b8fc8c9ba29ec55ab2f85aaf8b6625f915",
+      "bytes": 5612
     },
     {
       "path": "docs/research/2026-03-31_agentplane_alignment.md",
@@ -156,9 +176,14 @@
       "bytes": 3794
     },
     {
+      "path": "docs/specs/agentplane_bridge_contract.md",
+      "sha256": "4bea8f41856d44e6e13908cb2a774f72a5ef4d5e9d37639fd9f5c101da55c715",
+      "bytes": 3325
+    },
+    {
       "path": "docs/specs/agentplane_integration_plan.md",
-      "sha256": "14483791e95b5d5df48fe797e600e38817746e32f5f70be35b294ceb78290a69",
-      "bytes": 6312
+      "sha256": "ca45fc1da8e75e7763e7cc0002c065c7fd2642585fff4613c9d12ef55a9ee615",
+      "bytes": 6640
     },
     {
       "path": "docs/specs/capability_catalog.md",
@@ -209,6 +234,11 @@
       "path": "docs/turns/2026-04-02_turn_01.md",
       "sha256": "66f36e22f5079fa85113cf6784a6259dad2aacabea1efb2ba01da6b0ca8856eb",
       "bytes": 506
+    },
+    {
+      "path": "docs/turns/2026-04-02_turn_02.md",
+      "sha256": "4f2f7b2ff6a8dade7397487b85b6b223d8a5cd49657bec4290f1183a78c65c98",
+      "bytes": 566
     },
     {
       "path": "examples/policy_fabric_capability_catalog_example.json",

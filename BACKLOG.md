@@ -10,6 +10,7 @@
 8. Add execution-receipt and release-receipt schemas.
 9. Decide whether release-pack lifecycle belongs only in repo-native tooling or also in OpenAPI.
 10. Add stricter release-gated profile enforcement once the repo leaves active design mode.
-11. Evaluate official AgentPlane initialization in a disposable clone and record the generated surface map.
-12. Decide the long-term bridge model between `AGENTS.md`/`.agentplane/` and `.policy-fabric/`.
+11. Re-run official AgentPlane initialization in a disposable clone from an environment where npm package execution works, then record the generated surface map.
+12. Keep the new hybrid bridge model explicit between `AGENTS.md`/`.agentplane/` and `.policy-fabric/`.
 13. If AgentPlane is adopted, update ownership and doctor to make `.agentplane/` surfaces explicit and enforced.
+14. Add bridge-aware reconcile behavior once a real `.agentplane/` tree exists.

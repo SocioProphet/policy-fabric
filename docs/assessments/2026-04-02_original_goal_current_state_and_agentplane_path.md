@@ -61,3 +61,8 @@ The next move should explicitly keep both tracks in scope:
 
 - continue hardening the Policy Fabric semantics;
 - begin controlled AgentPlane adoption in a disposable clone or feature branch using the new `AGENTS.md` gateway and the integration plan.
+
+
+## Update after the first official-AgentPlane compatibility probe
+
+We have now completed a no-touch compatibility probe and machine-readable bridge contract. This means the repo is no longer merely "AgentPlane-ready" in the abstract. It has an explicit bridge model, a probe script, and a generated probe report. What is still missing is a clean official CLI init from an environment where package execution succeeds.

@@ -17,9 +17,10 @@ This is the root gateway for coding-agent work in the **Policy Fabric Control Re
 3. Read `.policy-fabric/ownership.json` before changing files.
 4. Make the change.
 5. Run `python scripts/reconcile.py`.
-6. Run `python scripts/doctor.py`.
-7. Review `docs/reports/doctor_latest.md` and `docs/reports/validation_report_latest.json`.
-8. Run `python scripts/build_dist_bundle.py` if the change affects release artifacts.
+6. Run `python scripts/agentplane_probe.py` when the change affects the AgentPlane bridge or repo workflow surfaces.
+7. Run `python scripts/doctor.py`.
+8. Review `docs/reports/doctor_latest.md`, `docs/reports/validation_report_latest.json`, and `docs/reports/agentplane_probe_latest.md` as needed.
+9. Run `python scripts/build_dist_bundle.py` if the change affects release artifacts.
 
 ## High-value surfaces
 
@@ -27,7 +28,8 @@ This is the root gateway for coding-agent work in the **Policy Fabric Control Re
 - `examples/` — aligned examples that should validate against the contracts.
 - `docs/specs/` — design rules and repo governance details.
 - `docs/assessments/` — what is strong, what is weak, what to do next.
-- `scripts/` — authoritative automation for reconcile, doctor, semantic checks, and bundle build.
+- `scripts/` — authoritative automation for reconcile, AgentPlane bridge probing, doctor, semantic checks, and bundle build.
+- `.policy-fabric/agentplane_bridge.json` — machine-readable contract for the official AgentPlane bridge.
 - `archive/prior-reference/` — historical reference only; do not treat as active product identity.
 
 ## Guardrails
