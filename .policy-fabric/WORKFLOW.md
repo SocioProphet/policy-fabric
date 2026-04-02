@@ -5,6 +5,8 @@ This repository uses a repo-native workflow surface so the contract work stays i
 
 ## Ownership model
 
+- `AGENTS.md` is the root agent gateway for the repository and should stay aligned with the active workflow surfaces.
+
 - `contracts/`, `examples/`, `docs/blueprints/`, `docs/assessments/`, `docs/research/`, `docs/rebrand/`, `docs/comparison/`, `docs/specs/`, `docs/turns/`, and `scripts/` are framework-managed working surfaces.
 - `docs/reports/`, `.policy-fabric/reports/`, `REPO_MANIFEST.json`, and `dist/` are generated surfaces and may be rewritten by repo tooling.
 - `.policy-fabric/local-notes/` is the sanctioned local override surface. It is non-authoritative and excluded from release bundles.
@@ -21,6 +23,8 @@ The authoritative path definitions live in `.policy-fabric/ownership.json`. The 
 Current profile: `normal`.
 
 ## Standard loop
+
+0. Start from `AGENTS.md` if the change is being performed through an agent workflow.
 
 1. Edit tracked files.
 2. Run `python scripts/reconcile.py`.

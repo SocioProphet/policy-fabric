@@ -20,6 +20,7 @@ Overall status: PASS
 - [OK] exists:.policy-fabric/ownership.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:.policy-fabric/profiles.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:.policy-fabric/RECONCILE.md — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:AGENTS.md — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/reconcile.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] validate:policy-example — PFD010_SCHEMA_OK — policy example validates against policy schema
 - [OK] validate:plan-example — PFD010_SCHEMA_OK — compiled plan validates against plan schema
@@ -35,6 +36,7 @@ Overall status: PASS
 - [OK] profiles:mode-allowed — PFD040_PROFILE_OK — workflow mode allowed by selected profile
 - [OK] docs:workflow-sync — PFD050_DOC_SYNC_OK — workflow documentation references governed commands and contracts
 - [OK] docs:reconcile-sync — PFD050_DOC_SYNC_OK — reconcile documentation references repair surfaces and commands
+- [OK] docs:agents-gateway-sync — PFD050_DOC_SYNC_OK — AGENTS.md references the active repository workflow surfaces
 - [OK] ownership:no-overlap — PFD032_OWNERSHIP_OVERLAP_FREE — ownership categories do not overlap on actual files
 - [OK] ownership:no-unclassified — PFD034_OWNERSHIP_CLASSIFICATION_OK — all tracked files are classified by the ownership contract
 - [OK] release-pack:digest-integrity — PFD060_RELEASE_PACK_DIGEST_OK — release-pack artifact digests match referenced files

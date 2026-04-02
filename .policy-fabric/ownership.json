@@ -16,6 +16,7 @@
     ".policy-fabric/ownership.json",
     ".policy-fabric/profiles.json",
     ".policy-fabric/RECONCILE.md",
+    "AGENTS.md",
     "README.md",
     "CHANGELOG.md",
     "BACKLOG.md",

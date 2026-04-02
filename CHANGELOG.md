@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-04-02 — identity and AgentPlane bridge pass
+
+- named the rolling repository role **Policy Fabric Control Repository** while preserving the existing filesystem path for continuity
+- added root `AGENTS.md` as the agent gateway for the repo
+- added `docs/specs/agentplane_integration_plan.md` to reconnect the original modernization effort to the current control-repo state and define an AgentPlane adoption path
+- added `docs/assessments/2026-04-02_original_goal_current_state_and_agentplane_path.md` to explain the work arc from prior-reference modernization to control-repo hardening
+- updated repo workflow and ownership to treat `AGENTS.md` as a managed surface
+- extended `scripts/doctor.py` so the root agent gateway is checked for workflow drift
+
 ## 2026-03-31T18:27:26Z
 
 - created the first cumulative working repository for Policy Fabric

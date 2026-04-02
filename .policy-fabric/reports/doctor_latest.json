@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-04-01T18:32:08.005589Z",
+    "generatedAt": "2026-04-02T12:35:05.201918Z",
     "generator": "policy-fabric-doctor/0.4.0",
-    "runId": "doctor-2026-04-01T18:32:08.005589Z"
+    "runId": "doctor-2026-04-02T12:35:05.201918Z"
   },
   "subject": {
     "type": "releasePack",
@@ -13,7 +13,7 @@
   },
   "summary": {
     "status": "pass",
-    "checkCount": 54,
+    "checkCount": 56,
     "failCount": 0,
     "warnCount": 0
   },
@@ -163,6 +163,14 @@
       "artifactRef": ".policy-fabric/RECONCILE.md"
     },
     {
+      "id": "exists:AGENTS.md",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "AGENTS.md"
+    },
+    {
       "id": "exists:scripts/reconcile.py",
       "status": "pass",
       "severity": "info",
@@ -281,6 +289,14 @@
       "code": "PFD050_DOC_SYNC_OK",
       "message": "reconcile documentation references repair surfaces and commands",
       "artifactRef": ".policy-fabric/RECONCILE.md"
+    },
+    {
+      "id": "docs:agents-gateway-sync",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD050_DOC_SYNC_OK",
+      "message": "AGENTS.md references the active repository workflow surfaces",
+      "artifactRef": "AGENTS.md"
     },
     {
       "id": "ownership:no-overlap",

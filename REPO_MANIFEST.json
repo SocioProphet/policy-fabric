@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-04-01T18:32:04.840788Z",
+  "generatedAt": "2026-04-02T12:35:04.962981Z",
   "git": {
-    "rev": "db6a2a9",
+    "rev": "7d6288d",
     "dirty": true
   },
-  "fileCount": 72,
+  "fileCount": 77,
   "files": [
     {
       "path": ".gitignore",
@@ -24,16 +24,16 @@
     },
     {
       "path": ".policy-fabric/WORKFLOW.md",
-      "sha256": "36ccf9f098c61c3ac55c78b61f660ff41b7dfa3e379f61c014ae2455f4a83918",
-      "bytes": 1913,
+      "sha256": "2168061c42e2cebe12ae43210ecbc15477dfa5829d54a469dfb180485fbbb088",
+      "bytes": 2119,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": ".policy-fabric/config.json",
-      "sha256": "35f800a244a2a72e41ccb4b3cafe7660535ebca47d93ae42c5063bfdd3429567",
-      "bytes": 1250,
+      "sha256": "be8238e698a86f28a4de2243ca750bb945e1d9bdd2bd309a00be0aced8188db5",
+      "bytes": 1267,
       "categories": [
         "frameworkManaged"
       ]
@@ -48,8 +48,8 @@
     },
     {
       "path": ".policy-fabric/ownership.json",
-      "sha256": "ea37520a487e59393779b28e3af3d3ee09bcaa5c0402db2aae873bf0d46818e9",
-      "bytes": 934,
+      "sha256": "4aa02dbfaee458f4809e5a7778b0f4192f07004ac70e5fc14711852b29b54e27",
+      "bytes": 951,
       "categories": [
         "frameworkManaged"
       ]
@@ -64,7 +64,7 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "89fe782147030815837b4d503310e4a8cad579250fc84649906333d2a99918fd",
+      "sha256": "290520f325f1882db838ca8617711ed49746d2e5a6ac462d1cd29fefb7528b3f",
       "bytes": 16164,
       "categories": [
         "generated"
@@ -72,32 +72,40 @@
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "1970cd7c4298824edc81cf839cb4046102c25337ecfde2abb60bb539ca27bc9e",
+      "sha256": "97bdc95bba34e229d6589e0bba04e653a05494a9bc662bd6cf29fb50e723e7e0",
       "bytes": 316,
       "categories": [
         "generated"
       ]
     },
     {
+      "path": "AGENTS.md",
+      "sha256": "ff6efdded41b1fdfce309d43a753f258027777b08d0b7b2180afbdfd09499ce4",
+      "bytes": 2265,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": "BACKLOG.md",
-      "sha256": "bdee64674e423c27b880db2821f021e9c6edaaa0493fdd111bb493706025d5ea",
-      "bytes": 1004,
+      "sha256": "d4766fc80c575be5a16d49fbd45f06154a8348c57709ca7394be65d786cfc981",
+      "bytes": 1320,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "e050cb34b4525044279052e74596cf1d14a04e2c3e10a72c1ffbb625e8f93aa7",
-      "bytes": 2692,
+      "sha256": "6f96ae82684c3dd641eebaa9facf83524c2b0bb3460e607e1802566f4669ab59",
+      "bytes": 3454,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "README.md",
-      "sha256": "bee58f6727bd377c2231fc10c64e509cd9565e7b9fe53893a2dfd748dee24bcb",
-      "bytes": 2083,
+      "sha256": "f6597bbb99d5ff32bd92c712c354006c880f641eb0907f38dac0ce48c1007ff7",
+      "bytes": 3534,
       "categories": [
         "frameworkManaged"
       ]
@@ -279,6 +287,14 @@
       ]
     },
     {
+      "path": "docs/assessments/2026-04-02_original_goal_current_state_and_agentplane_path.md",
+      "sha256": "360b9b56e1e4a6875e867a3feee1324352350a643447589cf86fb9b7b56d678f",
+      "bytes": 2626,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": "docs/blueprints/Policy_Fabric_Platform_Blueprint.docx",
       "sha256": "f6e4c262413cd5873dfcc67277b49cd5f81969d7430b5379a3493c3d687fcf2f",
       "bytes": 50227,
@@ -312,7 +328,7 @@
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "4b6b56475f65a6234013561056bfc626f9080cc03b30757a9d687d3f15a682ec",
+      "sha256": "86c29e4c9f8429bfe579d8ce9f1708fa8ae78803a37d918250a39510f7f5113f",
       "bytes": 154,
       "categories": [
         "generated"
@@ -328,7 +344,7 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "89fe782147030815837b4d503310e4a8cad579250fc84649906333d2a99918fd",
+      "sha256": "290520f325f1882db838ca8617711ed49746d2e5a6ac462d1cd29fefb7528b3f",
       "bytes": 16164,
       "categories": [
         "generated"
@@ -362,6 +378,14 @@
       "path": "docs/research/2026-04-01_agentplane_official_site_lessons.md",
       "sha256": "7530583af2ef7e9eeb844e221e4ad8778ea195f87c4f21071ff98e650c3a2be4",
       "bytes": 3794,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "docs/specs/agentplane_integration_plan.md",
+      "sha256": "14483791e95b5d5df48fe797e600e38817746e32f5f70be35b294ceb78290a69",
+      "bytes": 6312,
       "categories": [
         "frameworkManaged"
       ]
@@ -434,6 +458,14 @@
       "path": "docs/turns/2026-04-01T18-05-00Z_authored-policy-semantic-validation-and-capability-catalog.md",
       "sha256": "fd4e24cfa7eb0e407f4fc084853babf07735b8f34029992610a4f1dae9a4bc1b",
       "bytes": 732,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "docs/turns/2026-04-02_turn_01.md",
+      "sha256": "66f36e22f5079fa85113cf6784a6259dad2aacabea1efb2ba01da6b0ca8856eb",
+      "bytes": 506,
       "categories": [
         "frameworkManaged"
       ]
@@ -527,6 +559,14 @@
       ]
     },
     {
+      "path": "scripts/__pycache__/doctor.cpython-311.pyc",
+      "sha256": "6a35fa462915c823e98ac227f1e14be7d4a3916830673b05716518823bd2dd7b",
+      "bytes": 26274,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": "scripts/__pycache__/doctor.cpython-313.pyc",
       "sha256": "c107f602582589b5eaed5913ddbe22a1be8229550327e19bc1a87c21ea52ca99",
       "bytes": 21936,
@@ -560,8 +600,8 @@
     },
     {
       "path": "scripts/doctor.py",
-      "sha256": "9ae8bf2cac05eec810fe5ce27f47247e08369650cefa57db4606304e35b92e03",
-      "bytes": 19068,
+      "sha256": "4167b14943589030e55287747869700a602e944d561c21c87b22cc870d84a2ef",
+      "bytes": 19688,
       "categories": [
         "frameworkManaged"
       ]

@@ -102,6 +102,7 @@ required = [
     '.policy-fabric/ownership.json',
     '.policy-fabric/profiles.json',
     '.policy-fabric/RECONCILE.md',
+    'AGENTS.md',
     'scripts/reconcile.py',
 ]
 for rel in required:
@@ -182,6 +183,14 @@ try:
         ok('docs:reconcile-sync', 'PFD050_DOC_SYNC_OK', 'reconcile documentation references repair surfaces and commands', '.policy-fabric/RECONCILE.md')
     else:
         fail('docs:reconcile-sync', 'PFD051_DOC_SYNC_DRIFT', f'reconcile documentation missing tokens: {missing_reconcile_tokens}', '.policy-fabric/RECONCILE.md')
+
+    agents_text = (ROOT / 'AGENTS.md').read_text()
+    agents_tokens = ['Policy Fabric', 'scripts/reconcile.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py', '.policy-fabric/WORKFLOW.md']
+    missing_agents_tokens = [token for token in agents_tokens if token not in agents_text]
+    if not missing_agents_tokens:
+        ok('docs:agents-gateway-sync', 'PFD050_DOC_SYNC_OK', 'AGENTS.md references the active repository workflow surfaces', 'AGENTS.md')
+    else:
+        fail('docs:agents-gateway-sync', 'PFD051_DOC_SYNC_DRIFT', f'AGENTS.md missing tokens: {missing_agents_tokens}', 'AGENTS.md')
 
     category_map = {
         'frameworkManaged': ownership.get('frameworkManagedPaths', []),

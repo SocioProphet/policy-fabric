@@ -2,8 +2,9 @@
 
 Overall status: PASS
 
-Check count: `54`; fails: `0`; warnings: `0`
+Check count: `56`; fails: `0`; warnings: `0`
 
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
@@ -37,6 +38,7 @@ Check count: `54`; fails: `0`; warnings: `0`
 - `PFD040_PROFILE_OK` — pass — workflow mode allowed by selected profile
 - `PFD050_DOC_SYNC_OK` — pass — workflow documentation references governed commands and contracts
 - `PFD050_DOC_SYNC_OK` — pass — reconcile documentation references repair surfaces and commands
+- `PFD050_DOC_SYNC_OK` — pass — AGENTS.md references the active repository workflow surfaces
 - `PFD032_OWNERSHIP_OVERLAP_FREE` — pass — ownership categories do not overlap on actual files
 - `PFD034_OWNERSHIP_CLASSIFICATION_OK` — pass — all tracked files are classified by the ownership contract
 - `PFD060_RELEASE_PACK_DIGEST_OK` — pass — release-pack artifact digests match referenced files
