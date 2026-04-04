@@ -21,7 +21,8 @@
     "CHANGELOG.md",
     "BACKLOG.md",
     ".gitignore",
-    ".policy-fabric/agentplane_bridge.json"
+    ".policy-fabric/agentplane_bridge.json",
+    ".policy-fabric/branch_policy.json"
   ],
   "generatedPaths": [
     "docs/reports/**",

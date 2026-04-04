@@ -25,7 +25,8 @@
     "CHANGELOG.md",
     "BACKLOG.md",
     ".gitignore",
-    ".policy-fabric/agentplane_bridge.json"
+    ".policy-fabric/agentplane_bridge.json",
+    ".policy-fabric/branch_policy.json"
   ],
   "generatedPaths": [
     "docs/reports/**",
@@ -46,5 +47,8 @@
   "validationReportPath": "docs/reports/validation_report_latest.json",
   "agentplaneBridgeContract": ".policy-fabric/agentplane_bridge.json",
   "agentplaneProbeCommand": "python scripts/agentplane_probe.py",
-  "agentplaneProbeReportPath": "docs/reports/agentplane_probe_latest.json"
+  "agentplaneProbeReportPath": "docs/reports/agentplane_probe_latest.json",
+  "branchPolicyContract": ".policy-fabric/branch_policy.json",
+  "branchAuditCommand": "python scripts/branch_audit.py",
+  "branchAuditReportPath": "docs/reports/branch_audit_latest.json"
 }

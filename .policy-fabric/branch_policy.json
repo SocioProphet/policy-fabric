@@ -1,0 +1,45 @@
+{
+  "branchPolicyVersion": 1,
+  "mode": "bootstrap-linear-history",
+  "protectedBranches": [
+    "main"
+  ],
+  "baselineTagPrefix": "baseline/",
+  "recommendedWorkBranchPrefixes": [
+    "work/",
+    "fix/",
+    "spike/",
+    "docs/"
+  ],
+  "directMainPolicy": {
+    "allowed": true,
+    "rationale": "Bootstrap single-user control repo with no remote protection yet; high-risk changes must still branch from a tagged baseline.",
+    "sunsetCondition": "Disable direct main changes after the first successful official AgentPlane initialization and remote branch protection rollout."
+  },
+  "highRiskWorkClassesRequiringFeatureBranch": [
+    "official-agentplane-init",
+    "ownership-model-change",
+    "bundle-build-change",
+    "schema-breaking-change",
+    "validator-breaking-change",
+    "history-rewrite"
+  ],
+  "auditRules": {
+    "forbidDetachedHead": true,
+    "forbidInProgressMergeStates": true,
+    "warnIfOnlyMainExists": true,
+    "warnIfNoRemotesConfigured": true,
+    "warnIfLinearHistoryOnly": true,
+    "requireCleanWorktreeBeforeTag": true
+  },
+  "nextRecommendedBranches": [
+    {
+      "name": "work/official-agentplane-init-eval",
+      "purpose": "Run the first real official AgentPlane initialization in a disposable clone or feature branch."
+    },
+    {
+      "name": "work/policy-semantics-overlap",
+      "purpose": "Deepen selector-overlap analysis and richer failure-fixture semantics without risking the main workflow surfaces."
+    }
+  ]
+}

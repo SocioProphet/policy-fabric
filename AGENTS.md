@@ -47,3 +47,8 @@ When we adopt the official AgentPlane CLI, initialize it on a dedicated branch a
 Until then, `.policy-fabric/` remains the authoritative workflow surface.
 
 The explicit adoption plan lives in `docs/specs/agentplane_integration_plan.md`.
+
+
+## Branch Discipline
+
+Before risky work, run `python scripts/branch_audit.py`, `.policy-fabric/branch_policy.json`, create a `baseline/` tag, and branch off `main` using a `work/` prefix. Do not run the first real official AgentPlane init directly on `main`.

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-04-02T14:27:49.057310Z",
+  "generatedAt": "2026-04-04T20:57:00.795906Z",
   "git": {
-    "rev": "7ca0041",
+    "rev": "cd5e342",
     "dirty": true
   },
-  "fileCount": 86,
+  "fileCount": 97,
   "files": [
     {
       "path": ".gitignore",
@@ -24,8 +24,8 @@
     },
     {
       "path": ".policy-fabric/WORKFLOW.md",
-      "sha256": "d03522cdd074c3b4e6989f899e78489adc86d66642ba4b01c5d7a0bf314a31c1",
-      "bytes": 2281,
+      "sha256": "199e276e416d71398b1f720b4a602a0133b4cdbe14f8167573cd8010c70e2b02",
+      "bytes": 2674,
       "categories": [
         "frameworkManaged"
       ]
@@ -39,9 +39,17 @@
       ]
     },
     {
+      "path": ".policy-fabric/branch_policy.json",
+      "sha256": "bdfae1d029378dd85e14c86a32cc456e4a6bb1f1c84c073ed99fa1d12e91e118",
+      "bytes": 1471,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": ".policy-fabric/config.json",
-      "sha256": "445dc661be6427732c6284fa0bd6788494741a0b4007b564e78325338ccc9d2a",
-      "bytes": 1525,
+      "sha256": "a3246db109cc9e9fd6facc35d71373696eed7855e213b16ac0614566f7145612",
+      "bytes": 1755,
       "categories": [
         "frameworkManaged"
       ]
@@ -56,8 +64,8 @@
     },
     {
       "path": ".policy-fabric/ownership.json",
-      "sha256": "01670fb5d292144a73328f7bb02a4a4bb9cfdbbbe298c03c9096fd9ee6674a50",
-      "bytes": 996,
+      "sha256": "1c7f9533bd81027f7a331bbe69584c674be348caed290709f2e0d8ad87da21ca",
+      "bytes": 1037,
       "categories": [
         "frameworkManaged"
       ]
@@ -72,15 +80,15 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "558f1b7731fb4820ae344f50aa113dea1c674e283d912700d4fd6984f7308843",
-      "bytes": 18371,
+      "sha256": "084e6d66279a40ac26f93a82d955651613fd41e76917c7e1577ad7c04f5a3c41",
+      "bytes": 20008,
       "categories": [
         "generated"
       ]
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "182277e700bb06dc7cbfdd188451885e3210de3a67494375ac94332f8caa015d",
+      "sha256": "8c2f8242033edfb03250eaf3185f541e2f97dd478c0a91955e0805a14dab4787",
       "bytes": 316,
       "categories": [
         "generated"
@@ -88,32 +96,32 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "3657e36e71c2e90d97711913ee3b5305d88bbfea8495d04f7bf56141760f22aa",
-      "bytes": 2571,
+      "sha256": "a881a98c9c363548c2e2a2caa5b54eeb45f1a4ba15cefd96f65501c57ec8262c",
+      "bytes": 2832,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "BACKLOG.md",
-      "sha256": "c6fbda4a5621cd1a1bf9ae14b95d3b85196957adde9ebd3c52d7c71485c1052e",
-      "bytes": 1462,
+      "sha256": "03ab5d5a1f5e05427f316f7ac74b78f7f3bfc3bc5053a62f70323e186e8e073f",
+      "bytes": 1526,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "4ce0fb90cee5ff1c641859815902e9d8167f4a821d7fa17672c194a88c5e34b9",
-      "bytes": 4126,
+      "sha256": "ca77339a099a57ffb111f33b54001bd47501db76aa0bb4bfe9a732322335a9fe",
+      "bytes": 4263,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "README.md",
-      "sha256": "f28b0ad3b0e88aeb186bf7c9589fd7a5ec623ef8a04a3aebdfe757e13c6af0f9",
-      "bytes": 3797,
+      "sha256": "9d75bdcd8caa4a06b70ec17f1aac90e1cf6d5f0692db1da579626f393ca61bab",
+      "bytes": 4113,
       "categories": [
         "frameworkManaged"
       ]
@@ -303,6 +311,14 @@
       ]
     },
     {
+      "path": "docs/assessments/2026-04-02_branch_topology_and_safety.md",
+      "sha256": "d9d0580d6d343081c8dbcad1a05b08719879d0be0ec1a6b7f305865f9ba6ad57",
+      "bytes": 860,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": "docs/assessments/2026-04-02_original_goal_current_state_and_agentplane_path.md",
       "sha256": "985d4e95bd9212c8ba725ea96aae7bd77e12abfdda4812dba33ac7cb1877e251",
       "bytes": 3046,
@@ -336,7 +352,7 @@
     },
     {
       "path": "docs/reports/agentplane_probe_latest.json",
-      "sha256": "5f5aa698bfda2fced9f8e8fd5154051040c09b49df43c10df2344fd2dc6de0de",
+      "sha256": "48a9fb2ccefa5e386d5897084b92fce04b9b9b6298b8214710a9d252a64cc74a",
       "bytes": 4732,
       "categories": [
         "generated"
@@ -344,23 +360,39 @@
     },
     {
       "path": "docs/reports/agentplane_probe_latest.md",
-      "sha256": "15f3ed2c5e75ddbf76e3b3eb988686be2a6c3824bce8f364be1b2a7247d19e20",
+      "sha256": "831bafec03649935bb8832c74253b0ef61a6f877c533e858aa0f9a29319bfd67",
       "bytes": 2271,
       "categories": [
         "generated"
       ]
     },
     {
+      "path": "docs/reports/branch_audit_latest.json",
+      "sha256": "4d5ffb18e0c0fa6f7f0bccb7a2fc30fc34d59e365220b5218b53a3ddfec60424",
+      "bytes": 5857,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": "docs/reports/branch_audit_latest.md",
+      "sha256": "790538f3ed38c6dbaebf38e28657a4d647b870f3fe2b1d5a129b7fb8bb146359",
+      "bytes": 1443,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
       "path": "docs/reports/doctor_latest.md",
-      "sha256": "a19740a9556aa73d6fd83240a36862e87e883e7bc1282ce5d68fdcd86cce6273",
-      "bytes": 7588,
+      "sha256": "9143ac227b6c66c23109978957d057825ae8b878f24ad5dc71551e4fd284ff63",
+      "bytes": 8293,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "0fd4a34f666b34aa0291dd05d44db8af03e35350a8f13f6f6e08c517e9bfcffb",
+      "sha256": "0d1b006a60692089e4e8f1c2351511953796927ccc41a39d92fe74af85f79249",
       "bytes": 154,
       "categories": [
         "generated"
@@ -376,16 +408,16 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "558f1b7731fb4820ae344f50aa113dea1c674e283d912700d4fd6984f7308843",
-      "bytes": 18371,
+      "sha256": "084e6d66279a40ac26f93a82d955651613fd41e76917c7e1577ad7c04f5a3c41",
+      "bytes": 20008,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/validation_report_latest.md",
-      "sha256": "c09fc8d45c616417f6c66d2c5fe1e2b8fc8c9ba29ec55ab2f85aaf8b6625f915",
-      "bytes": 5612,
+      "sha256": "99bb5f18f590fa4be71b904b26014f9b13511397ba3afcc3cf362628820e0ced",
+      "bytes": 6147,
       "categories": [
         "generated"
       ]
@@ -426,6 +458,14 @@
       "path": "docs/specs/agentplane_integration_plan.md",
       "sha256": "ca45fc1da8e75e7763e7cc0002c065c7fd2642585fff4613c9d12ef55a9ee615",
       "bytes": 6640,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "docs/specs/branch_safety.md",
+      "sha256": "541d980cbfd4a6c587ebc4d309e2bb2a16eb6421111e337e1a22a0e49061e17a",
+      "bytes": 1382,
       "categories": [
         "frameworkManaged"
       ]
@@ -519,6 +559,14 @@
       ]
     },
     {
+      "path": "docs/turns/2026-04-02_turn_03.md",
+      "sha256": "adef38a8dc355b1054871272e11e6e666f86d7c3c03b30337fb9c803f5129f09",
+      "bytes": 500,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": "examples/policy_fabric_capability_catalog_example.json",
       "sha256": "56b66799a30b64630a616703cd35370ff32f7bd03db0ed98cdcefe5dead7895d",
       "bytes": 2352,
@@ -599,9 +647,33 @@
       ]
     },
     {
+      "path": "scripts/__pycache__/agentplane_probe.cpython-311.pyc",
+      "sha256": "f9264be69e2eb6d1b28eeeb743e85f35a8ec05936224c7faa8b37dc8e44294d8",
+      "bytes": 12817,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": "scripts/__pycache__/agentplane_probe.cpython-313.pyc",
       "sha256": "199e9db31da4459d77f026b33e9e73ced1d7cdaa0a43ab13c69e523bf60d0eb5",
       "bytes": 11368,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "scripts/__pycache__/branch_audit.cpython-311.pyc",
+      "sha256": "3430c76a7e27367e411fdfb875facfab29a73fc575b4314bc953bed647156fbc",
+      "bytes": 10827,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "scripts/__pycache__/build_dist_bundle.cpython-311.pyc",
+      "sha256": "9ed5807c00cd7b9aae2ac5871bcbbe29514e58db568cc296a41dbb07435c35be",
+      "bytes": 3784,
       "categories": [
         "frameworkManaged"
       ]
@@ -616,8 +688,8 @@
     },
     {
       "path": "scripts/__pycache__/doctor.cpython-311.pyc",
-      "sha256": "6a35fa462915c823e98ac227f1e14be7d4a3916830673b05716518823bd2dd7b",
-      "bytes": 26274,
+      "sha256": "8362a5d7b623776fd2939b7efa4b03721f2ae61e70200bdc8eab78b5dc102193",
+      "bytes": 33241,
       "categories": [
         "frameworkManaged"
       ]
@@ -632,8 +704,8 @@
     },
     {
       "path": "scripts/__pycache__/policy_semantic_validator.cpython-311.pyc",
-      "sha256": "c39ae2e23140233fc695bf5fe00836d3f61d0d694a8a54147592e000f8131b58",
-      "bytes": 27587,
+      "sha256": "2dc9f7a1ae43070d7fbaa925c651be657505c8759ed7972d94bdef97b9a0e999",
+      "bytes": 27538,
       "categories": [
         "frameworkManaged"
       ]
@@ -642,6 +714,14 @@
       "path": "scripts/__pycache__/policy_semantic_validator.cpython-313.pyc",
       "sha256": "12205399f80996ce6e9c81bc25bb8e242e1a48cb10582a1109dd3fd0b248ccdf",
       "bytes": 22035,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "scripts/__pycache__/reconcile.cpython-311.pyc",
+      "sha256": "46c3a1cb2a691028fc3841e670c87176ea9a9332c0e05b4c29b567012914a4a7",
+      "bytes": 5727,
       "categories": [
         "frameworkManaged"
       ]
@@ -663,6 +743,14 @@
       ]
     },
     {
+      "path": "scripts/branch_audit.py",
+      "sha256": "dfd64dd6f662caaccabaf961a804db6804981ec884541ca1fb66ef25ac25eecb",
+      "bytes": 6713,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": "scripts/build_dist_bundle.py",
       "sha256": "169f5c9e4af1d9ca3640854bd1ba1206302db421408d2a4ad9caa9245bd2a2b2",
       "bytes": 1473,
@@ -672,8 +760,8 @@
     },
     {
       "path": "scripts/doctor.py",
-      "sha256": "269cfd217b1705cdd6dffc52de9a26b9c54061df99103a8e524bceddadda08e6",
-      "bytes": 22759,
+      "sha256": "fd7f04203fef6fea3f9eccf2aabbc9ab063c37a6a809f911bf075f716cc3744d",
+      "bytes": 25427,
       "categories": [
         "frameworkManaged"
       ]

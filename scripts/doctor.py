@@ -103,9 +103,11 @@ required = [
     '.policy-fabric/profiles.json',
     '.policy-fabric/RECONCILE.md',
     '.policy-fabric/agentplane_bridge.json',
+    '.policy-fabric/branch_policy.json',
     'AGENTS.md',
     'scripts/reconcile.py',
     'scripts/agentplane_probe.py',
+    'scripts/branch_audit.py',
 ]
 for rel in required:
     p = ROOT / rel
@@ -187,7 +189,12 @@ try:
         fail('docs:reconcile-sync', 'PFD051_DOC_SYNC_DRIFT', f'reconcile documentation missing tokens: {missing_reconcile_tokens}', '.policy-fabric/RECONCILE.md')
 
     agents_text = (ROOT / 'AGENTS.md').read_text()
-    agents_tokens = ['Policy Fabric', 'scripts/reconcile.py', 'scripts/agentplane_probe.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py', '.policy-fabric/WORKFLOW.md', '.policy-fabric/agentplane_bridge.json']
+    if config.get('branchPolicyContract') == '.policy-fabric/branch_policy.json' and config.get('branchAuditCommand') == 'python scripts/branch_audit.py':
+        ok('branch-policy:config-sync', 'PFD043_BRANCH_POLICY_SYNC_OK', 'config references the branch policy contract and branch audit command', '.policy-fabric/config.json')
+    else:
+        fail('branch-policy:config-sync', 'PFD044_BRANCH_POLICY_SYNC_DRIFT', 'config missing branch policy contract or branch audit command', '.policy-fabric/config.json')
+
+    agents_tokens = ['Policy Fabric', 'scripts/reconcile.py', 'scripts/agentplane_probe.py', 'scripts/branch_audit.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py', '.policy-fabric/WORKFLOW.md', '.policy-fabric/agentplane_bridge.json', '.policy-fabric/branch_policy.json']
     missing_agents_tokens = [token for token in agents_tokens if token not in agents_text]
     if not missing_agents_tokens:
         ok('docs:agents-gateway-sync', 'PFD050_DOC_SYNC_OK', 'AGENTS.md references the active repository workflow surfaces', 'AGENTS.md')
@@ -339,6 +346,33 @@ if probe_path.exists():
         fail('agentplane-probe:parse', 'PFD099_AGENTPLANE_PROBE_PARSE_ERROR', str(exc), 'docs/reports/agentplane_probe_latest.json')
 else:
     warn('agentplane-probe:missing', 'PFD100_AGENTPLANE_PROBE_MISSING', 'AgentPlane probe report missing; run python scripts/agentplane_probe.py', 'docs/reports/agentplane_probe_latest.json')
+
+try:
+    branch_policy = load_json('.policy-fabric/branch_policy.json')
+    if branch_policy.get('protectedBranches') == ['main'] and branch_policy.get('baselineTagPrefix') == 'baseline/':
+        ok('branch-policy:contract-shape', 'PFD101_BRANCH_POLICY_OK', 'branch policy protects main and defines baseline tag prefix', '.policy-fabric/branch_policy.json')
+    else:
+        fail('branch-policy:contract-shape', 'PFD102_BRANCH_POLICY_INVALID', 'branch policy missing expected bootstrap protections', '.policy-fabric/branch_policy.json')
+except Exception as exc:
+    fail('branch-policy:parse', 'PFD103_BRANCH_POLICY_PARSE_ERROR', str(exc), '.policy-fabric/branch_policy.json')
+
+branch_audit_path = ROOT / 'docs/reports/branch_audit_latest.json'
+if branch_audit_path.exists():
+    try:
+        branch_audit = load_json('docs/reports/branch_audit_latest.json')
+        if branch_audit.get('apiVersion') == 'policy.fabric.branch-audit/v1':
+            ok('branch-audit:report-shape', 'PFD104_BRANCH_AUDIT_OK', 'branch audit report present with expected API version', 'docs/reports/branch_audit_latest.json')
+        else:
+            fail('branch-audit:report-shape', 'PFD105_BRANCH_AUDIT_INVALID', 'branch audit report API version mismatch', 'docs/reports/branch_audit_latest.json')
+
+        if branch_audit.get('summary', {}).get('status') in {'pass', 'warn'}:
+            ok('branch-audit:report-status', 'PFD106_BRANCH_AUDIT_STATUS_OK', 'branch audit report is non-failing', 'docs/reports/branch_audit_latest.json')
+        else:
+            fail('branch-audit:report-status', 'PFD107_BRANCH_AUDIT_STATUS_FAIL', 'branch audit report is failing', 'docs/reports/branch_audit_latest.json')
+    except Exception as exc:
+        fail('branch-audit:parse', 'PFD108_BRANCH_AUDIT_PARSE_ERROR', str(exc), 'docs/reports/branch_audit_latest.json')
+else:
+    warn('branch-audit:missing', 'PFD109_BRANCH_AUDIT_MISSING', 'branch audit report missing; run python scripts/branch_audit.py', 'docs/reports/branch_audit_latest.json')
 
 bundle_manifest_path = ROOT / 'dist/policy_fabric_contracts_bundle_manifest.json'
 if bundle_manifest_path.exists():

@@ -1,0 +1,175 @@
+{
+  "apiVersion": "policy.fabric.branch-audit/v1",
+  "kind": "BranchAuditReport",
+  "metadata": {
+    "generatedAt": "2026-04-04T20:57:38.092735Z",
+    "generator": "policy-fabric-branch-audit/0.1.0"
+  },
+  "summary": {
+    "status": "warn",
+    "currentBranch": "main",
+    "cleanWorktree": true,
+    "localBranchCount": 3,
+    "remoteCount": 0,
+    "mergeCommitCount": 0
+  },
+  "topology": {
+    "localBranches": [
+      "main",
+      "work/official-agentplane-init-eval",
+      "work/policy-semantics-overlap"
+    ],
+    "remotes": [],
+    "mergeStates": {
+      "MERGE_HEAD": false,
+      "REBASE_HEAD": false,
+      "CHERRY_PICK_HEAD": false,
+      "REVERT_HEAD": false
+    },
+    "baselineTags": [
+      "baseline/2026-04-02_pre-branch-audit",
+      "baseline/2026-04-04_branch-audited"
+    ],
+    "recentGraph": [
+      "* fb488b6 (HEAD -> main, tag: baseline/2026-04-04_branch-audited, work/policy-semantics-overlap, work/official-agentplane-init-eval) Add branch audit and branch-safety policy",
+      "* cd5e342 (tag: baseline/2026-04-02_pre-branch-audit) Add official AgentPlane bridge contract and probe",
+      "* 7ca0041 Add repo identity and AgentPlane integration bridge",
+      "* 7d6288d Add capability catalog and authored policy semantic validation",
+      "* db6a2a9 Add managed ownership, profiles, and drift checks",
+      "* 9f71b2c Correct AgentPlane lessons to official public docs and harden doctor coverage",
+      "* ff095f1 Rebuild distributable bundle after manifest refresh",
+      "* 10f5841 Refresh repository manifest after spec additions",
+      "* c1c73c3 Add draft semantic validator and error taxonomy specs",
+      "* baae8b7 Add manifest-aware bundle build and release snapshot report",
+      "* d580b90 Initialize Policy Fabric working repository with repo-native workflow surfaces"
+    ],
+    "recentCommits": [
+      {
+        "rev": "fb488b6",
+        "fullRev": "fb488b69c8c1ac5b90d44714f1715ae82845c3ce",
+        "date": "2026-04-04 20:57:20 +0000",
+        "subject": "Add branch audit and branch-safety policy"
+      },
+      {
+        "rev": "cd5e342",
+        "fullRev": "cd5e342e3620070bb292f74ad170b3b02d12bbdf",
+        "date": "2026-04-02 14:28:11 +0000",
+        "subject": "Add official AgentPlane bridge contract and probe"
+      },
+      {
+        "rev": "7ca0041",
+        "fullRev": "7ca0041c3777965e811467253fb30abf51ee4c84",
+        "date": "2026-04-02 12:35:35 +0000",
+        "subject": "Add repo identity and AgentPlane integration bridge"
+      },
+      {
+        "rev": "7d6288d",
+        "fullRev": "7d6288d0ba339a50a190c904c84239f5c3a48281",
+        "date": "2026-04-01 18:32:21 +0000",
+        "subject": "Add capability catalog and authored policy semantic validation"
+      },
+      {
+        "rev": "db6a2a9",
+        "fullRev": "db6a2a9f657dcf584a5e1415346bde5cc2a1fa1c",
+        "date": "2026-04-01 14:37:02 +0000",
+        "subject": "Add managed ownership, profiles, and drift checks"
+      },
+      {
+        "rev": "9f71b2c",
+        "fullRev": "9f71b2c905f8a92402e9617c3647bbf9b744e16d",
+        "date": "2026-04-01 13:19:46 +0000",
+        "subject": "Correct AgentPlane lessons to official public docs and harden doctor coverage"
+      },
+      {
+        "rev": "ff095f1",
+        "fullRev": "ff095f152bc67de2f611511fa47d8014a58904f0",
+        "date": "2026-03-31 18:31:59 +0000",
+        "subject": "Rebuild distributable bundle after manifest refresh"
+      },
+      {
+        "rev": "10f5841",
+        "fullRev": "10f5841b061d95adb16894dc760c88c85f2724b6",
+        "date": "2026-03-31 18:31:31 +0000",
+        "subject": "Refresh repository manifest after spec additions"
+      },
+      {
+        "rev": "c1c73c3",
+        "fullRev": "c1c73c37298c1ac1ee9fb721371324333f6a9017",
+        "date": "2026-03-31 18:31:30 +0000",
+        "subject": "Add draft semantic validator and error taxonomy specs"
+      },
+      {
+        "rev": "baae8b7",
+        "fullRev": "baae8b77729e7320b0ce03cda1317c288af0930b",
+        "date": "2026-03-31 18:29:12 +0000",
+        "subject": "Add manifest-aware bundle build and release snapshot report"
+      },
+      {
+        "rev": "d580b90",
+        "fullRev": "d580b903ff445184e51b2f135785c869a505dc52",
+        "date": "2026-03-31 18:28:10 +0000",
+        "subject": "Initialize Policy Fabric working repository with repo-native workflow surfaces"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "name": "work/official-agentplane-init-eval",
+      "purpose": "Run the first real official AgentPlane initialization in a disposable clone or feature branch."
+    },
+    {
+      "name": "work/policy-semantics-overlap",
+      "purpose": "Deepen selector-overlap analysis and richer failure-fixture semantics without risking the main workflow surfaces."
+    }
+  ],
+  "checks": [
+    {
+      "id": "branch:head-attached",
+      "status": "pass",
+      "code": "PFB010_BRANCH_HEAD_OK",
+      "message": "HEAD is attached to `main`"
+    },
+    {
+      "id": "branch:merge-state",
+      "status": "pass",
+      "code": "PFB012_BRANCH_STATE_OK",
+      "message": "No in-progress merge/rebase/cherry-pick/revert state detected"
+    },
+    {
+      "id": "branch:main-present",
+      "status": "pass",
+      "code": "PFB014_BRANCH_MAIN_PRESENT",
+      "message": "`main` branch exists"
+    },
+    {
+      "id": "branch:single-main-only",
+      "status": "pass",
+      "code": "PFB017_BRANCH_TOPOLOGY_OK",
+      "message": "Local branches present: ['main', 'work/official-agentplane-init-eval', 'work/policy-semantics-overlap']"
+    },
+    {
+      "id": "branch:remotes",
+      "status": "warn",
+      "code": "PFB019_BRANCH_NO_REMOTE",
+      "message": "No remotes configured in snapshot; remote protection cannot be observed here"
+    },
+    {
+      "id": "branch:merge-history",
+      "status": "warn",
+      "code": "PFB020_BRANCH_LINEAR_HISTORY",
+      "message": "History is fully linear so far; keep baseline tags and use work branches for risky changes"
+    },
+    {
+      "id": "branch:baseline-tags",
+      "status": "pass",
+      "code": "PFB022_BRANCH_BASELINE_TAGS_OK",
+      "message": "Baseline tags present: ['baseline/2026-04-02_pre-branch-audit', 'baseline/2026-04-04_branch-audited']"
+    },
+    {
+      "id": "branch:policy-protected-main",
+      "status": "pass",
+      "code": "PFB024_BRANCH_POLICY_OK",
+      "message": "Branch policy protects `main` as the baseline branch"
+    }
+  ]
+}

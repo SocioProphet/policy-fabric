@@ -21,9 +21,11 @@ Overall status: PASS
 - [OK] exists:.policy-fabric/profiles.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:.policy-fabric/RECONCILE.md — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:.policy-fabric/agentplane_bridge.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.policy-fabric/branch_policy.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:AGENTS.md — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/reconcile.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/agentplane_probe.py — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:scripts/branch_audit.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] validate:policy-example — PFD010_SCHEMA_OK — policy example validates against policy schema
 - [OK] validate:plan-example — PFD010_SCHEMA_OK — compiled plan validates against plan schema
 - [OK] validate:release-pack-example — PFD010_SCHEMA_OK — release pack example validates against release pack schema
@@ -38,6 +40,7 @@ Overall status: PASS
 - [OK] profiles:mode-allowed — PFD040_PROFILE_OK — workflow mode allowed by selected profile
 - [OK] docs:workflow-sync — PFD050_DOC_SYNC_OK — workflow documentation references governed commands and contracts
 - [OK] docs:reconcile-sync — PFD050_DOC_SYNC_OK — reconcile documentation references repair surfaces and commands
+- [OK] branch-policy:config-sync — PFD043_BRANCH_POLICY_SYNC_OK — config references the branch policy contract and branch audit command
 - [OK] docs:agents-gateway-sync — PFD050_DOC_SYNC_OK — AGENTS.md references the active repository workflow surfaces
 - [OK] ownership:no-overlap — PFD032_OWNERSHIP_OVERLAP_FREE — ownership categories do not overlap on actual files
 - [OK] ownership:no-unclassified — PFD034_OWNERSHIP_CLASSIFICATION_OK — all tracked files are classified by the ownership contract
@@ -63,4 +66,7 @@ Overall status: PASS
 - [OK] agentplane-bridge:expected-findings — PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK — AgentPlane bridge contract records expected current-state findings
 - [OK] agentplane-probe:report-shape — PFD095_AGENTPLANE_PROBE_OK — AgentPlane probe report present with expected API version
 - [OK] agentplane-probe:report-status — PFD097_AGENTPLANE_PROBE_STATUS_OK — AgentPlane probe report is non-failing
+- [OK] branch-policy:contract-shape — PFD101_BRANCH_POLICY_OK — branch policy protects main and defines baseline tag prefix
+- [OK] branch-audit:report-shape — PFD104_BRANCH_AUDIT_OK — branch audit report present with expected API version
+- [OK] branch-audit:report-status — PFD106_BRANCH_AUDIT_STATUS_OK — branch audit report is non-failing
 - [OK] bundle:local-overrides-excluded — PFD080_BUNDLE_EXCLUSION_OK — local override files are excluded from the distributable bundle

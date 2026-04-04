@@ -62,3 +62,8 @@ See `AGENTS.md`, `.policy-fabric/agentplane_bridge.json`, and `docs/specs/agentp
 ## Current focus
 
 The current focus is reconnecting the original modernization goal to the repo we built: preserve the strong technical kernel, make the contracts and promotion artifacts executable, and now prepare a clean AgentPlane adoption path without throwing away the Policy Fabric governance layer we already created.
+
+
+## Branch Safety
+
+This repository currently has a linear bootstrap history on `main`. That keeps the repo simple, but it also means risky work should now move to explicit `work/` branches from tagged baselines. See `.policy-fabric/branch_policy.json`, `scripts/branch_audit.py`, and `docs/specs/branch_safety.md`.

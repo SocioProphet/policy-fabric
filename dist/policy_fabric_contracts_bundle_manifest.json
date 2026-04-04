@@ -7,8 +7,8 @@
     },
     {
       "path": ".policy-fabric/WORKFLOW.md",
-      "sha256": "d03522cdd074c3b4e6989f899e78489adc86d66642ba4b01c5d7a0bf314a31c1",
-      "bytes": 2281
+      "sha256": "199e276e416d71398b1f720b4a602a0133b4cdbe14f8167573cd8010c70e2b02",
+      "bytes": 2674
     },
     {
       "path": ".policy-fabric/agentplane_bridge.json",
@@ -16,14 +16,19 @@
       "bytes": 4514
     },
     {
+      "path": ".policy-fabric/branch_policy.json",
+      "sha256": "bdfae1d029378dd85e14c86a32cc456e4a6bb1f1c84c073ed99fa1d12e91e118",
+      "bytes": 1471
+    },
+    {
       "path": ".policy-fabric/config.json",
-      "sha256": "445dc661be6427732c6284fa0bd6788494741a0b4007b564e78325338ccc9d2a",
-      "bytes": 1525
+      "sha256": "a3246db109cc9e9fd6facc35d71373696eed7855e213b16ac0614566f7145612",
+      "bytes": 1755
     },
     {
       "path": ".policy-fabric/ownership.json",
-      "sha256": "01670fb5d292144a73328f7bb02a4a4bb9cfdbbbe298c03c9096fd9ee6674a50",
-      "bytes": 996
+      "sha256": "1c7f9533bd81027f7a331bbe69584c674be348caed290709f2e0d8ad87da21ca",
+      "bytes": 1037
     },
     {
       "path": ".policy-fabric/profiles.json",
@@ -32,33 +37,33 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "739fcfda7c36f7a47f05217df52e055736e022313e39b47acbe6f5651ffa764c",
-      "bytes": 18371
+      "sha256": "371e8113aacd49ca8f4ef343a221e0c76d0dc8196d47e975b89334eaaa1218e7",
+      "bytes": 20001
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "34c0cf3208523ed9a7d1f3ab81af169fe72f75c8d37f167659789c23e0b00f0e",
+      "sha256": "f92c533ec722acf951139b4a55ec4bac6303b711458c77a73113a851602ab042",
       "bytes": 316
     },
     {
       "path": "BACKLOG.md",
-      "sha256": "c6fbda4a5621cd1a1bf9ae14b95d3b85196957adde9ebd3c52d7c71485c1052e",
-      "bytes": 1462
+      "sha256": "03ab5d5a1f5e05427f316f7ac74b78f7f3bfc3bc5053a62f70323e186e8e073f",
+      "bytes": 1526
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "4ce0fb90cee5ff1c641859815902e9d8167f4a821d7fa17672c194a88c5e34b9",
-      "bytes": 4126
+      "sha256": "ca77339a099a57ffb111f33b54001bd47501db76aa0bb4bfe9a732322335a9fe",
+      "bytes": 4263
     },
     {
       "path": "README.md",
-      "sha256": "f28b0ad3b0e88aeb186bf7c9589fd7a5ec623ef8a04a3aebdfe757e13c6af0f9",
-      "bytes": 3797
+      "sha256": "9d75bdcd8caa4a06b70ec17f1aac90e1cf6d5f0692db1da579626f393ca61bab",
+      "bytes": 4113
     },
     {
       "path": "REPO_MANIFEST.json",
-      "sha256": "6292dcb26ea4972d417dcd4656c06f8e0d94042415ea81bf7994ebfbf1d58549",
-      "bytes": 20646
+      "sha256": "866aa292efaf03e6bc6200ab1d961d7b1811caba4df8a2801424bc6f6a4ac7da",
+      "bytes": 23198
     },
     {
       "path": "contracts/policy_fabric_capability_catalog_v1.schema.json",
@@ -106,6 +111,11 @@
       "bytes": 1847
     },
     {
+      "path": "docs/assessments/2026-04-02_branch_topology_and_safety.md",
+      "sha256": "d9d0580d6d343081c8dbcad1a05b08719879d0be0ec1a6b7f305865f9ba6ad57",
+      "bytes": 860
+    },
+    {
       "path": "docs/assessments/2026-04-02_original_goal_current_state_and_agentplane_path.md",
       "sha256": "985d4e95bd9212c8ba725ea96aae7bd77e12abfdda4812dba33ac7cb1877e251",
       "bytes": 3046
@@ -136,13 +146,23 @@
       "bytes": 2271
     },
     {
+      "path": "docs/reports/branch_audit_latest.json",
+      "sha256": "0b67105a7a650d290c3a18b550fc7359dc82ad43dbab860ac6990e99bdd1178e",
+      "bytes": 6421
+    },
+    {
+      "path": "docs/reports/branch_audit_latest.md",
+      "sha256": "1281ab8eaf160af874b1ab6d59fbcd3c491f810956bb83e7a9746138c28c88d9",
+      "bytes": 1495
+    },
+    {
       "path": "docs/reports/doctor_latest.md",
-      "sha256": "a19740a9556aa73d6fd83240a36862e87e883e7bc1282ce5d68fdcd86cce6273",
-      "bytes": 7588
+      "sha256": "ccacb43b0ad3328ac5a794c13ec007dde1cd78261efbd2f6374dcc5d29fe0a41",
+      "bytes": 8285
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "db3b0b562a9ccda1b6f9dc70cf9fdfb963f1a3102c7ca74e6afc9f24e1916a41",
+      "sha256": "eb724c67c1031a5aba64df543bfbc3133b90ff66fd7e8672c077810e481877f4",
       "bytes": 154
     },
     {
@@ -152,13 +172,13 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "739fcfda7c36f7a47f05217df52e055736e022313e39b47acbe6f5651ffa764c",
-      "bytes": 18371
+      "sha256": "371e8113aacd49ca8f4ef343a221e0c76d0dc8196d47e975b89334eaaa1218e7",
+      "bytes": 20001
     },
     {
       "path": "docs/reports/validation_report_latest.md",
-      "sha256": "c09fc8d45c616417f6c66d2c5fe1e2b8fc8c9ba29ec55ab2f85aaf8b6625f915",
-      "bytes": 5612
+      "sha256": "f547706f9d34de69c7a4c8d86946aabb54662150c6bd0b30d253f3f7f8139c30",
+      "bytes": 6141
     },
     {
       "path": "docs/research/2026-03-31_agentplane_alignment.md",
@@ -184,6 +204,11 @@
       "path": "docs/specs/agentplane_integration_plan.md",
       "sha256": "ca45fc1da8e75e7763e7cc0002c065c7fd2642585fff4613c9d12ef55a9ee615",
       "bytes": 6640
+    },
+    {
+      "path": "docs/specs/branch_safety.md",
+      "sha256": "541d980cbfd4a6c587ebc4d309e2bb2a16eb6421111e337e1a22a0e49061e17a",
+      "bytes": 1382
     },
     {
       "path": "docs/specs/capability_catalog.md",
@@ -239,6 +264,11 @@
       "path": "docs/turns/2026-04-02_turn_02.md",
       "sha256": "4f2f7b2ff6a8dade7397487b85b6b223d8a5cd49657bec4290f1183a78c65c98",
       "bytes": 566
+    },
+    {
+      "path": "docs/turns/2026-04-02_turn_03.md",
+      "sha256": "adef38a8dc355b1054871272e11e6e666f86d7c3c03b30337fb9c803f5129f09",
+      "bytes": 500
     },
     {
       "path": "examples/policy_fabric_capability_catalog_example.json",

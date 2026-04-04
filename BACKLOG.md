@@ -14,3 +14,5 @@
 12. Keep the new hybrid bridge model explicit between `AGENTS.md`/`.agentplane/` and `.policy-fabric/`.
 13. If AgentPlane is adopted, update ownership and doctor to make `.agentplane/` surfaces explicit and enforced.
 14. Add bridge-aware reconcile behavior once a real `.agentplane/` tree exists.
+
+- Implement branch safety and evaluate recent branch topology.

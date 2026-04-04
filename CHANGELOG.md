@@ -55,3 +55,6 @@
 - implemented authored-policy semantic checks for duplicate ids, selectorRef resolution, provider/capability authorization, rollout scope, re-identification governance, exact-target conflicts, attestation readiness, and fixture readiness
 - updated semantic-validator, release-pack, and capability-catalog specs
 - refreshed assessment, backlog, reports, bundle, and repo snapshot exports
+
+## 2026-04-02
+- Added branch audit, branch policy, baseline tagging, and recommended work-branch discipline for upcoming risky changes.

@@ -2,8 +2,10 @@
 
 Overall status: PASS
 
-Check count: `62`; fails: `0`; warnings: `0`
+Check count: `68`; fails: `0`; warnings: `0`
 
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
@@ -40,6 +42,7 @@ Check count: `62`; fails: `0`; warnings: `0`
 - `PFD040_PROFILE_OK` — pass — workflow mode allowed by selected profile
 - `PFD050_DOC_SYNC_OK` — pass — workflow documentation references governed commands and contracts
 - `PFD050_DOC_SYNC_OK` — pass — reconcile documentation references repair surfaces and commands
+- `PFD043_BRANCH_POLICY_SYNC_OK` — pass — config references the branch policy contract and branch audit command
 - `PFD050_DOC_SYNC_OK` — pass — AGENTS.md references the active repository workflow surfaces
 - `PFD032_OWNERSHIP_OVERLAP_FREE` — pass — ownership categories do not overlap on actual files
 - `PFD034_OWNERSHIP_CLASSIFICATION_OK` — pass — all tracked files are classified by the ownership contract
@@ -65,4 +68,7 @@ Check count: `62`; fails: `0`; warnings: `0`
 - `PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK` — pass — AgentPlane bridge contract records expected current-state findings
 - `PFD095_AGENTPLANE_PROBE_OK` — pass — AgentPlane probe report present with expected API version
 - `PFD097_AGENTPLANE_PROBE_STATUS_OK` — pass — AgentPlane probe report is non-failing
+- `PFD101_BRANCH_POLICY_OK` — pass — branch policy protects main and defines baseline tag prefix
+- `PFD104_BRANCH_AUDIT_OK` — pass — branch audit report present with expected API version
+- `PFD106_BRANCH_AUDIT_STATUS_OK` — pass — branch audit report is non-failing
 - `PFD080_BUNDLE_EXCLUSION_OK` — pass — local override files are excluded from the distributable bundle

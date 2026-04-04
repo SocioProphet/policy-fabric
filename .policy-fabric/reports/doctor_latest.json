@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-04-02T14:27:59.360860Z",
+    "generatedAt": "2026-04-04T20:57:38.378249Z",
     "generator": "policy-fabric-doctor/0.5.0",
-    "runId": "doctor-2026-04-02T14:27:59.360860Z"
+    "runId": "doctor-2026-04-04T20:57:38.378249Z"
   },
   "subject": {
     "type": "releasePack",
@@ -13,7 +13,7 @@
   },
   "summary": {
     "status": "pass",
-    "checkCount": 62,
+    "checkCount": 68,
     "failCount": 0,
     "warnCount": 0
   },
@@ -171,6 +171,14 @@
       "artifactRef": ".policy-fabric/agentplane_bridge.json"
     },
     {
+      "id": "exists:.policy-fabric/branch_policy.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": ".policy-fabric/branch_policy.json"
+    },
+    {
       "id": "exists:AGENTS.md",
       "status": "pass",
       "severity": "info",
@@ -193,6 +201,14 @@
       "code": "PFD001_REQUIRED_FILE_PRESENT",
       "message": "required file present",
       "artifactRef": "scripts/agentplane_probe.py"
+    },
+    {
+      "id": "exists:scripts/branch_audit.py",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "scripts/branch_audit.py"
     },
     {
       "id": "validate:policy-example",
@@ -305,6 +321,14 @@
       "code": "PFD050_DOC_SYNC_OK",
       "message": "reconcile documentation references repair surfaces and commands",
       "artifactRef": ".policy-fabric/RECONCILE.md"
+    },
+    {
+      "id": "branch-policy:config-sync",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD043_BRANCH_POLICY_SYNC_OK",
+      "message": "config references the branch policy contract and branch audit command",
+      "artifactRef": ".policy-fabric/config.json"
     },
     {
       "id": "docs:agents-gateway-sync",
@@ -505,6 +529,30 @@
       "code": "PFD097_AGENTPLANE_PROBE_STATUS_OK",
       "message": "AgentPlane probe report is non-failing",
       "artifactRef": "docs/reports/agentplane_probe_latest.json"
+    },
+    {
+      "id": "branch-policy:contract-shape",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD101_BRANCH_POLICY_OK",
+      "message": "branch policy protects main and defines baseline tag prefix",
+      "artifactRef": ".policy-fabric/branch_policy.json"
+    },
+    {
+      "id": "branch-audit:report-shape",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD104_BRANCH_AUDIT_OK",
+      "message": "branch audit report present with expected API version",
+      "artifactRef": "docs/reports/branch_audit_latest.json"
+    },
+    {
+      "id": "branch-audit:report-status",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD106_BRANCH_AUDIT_STATUS_OK",
+      "message": "branch audit report is non-failing",
+      "artifactRef": "docs/reports/branch_audit_latest.json"
     },
     {
       "id": "bundle:local-overrides-excluded",

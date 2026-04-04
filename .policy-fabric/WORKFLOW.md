@@ -39,3 +39,7 @@ Current profile: `normal`.
 ## Why this exists
 
 The goal is to avoid detached artifacts, silent drift, and undocumented repair work. Every meaningful change should leave a file-level trail inside the repository.
+
+## Branch Safety
+
+Before high-risk work, create a `baseline/` tag on the current good state, run `python scripts/branch_audit.py`, and do the risky change on a `work/` branch instead of committing directly to `main`. High-risk work includes official AgentPlane init, ownership-model changes, bundle-build changes, schema-breaking changes, validator-breaking changes, and any history rewrite.
