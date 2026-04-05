@@ -53,7 +53,7 @@ detached = current_branch == 'HEAD'
 status_lines = git_lines('status', '--porcelain')
 relevant_status_lines = []
 for line in status_lines:
-    path_part = line[3:] if len(line) > 3 else ''
+    path_part = line[3:].strip() if len(line) > 3 else ''
     if ' -> ' in path_part:
         path_part = path_part.split(' -> ', 1)[1]
     if matches_any(path_part, noise_patterns):
@@ -165,7 +165,7 @@ report = {
         'status': summary_status,
         'currentBranch': current_branch,
         'cleanWorktree': clean,
-        'ignoredDirtyPaths': [line[3:] if len(line) > 3 else '' for line in status_lines if line not in relevant_status_lines],
+        'ignoredDirtyPaths': [line[3:].strip() if len(line) > 3 else '' for line in status_lines if line not in relevant_status_lines],
         'localBranchCount': len(local_branches),
         'remoteCount': len(remotes),
         'mergeCommitCount': merge_commit_count,

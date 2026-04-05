@@ -1,6 +1,6 @@
 # GitHub publish prep report
 
-- Generated at: `2026-04-05T01:09:39.636259Z`
+- Generated at: `2026-04-05T01:11:09.276766Z`
 - Target owner/repo: `SocioProphet/policy-fabric-control-repository`
 - Visibility: `private`
 - Status: `warn`

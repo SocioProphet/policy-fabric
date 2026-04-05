@@ -2,7 +2,7 @@
   "apiVersion": "policy.fabric.github-publish-report/v1",
   "kind": "GitHubPublishPrepReport",
   "metadata": {
-    "generatedAt": "2026-04-05T01:09:39.636259Z",
+    "generatedAt": "2026-04-05T01:11:09.276766Z",
     "generator": "policy-fabric-github-publish-prep/0.1.0"
   },
   "subject": {

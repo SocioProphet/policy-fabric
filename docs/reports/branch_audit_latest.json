@@ -2,7 +2,7 @@
   "apiVersion": "policy.fabric.branch-audit/v1",
   "kind": "BranchAuditReport",
   "metadata": {
-    "generatedAt": "2026-04-05T01:09:39.491439Z",
+    "generatedAt": "2026-04-05T01:11:09.117450Z",
     "generator": "policy-fabric-branch-audit/0.1.0"
   },
   "summary": {
@@ -43,7 +43,8 @@
       "baseline/2026-04-05_pre-github-publish-prep"
     ],
     "recentGraph": [
-      "* 693a18c (HEAD -> main) Ignore generated-only noise in publish and branch readiness checks",
+      "* 6c93f24 (HEAD -> main) Refine publish and branch checks to ignore generated-only noise",
+      "* 693a18c Ignore generated-only noise in publish and branch readiness checks",
       "* ec4af4b (tag: baseline/2026-04-05_post-github-publish-prep) Refresh generated reports after GitHub prep merge",
       "*   e76af78 Merge docs/github-publish-pairing-prep",
       "|\\  ",
@@ -62,6 +63,12 @@
       "* d580b90 Initialize Policy Fabric working repository with repo-native workflow surfaces"
     ],
     "recentCommits": [
+      {
+        "rev": "6c93f24",
+        "fullRev": "6c93f2464c71772fd244d40242c5d0a4dbe7a27d",
+        "date": "2026-04-05 01:10:03 +0000",
+        "subject": "Refine publish and branch checks to ignore generated-only noise"
+      },
       {
         "rev": "693a18c",
         "fullRev": "693a18c4550d8c15fe41c4b39b8ddf67f0a077cd",
@@ -127,12 +134,6 @@
         "fullRev": "ff095f152bc67de2f611511fa47d8014a58904f0",
         "date": "2026-03-31 18:31:59 +0000",
         "subject": "Rebuild distributable bundle after manifest refresh"
-      },
-      {
-        "rev": "10f5841",
-        "fullRev": "10f5841b061d95adb16894dc760c88c85f2724b6",
-        "date": "2026-03-31 18:31:31 +0000",
-        "subject": "Refresh repository manifest after spec additions"
       }
     ]
   },
