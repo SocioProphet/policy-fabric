@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import fnmatch
 import json
 import shutil
 import subprocess
@@ -40,6 +41,8 @@ def run(cmd: list[str]) -> dict[str, Any]:
 
 
 contract = json.loads(CONTRACT_PATH.read_text())
+ownership = json.loads((ROOT / '.policy-fabric/ownership.json').read_text())
+noise_patterns = ownership.get('generatedPaths', []) + ownership.get('localOverridePaths', [])
 checks: list[dict[str, Any]] = []
 
 
@@ -89,8 +92,19 @@ else:
     add('git:branch', 'fail', 'error', 'PFG021_BRANCH_UNKNOWN', 'unable to resolve current git branch', details=branch)
 
 if status['ok']:
-    clean = not bool(status['stdout'])
-    add('git:worktree-clean', 'pass' if clean else 'warn', 'info' if clean else 'warn', 'PFG022_WORKTREE_CLEAN' if clean else 'PFG023_WORKTREE_DIRTY', 'working tree is clean for publication prep' if clean else 'working tree is dirty; publish only after review or commit', details={'stdout': status['stdout'][:1000]})
+    raw_lines = [line for line in status['stdout'].splitlines() if line.strip()]
+    relevant = []
+    ignored = []
+    for line in raw_lines:
+        path_part = line[3:] if len(line) > 3 else ''
+        if ' -> ' in path_part:
+            path_part = path_part.split(' -> ', 1)[1]
+        if any(fnmatch.fnmatch(path_part, pattern) for pattern in noise_patterns):
+            ignored.append(path_part)
+        else:
+            relevant.append(line)
+    clean = not bool(relevant)
+    add('git:worktree-clean', 'pass' if clean else 'warn', 'info' if clean else 'warn', 'PFG022_WORKTREE_CLEAN' if clean else 'PFG023_WORKTREE_DIRTY', 'working tree is clean for publication prep once generated-only noise is ignored' if clean else 'working tree has non-generated changes; publish only after review or commit', details={'stdout': '\n'.join(relevant)[:1000], 'ignored': ignored[:20]})
 else:
     add('git:worktree-clean', 'fail', 'error', 'PFG024_WORKTREE_CHECK_FAILED', 'unable to inspect git worktree status', details=status)
 

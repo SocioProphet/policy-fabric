@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import fnmatch
 import json
 import subprocess
 from datetime import datetime, timezone
@@ -36,10 +37,20 @@ def state_file(name: str) -> bool:
 
 
 policy = json.loads((ROOT / '.policy-fabric' / 'branch_policy.json').read_text())
+ownership = json.loads((ROOT / '.policy-fabric' / 'ownership.json').read_text())
+noise_patterns = ownership.get('generatedPaths', []) + ownership.get('localOverridePaths', [])
 current_branch = git('rev-parse', '--abbrev-ref', 'HEAD')
 detached = current_branch == 'HEAD'
-status = git('status', '--porcelain')
-clean = not bool(status)
+status_lines = git_lines('status', '--porcelain')
+relevant_status_lines = []
+for line in status_lines:
+    path_part = line[3:] if len(line) > 3 else ''
+    if ' -> ' in path_part:
+        path_part = path_part.split(' -> ', 1)[1]
+    if any(fnmatch.fnmatch(path_part, pattern) for pattern in noise_patterns):
+        continue
+    relevant_status_lines.append(line)
+clean = not bool(relevant_status_lines)
 
 local_branches: list[str] = []
 for line in git_lines('branch', '-vv'):
@@ -145,6 +156,7 @@ report = {
         'status': summary_status,
         'currentBranch': current_branch,
         'cleanWorktree': clean,
+        'ignoredDirtyPaths': [line[3:] if len(line) > 3 else '' for line in status_lines if line not in relevant_status_lines],
         'localBranchCount': len(local_branches),
         'remoteCount': len(remotes),
         'mergeCommitCount': merge_commit_count,

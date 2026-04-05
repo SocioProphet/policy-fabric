@@ -2,7 +2,7 @@
   "apiVersion": "policy.fabric.github-publish-report/v1",
   "kind": "GitHubPublishPrepReport",
   "metadata": {
-    "generatedAt": "2026-04-05T01:06:21.665482Z",
+    "generatedAt": "2026-04-05T01:08:41.191586Z",
     "generator": "policy-fabric-github-publish-prep/0.1.0"
   },
   "subject": {
@@ -51,9 +51,12 @@
       "status": "warn",
       "severity": "warn",
       "code": "PFG023_WORKTREE_DIRTY",
-      "message": "working tree is dirty; publish only after review or commit",
+      "message": "working tree has non-generated changes; publish only after review or commit",
       "details": {
-        "stdout": "M .policy-fabric/reports/reconcile_latest.json\n M REPO_MANIFEST.json\n M docs/reports/branch_audit_latest.json\n M docs/reports/branch_audit_latest.md\n M docs/reports/reconcile_latest.md"
+        "stdout": "M docs/reports/branch_audit_latest.json\n M scripts/branch_audit.py\n M scripts/github_publish_prep.py",
+        "ignored": [
+          "docs/reports/branch_audit_latest.md"
+        ]
       }
     },
     {
@@ -74,7 +77,7 @@
       "code": "PFG027_BASELINE_TAGS_PRESENT",
       "message": "baseline tags are present",
       "details": {
-        "stdout": "baseline/2026-04-02_pre-branch-audit\nbaseline/2026-04-04_branch-audited\nbaseline/2026-04-05_docs-github-prep-validated\nbaseline/2026-04-05_pre-github-publish-prep"
+        "stdout": "baseline/2026-04-02_pre-branch-audit\nbaseline/2026-04-04_branch-audited\nbaseline/2026-04-05_docs-github-prep-validated\nbaseline/2026-04-05_post-github-publish-prep\nbaseline/2026-04-05_pre-github-publish-prep"
       }
     },
     {

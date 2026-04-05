@@ -2,13 +2,14 @@
   "apiVersion": "policy.fabric.branch-audit/v1",
   "kind": "BranchAuditReport",
   "metadata": {
-    "generatedAt": "2026-04-05T01:06:21.526526Z",
+    "generatedAt": "2026-04-05T01:08:41.030286Z",
     "generator": "policy-fabric-branch-audit/0.1.0"
   },
   "summary": {
     "status": "warn",
     "currentBranch": "main",
     "cleanWorktree": false,
+    "ignoredDirtyPaths": [],
     "localBranchCount": 4,
     "remoteCount": 0,
     "mergeCommitCount": 1
@@ -31,10 +32,12 @@
       "baseline/2026-04-02_pre-branch-audit",
       "baseline/2026-04-04_branch-audited",
       "baseline/2026-04-05_docs-github-prep-validated",
+      "baseline/2026-04-05_post-github-publish-prep",
       "baseline/2026-04-05_pre-github-publish-prep"
     ],
     "recentGraph": [
-      "*   e76af78 (HEAD -> main) Merge docs/github-publish-pairing-prep",
+      "* ec4af4b (HEAD -> main, tag: baseline/2026-04-05_post-github-publish-prep) Refresh generated reports after GitHub prep merge",
+      "*   e76af78 Merge docs/github-publish-pairing-prep",
       "|\\  ",
       "| * 642204a (tag: baseline/2026-04-05_docs-github-prep-validated, docs/github-publish-pairing-prep) Add GitHub publication and pair-programming prep surfaces",
       "|/  ",
@@ -51,6 +54,12 @@
       "* d580b90 Initialize Policy Fabric working repository with repo-native workflow surfaces"
     ],
     "recentCommits": [
+      {
+        "rev": "ec4af4b",
+        "fullRev": "ec4af4bdd38013f4d1f30836446de60744b0a173",
+        "date": "2026-04-05 01:06:54 +0000",
+        "subject": "Refresh generated reports after GitHub prep merge"
+      },
       {
         "rev": "e76af78",
         "fullRev": "e76af78820c0511b273761e4322e7013a0b6a5dd",
@@ -116,12 +125,6 @@
         "fullRev": "c1c73c37298c1ac1ee9fb721371324333f6a9017",
         "date": "2026-03-31 18:31:30 +0000",
         "subject": "Add draft semantic validator and error taxonomy specs"
-      },
-      {
-        "rev": "baae8b7",
-        "fullRev": "baae8b77729e7320b0ce03cda1317c288af0930b",
-        "date": "2026-03-31 18:29:12 +0000",
-        "subject": "Add manifest-aware bundle build and release snapshot report"
       }
     ]
   },
@@ -176,7 +179,7 @@
       "id": "branch:baseline-tags",
       "status": "pass",
       "code": "PFB022_BRANCH_BASELINE_TAGS_OK",
-      "message": "Baseline tags present: ['baseline/2026-04-02_pre-branch-audit', 'baseline/2026-04-04_branch-audited', 'baseline/2026-04-05_docs-github-prep-validated', 'baseline/2026-04-05_pre-github-publish-prep']"
+      "message": "Baseline tags present: ['baseline/2026-04-02_pre-branch-audit', 'baseline/2026-04-04_branch-audited', 'baseline/2026-04-05_docs-github-prep-validated', 'baseline/2026-04-05_post-github-publish-prep', 'baseline/2026-04-05_pre-github-publish-prep']"
     },
     {
       "id": "branch:policy-protected-main",

@@ -13,7 +13,7 @@ Merge commits in history: `1`
 - [OK] branch:single-main-only — PFB017_BRANCH_TOPOLOGY_OK — Local branches present: ['docs/github-publish-pairing-prep', 'main', 'work/official-agentplane-init-eval', 'work/policy-semantics-overlap']
 - [WARN] branch:remotes — PFB019_BRANCH_NO_REMOTE — No remotes configured in snapshot; remote protection cannot be observed here
 - [OK] branch:merge-history — PFB021_BRANCH_MERGE_HISTORY_PRESENT — History contains 1 merge commits
-- [OK] branch:baseline-tags — PFB022_BRANCH_BASELINE_TAGS_OK — Baseline tags present: ['baseline/2026-04-02_pre-branch-audit', 'baseline/2026-04-04_branch-audited', 'baseline/2026-04-05_docs-github-prep-validated', 'baseline/2026-04-05_pre-github-publish-prep']
+- [OK] branch:baseline-tags — PFB022_BRANCH_BASELINE_TAGS_OK — Baseline tags present: ['baseline/2026-04-02_pre-branch-audit', 'baseline/2026-04-04_branch-audited', 'baseline/2026-04-05_docs-github-prep-validated', 'baseline/2026-04-05_post-github-publish-prep', 'baseline/2026-04-05_pre-github-publish-prep']
 - [OK] branch:policy-protected-main — PFB024_BRANCH_POLICY_OK — Branch policy protects `main` as the baseline branch
 
 ## Recommended Next Work Branches
