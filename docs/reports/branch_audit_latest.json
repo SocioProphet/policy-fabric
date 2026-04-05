@@ -2,7 +2,7 @@
   "apiVersion": "policy.fabric.branch-audit/v1",
   "kind": "BranchAuditReport",
   "metadata": {
-    "generatedAt": "2026-04-05T01:11:09.117450Z",
+    "generatedAt": "2026-04-05T01:12:17.571803Z",
     "generator": "policy-fabric-branch-audit/0.1.0"
   },
   "summary": {
@@ -10,12 +10,7 @@
     "currentBranch": "main",
     "cleanWorktree": false,
     "ignoredDirtyPaths": [
-      "dist/policy_fabric_contracts_bundle_latest.zip",
-      "dist/policy_fabric_contracts_bundle_manifest.json",
-      "docs/reports/branch_audit_latest.json",
-      "docs/reports/github_publish_prep_latest.json",
-      "docs/reports/github_publish_prep_latest.md",
-      "docs/reports/validation_report_latest.json"
+      "docs/reports/github_publish_prep_latest.md"
     ],
     "localBranchCount": 4,
     "remoteCount": 0,
@@ -43,7 +38,8 @@
       "baseline/2026-04-05_pre-github-publish-prep"
     ],
     "recentGraph": [
-      "* 6c93f24 (HEAD -> main) Refine publish and branch checks to ignore generated-only noise",
+      "* 49b05ee (HEAD -> main) Tighten GitHub publish and branch readiness reporting",
+      "* 6c93f24 Refine publish and branch checks to ignore generated-only noise",
       "* 693a18c Ignore generated-only noise in publish and branch readiness checks",
       "* ec4af4b (tag: baseline/2026-04-05_post-github-publish-prep) Refresh generated reports after GitHub prep merge",
       "*   e76af78 Merge docs/github-publish-pairing-prep",
@@ -63,6 +59,12 @@
       "* d580b90 Initialize Policy Fabric working repository with repo-native workflow surfaces"
     ],
     "recentCommits": [
+      {
+        "rev": "49b05ee",
+        "fullRev": "49b05eebc84579673d68e671521447fd44c6028d",
+        "date": "2026-04-05 01:11:52 +0000",
+        "subject": "Tighten GitHub publish and branch readiness reporting"
+      },
       {
         "rev": "6c93f24",
         "fullRev": "6c93f2464c71772fd244d40242c5d0a4dbe7a27d",
@@ -128,12 +130,6 @@
         "fullRev": "9f71b2c905f8a92402e9617c3647bbf9b744e16d",
         "date": "2026-04-01 13:19:46 +0000",
         "subject": "Correct AgentPlane lessons to official public docs and harden doctor coverage"
-      },
-      {
-        "rev": "ff095f1",
-        "fullRev": "ff095f152bc67de2f611511fa47d8014a58904f0",
-        "date": "2026-03-31 18:31:59 +0000",
-        "subject": "Rebuild distributable bundle after manifest refresh"
       }
     ]
   },

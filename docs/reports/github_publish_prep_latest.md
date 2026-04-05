@@ -1,6 +1,6 @@
 # GitHub publish prep report
 
-- Generated at: `2026-04-05T01:11:09.276766Z`
+- Generated at: `2026-04-05T01:12:17.482493Z`
 - Target owner/repo: `SocioProphet/policy-fabric-control-repository`
 - Visibility: `private`
 - Status: `warn`
@@ -13,10 +13,7 @@
   - Artifact: `.policy-fabric/github_publish.json`
 - ✅ `PFG020_BRANCH_OK` — current branch is `main`
   - branch=main
-- ⚠️ `PFG023_WORKTREE_DIRTY` — working tree has non-generated changes; publish only after review or commit
-  - stdout=M .policy-fabric/reports/doctor_latest.json
- M scripts/branch_audit.py
- M scripts/github_publish_prep.py
+- ✅ `PFG022_WORKTREE_CLEAN` — working tree is clean for publication prep once generated-only noise is ignored
 - ⚠️ `PFG026_REMOTE_MISSING` — no git remote configured yet; expected before first push
 - ✅ `PFG027_BASELINE_TAGS_PRESENT` — baseline tags are present
   - stdout=baseline/2026-04-02_pre-branch-audit
