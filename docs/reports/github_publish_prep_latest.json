@@ -2,7 +2,7 @@
   "apiVersion": "policy.fabric.github-publish-report/v1",
   "kind": "GitHubPublishPrepReport",
   "metadata": {
-    "generatedAt": "2026-04-05T01:03:21.421293Z",
+    "generatedAt": "2026-04-05T01:06:21.665482Z",
     "generator": "policy-fabric-github-publish-prep/0.1.0"
   },
   "subject": {
@@ -41,9 +41,9 @@
       "status": "pass",
       "severity": "info",
       "code": "PFG020_BRANCH_OK",
-      "message": "current branch is `docs/github-publish-pairing-prep`",
+      "message": "current branch is `main`",
       "details": {
-        "branch": "docs/github-publish-pairing-prep"
+        "branch": "main"
       }
     },
     {
@@ -53,7 +53,7 @@
       "code": "PFG023_WORKTREE_DIRTY",
       "message": "working tree is dirty; publish only after review or commit",
       "details": {
-        "stdout": "M .policy-fabric/WORKFLOW.md\n M .policy-fabric/config.json\n M .policy-fabric/ownership.json\n M .policy-fabric/reports/reconcile_latest.json\n M AGENTS.md\n M BACKLOG.md\n M CHANGELOG.md\n M README.md\n M REPO_MANIFEST.json\n M docs/reports/reconcile_latest.md\n M scripts/build_dist_bundle.py\n M scripts/doctor.py\n?? .github/\n?? .policy-fabric/github_publish.json\n?? CONTRIBUTING.md\n?? SECURITY.md\n?? docs/assessments/2026-04-05_github_publish_readiness.md\n?? docs/specs/github_publish_and_pairing.md\n?? docs/turns/2026-04-05_turn_01.md\n?? scripts/github_publish_prep.py"
+        "stdout": "M .policy-fabric/reports/reconcile_latest.json\n M REPO_MANIFEST.json\n M docs/reports/branch_audit_latest.json\n M docs/reports/branch_audit_latest.md\n M docs/reports/reconcile_latest.md"
       }
     },
     {
@@ -74,7 +74,7 @@
       "code": "PFG027_BASELINE_TAGS_PRESENT",
       "message": "baseline tags are present",
       "details": {
-        "stdout": "baseline/2026-04-02_pre-branch-audit\nbaseline/2026-04-04_branch-audited\nbaseline/2026-04-05_pre-github-publish-prep"
+        "stdout": "baseline/2026-04-02_pre-branch-audit\nbaseline/2026-04-04_branch-audited\nbaseline/2026-04-05_docs-github-prep-validated\nbaseline/2026-04-05_pre-github-publish-prep"
       }
     },
     {

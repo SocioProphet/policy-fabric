@@ -2,16 +2,16 @@
   "apiVersion": "policy.fabric.branch-audit/v1",
   "kind": "BranchAuditReport",
   "metadata": {
-    "generatedAt": "2026-04-05T01:03:25.253041Z",
+    "generatedAt": "2026-04-05T01:06:21.526526Z",
     "generator": "policy-fabric-branch-audit/0.1.0"
   },
   "summary": {
     "status": "warn",
-    "currentBranch": "docs/github-publish-pairing-prep",
+    "currentBranch": "main",
     "cleanWorktree": false,
     "localBranchCount": 4,
     "remoteCount": 0,
-    "mergeCommitCount": 0
+    "mergeCommitCount": 1
   },
   "topology": {
     "localBranches": [
@@ -30,10 +30,15 @@
     "baselineTags": [
       "baseline/2026-04-02_pre-branch-audit",
       "baseline/2026-04-04_branch-audited",
+      "baseline/2026-04-05_docs-github-prep-validated",
       "baseline/2026-04-05_pre-github-publish-prep"
     ],
     "recentGraph": [
-      "* fb89fb6 (HEAD -> docs/github-publish-pairing-prep, tag: baseline/2026-04-05_pre-github-publish-prep, tag: baseline/2026-04-04_branch-audited, work/policy-semantics-overlap, work/official-agentplane-init-eval, main) Add branch audit and branch-safety policy",
+      "*   e76af78 (HEAD -> main) Merge docs/github-publish-pairing-prep",
+      "|\\  ",
+      "| * 642204a (tag: baseline/2026-04-05_docs-github-prep-validated, docs/github-publish-pairing-prep) Add GitHub publication and pair-programming prep surfaces",
+      "|/  ",
+      "* fb89fb6 (tag: baseline/2026-04-05_pre-github-publish-prep, tag: baseline/2026-04-04_branch-audited, work/policy-semantics-overlap, work/official-agentplane-init-eval) Add branch audit and branch-safety policy",
       "* cd5e342 (tag: baseline/2026-04-02_pre-branch-audit) Add official AgentPlane bridge contract and probe",
       "* 7ca0041 Add repo identity and AgentPlane integration bridge",
       "* 7d6288d Add capability catalog and authored policy semantic validation",
@@ -46,6 +51,18 @@
       "* d580b90 Initialize Policy Fabric working repository with repo-native workflow surfaces"
     ],
     "recentCommits": [
+      {
+        "rev": "e76af78",
+        "fullRev": "e76af78820c0511b273761e4322e7013a0b6a5dd",
+        "date": "2026-04-05 01:05:23 +0000",
+        "subject": "Merge docs/github-publish-pairing-prep"
+      },
+      {
+        "rev": "642204a",
+        "fullRev": "642204a1854cd3ace66195f82392d22fd0adce6e",
+        "date": "2026-04-05 01:03:57 +0000",
+        "subject": "Add GitHub publication and pair-programming prep surfaces"
+      },
       {
         "rev": "fb89fb6",
         "fullRev": "fb89fb625589ca2a32d43a8b86ea1bac4c134696",
@@ -105,12 +122,6 @@
         "fullRev": "baae8b77729e7320b0ce03cda1317c288af0930b",
         "date": "2026-03-31 18:29:12 +0000",
         "subject": "Add manifest-aware bundle build and release snapshot report"
-      },
-      {
-        "rev": "d580b90",
-        "fullRev": "d580b903ff445184e51b2f135785c869a505dc52",
-        "date": "2026-03-31 18:28:10 +0000",
-        "subject": "Initialize Policy Fabric working repository with repo-native workflow surfaces"
       }
     ]
   },
@@ -129,7 +140,7 @@
       "id": "branch:head-attached",
       "status": "pass",
       "code": "PFB010_BRANCH_HEAD_OK",
-      "message": "HEAD is attached to `docs/github-publish-pairing-prep`"
+      "message": "HEAD is attached to `main`"
     },
     {
       "id": "branch:merge-state",
@@ -157,15 +168,15 @@
     },
     {
       "id": "branch:merge-history",
-      "status": "warn",
-      "code": "PFB020_BRANCH_LINEAR_HISTORY",
-      "message": "History is fully linear so far; keep baseline tags and use work branches for risky changes"
+      "status": "pass",
+      "code": "PFB021_BRANCH_MERGE_HISTORY_PRESENT",
+      "message": "History contains 1 merge commits"
     },
     {
       "id": "branch:baseline-tags",
       "status": "pass",
       "code": "PFB022_BRANCH_BASELINE_TAGS_OK",
-      "message": "Baseline tags present: ['baseline/2026-04-02_pre-branch-audit', 'baseline/2026-04-04_branch-audited', 'baseline/2026-04-05_pre-github-publish-prep']"
+      "message": "Baseline tags present: ['baseline/2026-04-02_pre-branch-audit', 'baseline/2026-04-04_branch-audited', 'baseline/2026-04-05_docs-github-prep-validated', 'baseline/2026-04-05_pre-github-publish-prep']"
     },
     {
       "id": "branch:policy-protected-main",
