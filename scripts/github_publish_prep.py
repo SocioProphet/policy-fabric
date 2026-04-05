@@ -65,6 +65,15 @@ def git_out(*args: str) -> dict[str, Any]:
     return run(['git', *args])
 
 
+def matches_any(path_str: str, patterns: list[str]) -> bool:
+    for pattern in patterns:
+        if fnmatch.fnmatch(path_str, pattern):
+            return True
+        if pattern.endswith('/**') and path_str.startswith(pattern[:-3]):
+            return True
+    return False
+
+
 # Contract presence and basic shape
 required_keys = {'owner', 'repoName', 'visibility', 'defaultBranch', 'remoteName', 'publishMode', 'requiredRepoSurfaces'}
 missing_keys = sorted(required_keys - set(contract))
@@ -99,7 +108,7 @@ if status['ok']:
         path_part = line[3:] if len(line) > 3 else ''
         if ' -> ' in path_part:
             path_part = path_part.split(' -> ', 1)[1]
-        if any(fnmatch.fnmatch(path_part, pattern) for pattern in noise_patterns):
+        if matches_any(path_part, noise_patterns):
             ignored.append(path_part)
         else:
             relevant.append(line)

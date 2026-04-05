@@ -1,6 +1,6 @@
 # GitHub publish prep report
 
-- Generated at: `2026-04-05T01:08:41.191586Z`
+- Generated at: `2026-04-05T01:09:39.636259Z`
 - Target owner/repo: `SocioProphet/policy-fabric-control-repository`
 - Visibility: `private`
 - Status: `warn`
@@ -14,7 +14,7 @@
 - ✅ `PFG020_BRANCH_OK` — current branch is `main`
   - branch=main
 - ⚠️ `PFG023_WORKTREE_DIRTY` — working tree has non-generated changes; publish only after review or commit
-  - stdout=M docs/reports/branch_audit_latest.json
+  - stdout=M .policy-fabric/reports/doctor_latest.json
  M scripts/branch_audit.py
  M scripts/github_publish_prep.py
 - ⚠️ `PFG026_REMOTE_MISSING` — no git remote configured yet; expected before first push

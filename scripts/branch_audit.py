@@ -36,6 +36,15 @@ def state_file(name: str) -> bool:
     return (ROOT / '.git' / name).exists()
 
 
+def matches_any(path_str: str, patterns: list[str]) -> bool:
+    for pattern in patterns:
+        if fnmatch.fnmatch(path_str, pattern):
+            return True
+        if pattern.endswith('/**') and path_str.startswith(pattern[:-3]):
+            return True
+    return False
+
+
 policy = json.loads((ROOT / '.policy-fabric' / 'branch_policy.json').read_text())
 ownership = json.loads((ROOT / '.policy-fabric' / 'ownership.json').read_text())
 noise_patterns = ownership.get('generatedPaths', []) + ownership.get('localOverridePaths', [])
@@ -47,7 +56,7 @@ for line in status_lines:
     path_part = line[3:] if len(line) > 3 else ''
     if ' -> ' in path_part:
         path_part = path_part.split(' -> ', 1)[1]
-    if any(fnmatch.fnmatch(path_part, pattern) for pattern in noise_patterns):
+    if matches_any(path_part, noise_patterns):
         continue
     relevant_status_lines.append(line)
 clean = not bool(relevant_status_lines)
