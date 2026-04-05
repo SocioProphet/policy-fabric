@@ -1,3 +1,9 @@
+
+## 2026-04-05
+
+- added GitHub publication and pair-programming preparation surfaces (`CONTRIBUTING.md`, `SECURITY.md`, `.github/`, `.policy-fabric/github_publish.json`, `scripts/github_publish_prep.py`)
+- added a repo-health GitHub Actions workflow and first-pass issue/PR templates
+- updated repo governance and doctor coverage for GitHub publish readiness
 # Changelog
 
 ## 2026-04-02 — official AgentPlane no-touch probe and bridge contract

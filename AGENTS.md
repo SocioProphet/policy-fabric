@@ -19,14 +19,16 @@ This is the root gateway for coding-agent work in the **Policy Fabric Control Re
 5. Run `python scripts/reconcile.py`.
 6. Run `python scripts/agentplane_probe.py` when the change affects the AgentPlane bridge or repo workflow surfaces.
 7. Run `python scripts/doctor.py`.
-8. Review `docs/reports/doctor_latest.md`, `docs/reports/validation_report_latest.json`, and `docs/reports/agentplane_probe_latest.md` as needed.
-9. Run `python scripts/build_dist_bundle.py` if the change affects release artifacts.
+8. Run `python scripts/github_publish_prep.py` when the change affects `.github/`, publication readiness, or pair-programming push flow.
+9. Review `docs/reports/doctor_latest.md`, `docs/reports/validation_report_latest.json`, `docs/reports/agentplane_probe_latest.md`, and `docs/reports/github_publish_prep_latest.md` as needed.
+10. Run `python scripts/build_dist_bundle.py` if the change affects release artifacts.
 
 ## High-value surfaces
 
 - `contracts/` — source-of-truth machine-readable contracts.
 - `examples/` — aligned examples that should validate against the contracts.
 - `docs/specs/` — design rules and repo governance details.
+- `.github/` — GitHub collaboration and automation surfaces for the first publish and ongoing pair-programming flow.
 - `docs/assessments/` — what is strong, what is weak, what to do next.
 - `scripts/` — authoritative automation for reconcile, AgentPlane bridge probing, doctor, semantic checks, and bundle build.
 - `.policy-fabric/agentplane_bridge.json` — machine-readable contract for the official AgentPlane bridge.
@@ -47,6 +49,10 @@ When we adopt the official AgentPlane CLI, initialize it on a dedicated branch a
 Until then, `.policy-fabric/` remains the authoritative workflow surface.
 
 The explicit adoption plan lives in `docs/specs/agentplane_integration_plan.md`.
+
+## GitHub-first collaboration
+
+Use `CONTRIBUTING.md`, `SECURITY.md`, `.policy-fabric/github_publish.json`, and `docs/specs/github_publish_and_pairing.md` as the authoritative surfaces for the first GitHub publish and pair-programming push.
 
 
 ## Branch Discipline

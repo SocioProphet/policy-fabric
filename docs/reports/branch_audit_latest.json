@@ -2,19 +2,20 @@
   "apiVersion": "policy.fabric.branch-audit/v1",
   "kind": "BranchAuditReport",
   "metadata": {
-    "generatedAt": "2026-04-04T20:57:38.092735Z",
+    "generatedAt": "2026-04-05T01:03:25.253041Z",
     "generator": "policy-fabric-branch-audit/0.1.0"
   },
   "summary": {
     "status": "warn",
-    "currentBranch": "main",
-    "cleanWorktree": true,
-    "localBranchCount": 3,
+    "currentBranch": "docs/github-publish-pairing-prep",
+    "cleanWorktree": false,
+    "localBranchCount": 4,
     "remoteCount": 0,
     "mergeCommitCount": 0
   },
   "topology": {
     "localBranches": [
+      "docs/github-publish-pairing-prep",
       "main",
       "work/official-agentplane-init-eval",
       "work/policy-semantics-overlap"
@@ -28,10 +29,11 @@
     },
     "baselineTags": [
       "baseline/2026-04-02_pre-branch-audit",
-      "baseline/2026-04-04_branch-audited"
+      "baseline/2026-04-04_branch-audited",
+      "baseline/2026-04-05_pre-github-publish-prep"
     ],
     "recentGraph": [
-      "* fb488b6 (HEAD -> main, tag: baseline/2026-04-04_branch-audited, work/policy-semantics-overlap, work/official-agentplane-init-eval) Add branch audit and branch-safety policy",
+      "* fb89fb6 (HEAD -> docs/github-publish-pairing-prep, tag: baseline/2026-04-05_pre-github-publish-prep, tag: baseline/2026-04-04_branch-audited, work/policy-semantics-overlap, work/official-agentplane-init-eval, main) Add branch audit and branch-safety policy",
       "* cd5e342 (tag: baseline/2026-04-02_pre-branch-audit) Add official AgentPlane bridge contract and probe",
       "* 7ca0041 Add repo identity and AgentPlane integration bridge",
       "* 7d6288d Add capability catalog and authored policy semantic validation",
@@ -45,8 +47,8 @@
     ],
     "recentCommits": [
       {
-        "rev": "fb488b6",
-        "fullRev": "fb488b69c8c1ac5b90d44714f1715ae82845c3ce",
+        "rev": "fb89fb6",
+        "fullRev": "fb89fb625589ca2a32d43a8b86ea1bac4c134696",
         "date": "2026-04-04 20:57:20 +0000",
         "subject": "Add branch audit and branch-safety policy"
       },
@@ -127,7 +129,7 @@
       "id": "branch:head-attached",
       "status": "pass",
       "code": "PFB010_BRANCH_HEAD_OK",
-      "message": "HEAD is attached to `main`"
+      "message": "HEAD is attached to `docs/github-publish-pairing-prep`"
     },
     {
       "id": "branch:merge-state",
@@ -145,7 +147,7 @@
       "id": "branch:single-main-only",
       "status": "pass",
       "code": "PFB017_BRANCH_TOPOLOGY_OK",
-      "message": "Local branches present: ['main', 'work/official-agentplane-init-eval', 'work/policy-semantics-overlap']"
+      "message": "Local branches present: ['docs/github-publish-pairing-prep', 'main', 'work/official-agentplane-init-eval', 'work/policy-semantics-overlap']"
     },
     {
       "id": "branch:remotes",
@@ -163,7 +165,7 @@
       "id": "branch:baseline-tags",
       "status": "pass",
       "code": "PFB022_BRANCH_BASELINE_TAGS_OK",
-      "message": "Baseline tags present: ['baseline/2026-04-02_pre-branch-audit', 'baseline/2026-04-04_branch-audited']"
+      "message": "Baseline tags present: ['baseline/2026-04-02_pre-branch-audit', 'baseline/2026-04-04_branch-audited', 'baseline/2026-04-05_pre-github-publish-prep']"
     },
     {
       "id": "branch:policy-protected-main",

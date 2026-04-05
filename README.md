@@ -26,9 +26,11 @@ The repo keeps the active contracts, aligned examples, supporting design notes, 
 - `contracts/` — active machine-readable service and schema contracts.
 - `examples/` — aligned example payloads and responses.
 - `docs/` — blueprint, assessments, research, comparison, rebrand notes, specs, reports, and turn logs.
-- `.policy-fabric/` — repo-local workflow, ownership, profile, repair, generated-report, and AgentPlane-bridge surfaces.
+- `.policy-fabric/` — repo-local workflow, ownership, profile, repair, generated-report, AgentPlane-bridge, and GitHub publish-contract surfaces.
 - `scripts/` — reconcile, AgentPlane bridge probing, doctor, semantic validation, and bundle-build utilities.
 - `AGENTS.md` — root gateway for coding-agent workflows, including AgentPlane-oriented startup guidance.
+- `.github/` — GitHub-native collaboration surfaces: PR template, issue templates, CODEOWNERS placeholder, and CI workflow.
+- `CONTRIBUTING.md` / `SECURITY.md` — collaborator and publication guidance.
 
 ## Generated outputs
 
@@ -42,8 +44,9 @@ The repo keeps the active contracts, aligned examples, supporting design notes, 
 3. Run `python scripts/agentplane_probe.py` when the change affects the AgentPlane bridge or repo workflow surfaces.
 4. Run `python scripts/doctor.py`.
 5. Review `docs/reports/doctor_latest.md`, `docs/reports/validation_report_latest.json`, and `docs/reports/agentplane_probe_latest.md` as applicable.
-6. Run `python scripts/build_dist_bundle.py`.
-7. Commit the result and export the latest snapshot zip.
+6. Run `python scripts/github_publish_prep.py` when the change affects GitHub-facing surfaces or publish readiness.
+7. Run `python scripts/build_dist_bundle.py`.
+8. Commit the result and export the latest snapshot zip.
 
 ## How this relates to AgentPlane
 
@@ -67,3 +70,16 @@ The current focus is reconnecting the original modernization goal to the repo we
 ## Branch Safety
 
 This repository currently has a linear bootstrap history on `main`. That keeps the repo simple, but it also means risky work should now move to explicit `work/` branches from tagged baselines. See `.policy-fabric/branch_policy.json`, `scripts/branch_audit.py`, and `docs/specs/branch_safety.md`.
+
+## GitHub publication state
+
+This repository is now prepared for a **private initial GitHub publication**.
+The proposed first remote is `SocioProphet/policy-fabric-control-repository`.
+
+Use `python scripts/github_publish_prep.py` plus `docs/specs/github_publish_and_pairing.md` before the first push.
+Keep the repository private until the license and disclosure path are frozen.
+
+## Pair programming push
+
+The first pair-programming push should be a low-risk bootstrap push that verifies the remote, CI workflow, templates, and branch protection path.
+Do **not** combine the first remote push with the first official AgentPlane initialization.

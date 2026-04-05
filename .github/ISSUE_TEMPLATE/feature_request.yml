@@ -1,0 +1,23 @@
+name: Feature request
+description: Propose an enhancement to Policy Fabric contracts, workflow, validation, or GitHub/AgentPlane readiness.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Expected impact
+      description: Explain effect on product semantics, repo workflow, or publication path.
