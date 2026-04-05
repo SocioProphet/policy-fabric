@@ -15,8 +15,8 @@ OWNERSHIP = json.loads((ROOT / '.policy-fabric/ownership.json').read_text())
 EXCLUSIONS = OWNERSHIP.get('bundleExclusions', [])
 
 include_roots = [
-    'README.md', 'CHANGELOG.md', 'BACKLOG.md', 'REPO_MANIFEST.json',
-    'contracts', 'examples', 'docs', '.policy-fabric'
+    'README.md', 'CHANGELOG.md', 'BACKLOG.md', 'CONTRIBUTING.md', 'SECURITY.md', 'AGENTS.md', 'REPO_MANIFEST.json',
+    'contracts', 'examples', 'docs', '.policy-fabric', '.github'
 ]
 
 

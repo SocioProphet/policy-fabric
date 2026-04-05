@@ -22,10 +22,20 @@ Overall status: PASS
 - [OK] exists:.policy-fabric/RECONCILE.md — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:.policy-fabric/agentplane_bridge.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:.policy-fabric/branch_policy.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.policy-fabric/github_publish.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:AGENTS.md — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:CONTRIBUTING.md — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:SECURITY.md — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.github/PULL_REQUEST_TEMPLATE.md — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.github/ISSUE_TEMPLATE/bug_report.yml — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.github/ISSUE_TEMPLATE/feature_request.yml — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.github/ISSUE_TEMPLATE/config.yml — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.github/CODEOWNERS — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:.github/workflows/repo_health.yml — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/reconcile.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/agentplane_probe.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/branch_audit.py — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:scripts/github_publish_prep.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] validate:policy-example — PFD010_SCHEMA_OK — policy example validates against policy schema
 - [OK] validate:plan-example — PFD010_SCHEMA_OK — compiled plan validates against plan schema
 - [OK] validate:release-pack-example — PFD010_SCHEMA_OK — release pack example validates against release pack schema
@@ -41,6 +51,7 @@ Overall status: PASS
 - [OK] docs:workflow-sync — PFD050_DOC_SYNC_OK — workflow documentation references governed commands and contracts
 - [OK] docs:reconcile-sync — PFD050_DOC_SYNC_OK — reconcile documentation references repair surfaces and commands
 - [OK] branch-policy:config-sync — PFD043_BRANCH_POLICY_SYNC_OK — config references the branch policy contract and branch audit command
+- [OK] github-publish:config-sync — PFD045_GITHUB_PUBLISH_SYNC_OK — config references the GitHub publish contract and prep command
 - [OK] docs:agents-gateway-sync — PFD050_DOC_SYNC_OK — AGENTS.md references the active repository workflow surfaces
 - [OK] ownership:no-overlap — PFD032_OWNERSHIP_OVERLAP_FREE — ownership categories do not overlap on actual files
 - [OK] ownership:no-unclassified — PFD034_OWNERSHIP_CLASSIFICATION_OK — all tracked files are classified by the ownership contract
@@ -66,6 +77,10 @@ Overall status: PASS
 - [OK] agentplane-bridge:expected-findings — PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK — AgentPlane bridge contract records expected current-state findings
 - [OK] agentplane-probe:report-shape — PFD095_AGENTPLANE_PROBE_OK — AgentPlane probe report present with expected API version
 - [OK] agentplane-probe:report-status — PFD097_AGENTPLANE_PROBE_STATUS_OK — AgentPlane probe report is non-failing
+- [OK] github-publish:contract-shape — PFD110_GITHUB_PUBLISH_OK — GitHub publish contract has expected core fields
+- [OK] github-publish:workflow-triggers — PFD112_GITHUB_WORKFLOW_OK — repo health workflow is configured for push and pull_request
+- [OK] github-publish:report-shape — PFD115_GITHUB_PUBLISH_REPORT_OK — GitHub publish prep report present with expected API version
+- [OK] github-publish:report-status — PFD117_GITHUB_PUBLISH_STATUS_OK — GitHub publish prep report is non-failing
 - [OK] branch-policy:contract-shape — PFD101_BRANCH_POLICY_OK — branch policy protects main and defines baseline tag prefix
 - [OK] branch-audit:report-shape — PFD104_BRANCH_AUDIT_OK — branch audit report present with expected API version
 - [OK] branch-audit:report-status — PFD106_BRANCH_AUDIT_STATUS_OK — branch audit report is non-failing

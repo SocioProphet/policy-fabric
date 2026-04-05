@@ -1,0 +1,115 @@
+{
+  "apiVersion": "policy.fabric.github-publish-report/v1",
+  "kind": "GitHubPublishPrepReport",
+  "metadata": {
+    "generatedAt": "2026-04-05T01:03:21.421293Z",
+    "generator": "policy-fabric-github-publish-prep/0.1.0"
+  },
+  "subject": {
+    "type": "repository",
+    "ref": ".",
+    "owner": "SocioProphet",
+    "repoName": "policy-fabric-control-repository"
+  },
+  "summary": {
+    "status": "warn",
+    "checkCount": 9,
+    "failCount": 0,
+    "warnCount": 3,
+    "recommendedVisibility": "private",
+    "nextAction": "Create or configure the remote, then push the current baseline using the command preview in the report."
+  },
+  "checks": [
+    {
+      "id": "contract:shape",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFG001_CONTRACT_OK",
+      "message": "GitHub publish contract has required keys",
+      "artifactRef": ".policy-fabric/github_publish.json"
+    },
+    {
+      "id": "surface:required-files",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFG010_REQUIRED_SURFACES_OK",
+      "message": "required GitHub-facing surfaces are present",
+      "artifactRef": ".policy-fabric/github_publish.json"
+    },
+    {
+      "id": "git:branch",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFG020_BRANCH_OK",
+      "message": "current branch is `docs/github-publish-pairing-prep`",
+      "details": {
+        "branch": "docs/github-publish-pairing-prep"
+      }
+    },
+    {
+      "id": "git:worktree-clean",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFG023_WORKTREE_DIRTY",
+      "message": "working tree is dirty; publish only after review or commit",
+      "details": {
+        "stdout": "M .policy-fabric/WORKFLOW.md\n M .policy-fabric/config.json\n M .policy-fabric/ownership.json\n M .policy-fabric/reports/reconcile_latest.json\n M AGENTS.md\n M BACKLOG.md\n M CHANGELOG.md\n M README.md\n M REPO_MANIFEST.json\n M docs/reports/reconcile_latest.md\n M scripts/build_dist_bundle.py\n M scripts/doctor.py\n?? .github/\n?? .policy-fabric/github_publish.json\n?? CONTRIBUTING.md\n?? SECURITY.md\n?? docs/assessments/2026-04-05_github_publish_readiness.md\n?? docs/specs/github_publish_and_pairing.md\n?? docs/turns/2026-04-05_turn_01.md\n?? scripts/github_publish_prep.py"
+      }
+    },
+    {
+      "id": "git:remote",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFG026_REMOTE_MISSING",
+      "message": "no git remote configured yet; expected before first push",
+      "details": {
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "id": "git:baseline-tags",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFG027_BASELINE_TAGS_PRESENT",
+      "message": "baseline tags are present",
+      "details": {
+        "stdout": "baseline/2026-04-02_pre-branch-audit\nbaseline/2026-04-04_branch-audited\nbaseline/2026-04-05_pre-github-publish-prep"
+      }
+    },
+    {
+      "id": "tool:gh",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFG031_GH_MISSING",
+      "message": "GitHub CLI not available in current environment; use web UI + git remote path or install gh",
+      "details": {
+        "path": ""
+      }
+    },
+    {
+      "id": "policy:license-private-safe",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFG040_LICENSE_PRIVATE_OK",
+      "message": "license is pending but private publication is allowed by contract",
+      "artifactRef": ".policy-fabric/github_publish.json"
+    },
+    {
+      "id": "commands:preview",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFG050_COMMANDS_READY",
+      "message": "publish command previews are available",
+      "artifactRef": ".policy-fabric/github_publish.json",
+      "details": {
+        "ghCli": "gh repo create SocioProphet/policy-fabric-control-repository --private --source . --remote origin --push --description \"Control repository for Policy Fabric contracts, examples, workflow governance, and promotion artifacts.\"",
+        "manualRemote": "git remote add origin git@github.com:SocioProphet/policy-fabric-control-repository.git && git push -u origin main --follow-tags"
+      }
+    }
+  ],
+  "commandPreview": {
+    "ghCli": "gh repo create SocioProphet/policy-fabric-control-repository --private --source . --remote origin --push --description \"Control repository for Policy Fabric contracts, examples, workflow governance, and promotion artifacts.\"",
+    "manualRemote": "git remote add origin git@github.com:SocioProphet/policy-fabric-control-repository.git && git push -u origin main --follow-tags"
+  }
+}

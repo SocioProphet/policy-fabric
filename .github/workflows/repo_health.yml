@@ -1,0 +1,46 @@
+name: Repo Health
+
+on:
+  push:
+    branches:
+      - main
+      - 'work/**'
+      - 'docs/**'
+      - 'fix/**'
+      - 'spike/**'
+  pull_request:
+
+jobs:
+  repo-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install jsonschema pyyaml
+
+      - name: Reconcile
+        run: python scripts/reconcile.py
+
+      - name: Branch audit
+        run: python scripts/branch_audit.py
+
+      - name: AgentPlane probe
+        run: python scripts/agentplane_probe.py
+
+      - name: GitHub publish prep
+        run: python scripts/github_publish_prep.py
+
+      - name: Doctor
+        run: python scripts/doctor.py
+
+      - name: Build distributable bundle
+        run: python scripts/build_dist_bundle.py

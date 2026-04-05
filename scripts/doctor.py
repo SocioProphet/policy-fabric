@@ -104,10 +104,20 @@ required = [
     '.policy-fabric/RECONCILE.md',
     '.policy-fabric/agentplane_bridge.json',
     '.policy-fabric/branch_policy.json',
+    '.policy-fabric/github_publish.json',
     'AGENTS.md',
+    'CONTRIBUTING.md',
+    'SECURITY.md',
+    '.github/PULL_REQUEST_TEMPLATE.md',
+    '.github/ISSUE_TEMPLATE/bug_report.yml',
+    '.github/ISSUE_TEMPLATE/feature_request.yml',
+    '.github/ISSUE_TEMPLATE/config.yml',
+    '.github/CODEOWNERS',
+    '.github/workflows/repo_health.yml',
     'scripts/reconcile.py',
     'scripts/agentplane_probe.py',
     'scripts/branch_audit.py',
+    'scripts/github_publish_prep.py',
 ]
 for rel in required:
     p = ROOT / rel
@@ -174,7 +184,7 @@ try:
 
     workflow_text = (ROOT / '.policy-fabric/WORKFLOW.md').read_text()
     reconcile_text = (ROOT / '.policy-fabric/RECONCILE.md').read_text()
-    workflow_tokens = ['ownership.json', 'profiles.json', 'scripts/reconcile.py', 'scripts/agentplane_probe.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py']
+    workflow_tokens = ['ownership.json', 'profiles.json', 'scripts/reconcile.py', 'scripts/agentplane_probe.py', 'scripts/github_publish_prep.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py']
     missing_workflow_tokens = [token for token in workflow_tokens if token not in workflow_text]
     if not missing_workflow_tokens:
         ok('docs:workflow-sync', 'PFD050_DOC_SYNC_OK', 'workflow documentation references governed commands and contracts', '.policy-fabric/WORKFLOW.md')
@@ -194,7 +204,12 @@ try:
     else:
         fail('branch-policy:config-sync', 'PFD044_BRANCH_POLICY_SYNC_DRIFT', 'config missing branch policy contract or branch audit command', '.policy-fabric/config.json')
 
-    agents_tokens = ['Policy Fabric', 'scripts/reconcile.py', 'scripts/agentplane_probe.py', 'scripts/branch_audit.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py', '.policy-fabric/WORKFLOW.md', '.policy-fabric/agentplane_bridge.json', '.policy-fabric/branch_policy.json']
+    if config.get('githubPublishContract') == '.policy-fabric/github_publish.json' and config.get('githubPublishPrepCommand') == 'python scripts/github_publish_prep.py':
+        ok('github-publish:config-sync', 'PFD045_GITHUB_PUBLISH_SYNC_OK', 'config references the GitHub publish contract and prep command', '.policy-fabric/config.json')
+    else:
+        fail('github-publish:config-sync', 'PFD046_GITHUB_PUBLISH_SYNC_DRIFT', 'config missing GitHub publish contract or prep command', '.policy-fabric/config.json')
+
+    agents_tokens = ['Policy Fabric', 'scripts/reconcile.py', 'scripts/agentplane_probe.py', 'scripts/branch_audit.py', 'scripts/github_publish_prep.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py', '.policy-fabric/WORKFLOW.md', '.policy-fabric/agentplane_bridge.json', '.policy-fabric/branch_policy.json', '.policy-fabric/github_publish.json']
     missing_agents_tokens = [token for token in agents_tokens if token not in agents_text]
     if not missing_agents_tokens:
         ok('docs:agents-gateway-sync', 'PFD050_DOC_SYNC_OK', 'AGENTS.md references the active repository workflow surfaces', 'AGENTS.md')
@@ -346,6 +361,40 @@ if probe_path.exists():
         fail('agentplane-probe:parse', 'PFD099_AGENTPLANE_PROBE_PARSE_ERROR', str(exc), 'docs/reports/agentplane_probe_latest.json')
 else:
     warn('agentplane-probe:missing', 'PFD100_AGENTPLANE_PROBE_MISSING', 'AgentPlane probe report missing; run python scripts/agentplane_probe.py', 'docs/reports/agentplane_probe_latest.json')
+
+try:
+    publish_contract = load_json('.policy-fabric/github_publish.json')
+    if publish_contract.get('owner') and publish_contract.get('repoName') and publish_contract.get('visibility') in {'private', 'public', 'internal'}:
+        ok('github-publish:contract-shape', 'PFD110_GITHUB_PUBLISH_OK', 'GitHub publish contract has expected core fields', '.policy-fabric/github_publish.json')
+    else:
+        fail('github-publish:contract-shape', 'PFD111_GITHUB_PUBLISH_INVALID', 'GitHub publish contract missing owner, repoName, or valid visibility', '.policy-fabric/github_publish.json')
+
+    gh_workflow = yaml.safe_load((ROOT / '.github/workflows/repo_health.yml').read_text())
+    triggers = gh_workflow.get(True) if True in gh_workflow else gh_workflow.get('on', {})
+    if 'push' in triggers and 'pull_request' in triggers:
+        ok('github-publish:workflow-triggers', 'PFD112_GITHUB_WORKFLOW_OK', 'repo health workflow is configured for push and pull_request', '.github/workflows/repo_health.yml')
+    else:
+        fail('github-publish:workflow-triggers', 'PFD113_GITHUB_WORKFLOW_INVALID', 'repo health workflow missing push or pull_request trigger', '.github/workflows/repo_health.yml')
+except Exception as exc:
+    fail('github-publish:parse', 'PFD114_GITHUB_PUBLISH_PARSE_ERROR', str(exc), '.policy-fabric/github_publish.json')
+
+github_prep_path = ROOT / 'docs/reports/github_publish_prep_latest.json'
+if github_prep_path.exists():
+    try:
+        github_prep = load_json('docs/reports/github_publish_prep_latest.json')
+        if github_prep.get('apiVersion') == 'policy.fabric.github-publish-report/v1':
+            ok('github-publish:report-shape', 'PFD115_GITHUB_PUBLISH_REPORT_OK', 'GitHub publish prep report present with expected API version', 'docs/reports/github_publish_prep_latest.json')
+        else:
+            fail('github-publish:report-shape', 'PFD116_GITHUB_PUBLISH_REPORT_INVALID', 'GitHub publish prep report API version mismatch', 'docs/reports/github_publish_prep_latest.json')
+
+        if github_prep.get('summary', {}).get('status') in {'pass', 'warn'}:
+            ok('github-publish:report-status', 'PFD117_GITHUB_PUBLISH_STATUS_OK', 'GitHub publish prep report is non-failing', 'docs/reports/github_publish_prep_latest.json')
+        else:
+            fail('github-publish:report-status', 'PFD118_GITHUB_PUBLISH_STATUS_FAIL', 'GitHub publish prep report is failing', 'docs/reports/github_publish_prep_latest.json')
+    except Exception as exc:
+        fail('github-publish:report-parse', 'PFD119_GITHUB_PUBLISH_REPORT_PARSE_ERROR', str(exc), 'docs/reports/github_publish_prep_latest.json')
+else:
+    warn('github-publish:report-missing', 'PFD120_GITHUB_PUBLISH_REPORT_MISSING', 'GitHub publish prep report missing; run python scripts/github_publish_prep.py', 'docs/reports/github_publish_prep_latest.json')
 
 try:
     branch_policy = load_json('.policy-fabric/branch_policy.json')
