@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-04-06T08:24:54.461795Z",
+  "generatedAt": "2026-04-06T09:29:39.684475Z",
   "git": {
-    "rev": "55e5209",
-    "dirty": true
+    "rev": "60afad9",
+    "dirty": false
   },
   "fileCount": 156,
   "files": [
@@ -478,7 +478,7 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "86c0db72c0fb95578cb26948b37766446c36b5016d7aaba1b0c0ea6715646921",
+      "sha256": "acbd51ee9251cb5588af6fdde3ff8e109e29026a58e52008658cfeb0cd79006b",
       "bytes": 20314,
       "categories": [
         "generated"
@@ -486,7 +486,7 @@
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "5fc9ff03d7cc4d021a08311dd470434e7301dc24f684e28297d40cf916b732f6",
+      "sha256": "1eb20561b2eb3fa990d4b9818d88aa284e00a343fb5c4cfa8dfa63ac29832da1",
       "bytes": 419,
       "categories": [
         "generated"
@@ -790,7 +790,7 @@
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "31de055df82eb337345aaa15de09ee0dfd9e1093b2966dbd337ff2d2333c8e71",
+      "sha256": "793a53114e344be1b0685f6bb98a82e7bcdf2667055a732cda24840f2b38b9ab",
       "bytes": 155,
       "categories": [
         "generated"
@@ -806,7 +806,7 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "86c0db72c0fb95578cb26948b37766446c36b5016d7aaba1b0c0ea6715646921",
+      "sha256": "acbd51ee9251cb5588af6fdde3ff8e109e29026a58e52008658cfeb0cd79006b",
       "bytes": 20314,
       "categories": [
         "generated"
