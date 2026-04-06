@@ -2,7 +2,7 @@
 
 Overall status: FAIL
 
-Check count: `68`; fails: `2`; warnings: `0`
+Check count: `68`; fails: `1`; warnings: `0`
 
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
@@ -35,7 +35,7 @@ Check count: `68`; fails: `2`; warnings: `0`
 - `PFD010_SCHEMA_OK` — pass — validation report example validates against validation report schema
 - `PFD010_SCHEMA_OK` — pass — replay report example validates against replay report schema
 - `PFD020_OPENAPI_OK` — pass — openapi parses and contains expected core surfaces
-- `PFD031_OWNERSHIP_DRIFT` — fail — config managed paths drift from ownership contract
+- `PFD030_OWNERSHIP_SYNC_OK` — pass — config managed paths match ownership contract
 - `PFD030_OWNERSHIP_SYNC_OK` — pass — config generated paths match ownership contract
 - `PFD030_OWNERSHIP_SYNC_OK` — pass — config local override paths match ownership contract
 - `PFD040_PROFILE_OK` — pass — selected workflow profile `normal` exists
@@ -45,7 +45,7 @@ Check count: `68`; fails: `2`; warnings: `0`
 - `PFD043_BRANCH_POLICY_SYNC_OK` — pass — config references the branch policy contract and branch audit command
 - `PFD050_DOC_SYNC_OK` — pass — AGENTS.md references the active repository workflow surfaces
 - `PFD032_OWNERSHIP_OVERLAP_FREE` — pass — ownership categories do not overlap on actual files
-- `PFD035_OWNERSHIP_UNCLASSIFIED` — fail — unclassified files found: ['.agentplane/WORKFLOW.md', '.agentplane/agents/CODER.json', '.agentplane/agents/CREATOR.json', '.agentplane/agents/DOCS.json', '.agentplane/agents/INTEGRATOR.json', '.agentplane/agents/ORCHESTRATOR.json', '.agentplane/agents/PLANNER.json', '.agentplane/agents/REDMINE.json', '.agentplane/agents/REVIEWER.json', '.agentplane/agents/TESTER.json']
+- `PFD035_OWNERSHIP_UNCLASSIFIED` — fail — unclassified files found: ['.gitignore', 'docs/blueprints/Policy_Fabric_Platform_Blueprint.docx', 'docs/comparison/policy_fabric_comparison_matrix.md', 'docs/rebrand/policy_fabric_rebrand_notes.md', 'docs/research/2026-03-31_agentplane_alignment.md', 'docs/research/2026-04-01_agentplane_lessons.md', 'docs/research/2026-04-01_agentplane_official_site_lessons.md', 'docs/turns/2026-03-31T18:27:26Z_repo-hardening-and-agentplane-alignment.md', 'docs/turns/2026-04-01T13-35-00Z_agentplane-official-site-correction.md', 'docs/turns/2026-04-01T16-10-00Z_managed-ownership-profiles-and-drift-checks.md']
 - `PFD060_RELEASE_PACK_DIGEST_OK` — pass — release-pack artifact digests match referenced files
 - `PFD062_PROMOTION_GATE_OK` — pass — promotion gate semantics satisfy current lane requirements
 - `PFD064_REPLAY_EVIDENCE_OK` — pass — replay evidence requirements are satisfied
