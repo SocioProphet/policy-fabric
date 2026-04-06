@@ -5,37 +5,35 @@
   "managedOwnershipContract": ".policy-fabric/ownership.json",
   "profilesContract": ".policy-fabric/profiles.json",
   "managedPaths": [
+    ".policy-fabric/**",
     "contracts/**",
     "examples/**",
-    "docs/blueprints/**",
-    "docs/assessments/**",
-    "docs/research/**",
-    "docs/rebrand/**",
-    "docs/comparison/**",
-    "docs/specs/**",
-    "docs/turns/**",
     "scripts/**",
-    ".policy-fabric/config.json",
-    ".policy-fabric/WORKFLOW.md",
-    ".policy-fabric/ownership.json",
-    ".policy-fabric/profiles.json",
-    ".policy-fabric/RECONCILE.md",
-    "AGENTS.md",
+    "docs/specs/**",
+    "docs/assessments/**",
     "README.md",
-    "CHANGELOG.md",
+    "AGENTS.md",
     "BACKLOG.md",
-    ".gitignore",
-    ".policy-fabric/agentplane_bridge.json",
-    ".policy-fabric/branch_policy.json"
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "REPO_MANIFEST.json",
+    ".agentplane/config.json",
+    ".agentplane/WORKFLOW.md",
+    ".agentplane/agents/**",
+    ".agentplane/backends/**",
+    ".agentplane/policy/**"
   ],
   "generatedPaths": [
     "docs/reports/**",
     ".policy-fabric/reports/**",
-    "REPO_MANIFEST.json",
-    "dist/**"
+    "dist/**",
+    ".agentplane/workflows/**",
+    ".agentplane/.upgrade/**"
   ],
   "localOverridePaths": [
-    ".policy-fabric/local-notes/**"
+    ".policy-fabric/local-notes/**",
+    ".agentplane/policy/incidents.md"
   ],
   "archiveProtectedPaths": [
     "archive/prior-reference/**"

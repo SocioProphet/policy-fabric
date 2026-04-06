@@ -1,15 +1,413 @@
 {
-  "generatedAt": "2026-04-04T20:57:00.795906Z",
+  "generatedAt": "2026-04-06T08:21:37.737365Z",
   "git": {
-    "rev": "cd5e342",
+    "rev": "1494ac9",
     "dirty": true
   },
-  "fileCount": 97,
+  "fileCount": 156,
   "files": [
     {
+      "path": ".agentplane/.upgrade/baseline/agents/CODER.json",
+      "sha256": "d9b54007c5be84ecf9ef1ea2c93958213c52dbb8590d108996441a700d784719",
+      "bytes": 2649,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/agents/CREATOR.json",
+      "sha256": "eeeeb080100f6ab81a2eea86ad79d5955c3bd320b90d78770e21fb4f59a71c46",
+      "bytes": 1709,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/agents/DOCS.json",
+      "sha256": "7a649bc222244f4ba06b4213cffa412ed728891627bdff1a73fc2ddf9f24d133",
+      "bytes": 1913,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/agents/INTEGRATOR.json",
+      "sha256": "6e6803ec2b61fb7c50947a9fb83a669d4cb25de72f49925a2bb91cf4fec3061a",
+      "bytes": 2315,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/agents/ORCHESTRATOR.json",
+      "sha256": "deded81ee6f7522fee0a5b5831ecd217d9ba56a314ac781191f3c8142959d836",
+      "bytes": 3789,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/agents/PLANNER.json",
+      "sha256": "ec34d7fe98752c4a3cd346506e69c9309fcfef0179970a8a2c0f23014a6971bd",
+      "bytes": 2884,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/agents/REDMINE.json",
+      "sha256": "992804d77129decfd9e4d11389e8881056add39565eb1d741b3a1cfd27ae092d",
+      "bytes": 1564,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/agents/REVIEWER.json",
+      "sha256": "b9c6d23e7297ebb3eaf3ce73e0dea04c3dc21927b5e1a3e1f23b4051a02d45cb",
+      "bytes": 1572,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/agents/TESTER.json",
+      "sha256": "fc98b54d686c17603b280d787d64578a02c0321fba56ad51ae5da491ff938105",
+      "bytes": 2105,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/agents/UPDATER.json",
+      "sha256": "09ce229cd00f5fb27040660fbc09bd3a4b183291638d8d22546cd5a771aa956b",
+      "bytes": 1576,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/agents/UPGRADER.json",
+      "sha256": "b11384bbbdb8d34803ab2c84a18f3e2a049d8ac3f1e48081fd4c90df79a275ca",
+      "bytes": 2572,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/check-routing.mjs",
+      "sha256": "b5684407e815e68fb17295c335f9f74fd38de1d11091501e4c6059be0c177fcd",
+      "bytes": 5933,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/dod.code.md",
+      "sha256": "792882e110bcde1f9a2fd59df2ed70827168a1fc17b80c94b12b8cc5eb9b41b7",
+      "bytes": 908,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/dod.core.md",
+      "sha256": "c3fb35e0a454ebea26f6ca24d1b413a2853966697442933f95df8fe51019aee4",
+      "bytes": 1415,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/dod.docs.md",
+      "sha256": "c07cb03f62dead50e01b2378b88ef1ef76cf072a5075e933e28486571800ff71",
+      "bytes": 1067,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/examples/migration-note.md",
+      "sha256": "f0c7643d402cfbffc7efb191919e98b79aa76d2cfd9408787d6fd3e9cbf6c465",
+      "bytes": 439,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/examples/pr-note.md",
+      "sha256": "b9d8fdf522c7d733ceb8b3c1ccdc4397b823ea911c7d7dc348afaf704a41afbc",
+      "bytes": 318,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/examples/unit-test-pattern.md",
+      "sha256": "65d3629a8d99735817db3d73635b609ed94b542a2518d1379961c93637c65386",
+      "bytes": 488,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/governance.md",
+      "sha256": "c1346e3a257ec2e1df44c041aecc6571d273a0d927fdd754d20c7c404ef56ebf",
+      "bytes": 2066,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/incidents.md",
+      "sha256": "af6a191f62ed4ef9219aab9d7150e0e1611f973ee3f1e5f9b47fbff47d104093",
+      "bytes": 4819,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/security.must.md",
+      "sha256": "7a37bc8b8016eb8e52083efedf19da309e2c1788680f3ac3a3b91f1e5a22ad33",
+      "bytes": 395,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/workflow.branch_pr.md",
+      "sha256": "a9bc8cf884466450dd3c718d2c40a4c9475bd99b325632374ff5998abb7500af",
+      "bytes": 1743,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/workflow.direct.md",
+      "sha256": "6f3a61174a0f5205850a661834b8ff31b51ac087bf243cf9425e2105325b06f5",
+      "bytes": 2787,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/workflow.md",
+      "sha256": "930efad5d27a29be33cafb883283b3c544d41306fd74dd20e5de7624847ca500",
+      "bytes": 382,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/workflow.release.md",
+      "sha256": "b575fdd26f17d78aa99f9ce1d9bed0f0c2db61ee79cd6afe2ac7b47c169c5e18",
+      "bytes": 1293,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/.upgrade/baseline/policy/workflow.upgrade.md",
+      "sha256": "83488d14bb5f85fe34f4882abda3ef75879489576e6ca76367aa7cb9da3e129c",
+      "bytes": 890,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": ".agentplane/WORKFLOW.md",
+      "sha256": "b0cd2c06257afc474dc82e78c93ddf740fd92d0323d71842179398278a2ce356",
+      "bytes": 509,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/CODER.json",
+      "sha256": "d9b54007c5be84ecf9ef1ea2c93958213c52dbb8590d108996441a700d784719",
+      "bytes": 2649,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/CREATOR.json",
+      "sha256": "eeeeb080100f6ab81a2eea86ad79d5955c3bd320b90d78770e21fb4f59a71c46",
+      "bytes": 1709,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/DOCS.json",
+      "sha256": "7a649bc222244f4ba06b4213cffa412ed728891627bdff1a73fc2ddf9f24d133",
+      "bytes": 1913,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/INTEGRATOR.json",
+      "sha256": "6e6803ec2b61fb7c50947a9fb83a669d4cb25de72f49925a2bb91cf4fec3061a",
+      "bytes": 2315,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/ORCHESTRATOR.json",
+      "sha256": "deded81ee6f7522fee0a5b5831ecd217d9ba56a314ac781191f3c8142959d836",
+      "bytes": 3789,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/PLANNER.json",
+      "sha256": "ec34d7fe98752c4a3cd346506e69c9309fcfef0179970a8a2c0f23014a6971bd",
+      "bytes": 2884,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/REDMINE.json",
+      "sha256": "992804d77129decfd9e4d11389e8881056add39565eb1d741b3a1cfd27ae092d",
+      "bytes": 1564,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/REVIEWER.json",
+      "sha256": "b9c6d23e7297ebb3eaf3ce73e0dea04c3dc21927b5e1a3e1f23b4051a02d45cb",
+      "bytes": 1572,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/TESTER.json",
+      "sha256": "fc98b54d686c17603b280d787d64578a02c0321fba56ad51ae5da491ff938105",
+      "bytes": 2105,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/UPDATER.json",
+      "sha256": "09ce229cd00f5fb27040660fbc09bd3a4b183291638d8d22546cd5a771aa956b",
+      "bytes": 1576,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/agents/UPGRADER.json",
+      "sha256": "b11384bbbdb8d34803ab2c84a18f3e2a049d8ac3f1e48081fd4c90df79a275ca",
+      "bytes": 2572,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/backends/local/backend.json",
+      "sha256": "8199c182e1ec0be2f7c7bd8cfb3e7fa0e8e4e8c6b3ae8eb25ae520f9c1e963fb",
+      "bytes": 88,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/cache/tasks-index.v2.json",
+      "sha256": "51d0d5845fd577c80880f31477649a7f9620d87aff34442ca7443a4526f9d120",
+      "bytes": 56,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/config.json",
+      "sha256": "09b004a8150bedf0c84b0fb00e6879a38d1adf2b4c548ec7cbccd8242d09c449",
+      "bytes": 3658,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/check-routing.mjs",
+      "sha256": "b5684407e815e68fb17295c335f9f74fd38de1d11091501e4c6059be0c177fcd",
+      "bytes": 5933,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/dod.code.md",
+      "sha256": "792882e110bcde1f9a2fd59df2ed70827168a1fc17b80c94b12b8cc5eb9b41b7",
+      "bytes": 908,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/dod.core.md",
+      "sha256": "c3fb35e0a454ebea26f6ca24d1b413a2853966697442933f95df8fe51019aee4",
+      "bytes": 1415,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/dod.docs.md",
+      "sha256": "c07cb03f62dead50e01b2378b88ef1ef76cf072a5075e933e28486571800ff71",
+      "bytes": 1067,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/examples/migration-note.md",
+      "sha256": "f0c7643d402cfbffc7efb191919e98b79aa76d2cfd9408787d6fd3e9cbf6c465",
+      "bytes": 439,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/examples/pr-note.md",
+      "sha256": "b9d8fdf522c7d733ceb8b3c1ccdc4397b823ea911c7d7dc348afaf704a41afbc",
+      "bytes": 318,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/examples/unit-test-pattern.md",
+      "sha256": "65d3629a8d99735817db3d73635b609ed94b542a2518d1379961c93637c65386",
+      "bytes": 488,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/governance.md",
+      "sha256": "c1346e3a257ec2e1df44c041aecc6571d273a0d927fdd754d20c7c404ef56ebf",
+      "bytes": 2066,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/incidents.md",
+      "sha256": "af6a191f62ed4ef9219aab9d7150e0e1611f973ee3f1e5f9b47fbff47d104093",
+      "bytes": 4819,
+      "categories": [
+        "localOverride"
+      ]
+    },
+    {
+      "path": ".agentplane/policy/security.must.md",
+      "sha256": "7a37bc8b8016eb8e52083efedf19da309e2c1788680f3ac3a3b91f1e5a22ad33",
+      "bytes": 395,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/workflow.branch_pr.md",
+      "sha256": "a9bc8cf884466450dd3c718d2c40a4c9475bd99b325632374ff5998abb7500af",
+      "bytes": 1743,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/workflow.direct.md",
+      "sha256": "6f3a61174a0f5205850a661834b8ff31b51ac087bf243cf9425e2105325b06f5",
+      "bytes": 2787,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/workflow.md",
+      "sha256": "930efad5d27a29be33cafb883283b3c544d41306fd74dd20e5de7624847ca500",
+      "bytes": 382,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/workflow.release.md",
+      "sha256": "b575fdd26f17d78aa99f9ce1d9bed0f0c2db61ee79cd6afe2ac7b47c169c5e18",
+      "bytes": 1293,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/policy/workflow.upgrade.md",
+      "sha256": "83488d14bb5f85fe34f4882abda3ef75879489576e6ca76367aa7cb9da3e129c",
+      "bytes": 890,
+      "categories": []
+    },
+    {
+      "path": ".agentplane/workflows/last-known-good.md",
+      "sha256": "b0cd2c06257afc474dc82e78c93ddf740fd92d0323d71842179398278a2ce356",
+      "bytes": 509,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
       "path": ".gitignore",
-      "sha256": "6cb589ae577b32e1cae5025e4e49f2265730cb3bf5c11a5b95c04daba5211f08",
-      "bytes": 58,
+      "sha256": "6b969146e3babfa06765aadb6ec7a2bde1f0320d881f66d58cd04def6197cd06",
+      "bytes": 363,
       "categories": [
         "frameworkManaged"
       ]
@@ -32,8 +430,8 @@
     },
     {
       "path": ".policy-fabric/agentplane_bridge.json",
-      "sha256": "b22e103ec9d5132de3cbe3b5cac1a8d2e7e10fa057c53f41e3371cbe19c35775",
-      "bytes": 4514,
+      "sha256": "4c84a358c4c91747bfed0ac9fa9701c7bf0912c4a7118f6dc2cf8686bfad55ac",
+      "bytes": 4789,
       "categories": [
         "frameworkManaged"
       ]
@@ -48,8 +446,8 @@
     },
     {
       "path": ".policy-fabric/config.json",
-      "sha256": "a3246db109cc9e9fd6facc35d71373696eed7855e213b16ac0614566f7145612",
-      "bytes": 1755,
+      "sha256": "54f53bdb0fb51966117e98c63471643cbe335eee2024a3545be6eaed39614e6a",
+      "bytes": 1675,
       "categories": [
         "frameworkManaged"
       ]
@@ -64,8 +462,8 @@
     },
     {
       "path": ".policy-fabric/ownership.json",
-      "sha256": "1c7f9533bd81027f7a331bbe69584c674be348caed290709f2e0d8ad87da21ca",
-      "bytes": 1037,
+      "sha256": "d9eb80d26191a6321be7ed2a49dcc8c33bd57073cff37bf758afef584c83835e",
+      "bytes": 1558,
       "categories": [
         "frameworkManaged"
       ]
@@ -80,16 +478,16 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "084e6d66279a40ac26f93a82d955651613fd41e76917c7e1577ad7c04f5a3c41",
-      "bytes": 20008,
+      "sha256": "ec822d2b80eb766d7eface3d8c8ec7e1a41eeb7f17419ce1fad43cf8ca517c34",
+      "bytes": 20318,
       "categories": [
         "generated"
       ]
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "8c2f8242033edfb03250eaf3185f541e2f97dd478c0a91955e0805a14dab4787",
-      "bytes": 316,
+      "sha256": "9dfd0f05ec63e87d595b3cff815df7319a86bcb097c653efb1533b9e20d9bc99",
+      "bytes": 419,
       "categories": [
         "generated"
       ]
@@ -352,48 +750,48 @@
     },
     {
       "path": "docs/reports/agentplane_probe_latest.json",
-      "sha256": "48a9fb2ccefa5e386d5897084b92fce04b9b9b6298b8214710a9d252a64cc74a",
-      "bytes": 4732,
+      "sha256": "6cf07b5f6d7f9fcd344c6f209b450e1b120e9e9b4acf8e61d327574a9f8c5b3a",
+      "bytes": 4741,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/agentplane_probe_latest.md",
-      "sha256": "831bafec03649935bb8832c74253b0ef61a6f877c533e858aa0f9a29319bfd67",
-      "bytes": 2271,
+      "sha256": "9df80bc2432737517613b966bdefda9146b66c74831787b2d9a94efc1e24a182",
+      "bytes": 2275,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/branch_audit_latest.json",
-      "sha256": "4d5ffb18e0c0fa6f7f0bccb7a2fc30fc34d59e365220b5218b53a3ddfec60424",
-      "bytes": 5857,
+      "sha256": "0b67105a7a650d290c3a18b550fc7359dc82ad43dbab860ac6990e99bdd1178e",
+      "bytes": 6421,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/branch_audit_latest.md",
-      "sha256": "790538f3ed38c6dbaebf38e28657a4d647b870f3fe2b1d5a129b7fb8bb146359",
-      "bytes": 1443,
+      "sha256": "1281ab8eaf160af874b1ab6d59fbcd3c491f810956bb83e7a9746138c28c88d9",
+      "bytes": 1495,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/doctor_latest.md",
-      "sha256": "9143ac227b6c66c23109978957d057825ae8b878f24ad5dc71551e4fd284ff63",
-      "bytes": 8293,
+      "sha256": "9421e5ff66ce188632024f9bf9850beaaad36f92c847b6b78853b2a2c00e77fd",
+      "bytes": 8605,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "0d1b006a60692089e4e8f1c2351511953796927ccc41a39d92fe74af85f79249",
-      "bytes": 154,
+      "sha256": "464aac68d9aea81cc0bd56188f347614dad5bad23cbc8569f2c105aa81df751a",
+      "bytes": 155,
       "categories": [
         "generated"
       ]
@@ -408,16 +806,16 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "084e6d66279a40ac26f93a82d955651613fd41e76917c7e1577ad7c04f5a3c41",
-      "bytes": 20008,
+      "sha256": "ec822d2b80eb766d7eface3d8c8ec7e1a41eeb7f17419ce1fad43cf8ca517c34",
+      "bytes": 20318,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/validation_report_latest.md",
-      "sha256": "99bb5f18f590fa4be71b904b26014f9b13511397ba3afcc3cf362628820e0ced",
-      "bytes": 6147,
+      "sha256": "92ba41ed4974901443f3dbc2120d19e759293ea888200115d02ad6bb481ca9f5",
+      "bytes": 6455,
       "categories": [
         "generated"
       ]
@@ -664,16 +1062,16 @@
     },
     {
       "path": "scripts/__pycache__/branch_audit.cpython-311.pyc",
-      "sha256": "3430c76a7e27367e411fdfb875facfab29a73fc575b4314bc953bed647156fbc",
-      "bytes": 10827,
+      "sha256": "73bd78aac2c88678de68f611716c1cd29e3617bb527306715fce4f658b0e850b",
+      "bytes": 12517,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "scripts/__pycache__/build_dist_bundle.cpython-311.pyc",
-      "sha256": "9ed5807c00cd7b9aae2ac5871bcbbe29514e58db568cc296a41dbb07435c35be",
-      "bytes": 3784,
+      "sha256": "4c74ee595fda016a621d16f2c9f15b39328af5a2a1639bc544020fe6a43fe51b",
+      "bytes": 3834,
       "categories": [
         "frameworkManaged"
       ]
@@ -688,8 +1086,8 @@
     },
     {
       "path": "scripts/__pycache__/doctor.cpython-311.pyc",
-      "sha256": "8362a5d7b623776fd2939b7efa4b03721f2ae61e70200bdc8eab78b5dc102193",
-      "bytes": 33241,
+      "sha256": "de0136a93c7f02e1d8ba66f1558f4c00ee856e9efcf32910a33a67d8ac4af1bc",
+      "bytes": 37660,
       "categories": [
         "frameworkManaged"
       ]
@@ -703,9 +1101,25 @@
       ]
     },
     {
+      "path": "scripts/__pycache__/github_publish_prep.cpython-311.pyc",
+      "sha256": "d5e0075e530f83e24d82ecf025fd6ecdab3a5d38e712611ba226bf2233f381c1",
+      "bytes": 14441,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": "scripts/__pycache__/policy_semantic_validator.cpython-311.pyc",
       "sha256": "2dc9f7a1ae43070d7fbaa925c651be657505c8759ed7972d94bdef97b9a0e999",
       "bytes": 27538,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "scripts/__pycache__/policy_semantic_validator.cpython-312.pyc",
+      "sha256": "d320fb15d3d5d4fd6171227792ee395c9f15e47e4865b38f2442b561a4ef6a6d",
+      "bytes": 21367,
       "categories": [
         "frameworkManaged"
       ]

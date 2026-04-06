@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-04-04T20:57:38.378249Z",
+    "generatedAt": "2026-04-06T08:21:39.261382Z",
     "generator": "policy-fabric-doctor/0.5.0",
-    "runId": "doctor-2026-04-04T20:57:38.378249Z"
+    "runId": "doctor-2026-04-06T08:21:39.261382Z"
   },
   "subject": {
     "type": "releasePack",
@@ -12,9 +12,9 @@
     "version": "1.0.0"
   },
   "summary": {
-    "status": "pass",
+    "status": "fail",
     "checkCount": 68,
-    "failCount": 0,
+    "failCount": 2,
     "warnCount": 0
   },
   "checks": [
@@ -268,10 +268,10 @@
     },
     {
       "id": "ownership:managed-sync",
-      "status": "pass",
-      "severity": "info",
-      "code": "PFD030_OWNERSHIP_SYNC_OK",
-      "message": "config managed paths match ownership contract",
+      "status": "fail",
+      "severity": "error",
+      "code": "PFD031_OWNERSHIP_DRIFT",
+      "message": "config managed paths drift from ownership contract",
       "artifactRef": ".policy-fabric/config.json"
     },
     {
@@ -348,10 +348,10 @@
     },
     {
       "id": "ownership:no-unclassified",
-      "status": "pass",
-      "severity": "info",
-      "code": "PFD034_OWNERSHIP_CLASSIFICATION_OK",
-      "message": "all tracked files are classified by the ownership contract",
+      "status": "fail",
+      "severity": "error",
+      "code": "PFD035_OWNERSHIP_UNCLASSIFIED",
+      "message": "unclassified files found: ['.agentplane/WORKFLOW.md', '.agentplane/agents/CODER.json', '.agentplane/agents/CREATOR.json', '.agentplane/agents/DOCS.json', '.agentplane/agents/INTEGRATOR.json', '.agentplane/agents/ORCHESTRATOR.json', '.agentplane/agents/PLANNER.json', '.agentplane/agents/REDMINE.json', '.agentplane/agents/REVIEWER.json', '.agentplane/agents/TESTER.json']",
       "artifactRef": ".policy-fabric/ownership.json"
     },
     {

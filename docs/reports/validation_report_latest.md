@@ -1,8 +1,8 @@
 # Validation Report
 
-Overall status: PASS
+Overall status: FAIL
 
-Check count: `68`; fails: `0`; warnings: `0`
+Check count: `68`; fails: `2`; warnings: `0`
 
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
@@ -35,7 +35,7 @@ Check count: `68`; fails: `0`; warnings: `0`
 - `PFD010_SCHEMA_OK` — pass — validation report example validates against validation report schema
 - `PFD010_SCHEMA_OK` — pass — replay report example validates against replay report schema
 - `PFD020_OPENAPI_OK` — pass — openapi parses and contains expected core surfaces
-- `PFD030_OWNERSHIP_SYNC_OK` — pass — config managed paths match ownership contract
+- `PFD031_OWNERSHIP_DRIFT` — fail — config managed paths drift from ownership contract
 - `PFD030_OWNERSHIP_SYNC_OK` — pass — config generated paths match ownership contract
 - `PFD030_OWNERSHIP_SYNC_OK` — pass — config local override paths match ownership contract
 - `PFD040_PROFILE_OK` — pass — selected workflow profile `normal` exists
@@ -45,7 +45,7 @@ Check count: `68`; fails: `0`; warnings: `0`
 - `PFD043_BRANCH_POLICY_SYNC_OK` — pass — config references the branch policy contract and branch audit command
 - `PFD050_DOC_SYNC_OK` — pass — AGENTS.md references the active repository workflow surfaces
 - `PFD032_OWNERSHIP_OVERLAP_FREE` — pass — ownership categories do not overlap on actual files
-- `PFD034_OWNERSHIP_CLASSIFICATION_OK` — pass — all tracked files are classified by the ownership contract
+- `PFD035_OWNERSHIP_UNCLASSIFIED` — fail — unclassified files found: ['.agentplane/WORKFLOW.md', '.agentplane/agents/CODER.json', '.agentplane/agents/CREATOR.json', '.agentplane/agents/DOCS.json', '.agentplane/agents/INTEGRATOR.json', '.agentplane/agents/ORCHESTRATOR.json', '.agentplane/agents/PLANNER.json', '.agentplane/agents/REDMINE.json', '.agentplane/agents/REVIEWER.json', '.agentplane/agents/TESTER.json']
 - `PFD060_RELEASE_PACK_DIGEST_OK` — pass — release-pack artifact digests match referenced files
 - `PFD062_PROMOTION_GATE_OK` — pass — promotion gate semantics satisfy current lane requirements
 - `PFD064_REPLAY_EVIDENCE_OK` — pass — replay evidence requirements are satisfied

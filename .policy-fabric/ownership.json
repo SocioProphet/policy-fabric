@@ -27,11 +27,13 @@
   "generatedPaths": [
     "docs/reports/**",
     ".policy-fabric/reports/**",
-    "REPO_MANIFEST.json",
-    "dist/**"
+    "dist/**",
+    ".agentplane/workflows/**",
+    ".agentplane/.upgrade/**"
   ],
   "localOverridePaths": [
-    ".policy-fabric/local-notes/**"
+    ".policy-fabric/local-notes/**",
+    ".agentplane/policy/incidents.md"
   ],
   "archiveProtectedPaths": [
     "archive/prior-reference/**"
@@ -40,5 +42,25 @@
     ".policy-fabric/local-notes/**",
     ".git/**",
     "dist/policy_fabric_contracts_bundle_latest.zip"
+  ],
+  "managedPaths": [
+    ".policy-fabric/**",
+    "contracts/**",
+    "examples/**",
+    "scripts/**",
+    "docs/specs/**",
+    "docs/assessments/**",
+    "README.md",
+    "AGENTS.md",
+    "BACKLOG.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "REPO_MANIFEST.json",
+    ".agentplane/config.json",
+    ".agentplane/WORKFLOW.md",
+    ".agentplane/agents/**",
+    ".agentplane/backends/**",
+    ".agentplane/policy/**"
   ]
 }

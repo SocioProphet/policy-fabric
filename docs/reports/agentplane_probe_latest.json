@@ -2,7 +2,7 @@
   "apiVersion": "policy.fabric.agentplane-probe/v1",
   "kind": "AgentPlaneProbeReport",
   "metadata": {
-    "generatedAt": "2026-04-02T14:27:51.107921Z",
+    "generatedAt": "2026-04-06T08:21:37.770259Z",
     "generator": "policy-fabric-agentplane-probe/0.1.0"
   },
   "subject": {
@@ -34,7 +34,7 @@
       "code": "PFA010_NODE_OK",
       "message": "node available for official AgentPlane prerequisite check",
       "details": {
-        "stdout": "v22.16.0",
+        "stdout": "v24.14.1",
         "stderr": ""
       }
     },
@@ -45,7 +45,7 @@
       "code": "PFA012_NPM_OK",
       "message": "npm available for official AgentPlane prerequisite check",
       "details": {
-        "stdout": "10.9.2",
+        "stdout": "11.12.1",
         "stderr": ""
       }
     },
@@ -66,19 +66,19 @@
       "code": "PFA022_PACKAGE_VISIBLE",
       "message": "npm package metadata for agentplane is visible in the current container",
       "details": {
-        "stdout": "0.3.7",
+        "stdout": "0.3.10",
         "stderr": ""
       }
     },
     {
       "id": "cli:npx-help",
-      "status": "warn",
-      "severity": "warn",
-      "code": "PFA025_NPX_HELP_BLOCKED",
-      "message": "npx agentplane --help did not execute cleanly in the current container",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFA024_NPX_HELP_OK",
+      "message": "npx agentplane --help executed successfully in the current container",
       "details": {
-        "stdout": "",
-        "stderr": "npm error code E401\nnpm error Incorrect or missing password.\nnpm error If you were trying to login, change your password, create an\nnpm error authentication token or enable two-factor authentication then\nnpm error that means you likely typed your password in incorrectly.\nnpm error Please try again, or recover your password at:\nnpm error   https://www.npmjs.com/forgot\nnpm error\nnpm error If you were doing some other operation then your saved credentials are\nnpm error probably out of date. To corr"
+        "stdout": "Usage:\n  agentplane help [<cmd...>] [--compact] [--json]\n\nCommands:\n  Backend:\n    backend  Backend-related operations.\n    backend inspect  Inspect visible backend readiness facts without mutating remote state.\n    backend migrate-canonical-state  Backfill canonical_state for issues in the configured backend.\n    backend sync  Sync the configured backend (push or pull).\n    sync  Sync the configured backend (alias).\n  Branch:\n    branch base  Manage the pinned base branch used in branch_pr work",
+        "stderr": ""
       }
     },
     {
@@ -99,10 +99,10 @@
     },
     {
       "id": "surface:agentplane-dir",
-      "status": "info",
-      "severity": "info",
-      "code": "PFA034_AGENTPLANE_SURFACE_ABSENT",
-      "message": "no .agentplane tree exists yet; no mixed-state workspace is present",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFA035_AGENTPLANE_SURFACE_PRESENT",
+      "message": ".agentplane tree already exists and should be reviewed for ownership and drift",
       "artifactRef": ".agentplane/"
     },
     {
