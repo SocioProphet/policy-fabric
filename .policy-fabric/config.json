@@ -51,7 +51,13 @@
     ".agentplane/policy/workflow.direct.md",
     ".agentplane/policy/workflow.md",
     ".agentplane/policy/workflow.release.md",
-    ".agentplane/policy/workflow.upgrade.md"
+    ".agentplane/policy/workflow.upgrade.md",
+    ".gitignore",
+    "docs/blueprints/**",
+    "docs/comparison/**",
+    "docs/rebrand/**",
+    "docs/research/**",
+    "docs/turns/**"
   ],
   "generatedPaths": [
     "docs/reports/**",

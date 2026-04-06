@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-04-06T09:31:34.683060Z",
+    "generatedAt": "2026-04-06T09:34:50.907786Z",
     "generator": "policy-fabric-doctor/0.5.0",
-    "runId": "doctor-2026-04-06T09:31:34.683060Z"
+    "runId": "doctor-2026-04-06T09:34:50.907786Z"
   },
   "subject": {
     "type": "releasePack",
@@ -12,9 +12,9 @@
     "version": "1.0.0"
   },
   "summary": {
-    "status": "fail",
+    "status": "pass",
     "checkCount": 68,
-    "failCount": 1,
+    "failCount": 0,
     "warnCount": 0
   },
   "checks": [
@@ -348,10 +348,10 @@
     },
     {
       "id": "ownership:no-unclassified",
-      "status": "fail",
-      "severity": "error",
-      "code": "PFD035_OWNERSHIP_UNCLASSIFIED",
-      "message": "unclassified files found: ['.gitignore', 'docs/blueprints/Policy_Fabric_Platform_Blueprint.docx', 'docs/comparison/policy_fabric_comparison_matrix.md', 'docs/rebrand/policy_fabric_rebrand_notes.md', 'docs/research/2026-03-31_agentplane_alignment.md', 'docs/research/2026-04-01_agentplane_lessons.md', 'docs/research/2026-04-01_agentplane_official_site_lessons.md', 'docs/turns/2026-03-31T18:27:26Z_repo-hardening-and-agentplane-alignment.md', 'docs/turns/2026-04-01T13-35-00Z_agentplane-official-site-correction.md', 'docs/turns/2026-04-01T16-10-00Z_managed-ownership-profiles-and-drift-checks.md']",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD034_OWNERSHIP_CLASSIFICATION_OK",
+      "message": "all tracked files are classified by the ownership contract",
       "artifactRef": ".policy-fabric/ownership.json"
     },
     {

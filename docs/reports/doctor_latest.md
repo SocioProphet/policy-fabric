@@ -1,6 +1,6 @@
 # Doctor Report
 
-Overall status: FAIL
+Overall status: PASS
 
 - [OK] exists:contracts/policy_fabric_policy_v2.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:contracts/policy_fabric_execution_plan_ir_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
@@ -43,7 +43,7 @@ Overall status: FAIL
 - [OK] branch-policy:config-sync — PFD043_BRANCH_POLICY_SYNC_OK — config references the branch policy contract and branch audit command
 - [OK] docs:agents-gateway-sync — PFD050_DOC_SYNC_OK — AGENTS.md references the active repository workflow surfaces
 - [OK] ownership:no-overlap — PFD032_OWNERSHIP_OVERLAP_FREE — ownership categories do not overlap on actual files
-- [FAIL] ownership:no-unclassified — PFD035_OWNERSHIP_UNCLASSIFIED — unclassified files found: ['.gitignore', 'docs/blueprints/Policy_Fabric_Platform_Blueprint.docx', 'docs/comparison/policy_fabric_comparison_matrix.md', 'docs/rebrand/policy_fabric_rebrand_notes.md', 'docs/research/2026-03-31_agentplane_alignment.md', 'docs/research/2026-04-01_agentplane_lessons.md', 'docs/research/2026-04-01_agentplane_official_site_lessons.md', 'docs/turns/2026-03-31T18:27:26Z_repo-hardening-and-agentplane-alignment.md', 'docs/turns/2026-04-01T13-35-00Z_agentplane-official-site-correction.md', 'docs/turns/2026-04-01T16-10-00Z_managed-ownership-profiles-and-drift-checks.md']
+- [OK] ownership:no-unclassified — PFD034_OWNERSHIP_CLASSIFICATION_OK — all tracked files are classified by the ownership contract
 - [OK] release-pack:digest-integrity — PFD060_RELEASE_PACK_DIGEST_OK — release-pack artifact digests match referenced files
 - [OK] release-pack:promotion-gate — PFD062_PROMOTION_GATE_OK — promotion gate semantics satisfy current lane requirements
 - [OK] release-pack:replay-evidence — PFD064_REPLAY_EVIDENCE_OK — replay evidence requirements are satisfied
