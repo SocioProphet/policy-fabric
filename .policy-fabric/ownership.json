@@ -45,7 +45,13 @@
     "dist/policy_fabric_contracts_bundle_latest.zip"
   ],
   "managedPaths": [
-    ".policy-fabric/**",
+    ".policy-fabric/config.json",
+    ".policy-fabric/WORKFLOW.md",
+    ".policy-fabric/ownership.json",
+    ".policy-fabric/profiles.json",
+    ".policy-fabric/RECONCILE.md",
+    ".policy-fabric/agentplane_bridge.json",
+    ".policy-fabric/branch_policy.json",
     "contracts/**",
     "examples/**",
     "scripts/**",

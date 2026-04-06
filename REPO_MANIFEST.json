@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-06T08:23:12.056844Z",
+  "generatedAt": "2026-04-06T08:24:54.461795Z",
   "git": {
-    "rev": "595afd4",
+    "rev": "55e5209",
     "dirty": true
   },
   "fileCount": 156,
@@ -430,8 +430,8 @@
     },
     {
       "path": ".policy-fabric/agentplane_bridge.json",
-      "sha256": "f1cde33341f29a26946c66b2525aa480dcf5c8cad31dad396ccb9cce42c50d62",
-      "bytes": 4811,
+      "sha256": "c77231d8a5b3d5dabee0263357224ad8ce5b1b459534b9326a589de6da197df6",
+      "bytes": 4820,
       "categories": [
         "frameworkManaged"
       ]
@@ -446,8 +446,8 @@
     },
     {
       "path": ".policy-fabric/config.json",
-      "sha256": "b74ce46d30b3dc75bdffcf51d4f8f600641d8d0f473c3c17285d42c960ed68df",
-      "bytes": 2730,
+      "sha256": "4cea0e8d9cf60250c3e0eb1553c641351917e5b36b2668a87de29ee879468169",
+      "bytes": 2967,
       "categories": [
         "frameworkManaged"
       ]
@@ -462,8 +462,8 @@
     },
     {
       "path": ".policy-fabric/ownership.json",
-      "sha256": "716dc6fb0fd31d6e1afd1036e7887fe64487b7b228250fc3a3dd960f90c8ff86",
-      "bytes": 2613,
+      "sha256": "9d45962ef8431de5246672ebcf64e2d9e782da3e9001f36dfd99bcae541e4580",
+      "bytes": 2850,
       "categories": [
         "frameworkManaged"
       ]
@@ -478,7 +478,7 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "8727bd579baed0ed15e90ba633681b169f126a51d5cb49412fda30402702626c",
+      "sha256": "86c0db72c0fb95578cb26948b37766446c36b5016d7aaba1b0c0ea6715646921",
       "bytes": 20314,
       "categories": [
         "generated"
@@ -486,8 +486,8 @@
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "4a6edf2e352d7f92571a0475a77e672ffda80777a4854ac56414057ff204e1e8",
-      "bytes": 393,
+      "sha256": "5fc9ff03d7cc4d021a08311dd470434e7301dc24f684e28297d40cf916b732f6",
+      "bytes": 419,
       "categories": [
         "generated"
       ]
@@ -750,7 +750,7 @@
     },
     {
       "path": "docs/reports/agentplane_probe_latest.json",
-      "sha256": "8ff638c34cc86c577185b1f0ee28769c7a5cda016b1194827b5499e453cf79f2",
+      "sha256": "1069c73ed5d623c4fd4ce10fa6f0f45f9e1e5ea6e98bbe500eba3ba0ba637c19",
       "bytes": 4741,
       "categories": [
         "generated"
@@ -758,7 +758,7 @@
     },
     {
       "path": "docs/reports/agentplane_probe_latest.md",
-      "sha256": "712ce4a6728b0431584491364c484250980985cd494fe20e306bfb7c0b4dcc38",
+      "sha256": "236fd8ac37a9f38ebddf5a032822542ed60a8a63999143934df0a84b9d078496",
       "bytes": 2275,
       "categories": [
         "generated"
@@ -790,7 +790,7 @@
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "7f5ff8a2b5f6e836051e89a79153a35ebf2d1059adc66462ae7e18d629d2a1c9",
+      "sha256": "31de055df82eb337345aaa15de09ee0dfd9e1093b2966dbd337ff2d2333c8e71",
       "bytes": 155,
       "categories": [
         "generated"
@@ -806,7 +806,7 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "8727bd579baed0ed15e90ba633681b169f126a51d5cb49412fda30402702626c",
+      "sha256": "86c0db72c0fb95578cb26948b37766446c36b5016d7aaba1b0c0ea6715646921",
       "bytes": 20314,
       "categories": [
         "generated"
