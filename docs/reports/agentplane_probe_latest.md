@@ -1,6 +1,6 @@
 # AgentPlane probe report
 
-- Generated at: `2026-04-06T08:21:37.770259Z`
+- Generated at: `2026-04-06T08:23:12.088487Z`
 - Target: `official-agentplane`
 - Trial mode: `no-touch-disposable-clone-probe`
 - Status: `warn`

@@ -2,7 +2,7 @@
   "apiVersion": "policy.fabric.agentplane-probe/v1",
   "kind": "AgentPlaneProbeReport",
   "metadata": {
-    "generatedAt": "2026-04-06T08:21:37.770259Z",
+    "generatedAt": "2026-04-06T08:23:12.088487Z",
     "generator": "policy-fabric-agentplane-probe/0.1.0"
   },
   "subject": {

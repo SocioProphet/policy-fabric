@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-06T08:21:37.737365Z",
+  "generatedAt": "2026-04-06T08:23:12.056844Z",
   "git": {
-    "rev": "1494ac9",
+    "rev": "595afd4",
     "dirty": true
   },
   "fileCount": 156,
@@ -430,8 +430,8 @@
     },
     {
       "path": ".policy-fabric/agentplane_bridge.json",
-      "sha256": "4c84a358c4c91747bfed0ac9fa9701c7bf0912c4a7118f6dc2cf8686bfad55ac",
-      "bytes": 4789,
+      "sha256": "f1cde33341f29a26946c66b2525aa480dcf5c8cad31dad396ccb9cce42c50d62",
+      "bytes": 4811,
       "categories": [
         "frameworkManaged"
       ]
@@ -446,8 +446,8 @@
     },
     {
       "path": ".policy-fabric/config.json",
-      "sha256": "54f53bdb0fb51966117e98c63471643cbe335eee2024a3545be6eaed39614e6a",
-      "bytes": 1675,
+      "sha256": "b74ce46d30b3dc75bdffcf51d4f8f600641d8d0f473c3c17285d42c960ed68df",
+      "bytes": 2730,
       "categories": [
         "frameworkManaged"
       ]
@@ -462,8 +462,8 @@
     },
     {
       "path": ".policy-fabric/ownership.json",
-      "sha256": "d9eb80d26191a6321be7ed2a49dcc8c33bd57073cff37bf758afef584c83835e",
-      "bytes": 1558,
+      "sha256": "716dc6fb0fd31d6e1afd1036e7887fe64487b7b228250fc3a3dd960f90c8ff86",
+      "bytes": 2613,
       "categories": [
         "frameworkManaged"
       ]
@@ -478,16 +478,16 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "ec822d2b80eb766d7eface3d8c8ec7e1a41eeb7f17419ce1fad43cf8ca517c34",
-      "bytes": 20318,
+      "sha256": "8727bd579baed0ed15e90ba633681b169f126a51d5cb49412fda30402702626c",
+      "bytes": 20314,
       "categories": [
         "generated"
       ]
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "9dfd0f05ec63e87d595b3cff815df7319a86bcb097c653efb1533b9e20d9bc99",
-      "bytes": 419,
+      "sha256": "4a6edf2e352d7f92571a0475a77e672ffda80777a4854ac56414057ff204e1e8",
+      "bytes": 393,
       "categories": [
         "generated"
       ]
@@ -750,7 +750,7 @@
     },
     {
       "path": "docs/reports/agentplane_probe_latest.json",
-      "sha256": "6cf07b5f6d7f9fcd344c6f209b450e1b120e9e9b4acf8e61d327574a9f8c5b3a",
+      "sha256": "8ff638c34cc86c577185b1f0ee28769c7a5cda016b1194827b5499e453cf79f2",
       "bytes": 4741,
       "categories": [
         "generated"
@@ -758,7 +758,7 @@
     },
     {
       "path": "docs/reports/agentplane_probe_latest.md",
-      "sha256": "9df80bc2432737517613b966bdefda9146b66c74831787b2d9a94efc1e24a182",
+      "sha256": "712ce4a6728b0431584491364c484250980985cd494fe20e306bfb7c0b4dcc38",
       "bytes": 2275,
       "categories": [
         "generated"
@@ -782,15 +782,15 @@
     },
     {
       "path": "docs/reports/doctor_latest.md",
-      "sha256": "9421e5ff66ce188632024f9bf9850beaaad36f92c847b6b78853b2a2c00e77fd",
-      "bytes": 8605,
+      "sha256": "f990b436d4ce0e21012451cf826fc8002cd09d090e8305ca08f6b6d786b69ffb",
+      "bytes": 8600,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "464aac68d9aea81cc0bd56188f347614dad5bad23cbc8569f2c105aa81df751a",
+      "sha256": "7f5ff8a2b5f6e836051e89a79153a35ebf2d1059adc66462ae7e18d629d2a1c9",
       "bytes": 155,
       "categories": [
         "generated"
@@ -806,16 +806,16 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "ec822d2b80eb766d7eface3d8c8ec7e1a41eeb7f17419ce1fad43cf8ca517c34",
-      "bytes": 20318,
+      "sha256": "8727bd579baed0ed15e90ba633681b169f126a51d5cb49412fda30402702626c",
+      "bytes": 20314,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/validation_report_latest.md",
-      "sha256": "92ba41ed4974901443f3dbc2120d19e759293ea888200115d02ad6bb481ca9f5",
-      "bytes": 6455,
+      "sha256": "f626fca2504ee3ff2cc3419fb2627fa61f04acbdb2105334e40befefd3cd8e46",
+      "bytes": 6452,
       "categories": [
         "generated"
       ]

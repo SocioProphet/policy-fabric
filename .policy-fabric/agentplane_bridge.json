@@ -125,6 +125,6 @@
     "policyFabricDirPresent": true,
     "gatewayPresent": true,
     "hybridBridgeActive": true,
-    "notes": "Official AgentPlane init succeeded on work/official-agentplane-init-eval; .agentplane and .policy-fabric now coexist in the repo."
+    "notes": "Official AgentPlane init succeeded on work/official-agentplane-init-eval; ownership/config now synchronized to the actual initialized .agentplane tree."
   }
 }
