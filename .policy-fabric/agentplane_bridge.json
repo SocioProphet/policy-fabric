@@ -1,7 +1,7 @@
 {
   "bridgeContractVersion": 1,
   "target": "official-agentplane",
-  "status": "probe-complete-init-not-executed",
+  "status": "initialized",
   "trialMode": "no-touch-disposable-clone-probe",
   "officialReferences": {
     "homepage": "https://agentplane.org/",
@@ -119,5 +119,12 @@
       "message": "Disposable-clone probing in this container could inspect prerequisites and package metadata, but could not complete an npm-executed official CLI init because the container npm execution path returned an authentication failure for package execution."
     }
   ],
-  "nextAction": "Run official AgentPlane init in a disposable clone from a clean environment where npm package execution works, then merge the observed managed surfaces back into the ownership contract and doctor checks."
+  "nextAction": "Run official AgentPlane init in a disposable clone from a clean environment where npm package execution works, then merge the observed managed surfaces back into the ownership contract and doctor checks.",
+  "findings": {
+    "agentplaneDirPresent": true,
+    "policyFabricDirPresent": true,
+    "gatewayPresent": true,
+    "hybridBridgeActive": true,
+    "notes": "Official AgentPlane init succeeded on work/official-agentplane-init-eval; ownership and config were synchronized to the actual initialized .agentplane file set."
+  }
 }

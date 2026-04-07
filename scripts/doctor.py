@@ -156,7 +156,7 @@ try:
     ownership = load_json('.policy-fabric/ownership.json')
     profiles = load_json('.policy-fabric/profiles.json')
 
-    if set(config.get('managedPaths', [])) == set(ownership.get('frameworkManagedPaths', [])):
+    if set(config.get('managedPaths', [])) == set(ownership.get('managedPaths', ownership.get('frameworkManagedPaths', []))):
         ok('ownership:managed-sync', 'PFD030_OWNERSHIP_SYNC_OK', 'config managed paths match ownership contract', '.policy-fabric/config.json')
     else:
         fail('ownership:managed-sync', 'PFD031_OWNERSHIP_DRIFT', 'config managed paths drift from ownership contract', '.policy-fabric/config.json')
@@ -217,7 +217,7 @@ try:
         fail('docs:agents-gateway-sync', 'PFD051_DOC_SYNC_DRIFT', f'AGENTS.md missing tokens: {missing_agents_tokens}', 'AGENTS.md')
 
     category_map = {
-        'frameworkManaged': ownership.get('frameworkManagedPaths', []),
+        'frameworkManaged': ownership.get('managedPaths', ownership.get('frameworkManagedPaths', [])),
         'generated': ownership.get('generatedPaths', []),
         'localOverride': ownership.get('localOverridePaths', []),
         'archiveProtected': ownership.get('archiveProtectedPaths', []),
