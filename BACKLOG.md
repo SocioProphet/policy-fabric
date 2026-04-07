@@ -16,3 +16,6 @@
 14. Add bridge-aware reconcile behavior once a real `.agentplane/` tree exists.
 
 - Implement branch safety and evaluate recent branch topology.
+
+- Add real GitHub remote, branch protection/rulesets, and CODEOWNERS ownership after the first private publish.
+- Run the first low-risk GitHub bootstrap PR before the first official AgentPlane init.

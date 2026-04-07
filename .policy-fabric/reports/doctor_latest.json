@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-04-06T09:34:50.907786Z",
+    "generatedAt": "2026-04-07T01:44:38.449629Z",
     "generator": "policy-fabric-doctor/0.5.0",
-    "runId": "doctor-2026-04-06T09:34:50.907786Z"
+    "runId": "doctor-2026-04-07T01:44:38.449629Z"
   },
   "subject": {
     "type": "releasePack",
@@ -13,7 +13,7 @@
   },
   "summary": {
     "status": "pass",
-    "checkCount": 68,
+    "checkCount": 83,
     "failCount": 0,
     "warnCount": 0
   },
@@ -179,12 +179,84 @@
       "artifactRef": ".policy-fabric/branch_policy.json"
     },
     {
+      "id": "exists:.policy-fabric/github_publish.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": ".policy-fabric/github_publish.json"
+    },
+    {
       "id": "exists:AGENTS.md",
       "status": "pass",
       "severity": "info",
       "code": "PFD001_REQUIRED_FILE_PRESENT",
       "message": "required file present",
       "artifactRef": "AGENTS.md"
+    },
+    {
+      "id": "exists:CONTRIBUTING.md",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "CONTRIBUTING.md"
+    },
+    {
+      "id": "exists:SECURITY.md",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "SECURITY.md"
+    },
+    {
+      "id": "exists:.github/PULL_REQUEST_TEMPLATE.md",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": ".github/PULL_REQUEST_TEMPLATE.md"
+    },
+    {
+      "id": "exists:.github/ISSUE_TEMPLATE/bug_report.yml",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": ".github/ISSUE_TEMPLATE/bug_report.yml"
+    },
+    {
+      "id": "exists:.github/ISSUE_TEMPLATE/feature_request.yml",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": ".github/ISSUE_TEMPLATE/feature_request.yml"
+    },
+    {
+      "id": "exists:.github/ISSUE_TEMPLATE/config.yml",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": ".github/ISSUE_TEMPLATE/config.yml"
+    },
+    {
+      "id": "exists:.github/CODEOWNERS",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": ".github/CODEOWNERS"
+    },
+    {
+      "id": "exists:.github/workflows/repo_health.yml",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": ".github/workflows/repo_health.yml"
     },
     {
       "id": "exists:scripts/reconcile.py",
@@ -209,6 +281,14 @@
       "code": "PFD001_REQUIRED_FILE_PRESENT",
       "message": "required file present",
       "artifactRef": "scripts/branch_audit.py"
+    },
+    {
+      "id": "exists:scripts/github_publish_prep.py",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "scripts/github_publish_prep.py"
     },
     {
       "id": "validate:policy-example",
@@ -328,6 +408,14 @@
       "severity": "info",
       "code": "PFD043_BRANCH_POLICY_SYNC_OK",
       "message": "config references the branch policy contract and branch audit command",
+      "artifactRef": ".policy-fabric/config.json"
+    },
+    {
+      "id": "github-publish:config-sync",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD045_GITHUB_PUBLISH_SYNC_OK",
+      "message": "config references the GitHub publish contract and prep command",
       "artifactRef": ".policy-fabric/config.json"
     },
     {
@@ -529,6 +617,38 @@
       "code": "PFD097_AGENTPLANE_PROBE_STATUS_OK",
       "message": "AgentPlane probe report is non-failing",
       "artifactRef": "docs/reports/agentplane_probe_latest.json"
+    },
+    {
+      "id": "github-publish:contract-shape",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD110_GITHUB_PUBLISH_OK",
+      "message": "GitHub publish contract has expected core fields",
+      "artifactRef": ".policy-fabric/github_publish.json"
+    },
+    {
+      "id": "github-publish:workflow-triggers",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD112_GITHUB_WORKFLOW_OK",
+      "message": "repo health workflow is configured for push and pull_request",
+      "artifactRef": ".github/workflows/repo_health.yml"
+    },
+    {
+      "id": "github-publish:report-shape",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD115_GITHUB_PUBLISH_REPORT_OK",
+      "message": "GitHub publish prep report present with expected API version",
+      "artifactRef": "docs/reports/github_publish_prep_latest.json"
+    },
+    {
+      "id": "github-publish:report-status",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD117_GITHUB_PUBLISH_STATUS_OK",
+      "message": "GitHub publish prep report is non-failing",
+      "artifactRef": "docs/reports/github_publish_prep_latest.json"
     },
     {
       "id": "branch-policy:contract-shape",

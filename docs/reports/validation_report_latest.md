@@ -2,8 +2,18 @@
 
 Overall status: PASS
 
-Check count: `68`; fails: `0`; warnings: `0`
+Check count: `83`; fails: `0`; warnings: `0`
 
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
@@ -43,6 +53,7 @@ Check count: `68`; fails: `0`; warnings: `0`
 - `PFD050_DOC_SYNC_OK` — pass — workflow documentation references governed commands and contracts
 - `PFD050_DOC_SYNC_OK` — pass — reconcile documentation references repair surfaces and commands
 - `PFD043_BRANCH_POLICY_SYNC_OK` — pass — config references the branch policy contract and branch audit command
+- `PFD045_GITHUB_PUBLISH_SYNC_OK` — pass — config references the GitHub publish contract and prep command
 - `PFD050_DOC_SYNC_OK` — pass — AGENTS.md references the active repository workflow surfaces
 - `PFD032_OWNERSHIP_OVERLAP_FREE` — pass — ownership categories do not overlap on actual files
 - `PFD034_OWNERSHIP_CLASSIFICATION_OK` — pass — all tracked files are classified by the ownership contract
@@ -68,6 +79,10 @@ Check count: `68`; fails: `0`; warnings: `0`
 - `PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK` — pass — AgentPlane bridge contract records expected current-state findings
 - `PFD095_AGENTPLANE_PROBE_OK` — pass — AgentPlane probe report present with expected API version
 - `PFD097_AGENTPLANE_PROBE_STATUS_OK` — pass — AgentPlane probe report is non-failing
+- `PFD110_GITHUB_PUBLISH_OK` — pass — GitHub publish contract has expected core fields
+- `PFD112_GITHUB_WORKFLOW_OK` — pass — repo health workflow is configured for push and pull_request
+- `PFD115_GITHUB_PUBLISH_REPORT_OK` — pass — GitHub publish prep report present with expected API version
+- `PFD117_GITHUB_PUBLISH_STATUS_OK` — pass — GitHub publish prep report is non-failing
 - `PFD101_BRANCH_POLICY_OK` — pass — branch policy protects main and defines baseline tag prefix
 - `PFD104_BRANCH_AUDIT_OK` — pass — branch audit report present with expected API version
 - `PFD106_BRANCH_AUDIT_STATUS_OK` — pass — branch audit report is non-failing

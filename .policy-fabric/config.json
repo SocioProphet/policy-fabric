@@ -57,7 +57,10 @@
     "docs/comparison/**",
     "docs/rebrand/**",
     "docs/research/**",
-    "docs/turns/**"
+    "docs/turns/**",
+    ".policy-fabric/github_publish.json",
+    ".github/**",
+    "scripts/github_publish_prep.py"
   ],
   "generatedPaths": [
     "docs/reports/**",
@@ -84,5 +87,7 @@
   "agentplaneProbeReportPath": "docs/reports/agentplane_probe_latest.json",
   "branchPolicyContract": ".policy-fabric/branch_policy.json",
   "branchAuditCommand": "python scripts/branch_audit.py",
-  "branchAuditReportPath": "docs/reports/branch_audit_latest.json"
+  "branchAuditReportPath": "docs/reports/branch_audit_latest.json",
+  "githubPublishContract": ".policy-fabric/github_publish.json",
+  "githubPublishPrepCommand": "python scripts/github_publish_prep.py"
 }

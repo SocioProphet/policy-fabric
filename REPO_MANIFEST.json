@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-04-06T09:34:50.822742Z",
+  "generatedAt": "2026-04-07T01:44:38.342515Z",
   "git": {
-    "rev": "95a0b2d",
+    "rev": "bd6e63e",
     "dirty": true
   },
-  "fileCount": 156,
+  "fileCount": 171,
   "files": [
     {
       "path": ".agentplane/.upgrade/baseline/agents/CODER.json",
@@ -405,6 +405,54 @@
       ]
     },
     {
+      "path": ".github/CODEOWNERS",
+      "sha256": "8e94ba8c4b106b1d8c220fd0e09877642e7f3a70910371514480ffe5bcd8f9d7",
+      "bytes": 256,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.yml",
+      "sha256": "38e57e690d7028d713a8f051e59281e74af7455721b1acd160dc2c3d5fc74a9d",
+      "bytes": 774,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "sha256": "1f103c6a9dd07cd13a9a6f17ace6b813f47747eb9cb7e00488cb2073caaf91bb",
+      "bytes": 28,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.yml",
+      "sha256": "b250fc0d3e9b12204538409b477f4c474b2f24cb9ed16dcb394a3cfe4da27468",
+      "bytes": 606,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "sha256": "63678b029c65e0e652e646e4e18cef5e82165b8ff844ed452b5398d8acc923c2",
+      "bytes": 822,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": ".github/workflows/repo_health.yml",
+      "sha256": "e07d0ff8fadf6a424803d59aeeb22fe0ecd69b0f8ffd5b5010e099e0bf81dbae",
+      "bytes": 986,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": ".gitignore",
       "sha256": "6b969146e3babfa06765aadb6ec7a2bde1f0320d881f66d58cd04def6197cd06",
       "bytes": 363,
@@ -422,8 +470,8 @@
     },
     {
       "path": ".policy-fabric/WORKFLOW.md",
-      "sha256": "199e276e416d71398b1f720b4a602a0133b4cdbe14f8167573cd8010c70e2b02",
-      "bytes": 2674,
+      "sha256": "34a0998efcf16c9a79cdcca0c27c767cfbb9ec61241bcbf64ba9eb94706937e7",
+      "bytes": 2865,
       "categories": [
         "frameworkManaged"
       ]
@@ -446,8 +494,16 @@
     },
     {
       "path": ".policy-fabric/config.json",
-      "sha256": "4c5ce6c711a27de4b71f3ac7ba9faa218b4e5ff78eb4f876656d8f53d322fd39",
-      "bytes": 3105,
+      "sha256": "22af696877513e40d0b40466c3685a2b8c36dc22f39ca0ba11f28084d8ce6324",
+      "bytes": 3339,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": ".policy-fabric/github_publish.json",
+      "sha256": "ecbdf0733804f926b2cc95633577684fffd4cddb5171e7c6cdb9e6795cf53e3a",
+      "bytes": 1660,
       "categories": [
         "frameworkManaged"
       ]
@@ -462,8 +518,8 @@
     },
     {
       "path": ".policy-fabric/ownership.json",
-      "sha256": "4d6af6213121b84ff1e663db0028f233f0ebce23c9d75b5f3f3a8a3c63a64fcc",
-      "bytes": 2988,
+      "sha256": "d8129501e1bbde7e538e13d89f9850824c27d4195f0cff16ac17da978e27681a",
+      "bytes": 3188,
       "categories": [
         "frameworkManaged"
       ]
@@ -478,15 +534,15 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "b429d98ef6528572a98510dc4f15214472eca7892e7e3d59d186d2041ac239a7",
-      "bytes": 20537,
+      "sha256": "af778f60eaad1036ca02654ae5dfc314cf44c291b1d94db9fa07f43183051df2",
+      "bytes": 24212,
       "categories": [
         "generated"
       ]
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "be16d1e0cf2232d18bef67e04bb0ae6a1750c4d6e1aede9f7cd38807d7d7d572",
+      "sha256": "ae2e1bc49c68792972a87f03889d7d37bc1ef12ea941e784c986237351f78e71",
       "bytes": 419,
       "categories": [
         "generated"
@@ -494,32 +550,48 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "a881a98c9c363548c2e2a2caa5b54eeb45f1a4ba15cefd96f65501c57ec8262c",
-      "bytes": 2832,
+      "sha256": "975798f7aa747086ce0f157bbf67b72f6ce84c7bcae8ab97f47859a87e7ce539",
+      "bytes": 3376,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "BACKLOG.md",
-      "sha256": "03ab5d5a1f5e05427f316f7ac74b78f7f3bfc3bc5053a62f70323e186e8e073f",
-      "bytes": 1526,
+      "sha256": "14820da7d1f8084fc9b85a0e12b0f7465b4ba8e8b70a0060edd15ee050cc553d",
+      "bytes": 1727,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "ca77339a099a57ffb111f33b54001bd47501db76aa0bb4bfe9a732322335a9fe",
-      "bytes": 4263,
+      "sha256": "5dab452f0410e65c9f2b8fc42833e0d887c1cd669f445fdf33fbd0f9345257b0",
+      "bytes": 4622,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "c4de8260a0c41155229ebc898109a9264a10534227b514a48852da3980df573e",
+      "bytes": 2577,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "README.md",
-      "sha256": "9d75bdcd8caa4a06b70ec17f1aac90e1cf6d5f0692db1da579626f393ca61bab",
-      "bytes": 4113,
+      "sha256": "89be6a92f8ff3753b9b33b3beb7661a89e70cbbd59ede46173f52a39a33b7dcb",
+      "bytes": 5104,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "b5b35c9587cee7e92e31505b52ffabaea53393e36181a0bbfd19eb724ae49ed8",
+      "bytes": 1534,
       "categories": [
         "frameworkManaged"
       ]
@@ -725,6 +797,14 @@
       ]
     },
     {
+      "path": "docs/assessments/2026-04-05_github_publish_readiness.md",
+      "sha256": "e6c9f7b7862f14bda4f1db535cbf75c403ecb2894ffc7aa24469e26c6ca7cd4f",
+      "bytes": 1334,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
       "path": "docs/blueprints/Policy_Fabric_Platform_Blueprint.docx",
       "sha256": "f6e4c262413cd5873dfcc67277b49cd5f81969d7430b5379a3493c3d687fcf2f",
       "bytes": 50227,
@@ -766,31 +846,47 @@
     },
     {
       "path": "docs/reports/branch_audit_latest.json",
-      "sha256": "0b67105a7a650d290c3a18b550fc7359dc82ad43dbab860ac6990e99bdd1178e",
-      "bytes": 6421,
+      "sha256": "ebe64839bf24c2a078f1be4cc1100a74ebb2763f9773d72c8d9c80db58ea97e9",
+      "bytes": 7722,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/branch_audit_latest.md",
-      "sha256": "1281ab8eaf160af874b1ab6d59fbcd3c491f810956bb83e7a9746138c28c88d9",
-      "bytes": 1495,
+      "sha256": "2e2dcf8de8b06ac04d2c878eb9810b36c9e0560d6cf92408221c1be714d55a3c",
+      "bytes": 1623,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/doctor_latest.md",
-      "sha256": "f8769878cb4b9c4340074bf82c10afa82dc8f00b9c15a2bfe677ff9cc46c83e1",
-      "bytes": 8822,
+      "sha256": "8a5008126638c36aff3dcad24b33d0e9ca6a363a859478cbb886c5fad8bfb0bf",
+      "bytes": 10172,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": "docs/reports/github_publish_prep_latest.json",
+      "sha256": "12b8f04d0cc48b0053820d54a64d9f0c7d1dabae3c7e822e461eaaa274d52839",
+      "bytes": 4093,
+      "categories": [
+        "generated"
+      ]
+    },
+    {
+      "path": "docs/reports/github_publish_prep_latest.md",
+      "sha256": "0ff4198f81960b68eae1398f088b03a9e1ae10c1147bc69fd96352cc8dac024b",
+      "bytes": 1989,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "b9a5915a6f092c245c6c0eb0acdb3efedad3419388419451d16ef39edff9d033",
+      "sha256": "565d3ffb45b5941505dd30834a3ad1f47e29802fe9cc361c34a3b607131c61cc",
       "bytes": 155,
       "categories": [
         "generated"
@@ -806,16 +902,16 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "b429d98ef6528572a98510dc4f15214472eca7892e7e3d59d186d2041ac239a7",
-      "bytes": 20537,
+      "sha256": "af778f60eaad1036ca02654ae5dfc314cf44c291b1d94db9fa07f43183051df2",
+      "bytes": 24212,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/validation_report_latest.md",
-      "sha256": "d9e9f67bba4ddb20be4155cd12a423e459d13074b64d85c57c97fea6e19cbae6",
-      "bytes": 6676,
+      "sha256": "3ab48aa79c988c3b3455d2e1a9b5af3db0370aec4655d915a81704d6938c1803",
+      "bytes": 7542,
       "categories": [
         "generated"
       ]
@@ -880,6 +976,14 @@
       "path": "docs/specs/error_taxonomy.md",
       "sha256": "950910c0917380b2a2a8fc27b51836c613c59d2af66d6722495676c6d19e899d",
       "bytes": 4238,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "docs/specs/github_publish_and_pairing.md",
+      "sha256": "1c704850eeb01ed67cc26c523b23de7d81a1512d19b561ccaac023b96229f29c",
+      "bytes": 3321,
       "categories": [
         "frameworkManaged"
       ]
@@ -960,6 +1064,14 @@
       "path": "docs/turns/2026-04-02_turn_03.md",
       "sha256": "adef38a8dc355b1054871272e11e6e666f86d7c3c03b30337fb9c803f5129f09",
       "bytes": 500,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "docs/turns/2026-04-05_turn_01.md",
+      "sha256": "acb8073d64000298b1bd8fd4c81e61f0578513c432bfd326c26dd5e5cf088a8c",
+      "bytes": 790,
       "categories": [
         "frameworkManaged"
       ]
@@ -1158,24 +1270,32 @@
     },
     {
       "path": "scripts/branch_audit.py",
-      "sha256": "dfd64dd6f662caaccabaf961a804db6804981ec884541ca1fb66ef25ac25eecb",
-      "bytes": 6713,
+      "sha256": "3312252227e94d8e87051ec612b2ce847e1569576bb344681d302e772669bb60",
+      "bytes": 7637,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "scripts/build_dist_bundle.py",
-      "sha256": "169f5c9e4af1d9ca3640854bd1ba1206302db421408d2a4ad9caa9245bd2a2b2",
-      "bytes": 1473,
+      "sha256": "f32039dc8c33f6e3acda870a7eb43c3cfe2880fa0e0b19b40bb8cfde9946547a",
+      "bytes": 1531,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "scripts/doctor.py",
-      "sha256": "e3ac5b6378bec0a8f44d22ac99eb928e4248856d33f33ab44ff33f92d3e51597",
-      "bytes": 25489,
+      "sha256": "3e002c020c35580f9cc16f85f4050f68cfd709a571c36a8ae71f5ac6a3e689eb",
+      "bytes": 29326,
+      "categories": [
+        "frameworkManaged"
+      ]
+    },
+    {
+      "path": "scripts/github_publish_prep.py",
+      "sha256": "5a5bba02ea8ed565d55ffd9c795f99b59eaf981effb153b66609fc27c6e3c0b7",
+      "bytes": 9527,
       "categories": [
         "frameworkManaged"
       ]

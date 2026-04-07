@@ -1,0 +1,46 @@
+{
+  "apiVersion": "policy.fabric.github-publish/v1",
+  "kind": "GitHubPublishContract",
+  "owner": "SocioProphet",
+  "repoName": "policy-fabric-control-repository",
+  "description": "Control repository for Policy Fabric contracts, examples, workflow governance, and promotion artifacts.",
+  "visibility": "private",
+  "defaultBranch": "main",
+  "remoteName": "origin",
+  "publishMode": "existing-local-repo",
+  "licenseDecision": {
+    "status": "pending",
+    "recommendedVisibilityUntilResolved": "private"
+  },
+  "topics": [
+    "policy-fabric",
+    "contracts",
+    "data-protection",
+    "governance",
+    "agentplane-ready"
+  ],
+  "requiredRepoSurfaces": [
+    "README.md",
+    "AGENTS.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    ".github/ISSUE_TEMPLATE/bug_report.yml",
+    ".github/ISSUE_TEMPLATE/feature_request.yml",
+    ".github/ISSUE_TEMPLATE/config.yml",
+    ".github/workflows/repo_health.yml",
+    ".github/CODEOWNERS"
+  ],
+  "recommendedBranchProtection": {
+    "requirePullRequestBeforeMerge": true,
+    "requireApprovingReviewCount": 1,
+    "requireStatusChecks": true,
+    "requireLinearHistory": false,
+    "allowForcePushes": false,
+    "allowDeletions": false
+  },
+  "recommendedCommands": {
+    "ghCli": "gh repo create SocioProphet/policy-fabric-control-repository --private --source . --remote origin --push --description \"Control repository for Policy Fabric contracts, examples, workflow governance, and promotion artifacts.\"",
+    "manualRemote": "git remote add origin git@github.com:SocioProphet/policy-fabric-control-repository.git && git push -u origin main --follow-tags"
+  }
+}
