@@ -108,6 +108,8 @@
     "LICENSE",
     "docs/ARCHITECTURE_OVERVIEW.md",
     "docs/TRUST_AND_SECURITY_MODEL.md",
-    "SUPPORT.md"
+    "SUPPORT.md",
+    "docs/QUICKSTART.md",
+    "docs/FAQ.md"
   ]
 }
