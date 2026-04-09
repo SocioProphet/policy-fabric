@@ -1,0 +1,61 @@
+{
+  "apiVersion": "policy.fabric.assessment/v0",
+  "manifestId": "vendor-acme-nist-ac-2-manifest",
+  "manifestVersion": "0.1.0",
+  "sourcePolicy": {
+    "policyId": "vendor-assessment-acme-nist-ac-2",
+    "version": "0.1.0"
+  },
+  "policyBundle": {
+    "id": "policy-bundle://vendor-assessment/nist-800-53-rev5",
+    "version": "0.1.0"
+  },
+  "subject": {
+    "id": "vendor:acme-cloud",
+    "kind": "vendor"
+  },
+  "framework": {
+    "id": "nist-800-53-rev5",
+    "version": "rev5"
+  },
+  "controlRequirements": [
+    {
+      "controlRequirementId": "ctrlreq_nist_ac_2_001",
+      "controlId": "AC-2",
+      "rowId": "ac-2-account-management",
+      "title": "Account management requires periodic review evidence",
+      "requiredProofClasses": [
+        "policy_document",
+        "access_review_record",
+        "identity_system_export"
+      ],
+      "decisionPolicy": "require_approval"
+    }
+  ],
+  "proofClassBindings": {
+    "policy_document": {
+      "acceptedEvidenceKinds": [
+        "policy_pdf",
+        "policy_doc"
+      ]
+    },
+    "access_review_record": {
+      "acceptedEvidenceKinds": [
+        "spreadsheet",
+        "ticket_export",
+        "signed_pdf"
+      ]
+    },
+    "identity_system_export": {
+      "acceptedEvidenceKinds": [
+        "csv_export",
+        "json_export"
+      ]
+    }
+  },
+  "outputContracts": {
+    "evaluationKind": "ControlCellEvaluation",
+    "findingKind": "Finding",
+    "receiptKind": "AssessmentReceipt"
+  }
+}
