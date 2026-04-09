@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-04-07T01:44:38.449629Z",
+    "generatedAt": "2026-04-09T02:27:55.582035Z",
     "generator": "policy-fabric-doctor/0.5.0",
-    "runId": "doctor-2026-04-07T01:44:38.449629Z"
+    "runId": "doctor-2026-04-09T02:27:55.582035Z"
   },
   "subject": {
     "type": "releasePack",
@@ -13,7 +13,7 @@
   },
   "summary": {
     "status": "pass",
-    "checkCount": 83,
+    "checkCount": 85,
     "failCount": 0,
     "warnCount": 0
   },
@@ -563,6 +563,14 @@
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     },
     {
+      "id": "policy:selector-overlap-heuristics",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV010_SELECTOR_OVERLAP_OK",
+      "message": "no likely selector overlaps detected beyond exact identity checks",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
       "id": "policy:illegal-transform-chains",
       "status": "pass",
       "severity": "info",
@@ -584,6 +592,14 @@
       "severity": "info",
       "code": "PFV000_POLICY_SEMANTICS_OK",
       "message": "policy fixtures cover approved-state minimums and attestation-aware assertions",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:negative-fixtures",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV016_NEGATIVE_FIXTURE_OK",
+      "message": "negative fixtures are well formed and reference known rules/selectors",
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     },
     {

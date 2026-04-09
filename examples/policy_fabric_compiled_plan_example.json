@@ -5,7 +5,7 @@
   "compilerVersion": "1.0.0",
   "sourcePolicy": {
     "policyId": "customer-support-mask",
-    "version": "7.3.0"
+    "version": "7.4.0"
   },
   "mode": "mask",
   "contentType": "application/json",

@@ -12,10 +12,10 @@
     "version": "1.0.0"
   },
   "summary": {
-    "status": "pass",
-    "checkCount": 6,
+    "status": "warn",
+    "checkCount": 7,
     "failCount": 0,
-    "warnCount": 0
+    "warnCount": 1
   },
   "checks": [
     {
@@ -65,6 +65,14 @@
       "code": "PFD010_SCHEMA_OK",
       "message": "Validation report example validates against validation report schema.",
       "artifactRef": "examples/policy_fabric_validation_report_example.json"
+    },
+    {
+      "id": "policy-negative-fixture-example",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFV016_NEGATIVE_FIXTURE_OK",
+      "message": "Example validation report includes a documented negative fixture expectation for semantic review workflows.",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     }
   ]
 }

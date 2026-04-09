@@ -82,7 +82,8 @@
     "Transforms with type decrypt or detokenize MUST only appear in policies or routes explicitly approved for re-identification.",
     "If selector.expectedCardinality is exactlyOne or zeroOrOne and the runtime match count exceeds 1, execution SHOULD fail closed unless explicitly overridden.",
     "Semver version SHOULD increase for any semantic policy change.",
-    "Approved policies SHOULD carry rollout constraints and test fixtures."
+    "Approved policies SHOULD carry rollout constraints and test fixtures.",
+    "Fixtures with expectFailure=true SHOULD declare expectedFailureCode and SHOULD reference the intended failing rule and/or selector when known."
   ],
   "$defs": {
     "idString": {
@@ -454,6 +455,28 @@
           "items": {
             "$ref": "#/$defs/assertion"
           }
+        },
+        "expectFailure": {
+          "type": "boolean"
+        },
+        "expectedFailureCode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedFailingRule": {
+          "$ref": "#/$defs/idString"
+        },
+        "expectedFailingSelector": {
+          "$ref": "#/$defs/idString"
+        },
+        "expectedNoop": {
+          "type": "boolean"
+        },
+        "failureAttestation": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/assertion"
+          }
         }
       }
     },
@@ -476,6 +499,28 @@
         "assert": {
           "type": "array",
           "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/assertion"
+          }
+        },
+        "expectFailure": {
+          "type": "boolean"
+        },
+        "expectedFailureCode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedFailingRule": {
+          "$ref": "#/$defs/idString"
+        },
+        "expectedFailingSelector": {
+          "$ref": "#/$defs/idString"
+        },
+        "expectedNoop": {
+          "type": "boolean"
+        },
+        "failureAttestation": {
+          "type": "array",
           "items": {
             "$ref": "#/$defs/assertion"
           }
