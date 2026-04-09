@@ -76,19 +76,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, validation, PR, and generated
 
 This repository is licensed under the [MIT License](LICENSE).
 
-## Suggested GitHub description
+## Topics
 
-Policy Fabric is a policy-governed data protection control repository for authored policies, compiled plans, release packs, and validation evidence.
-
-## Suggested GitHub topics
-
-- policy-fabric
-- policy-as-code
-- data-protection
-- data-governance
-- privacy-engineering
-- control-plane
-- semantic-validation
-- agentplane
-- security-governance
-- release-engineering
+policy-fabric · policy-as-code · data-protection · data-governance · privacy-engineering · control-plane · semantic-validation · agentplane · security-governance · release-engineering
