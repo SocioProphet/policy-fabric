@@ -1,42 +1,49 @@
 # Security Policy
 
-## Scope
+## Supported versions
 
-This repository holds design contracts, validation tooling, release-pack examples, and workflow governance for **Policy Fabric**. It must not become a place where secrets, production credentials, or raw sensitive payloads are stored inline.
+Policy Fabric is currently under active development.
 
-## What must never be committed
+We currently support security reports against:
 
-- access tokens
-- API keys
-- passwords
-- private keys
-- raw KMS material
-- raw vault credentials
-- sensitive production payloads
-- customer data used without explicit sanitization
+| Version / Branch | Supported |
+| --- | --- |
+| `main` | Yes |
+| active release candidate branches explicitly called out by maintainers | Case-by-case |
+| historical work branches | No |
 
-Use reference-style declarations only, such as provider refs, capability refs, and secret refs.
+## Reporting a vulnerability
 
-## Reporting security concerns
+Please do **not** open a public GitHub issue for suspected vulnerabilities.
 
-Until the repository is published and a final disclosure channel is configured, do **not** open a public issue for a suspected vulnerability involving secrets, re-identification paths, or sensitive data handling.
+Use one of these channels instead:
 
-Route the finding through a private maintainer channel in the owning GitHub organization first, then record the sanitized outcome back in the repo once handling guidance is ready.
+1. Preferred: GitHub private vulnerability reporting / security advisory flow, if enabled for this repository.
+2. Fallback: email `michael@socioprophet.ai` with the subject line `Policy Fabric security report`.
 
-## Publication posture
+If you later establish a dedicated security inbox, replace the fallback address above with that inbox.
 
-This repository is currently prepared for a **private** initial GitHub publication. Keep it private until:
+## What to include
 
-- a license decision is finalized
-- disclosure routing is finalized
-- remote branch protection is enabled
-- the first official AgentPlane initialization trial is understood
+Please include as much of the following as possible:
 
-## Operational hygiene
+- affected branch, commit, or tag
+- steps to reproduce
+- impacted contract, validator, workflow, or report surface
+- expected behavior vs actual behavior
+- severity or impact assessment
+- proof-of-concept or minimal reproducer, if safe to share
 
-Before pushing:
+## Response expectations
 
-1. run `python scripts/branch_audit.py`
-2. run `python scripts/github_publish_prep.py`
-3. run `python scripts/doctor.py`
-4. inspect `docs/reports/*.md` and `docs/reports/*.json`
+We aim to:
+
+- acknowledge receipt within 5 business days
+- determine whether the report is reproducible and in scope
+- coordinate a fix and disclosure path where appropriate
+
+## Disclosure guidance
+
+Please give us reasonable time to validate and remediate before public disclosure.
+
+If the issue affects generated examples or reports rather than executable behavior, still report it if it could mislead operators or weaken security posture.

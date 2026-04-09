@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-04-09T02:27:55.487683Z",
+  "generatedAt": "2026-04-09T02:47:58.814878Z",
   "git": {
-    "rev": "82c5941",
+    "rev": "12c4657",
     "dirty": true
   },
-  "fileCount": 172,
+  "fileCount": 173,
   "files": [
     {
       "path": ".agentplane/.upgrade/baseline/agents/CODER.json",
@@ -494,8 +494,8 @@
     },
     {
       "path": ".policy-fabric/config.json",
-      "sha256": "22af696877513e40d0b40466c3685a2b8c36dc22f39ca0ba11f28084d8ce6324",
-      "bytes": 3339,
+      "sha256": "25a2e5acd0b5bb4c0311447d8f984acee38a60498782ba8ea25ac26925225bb3",
+      "bytes": 3354,
       "categories": [
         "frameworkManaged"
       ]
@@ -518,8 +518,8 @@
     },
     {
       "path": ".policy-fabric/ownership.json",
-      "sha256": "d8129501e1bbde7e538e13d89f9850824c27d4195f0cff16ac17da978e27681a",
-      "bytes": 3188,
+      "sha256": "d30e6f8d4b1b5ff8f3a787f6e6dc9ddf3c9be56deacd639ecbc9810600d86e2c",
+      "bytes": 3203,
       "categories": [
         "frameworkManaged"
       ]
@@ -534,15 +534,15 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "2d1e2eb7175799c370342b068dbebf7751321843976e4299b05300e46a004237",
-      "bytes": 24798,
+      "sha256": "c2127cbccb1eb237033bdbdbea25a9d80fcec9e7da2c33b346528712ef4170bf",
+      "bytes": 24606,
       "categories": [
         "generated"
       ]
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "d2a8ee0e614f378ccde5a92bb27c0b2688defb05a763c774ed480fe8bf0a6f41",
+      "sha256": "31fc710023b5c2d842b78b5d9bf896ed11cd63238a739006a98c2fe3df4f1742",
       "bytes": 419,
       "categories": [
         "generated"
@@ -574,24 +574,30 @@
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "c4de8260a0c41155229ebc898109a9264a10534227b514a48852da3980df573e",
-      "bytes": 2577,
+      "sha256": "3e5088bdc593207551c8b5529425fbbc2cf642be97762565c2cb7666d412f06e",
+      "bytes": 1575,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
+      "path": "LICENSE",
+      "sha256": "b83b7f3ed823a628df9e35a474757bb78f8f20855f53a28d7b82960888909262",
+      "bytes": 1069,
+      "categories": []
+    },
+    {
       "path": "README.md",
-      "sha256": "89be6a92f8ff3753b9b33b3beb7661a89e70cbbd59ede46173f52a39a33b7dcb",
-      "bytes": 5104,
+      "sha256": "20ae0a6541527275b947cb31a34c104fa1bbebdbc6e7fd731f0e91caf9455010",
+      "bytes": 3533,
       "categories": [
         "frameworkManaged"
       ]
     },
     {
       "path": "SECURITY.md",
-      "sha256": "b5b35c9587cee7e92e31505b52ffabaea53393e36181a0bbfd19eb724ae49ed8",
-      "bytes": 1534,
+      "sha256": "fde156109fc791015eb40bb2a0c196da53e192afedb4a71b1fdf6a8adc4314fb",
+      "bytes": 1579,
       "categories": [
         "frameworkManaged"
       ]
@@ -862,8 +868,8 @@
     },
     {
       "path": "docs/reports/doctor_latest.md",
-      "sha256": "a94c1e79d22e64e314cc1300eb1c46f625c59778c43dfdd54bcc822c7163204a",
-      "bytes": 10402,
+      "sha256": "364d4d7acd5d48f19f29385997ea511b1a47ee9d27c50bde2b9dedd0b9b85366",
+      "bytes": 10209,
       "categories": [
         "generated"
       ]
@@ -886,7 +892,7 @@
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "e8e234164fd5c5b2cea294c317c6d47b60149dd7a0cd2cfe54221888cc614326",
+      "sha256": "61f498b6a061ddab603281caed8ef61038918eb780144326da30f394f8f258ed",
       "bytes": 155,
       "categories": [
         "generated"
@@ -902,16 +908,16 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "2d1e2eb7175799c370342b068dbebf7751321843976e4299b05300e46a004237",
-      "bytes": 24798,
+      "sha256": "c2127cbccb1eb237033bdbdbea25a9d80fcec9e7da2c33b346528712ef4170bf",
+      "bytes": 24606,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/validation_report_latest.md",
-      "sha256": "486a54e03fef936142491ae4c0fdef35481367b536231c294ff696decb045cb2",
-      "bytes": 7716,
+      "sha256": "01fc7fd0d16df14d3513ae71722263c2a630e61da754554dca078076a5571a9f",
+      "bytes": 7525,
       "categories": [
         "generated"
       ]
@@ -1238,7 +1244,7 @@
     },
     {
       "path": "scripts/__pycache__/policy_semantic_validator.cpython-312.pyc",
-      "sha256": "00e35a00ae32c61f0ed55fe66d03f7866bb5a6fb6083c3fd9dbd29cdbe9a225a",
+      "sha256": "d109bc94a30d6dedeec4cabe93f82feed937839bd5008ed509b8a8d7a3a7be80",
       "bytes": 29073,
       "categories": [
         "frameworkManaged"
