@@ -1,6 +1,14 @@
 # Policy Fabric
 
-Policy Fabric is a policy-governed data protection platform and control repository for authored policies, compiled execution plans, release packs, validation evidence, and repo-native workflow governance.
+Policy Fabric is a governed platform for authoring, validating, packaging, and reviewing data-protection policy as code.
+
+## Start here
+
+- [Quickstart](docs/QUICKSTART.md)
+- [Architecture Overview](docs/ARCHITECTURE_OVERVIEW.md)
+- [Trust and Security Model](docs/TRUST_AND_SECURITY_MODEL.md)
+- [Support](SUPPORT.md)
+- [FAQ](docs/FAQ.md)
 
 ## What this repository is
 
