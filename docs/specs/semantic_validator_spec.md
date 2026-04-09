@@ -68,3 +68,24 @@ Each validation finding should include:
 ## Relationship to current repo
 
 The current `scripts/doctor.py` plus `scripts/policy_semantic_validator.py` now implement Phase 0, structural checks, capability-catalog reference integrity, rollout/provider authorization checks, exact-target conflict detection, and attestation/test readiness checks. Deeper selector-overlap analysis, richer negative-fixture enforcement, and runtime semantics remain the next major layer to implement.
+
+## Semantic Tranche 1
+
+### Selector overlap heuristics
+The validator SHOULD emit non-fatal overlap findings when selectors are not textually identical but likely overlap semantically:
+- JSONPath/XPath/pointer prefix overlap
+- wildcard-vs-concrete index overlap
+- normalized path equivalence after array index normalization
+- obvious regex equivalence or shadow heuristics
+
+### Negative fixtures
+Fixtures MAY declare:
+- `expectFailure`
+- `expectedFailureCode`
+- `expectedFailingRule`
+- `expectedFailingSelector`
+- `expectedNoop`
+- `failureAttestation`
+
+Approved policies SHOULD include at least one negative fixture so failure semantics are reviewable alongside happy-path assertions.
+

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -62,6 +63,67 @@ def _selector_identity(selector: dict) -> str:
     if selector_type == "schemaRef":
         return f"schemaRef:{selector.get('schemaRef', '')}"
     return f"id:{selector.get('id', '')}"
+
+
+
+def _normalized_selector_value(selector: dict) -> tuple[str, str]:
+    selector_type = selector.get("type", "")
+    if selector_type in {"jsonpath", "xpath", "pointer"}:
+        raw = selector.get("path", "").strip()
+    elif selector_type == "regex":
+        raw = selector.get("pattern", "").strip()
+    else:
+        raw = selector.get("schemaRef", "").strip()
+
+    norm = raw
+    if selector_type in {"jsonpath", "xpath"}:
+        norm = norm.replace("[*]", "[]")
+        norm = re.sub(r"\[\d+\]", "[]", norm)
+    elif selector_type == "pointer":
+        norm = re.sub(r"/\d+(?=/|$)", "/[]", norm)
+    elif selector_type == "regex":
+        norm = raw.strip("^$").strip()
+
+    return selector_type, norm
+
+
+def _path_prefix_overlap(left: str, right: str) -> bool:
+    return (
+        left == right
+        or left.startswith(right + ".")
+        or left.startswith(right + "[")
+        or left.startswith(right + "/")
+        or right.startswith(left + ".")
+        or right.startswith(left + "[")
+        or right.startswith(left + "/")
+    )
+
+
+def _selector_overlap_reason(left: dict, right: dict) -> str | None:
+    left_type, left_norm = _normalized_selector_value(left)
+    right_type, right_norm = _normalized_selector_value(right)
+
+    if left_type != right_type or not left_norm or not right_norm:
+        return None
+
+    if left_type in {"jsonpath", "xpath", "pointer"}:
+        if left_norm == right_norm and _selector_identity(left) != _selector_identity(right):
+            return "normalized-path-equivalence"
+        if _path_prefix_overlap(left_norm, right_norm) and left_norm != right_norm:
+            return "path-prefix-overlap"
+        left_wild = re.sub(r"\[\d+\]", "[]", left_norm).replace("[*]", "[]")
+        right_wild = re.sub(r"\[\d+\]", "[]", right_norm).replace("[*]", "[]")
+        if left_wild == right_wild and left_norm != right_norm:
+            return "wildcard-shadow"
+
+    if left_type == "regex":
+        if left_norm == right_norm and left.get("flags", "") == right.get("flags", "") and _selector_identity(left) != _selector_identity(right):
+            return "regex-normalized-equivalence"
+        shorter, longer = sorted([left_norm, right_norm], key=len)
+        if shorter and len(shorter) >= 4 and shorter in longer:
+            return "regex-shadow-heuristic"
+
+    return None
 
 
 def _subset_violations(scope_values: list[str], allowed_values: list[str] | None) -> list[str]:
@@ -234,10 +296,31 @@ def collect_policy_semantic_findings(root: Path) -> list[dict]:
         if len(signatures) == 1 and not illegal_chain_messages:
             conflict_messages.append(f'{identity} is targeted redundantly by repeated transform signature {next(iter(signatures))}')
 
+    heuristic_overlap_messages = []
+    indexed_rules = [
+        (rule, selectors_by_id.get(rule.get('match', {}).get('selectorRef')))
+        for rule in rules
+    ]
+    indexed_rules = [(rule, selector) for rule, selector in indexed_rules if selector]
+    for i, (left_rule, left_selector) in enumerate(indexed_rules):
+        for right_rule, right_selector in indexed_rules[i + 1:]:
+            if _selector_identity(left_selector) == _selector_identity(right_selector):
+                continue
+            reason = _selector_overlap_reason(left_selector, right_selector)
+            if reason:
+                heuristic_overlap_messages.append(
+                    f"{left_rule.get('id')} ({left_selector.get('id')}) overlaps {right_rule.get('id')} ({right_selector.get('id')}) via {reason}"
+                )
+
     if conflict_messages:
         findings.append(_fail('policy:selector-conflicts', 'PFV007', '; '.join(conflict_messages), policy_ref))
     else:
         findings.append(_ok('policy:selector-conflicts', 'no enabled rules conflict on the same exact selector identity', policy_ref))
+
+    if heuristic_overlap_messages:
+        findings.append(_warn('policy:selector-overlap-heuristics', 'PFV011_SELECTOR_OVERLAP_HEURISTIC', '; '.join(heuristic_overlap_messages), policy_ref))
+    else:
+        findings.append(_ok('policy:selector-overlap-heuristics', 'no likely selector overlaps detected beyond exact identity checks', policy_ref, 'PFV010_SELECTOR_OVERLAP_OK'))
     if illegal_chain_messages:
         findings.append(_fail('policy:illegal-transform-chains', 'PFV008', '; '.join(illegal_chain_messages), policy_ref))
     else:
@@ -272,12 +355,56 @@ def collect_policy_semantic_findings(root: Path) -> list[dict]:
         for assertion in test.get('assert', [])
         if assertion.get('target') == 'attestation'
     ]
+    attestation_assertions.extend(
+        assertion
+        for test in tests
+        for assertion in test.get('failureAttestation', [])
+        if assertion.get('target') == 'attestation'
+    )
     if reversible_rules and not attestation_assertions:
         fixture_failures.append('policy with reversible or provider-mediated transforms must include at least one attestation-targeted assertion')
+    negative_fixture_failures = []
+    negative_fixtures = [
+        test for test in tests
+        if test.get('expectFailure') is True
+        or any(
+            key in test
+            for key in (
+                'expectedFailureCode',
+                'expectedFailingRule',
+                'expectedFailingSelector',
+                'expectedNoop',
+                'failureAttestation',
+            )
+        )
+    ]
+
+    if policy.get('status') == 'approved' and not negative_fixtures:
+        negative_fixture_failures.append('approved policy should include at least one negative fixture')
+
+    for test in negative_fixtures:
+        name = test.get('name', '<unnamed-fixture>')
+        if not test.get('expectFailure', False):
+            negative_fixture_failures.append(f'{name} declares failure metadata without expectFailure=true')
+        if not any(test.get(key) not in (None, [], "") for key in ('expectedFailureCode', 'expectedFailingRule', 'expectedFailingSelector', 'expectedNoop', 'failureAttestation')):
+            negative_fixture_failures.append(f'{name} expectFailure=true but no negative expectations were declared')
+        if test.get('expectedFailingRule') and test.get('expectedFailingRule') not in rule_ids:
+            negative_fixture_failures.append(f'{name} references unknown expectedFailingRule {test.get("expectedFailingRule")}')
+        if test.get('expectedFailingSelector') and test.get('expectedFailingSelector') not in selector_ids:
+            negative_fixture_failures.append(f'{name} references unknown expectedFailingSelector {test.get("expectedFailingSelector")}')
+        for assertion in test.get('failureAttestation', []):
+            if assertion.get('target') != 'attestation':
+                negative_fixture_failures.append(f'{name} failureAttestation contains non-attestation assertion')
+
     if fixture_failures:
         findings.append(_fail('policy:test-readiness', 'PFV010', '; '.join(fixture_failures), policy_ref))
     else:
         findings.append(_ok('policy:test-readiness', 'policy fixtures cover approved-state minimums and attestation-aware assertions', policy_ref))
+
+    if negative_fixture_failures:
+        findings.append(_fail('policy:negative-fixtures', 'PFV017_NEGATIVE_FIXTURE_INVALID', '; '.join(negative_fixture_failures), policy_ref))
+    else:
+        findings.append(_ok('policy:negative-fixtures', 'negative fixtures are well formed and reference known rules/selectors', policy_ref, 'PFV016_NEGATIVE_FIXTURE_OK'))
 
     return findings
 

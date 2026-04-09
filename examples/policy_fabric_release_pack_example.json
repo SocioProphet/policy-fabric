@@ -21,13 +21,13 @@
   "spec": {
     "policy": {
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json",
-      "sha256": "f8bb5162c41e6bb8ea84a5011e6a49351c1cd5261d1411208fe2afb1d09b247f",
+      "sha256": "4a3493e4a285e5ea5f6d40b19014f058b760c2b82fca6fcdb4366bf3d14837d4",
       "mediaType": "application/json",
       "description": "Approved authored policy artifact."
     },
     "plan": {
       "artifactRef": "examples/policy_fabric_compiled_plan_example.json",
-      "sha256": "486883b80a86f322db79db6365154f4cf0a5988071336ec9886ce530c6e486d2",
+      "sha256": "8d38bb071c7f5f0cea1397fb29f0882cfb660701c6a12eace17c82744e5ca2f6",
       "mediaType": "application/json",
       "description": "Compiled execution plan aligned to the authored policy."
     },
