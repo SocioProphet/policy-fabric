@@ -62,6 +62,12 @@ If the change affects workflow, branch, AgentPlane, or GitHub surfaces, also run
 - generated artifacts are part of the control surface and should be refreshed through repo scripts.
 - no branch should be treated as merge-ready until `python3 scripts/doctor.py` passes.
 
+## Architecture and trust model
+
+- [Architecture Overview](docs/ARCHITECTURE_OVERVIEW.md)
+- [Trust and Security Model](docs/TRUST_AND_SECURITY_MODEL.md)
+- [Support](SUPPORT.md)
+
 ## Security
 
 Do **not** report vulnerabilities in public issues.
