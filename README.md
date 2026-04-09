@@ -1,85 +1,94 @@
-# Policy Fabric Control Repository
+# Policy Fabric
 
-This repository is the cumulative working copy and control repository for the **Policy Fabric** platform.
-The filesystem directory is still `policy-fabric-working-repo`, but the repository role is now named **Policy Fabric Control Repository** so we have a stable identity for the rolling repo itself.
+Policy Fabric is a policy-governed data protection platform and control repository for authored policies, compiled execution plans, release packs, validation evidence, and repo-native workflow governance.
 
-## What this repo is
+## What this repository is
 
-- **Product name:** Policy Fabric.
-- **Repository role:** Policy Fabric Control Repository.
-- **Current state:** cumulative Git-backed source-of-truth working tree.
-- **AgentPlane state:** AgentPlane-ready, but not yet fully AgentPlane-initialized.
+This repository is the **Policy Fabric Control Repository**.
 
-The repo keeps the active contracts, aligned examples, supporting design notes, and archived prior-reference artifacts in one place so the work can become a real product repository without reconstructing history from detached files.
+It serves three roles:
 
-## Repository goals
+1. Product contract surface — machine-readable schemas, examples, and validation artifacts for Policy Fabric.
+2. Governance surface — repo-local rules, ownership contracts, reconcile logic, validation gates, and release expectations under `.policy-fabric/`.
+3. Workflow surface — official AgentPlane repo-native workflow scaffolding under `.agentplane/`, integrated without replacing Policy Fabric’s own product model.
 
-- Keep one authoritative working tree for all current Policy Fabric artifacts.
-- Preserve archived prior-reference materials without letting them pollute the active product identity.
-- Rebuild the distributable contract bundle reproducibly from repository contents.
-- Run reconcile and doctor before each release snapshot.
-- Keep ownership, profile, repair, and promotion semantics explicit inside the repo.
-- Provide a clean bridge into AgentPlane without losing the Policy Fabric workflow that already exists.
+## What Policy Fabric does
 
-## Active surfaces
+Policy Fabric turns data-protection policy into a governed, testable, reviewable system.
 
-- `contracts/` — active machine-readable service and schema contracts.
-- `examples/` — aligned example payloads and responses.
-- `docs/` — blueprint, assessments, research, comparison, rebrand notes, specs, reports, and turn logs.
-- `.policy-fabric/` — repo-local workflow, ownership, profile, repair, generated-report, AgentPlane-bridge, and GitHub publish-contract surfaces.
-- `scripts/` — reconcile, AgentPlane bridge probing, doctor, semantic validation, and bundle-build utilities.
-- `AGENTS.md` — root gateway for coding-agent workflows, including AgentPlane-oriented startup guidance.
-- `.github/` — GitHub-native collaboration surfaces: PR template, issue templates, CODEOWNERS placeholder, and CI workflow.
-- `CONTRIBUTING.md` / `SECURITY.md` — collaborator and publication guidance.
+It currently includes:
 
-## Generated outputs
+- authored policy contracts
+- compiled execution plan contracts
+- release pack, validation report, and replay report artifacts
+- semantic validation for policy correctness and governance
+- repo-native workflow and repair discipline
+- GitHub-native collaboration and CI surfaces
 
-- `/mnt/data/policy_fabric_contracts_bundle_latest.zip` — latest distributable bundle without Git metadata.
-- `/mnt/data/policy_fabric_repo_snapshot_latest.zip` — latest repository snapshot including `.git`.
+## Current status
 
-## Standard loop
+Current state: active buildout, with official AgentPlane successfully integrated into the control repo and repository health automation in place.
 
-1. Edit tracked files in the repository.
-2. Run `python scripts/reconcile.py`.
-3. Run `python scripts/agentplane_probe.py` when the change affects the AgentPlane bridge or repo workflow surfaces.
-4. Run `python scripts/doctor.py`.
-5. Review `docs/reports/doctor_latest.md`, `docs/reports/validation_report_latest.json`, and `docs/reports/agentplane_probe_latest.md` as applicable.
-6. Run `python scripts/github_publish_prep.py` when the change affects GitHub-facing surfaces or publish readiness.
-7. Run `python scripts/build_dist_bundle.py`.
-8. Commit the result and export the latest snapshot zip.
+The repository is usable now, but the platform is still being shaped through semantic tranches. Expect active refinement of schemas, validator logic, examples, and release semantics.
 
-## How this relates to AgentPlane
+## Repository map
 
-Policy Fabric is the product and runtime/control-plane design.
-This repository is the source-of-truth control repo for that work.
-AgentPlane is the candidate repo-native workflow layer we can place around this repository.
+- `contracts/` — active machine-readable contracts and schemas
+- `examples/` — aligned examples for policies, plans, release packs, and reports
+- `scripts/` — reconcile, doctor, semantic validation, branch audit, publish prep, and probe utilities
+- `.policy-fabric/` — Policy Fabric governance and control surfaces
+- `.agentplane/` — official AgentPlane workflow surfaces
+- `docs/specs/` — normative design and tranche specifications
+- `docs/assessments/` — architecture and integration assessments
+- `docs/reports/` — generated operational and validation reports
 
-The intended relationship is:
+## Quick start
 
-- Policy Fabric stays the product identity and the data-protection platform.
-- Policy Fabric Control Repository stays the authoritative design/contracts repo.
-- AgentPlane, if adopted, should govern repository workflow, repair, recovery, and promotion discipline around this repo rather than replace the Policy Fabric runtime model.
+Clone the repository and run the standard validation loop:
 
-See `AGENTS.md`, `.policy-fabric/agentplane_bridge.json`, and `docs/specs/agentplane_integration_plan.md` for the explicit bridge.
+    python3 scripts/reconcile.py
+    python3 scripts/doctor.py
 
-## Current focus
+If the change affects workflow, branch, AgentPlane, or GitHub surfaces, also run:
 
-The current focus is reconnecting the original modernization goal to the repo we built: preserve the strong technical kernel, make the contracts and promotion artifacts executable, and now prepare a clean AgentPlane adoption path without throwing away the Policy Fabric governance layer we already created.
+    python3 scripts/agentplane_probe.py
+    python3 scripts/branch_audit.py
+    python3 scripts/github_publish_prep.py
 
+## Development workflow
 
-## Branch Safety
+- `main` is the stable baseline.
+- risky or tranche-scoped work happens on `work/*` branches.
+- generated artifacts are part of the control surface and should be refreshed through repo scripts.
+- no branch should be treated as merge-ready until `python3 scripts/doctor.py` passes.
 
-This repository currently has a linear bootstrap history on `main`. That keeps the repo simple, but it also means risky work should now move to explicit `work/` branches from tagged baselines. See `.policy-fabric/branch_policy.json`, `scripts/branch_audit.py`, and `docs/specs/branch_safety.md`.
+## Security
 
-## GitHub publication state
+Do **not** report vulnerabilities in public issues.
 
-This repository is now prepared for a **private initial GitHub publication**.
-The proposed first remote is `SocioProphet/policy-fabric-control-repository`.
+See [SECURITY.md](SECURITY.md) for the reporting process and disclosure expectations.
 
-Use `python scripts/github_publish_prep.py` plus `docs/specs/github_publish_and_pairing.md` before the first push.
-Keep the repository private until the license and disclosure path are frozen.
+## Contributing
 
-## Pair programming push
+See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, validation, PR, and generated-artifact expectations.
 
-The first pair-programming push should be a low-risk bootstrap push that verifies the remote, CI workflow, templates, and branch protection path.
-Do **not** combine the first remote push with the first official AgentPlane initialization.
+## License
+
+This repository is licensed under the [MIT License](LICENSE).
+
+## Suggested GitHub description
+
+Policy Fabric is a policy-governed data protection control repository for authored policies, compiled plans, release packs, and validation evidence.
+
+## Suggested GitHub topics
+
+- policy-fabric
+- policy-as-code
+- data-protection
+- data-governance
+- privacy-engineering
+- control-plane
+- semantic-validation
+- agentplane
+- security-governance
+- release-engineering

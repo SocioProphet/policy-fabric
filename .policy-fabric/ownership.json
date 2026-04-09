@@ -104,6 +104,7 @@
     "docs/turns/**",
     ".policy-fabric/github_publish.json",
     ".github/**",
-    "scripts/github_publish_prep.py"
+    "scripts/github_publish_prep.py",
+    "LICENSE"
   ]
 }

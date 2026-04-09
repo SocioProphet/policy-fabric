@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-04-09T02:27:55.487683Z",
+  "generatedAt": "2026-04-09T02:47:58.814878Z",
   "git": {
-    "rev": "82c5941",
+    "rev": "12c4657",
     "dirty": true
   },
-  "fileCount": 172,
+  "fileCount": 173,
   "localOverridePaths": [
     ".policy-fabric/local-notes/**",
     ".agentplane/policy/incidents.md"
