@@ -105,6 +105,9 @@
     ".policy-fabric/github_publish.json",
     ".github/**",
     "scripts/github_publish_prep.py",
-    "LICENSE"
+    "LICENSE",
+    "docs/ARCHITECTURE_OVERVIEW.md",
+    "docs/TRUST_AND_SECURITY_MODEL.md",
+    "SUPPORT.md"
   ]
 }

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-04-09T02:47:58.814878Z",
+  "generatedAt": "2026-04-09T03:03:26.591757Z",
   "git": {
-    "rev": "12c4657",
+    "rev": "dae8827",
     "dirty": true
   },
-  "fileCount": 173,
+  "fileCount": 176,
   "files": [
     {
       "path": ".agentplane/.upgrade/baseline/agents/CODER.json",
@@ -494,8 +494,8 @@
     },
     {
       "path": ".policy-fabric/config.json",
-      "sha256": "25a2e5acd0b5bb4c0311447d8f984acee38a60498782ba8ea25ac26925225bb3",
-      "bytes": 3354,
+      "sha256": "bc9fa825c040765768ad021966cc35f9657d3b875641a6d840071a01c3a631b7",
+      "bytes": 3449,
       "categories": [
         "frameworkManaged"
       ]
@@ -518,8 +518,8 @@
     },
     {
       "path": ".policy-fabric/ownership.json",
-      "sha256": "d30e6f8d4b1b5ff8f3a787f6e6dc9ddf3c9be56deacd639ecbc9810600d86e2c",
-      "bytes": 3203,
+      "sha256": "92b868b29ef9e5aea3cb7789682b1e038d2a974f55ff76b2a439b5cedd1e905b",
+      "bytes": 3298,
       "categories": [
         "frameworkManaged"
       ]
@@ -534,15 +534,15 @@
     },
     {
       "path": ".policy-fabric/reports/doctor_latest.json",
-      "sha256": "c2127cbccb1eb237033bdbdbea25a9d80fcec9e7da2c33b346528712ef4170bf",
-      "bytes": 24606,
+      "sha256": "f3b7cb3b8efd3d10b2c76a7f94d82f214e598003b7d1663ea8e66918707474d2",
+      "bytes": 24631,
       "categories": [
         "generated"
       ]
     },
     {
       "path": ".policy-fabric/reports/reconcile_latest.json",
-      "sha256": "31fc710023b5c2d842b78b5d9bf896ed11cd63238a739006a98c2fe3df4f1742",
+      "sha256": "f609d06a33f7bd0fe6c660ff3c094d4583f49155b636135559315e988eb4a392",
       "bytes": 419,
       "categories": [
         "generated"
@@ -588,8 +588,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "20ae0a6541527275b947cb31a34c104fa1bbebdbc6e7fd731f0e91caf9455010",
-      "bytes": 3533,
+      "sha256": "fc3e005038bed26ef19ae2acc1a12d35367968a5eaa95c466ba63c305d328c5c",
+      "bytes": 3711,
       "categories": [
         "frameworkManaged"
       ]
@@ -601,6 +601,12 @@
       "categories": [
         "frameworkManaged"
       ]
+    },
+    {
+      "path": "SUPPORT.md",
+      "sha256": "748b894ab7d5e7508973a77d2cafc9b7dcefcac9a4b5458158b4772c4a48dab1",
+      "bytes": 787,
+      "categories": []
     },
     {
       "path": "archive/prior-reference/magen/Magen_Platform_Integration_Blueprint.docx",
@@ -771,6 +777,18 @@
       ]
     },
     {
+      "path": "docs/ARCHITECTURE_OVERVIEW.md",
+      "sha256": "2dbfe4753728dbe551c3610f3a1667a3aa48d859a0e948cec4631f4e888f447d",
+      "bytes": 2050,
+      "categories": []
+    },
+    {
+      "path": "docs/TRUST_AND_SECURITY_MODEL.md",
+      "sha256": "b15652b758414052e2fd1bb1623848ebc75d65865e46f224a02b51fb3c518a54",
+      "bytes": 1609,
+      "categories": []
+    },
+    {
       "path": "docs/assessments/2026-03-31_strengths_and_improvement_targets.md",
       "sha256": "bd07ed7944671967032074b219a88253fc86486e75097204f1acf9269bc57abd",
       "bytes": 2816,
@@ -868,8 +886,8 @@
     },
     {
       "path": "docs/reports/doctor_latest.md",
-      "sha256": "364d4d7acd5d48f19f29385997ea511b1a47ee9d27c50bde2b9dedd0b9b85366",
-      "bytes": 10209,
+      "sha256": "9da6b499ece6fafa60f8fb8c79168ae650bf4a79def6f06f161f7dd3c3e3af6d",
+      "bytes": 10233,
       "categories": [
         "generated"
       ]
@@ -892,7 +910,7 @@
     },
     {
       "path": "docs/reports/reconcile_latest.md",
-      "sha256": "61f498b6a061ddab603281caed8ef61038918eb780144326da30f394f8f258ed",
+      "sha256": "1d0c09e21b499534d7f356573a95e239e9dfd4a0f0fd9ad6cdc499d5ed08f3de",
       "bytes": 155,
       "categories": [
         "generated"
@@ -908,16 +926,16 @@
     },
     {
       "path": "docs/reports/validation_report_latest.json",
-      "sha256": "c2127cbccb1eb237033bdbdbea25a9d80fcec9e7da2c33b346528712ef4170bf",
-      "bytes": 24606,
+      "sha256": "f3b7cb3b8efd3d10b2c76a7f94d82f214e598003b7d1663ea8e66918707474d2",
+      "bytes": 24631,
       "categories": [
         "generated"
       ]
     },
     {
       "path": "docs/reports/validation_report_latest.md",
-      "sha256": "01fc7fd0d16df14d3513ae71722263c2a630e61da754554dca078076a5571a9f",
-      "bytes": 7525,
+      "sha256": "25ff073205bbc08e08c3d4d86154b309fdb0c5529f4e37f3fbade0fd7907bb1b",
+      "bytes": 7551,
       "categories": [
         "generated"
       ]
