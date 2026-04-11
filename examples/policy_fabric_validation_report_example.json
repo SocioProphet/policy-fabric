@@ -13,9 +13,9 @@
   },
   "summary": {
     "status": "warn",
-    "checkCount": 7,
+    "checkCount": 8,
     "failCount": 0,
-    "warnCount": 1
+    "warnCount": 2
   },
   "checks": [
     {
@@ -70,9 +70,17 @@
       "id": "policy-negative-fixture-example",
       "status": "warn",
       "severity": "warn",
-      "code": "PFV016_NEGATIVE_FIXTURE_OK",
-      "message": "Example validation report includes a documented negative fixture expectation for semantic review workflows.",
+      "code": "PFV017_NEGATIVE_FIXTURE_SEMANTICS_OK",
+      "message": "Example validation report includes documented failure and no-op fixture semantics for semantic review workflows.",
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy-overlap-classification-example",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFV011_SELECTOR_CLASSIFICATION_PRESENT",
+      "message": "Example validation report documents classified selector-overlap reason codes for semantic review workflows.",
+      "artifactRef": "docs/specs/semantic_validator_spec.md"
     }
   ]
 }

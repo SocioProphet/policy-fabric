@@ -1,7 +1,7 @@
 {
   "apiVersion": "policy.fabric/v2",
   "policyId": "customer-support-mask",
-  "version": "7.4.0",
+  "version": "7.5.0",
   "owner": "platform-data-protection",
   "status": "approved",
   "description": "Mask phone and email for support-case creation while preserving non-target fields.",
@@ -189,7 +189,7 @@
         }
       },
       "expectFailure": true,
-      "expectedFailureCode": "PFV017_NEGATIVE_FIXTURE_INVALID",
+      "expectedFailureCode": "PFV018_NEGATIVE_FIXTURE_SEMANTICS_INVALID",
       "expectedFailingRule": "tokenize-email",
       "expectedFailingSelector": "email",
       "expectedNoop": false,
@@ -209,6 +209,39 @@
           "operator": "equals",
           "value": "failure",
           "description": "Negative fixture documents the expected failure shape."
+        }
+      ]
+    },
+    {
+      "name": "support-case-noop-fixture-documents-no-target-hit",
+      "request": {
+        "mode": "mask",
+        "tenantId": "acme-prod",
+        "contentType": "application/json",
+        "context": {
+          "route": "support-case-create",
+          "environment": "prod",
+          "purpose": "customer-support",
+          "region": "us-east-1"
+        },
+        "payload": {
+          "caseId": "case-102",
+          "note": "no targeted selector fields present"
+        },
+        "options": {
+          "dryRun": false,
+          "emitAudit": true,
+          "returnMatches": false
+        }
+      },
+      "expectedNoop": true,
+      "assert": [
+        {
+          "target": "attestation",
+          "path": "$.outcome",
+          "operator": "equals",
+          "value": "noop",
+          "description": "No targeted fields should produce a no-op outcome."
         }
       ]
     }

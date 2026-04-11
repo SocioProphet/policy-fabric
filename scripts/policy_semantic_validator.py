@@ -65,7 +65,6 @@ def _selector_identity(selector: dict) -> str:
     return f"id:{selector.get('id', '')}"
 
 
-
 def _normalized_selector_value(selector: dict) -> tuple[str, str]:
     selector_type = selector.get("type", "")
     if selector_type in {"jsonpath", "xpath", "pointer"}:
@@ -284,7 +283,6 @@ def collect_policy_semantic_findings(root: Path) -> list[dict]:
         signatures = {(r.get('transform', {}).get('type'), r.get('transform', {}).get('provider'), r.get('transform', {}).get('capabilityRef')) for r in ordered}
         if len(ordered) > 1:
             conflict_messages.append(f'{identity} is targeted by multiple enabled rules: {[r.get("id") for r in ordered]}')
-        seen_types = []
         irreversible_seen = False
         for rule in ordered:
             transform_type = rule.get('transform', {}).get('type')
@@ -292,11 +290,10 @@ def collect_policy_semantic_findings(root: Path) -> list[dict]:
                 illegal_chain_messages.append(f'{identity} attempts {transform_type} after irreversible transform chain {[r.get("id") for r in ordered]}')
             if transform_type in IRREVERSIBLE_TYPES:
                 irreversible_seen = True
-            seen_types.append(transform_type)
         if len(signatures) == 1 and not illegal_chain_messages:
             conflict_messages.append(f'{identity} is targeted redundantly by repeated transform signature {next(iter(signatures))}')
 
-    heuristic_overlap_messages = []
+    overlap_messages: dict[str, list[str]] = defaultdict(list)
     indexed_rules = [
         (rule, selectors_by_id.get(rule.get('match', {}).get('selectorRef')))
         for rule in rules
@@ -308,7 +305,7 @@ def collect_policy_semantic_findings(root: Path) -> list[dict]:
                 continue
             reason = _selector_overlap_reason(left_selector, right_selector)
             if reason:
-                heuristic_overlap_messages.append(
+                overlap_messages[reason].append(
                     f"{left_rule.get('id')} ({left_selector.get('id')}) overlaps {right_rule.get('id')} ({right_selector.get('id')}) via {reason}"
                 )
 
@@ -317,10 +314,20 @@ def collect_policy_semantic_findings(root: Path) -> list[dict]:
     else:
         findings.append(_ok('policy:selector-conflicts', 'no enabled rules conflict on the same exact selector identity', policy_ref))
 
-    if heuristic_overlap_messages:
-        findings.append(_warn('policy:selector-overlap-heuristics', 'PFV011_SELECTOR_OVERLAP_HEURISTIC', '; '.join(heuristic_overlap_messages), policy_ref))
-    else:
-        findings.append(_ok('policy:selector-overlap-heuristics', 'no likely selector overlaps detected beyond exact identity checks', policy_ref, 'PFV010_SELECTOR_OVERLAP_OK'))
+    overlap_checks = [
+        ('normalized-path-equivalence', 'policy:selector-overlap-normalized', 'PFV011_SELECTOR_NORMALIZED_EQUIVALENCE', 'no normalized-path selector equivalence detected'),
+        ('path-prefix-overlap', 'policy:selector-overlap-prefix', 'PFV012_SELECTOR_PATH_PREFIX_OVERLAP', 'no path-prefix selector overlap detected'),
+        ('wildcard-shadow', 'policy:selector-overlap-wildcard', 'PFV013_SELECTOR_WILDCARD_SHADOW', 'no wildcard-shadow selector overlap detected'),
+        ('regex-normalized-equivalence', 'policy:selector-overlap-regex-equivalence', 'PFV014_SELECTOR_REGEX_EQUIVALENCE', 'no regex normalized-equivalence detected'),
+        ('regex-shadow-heuristic', 'policy:selector-overlap-regex-shadow', 'PFV015_SELECTOR_REGEX_SHADOW', 'no regex shadow-heuristic detected'),
+    ]
+    for reason, check_id, code, ok_message in overlap_checks:
+        messages = overlap_messages.get(reason, [])
+        if messages:
+            findings.append(_warn(check_id, code, '; '.join(messages), policy_ref))
+        else:
+            findings.append(_ok(check_id, ok_message, policy_ref, 'PFV010_SELECTOR_OVERLAP_OK'))
+
     if illegal_chain_messages:
         findings.append(_fail('policy:illegal-transform-chains', 'PFV008', '; '.join(illegal_chain_messages), policy_ref))
     else:
@@ -363,6 +370,7 @@ def collect_policy_semantic_findings(root: Path) -> list[dict]:
     )
     if reversible_rules and not attestation_assertions:
         fixture_failures.append('policy with reversible or provider-mediated transforms must include at least one attestation-targeted assertion')
+
     negative_fixture_failures = []
     negative_fixtures = [
         test for test in tests
@@ -384,17 +392,29 @@ def collect_policy_semantic_findings(root: Path) -> list[dict]:
 
     for test in negative_fixtures:
         name = test.get('name', '<unnamed-fixture>')
-        if not test.get('expectFailure', False):
-            negative_fixture_failures.append(f'{name} declares failure metadata without expectFailure=true')
-        if not any(test.get(key) not in (None, [], "") for key in ('expectedFailureCode', 'expectedFailingRule', 'expectedFailingSelector', 'expectedNoop', 'failureAttestation')):
-            negative_fixture_failures.append(f'{name} expectFailure=true but no negative expectations were declared')
-        if test.get('expectedFailingRule') and test.get('expectedFailingRule') not in rule_ids:
-            negative_fixture_failures.append(f'{name} references unknown expectedFailingRule {test.get("expectedFailingRule")}')
-        if test.get('expectedFailingSelector') and test.get('expectedFailingSelector') not in selector_ids:
-            negative_fixture_failures.append(f'{name} references unknown expectedFailingSelector {test.get("expectedFailingSelector")}')
-        for assertion in test.get('failureAttestation', []):
-            if assertion.get('target') != 'attestation':
-                negative_fixture_failures.append(f'{name} failureAttestation contains non-attestation assertion')
+        expected_noop = test.get('expectedNoop', False)
+        has_failure_metadata = any(
+            test.get(key) not in (None, [], "")
+            for key in ('expectedFailureCode', 'expectedFailingRule', 'expectedFailingSelector', 'failureAttestation')
+        )
+
+        if expected_noop:
+            if test.get('expectFailure', False):
+                negative_fixture_failures.append(f'{name} declares both expectFailure=true and expectedNoop=true')
+            if has_failure_metadata:
+                negative_fixture_failures.append(f'{name} declares failure-specific metadata while marked expectedNoop=true')
+        else:
+            if not test.get('expectFailure', False):
+                negative_fixture_failures.append(f'{name} declares failure metadata without expectFailure=true')
+            if not has_failure_metadata:
+                negative_fixture_failures.append(f'{name} expectFailure=true but no failure-specific expectations were declared')
+            if test.get('expectedFailingRule') and test.get('expectedFailingRule') not in rule_ids:
+                negative_fixture_failures.append(f'{name} references unknown expectedFailingRule {test.get("expectedFailingRule")}')
+            if test.get('expectedFailingSelector') and test.get('expectedFailingSelector') not in selector_ids:
+                negative_fixture_failures.append(f'{name} references unknown expectedFailingSelector {test.get("expectedFailingSelector")}')
+            for assertion in test.get('failureAttestation', []):
+                if assertion.get('target') != 'attestation':
+                    negative_fixture_failures.append(f'{name} failureAttestation contains non-attestation assertion')
 
     if fixture_failures:
         findings.append(_fail('policy:test-readiness', 'PFV010', '; '.join(fixture_failures), policy_ref))
@@ -402,9 +422,9 @@ def collect_policy_semantic_findings(root: Path) -> list[dict]:
         findings.append(_ok('policy:test-readiness', 'policy fixtures cover approved-state minimums and attestation-aware assertions', policy_ref))
 
     if negative_fixture_failures:
-        findings.append(_fail('policy:negative-fixtures', 'PFV017_NEGATIVE_FIXTURE_INVALID', '; '.join(negative_fixture_failures), policy_ref))
+        findings.append(_fail('policy:negative-fixtures', 'PFV018_NEGATIVE_FIXTURE_SEMANTICS_INVALID', '; '.join(negative_fixture_failures), policy_ref))
     else:
-        findings.append(_ok('policy:negative-fixtures', 'negative fixtures are well formed and reference known rules/selectors', policy_ref, 'PFV016_NEGATIVE_FIXTURE_OK'))
+        findings.append(_ok('policy:negative-fixtures', 'negative fixtures are well formed across failure and no-op semantics', policy_ref, 'PFV017_NEGATIVE_FIXTURE_SEMANTICS_OK'))
 
     return findings
 
