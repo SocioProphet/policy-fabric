@@ -89,3 +89,25 @@ Fixtures MAY declare:
 
 Approved policies SHOULD include at least one negative fixture so failure semantics are reviewable alongside happy-path assertions.
 
+## Semantic Tranche 2
+
+### Classified selector overlap
+Selector overlap findings SHOULD be emitted in distinct classes rather than one generic overlap bucket:
+- normalized path equivalence
+- path prefix overlap
+- wildcard shadow
+- regex normalized equivalence
+- regex shadow heuristic
+
+### No-op and failure fixture semantics
+Negative fixtures SHOULD distinguish between expected failure and expected no-op behavior.
+
+Fixtures may use:
+- `expectFailure`
+- `expectedFailureCode`
+- `expectedFailingRule`
+- `expectedFailingSelector`
+- `expectedNoop`
+- `failureAttestation`
+
+Validator semantics should ensure these declarations remain internally coherent.
