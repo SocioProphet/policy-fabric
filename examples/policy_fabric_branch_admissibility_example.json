@@ -1,0 +1,26 @@
+{
+  "apiVersion": "policy.fabric.planning/v1",
+  "kind": "BranchAdmissibilityPolicy",
+  "metadata": {
+    "name": "branch-admissibility-abstract-default",
+    "version": "0.1.0",
+    "updatedAt": "2026-04-11T21:00:00Z",
+    "owner": "platform-governance",
+    "description": "Default admissibility policy for abstract and program-induction planning lanes."
+  },
+  "reasoningClass": "ABSTRACT",
+  "llmOnlyForbidden": true,
+  "requiresProgramCandidate": true,
+  "requiresCounterexampleSearch": true,
+  "requiresBacktrackingCapability": true,
+  "requiresCausalCheck": false,
+  "minimumVerificationMode": "COUNTEREXAMPLE_SEARCH",
+  "allowedExecutionActions": [
+    "INDUCE_PROGRAM",
+    "SEARCH_COUNTEREXAMPLE",
+    "BACKTRACK",
+    "ESCALATE",
+    "DEFER"
+  ],
+  "notes": "Use COMPOSITE when both program execution and counterexample search are available."
+}
