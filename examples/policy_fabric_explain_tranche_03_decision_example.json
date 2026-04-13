@@ -1,0 +1,44 @@
+{
+  "apiVersion": "policy.fabric.explain/v1",
+  "kind": "ExplainReport",
+  "metadata": {
+    "generatedAt": "2026-04-13T12:40:00Z",
+    "generator": "policy-fabric-semantic-tranche-03/0.1.0"
+  },
+  "subject": {
+    "policyRef": "examples/policy_fabric_policy_v2_semantic_tranche_03_example.json",
+    "requestShape": {
+      "mode": "mask",
+      "environment": "prod",
+      "route": "support-case-create",
+      "purpose": "customer-support"
+    }
+  },
+  "decision": {
+    "candidateRules": [
+      "tokenize-support-contact-email",
+      "encrypt-prod-contact-email",
+      "redact-generic-contact-email"
+    ],
+    "winner": null,
+    "status": "incomplete",
+    "reasonCode": "PFV026_EXPLAIN_DECISION_INCOMPLETE",
+    "message": "Tranche 3 defines the reason-code family for overlapping candidate-rule decisions, but the main validator/explain pipeline has not yet emitted a final winner-rule justification."
+  },
+  "analysis": {
+    "selector": "contact-emails",
+    "cardinality": {
+      "declared": "zeroOrOne",
+      "reasonCode": "PFV022_SELECTOR_CARDINALITY_OVERMATCH",
+      "message": "Wildcard contact-email selector may overmatch its declared cardinality."
+    },
+    "precedence": {
+      "reasonCode": "PFV021_RULE_PRECEDENCE_CONFLICT",
+      "message": "Same-priority overlapping rules tokenize-support-contact-email and encrypt-prod-contact-email conflict."
+    },
+    "rollout": {
+      "reasonCode": "PFV025_ROLLOUT_SHADOW_CONFLICT",
+      "message": "Wider-scope rule redact-generic-contact-email may shadow narrower rules across active scope."
+    }
+  }
+}
