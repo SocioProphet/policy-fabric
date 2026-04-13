@@ -1,0 +1,78 @@
+{
+  "apiVersion": "policy.fabric/v2",
+  "policyId": "semantic-tranche-03-example",
+  "version": "0.1.0",
+  "owner": "platform-data-protection",
+  "status": "draft",
+  "description": "Illustrative example for precedence, cardinality, and rollout-subsumption semantics.",
+  "selectors": [
+    {
+      "id": "contact-emails",
+      "type": "jsonpath",
+      "path": "$.contacts[*].email",
+      "expectedCardinality": "zeroOrOne",
+      "matchKind": "value",
+      "description": "Wildcard contact-email selector that intentionally risks overmatch."
+    }
+  ],
+  "rules": [
+    {
+      "id": "tokenize-support-contact-email",
+      "priority": 100,
+      "when": {
+        "mode": "mask",
+        "environmentIn": ["prod", "stage"],
+        "routeIn": ["support-case-create"],
+        "purposeIn": ["customer-support"]
+      },
+      "match": {
+        "selectorRef": "contact-emails",
+        "onNoMatch": "skip",
+        "expectedCardinality": "inherit"
+      },
+      "transform": {
+        "type": "tokenize",
+        "provider": "token-vault",
+        "capabilityRef": "pii-email-token"
+      }
+    },
+    {
+      "id": "encrypt-prod-contact-email",
+      "priority": 100,
+      "when": {
+        "mode": "mask",
+        "environmentIn": ["prod"],
+        "routeIn": ["support-case-create"],
+        "purposeIn": ["customer-support"]
+      },
+      "match": {
+        "selectorRef": "contact-emails",
+        "onNoMatch": "skip",
+        "expectedCardinality": "inherit"
+      },
+      "transform": {
+        "type": "encrypt",
+        "provider": "kms-aes-gcm",
+        "capabilityRef": "pii-email-encryption"
+      }
+    },
+    {
+      "id": "redact-generic-contact-email",
+      "priority": 200,
+      "when": {
+        "mode": "mask",
+        "purposeIn": ["customer-support"]
+      },
+      "match": {
+        "selectorRef": "contact-emails",
+        "onNoMatch": "skip",
+        "expectedCardinality": "inherit"
+      },
+      "transform": {
+        "type": "redact",
+        "provider": "native-redaction",
+        "capabilityRef": "pii-email-redaction"
+      }
+    }
+  ]
+}
