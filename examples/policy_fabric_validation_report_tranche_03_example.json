@@ -1,0 +1,70 @@
+{
+  "apiVersion": "policy.fabric.validation/v1",
+  "kind": "ValidationReport",
+  "metadata": {
+    "generatedAt": "2026-04-13T12:30:00Z",
+    "generator": "policy-fabric-semantic-tranche-03/0.1.0",
+    "runId": "semantic-tranche-03-example-001"
+  },
+  "subject": {
+    "type": "policy",
+    "ref": "examples/policy_fabric_policy_v2_semantic_tranche_03_example.json",
+    "version": "0.1.0"
+  },
+  "summary": {
+    "status": "warn",
+    "checkCount": 6,
+    "failCount": 1,
+    "warnCount": 3
+  },
+  "checks": [
+    {
+      "id": "policy:selector-cardinality-overmatch-example",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFV022_SELECTOR_CARDINALITY_OVERMATCH",
+      "message": "selector contact-emails may overmatch relative to declared cardinality zeroOrOne",
+      "artifactRef": "examples/policy_fabric_policy_v2_semantic_tranche_03_example.json"
+    },
+    {
+      "id": "policy:rule-precedence-conflict-example",
+      "status": "fail",
+      "severity": "error",
+      "code": "PFV021_RULE_PRECEDENCE_CONFLICT",
+      "message": "jsonpath:$.contacts[*].email: same-priority overlapping rules tokenize-support-contact-email and encrypt-prod-contact-email conflict",
+      "artifactRef": "examples/policy_fabric_policy_v2_semantic_tranche_03_example.json"
+    },
+    {
+      "id": "policy:rollout-shadow-example",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFV025_ROLLOUT_SHADOW_CONFLICT",
+      "message": "jsonpath:$.contacts[*].email: wider-scope rule redact-generic-contact-email shadows narrower rule tokenize-support-contact-email",
+      "artifactRef": "examples/policy_fabric_policy_v2_semantic_tranche_03_example.json"
+    },
+    {
+      "id": "policy:rollout-subsumption-example",
+      "status": "warn",
+      "severity": "warn",
+      "code": "PFV024_ROLLOUT_SUBSUMPTION_WARNING",
+      "message": "jsonpath:$.contacts[*].email: rule redact-generic-contact-email subsumes encrypt-prod-contact-email across active scope",
+      "artifactRef": "examples/policy_fabric_policy_v2_semantic_tranche_03_example.json"
+    },
+    {
+      "id": "policy:explain-decision-example",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV026_EXPLAIN_DECISION_INCOMPLETE",
+      "message": "Example reason-code family reserved for explain surfaces that cannot yet justify winner-rule selection in overlapping cases.",
+      "artifactRef": "docs/specs/semantic_tranche_03.md"
+    },
+    {
+      "id": "policy:tranche-03-helper-module-example",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV000_POLICY_SEMANTICS_OK",
+      "message": "Tranche 3 helper module demonstrates precedence, cardinality, and rollout-subsumption classification logic.",
+      "artifactRef": "scripts/policy_semantic_tranche_03.py"
+    }
+  ]
+}
