@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.internal/policy-fabric/schemas/policy_fabric_branch_admissibility_v1.schema.json",
+  "title": "Policy Fabric Branch Admissibility v1",
+  "description": "Authored policy contract for branch admissibility in governed planning lanes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "reasoningClass",
+    "llmOnlyForbidden",
+    "minimumVerificationMode"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "policy.fabric.planning/v1"
+    },
+    "kind": {
+      "const": "BranchAdmissibilityPolicy"
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "reasoningClass": {
+      "type": "string",
+      "enum": [
+        "REACTIVE",
+        "RETRIEVAL",
+        "ABSTRACT",
+        "CAUSAL",
+        "PROGRAM_INDUCTION"
+      ]
+    },
+    "llmOnlyForbidden": {
+      "type": "boolean"
+    },
+    "requiresProgramCandidate": {
+      "type": "boolean",
+      "default": false
+    },
+    "requiresCounterexampleSearch": {
+      "type": "boolean",
+      "default": false
+    },
+    "requiresBacktrackingCapability": {
+      "type": "boolean",
+      "default": false
+    },
+    "requiresCausalCheck": {
+      "type": "boolean",
+      "default": false
+    },
+    "minimumVerificationMode": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "POLICY_ONLY",
+        "COUNTEREXAMPLE_SEARCH",
+        "PROGRAM_EXECUTION",
+        "CAUSAL_CHECK",
+        "HUMAN_REVIEW",
+        "COMPOSITE"
+      ]
+    },
+    "allowedExecutionActions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "QUERY",
+          "TRANSFORM",
+          "APPROVE",
+          "EXECUTE",
+          "ROLLBACK",
+          "ESCALATE",
+          "DEFER",
+          "INDUCE_PROGRAM",
+          "SEARCH_COUNTEREXAMPLE",
+          "BACKTRACK",
+          "EVALUATE_CAUSAL_MECHANISM"
+        ]
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "x-semanticValidationRules": [
+    "ABSTRACT and PROGRAM_INDUCTION lanes SHOULD set llmOnlyForbidden=true.",
+    "If requiresProgramCandidate=true then minimumVerificationMode MUST NOT be NONE.",
+    "If requiresCounterexampleSearch=true then minimumVerificationMode SHOULD be COUNTEREXAMPLE_SEARCH or COMPOSITE.",
+    "If requiresBacktrackingCapability=true then allowedExecutionActions SHOULD include BACKTRACK.",
+    "A policy with llmOnlyForbidden=true MUST NOT permit an execution-only branch without one or more external verification artifacts."
+  ],
+  "$defs": {
+    "idString": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{1,127}$"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "updatedAt",
+        "owner"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/idString"
+        },
+        "version": {
+          "$ref": "#/$defs/semver"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
