@@ -1,0 +1,132 @@
+{
+  "apiVersion": "policy.fabric/v2",
+  "policyId": "banking-filing-publication-mask",
+  "version": "0.1.0",
+  "owner": "banking-governance",
+  "status": "approved",
+  "description": "Mask or tokenize sensitive filing-adjacent identifiers before external publication or broad internal distribution.",
+  "labels": {
+    "domain": "banking",
+    "dataClass": "filing-sensitive"
+  },
+  "rollout": {
+    "tenants": ["banking-prod"],
+    "environments": ["prod", "stage"],
+    "regions": ["us-east-1"],
+    "percentage": 100
+  },
+  "selectors": [
+    {
+      "id": "counterparty-lei",
+      "type": "jsonpath",
+      "path": "$.filing.counterparties[*].lei",
+      "expectedCardinality": "zeroToMany",
+      "matchKind": "value",
+      "description": "Counterparty LEI values in filing payloads."
+    },
+    {
+      "id": "facility-internal-id",
+      "type": "jsonpath",
+      "path": "$.filing.facilities[*].internalId",
+      "expectedCardinality": "zeroToMany",
+      "matchKind": "value",
+      "description": "Internal facility identifiers not intended for publication."
+    }
+  ],
+  "rules": [
+    {
+      "id": "tokenize-counterparty-lei",
+      "priority": 100,
+      "description": "Tokenize counterparty identifiers for publish/export routes.",
+      "when": {
+        "mode": "mask",
+        "routeIn": ["filing-publish", "filing-export"],
+        "environmentIn": ["prod", "stage"]
+      },
+      "match": {
+        "selectorRef": "counterparty-lei",
+        "onNoMatch": "skip",
+        "expectedCardinality": "inherit"
+      },
+      "transform": {
+        "type": "tokenize",
+        "provider": "token-vault",
+        "capabilityRef": "banking-counterparty-token",
+        "preserveFormat": false,
+        "reversible": true
+      },
+      "onFailure": "failClosed"
+    },
+    {
+      "id": "encrypt-facility-internal-id",
+      "priority": 110,
+      "description": "Encrypt internal facility identifiers before publication routes.",
+      "when": {
+        "mode": "mask",
+        "routeIn": ["filing-publish", "filing-export"]
+      },
+      "match": {
+        "selectorRef": "facility-internal-id",
+        "onNoMatch": "skip",
+        "expectedCardinality": "inherit"
+      },
+      "transform": {
+        "type": "encrypt",
+        "provider": "kms-aes-gcm",
+        "capabilityRef": "banking-facility-id-encryption",
+        "preserveFormat": false,
+        "reversible": true,
+        "aadTemplate": ["tenantId", "policyId", "selectorId", "requestId"]
+      },
+      "onFailure": "failClosed"
+    }
+  ],
+  "options": {
+    "emitAudit": true,
+    "loggable": false,
+    "returnMatchesByDefault": false,
+    "failClosed": true,
+    "allowExplainSimulation": true
+  },
+  "tests": [
+    {
+      "name": "filing-publication-transforms-sensitive-identifiers",
+      "request": {
+        "mode": "mask",
+        "tenantId": "banking-prod",
+        "contentType": "application/json",
+        "context": {
+          "route": "filing-publish",
+          "environment": "prod",
+          "purpose": "regulatory-publication",
+          "region": "us-east-1"
+        },
+        "payload": {
+          "filing": {
+            "counterparties": [{"lei": "5493001KJTIIGC8Y1R12"}],
+            "facilities": [{"internalId": "FAC-INT-00042"}]
+          }
+        },
+        "options": {
+          "dryRun": false,
+          "emitAudit": true,
+          "returnMatches": false
+        }
+      },
+      "assert": [
+        {
+          "target": "payload",
+          "path": "$.filing.counterparties[0].lei",
+          "operator": "changed",
+          "description": "Counterparty LEI must be transformed."
+        },
+        {
+          "target": "payload",
+          "path": "$.filing.facilities[0].internalId",
+          "operator": "changed",
+          "description": "Internal facility ID must be transformed."
+        }
+      ]
+    }
+  ]
+}

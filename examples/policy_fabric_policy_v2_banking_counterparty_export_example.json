@@ -1,0 +1,130 @@
+{
+  "apiVersion": "policy.fabric/v2",
+  "policyId": "banking-counterparty-export-control",
+  "version": "0.1.0",
+  "owner": "banking-governance",
+  "status": "approved",
+  "description": "Apply tokenization and encryption controls to counterparty export payloads used outside bounded internal analytics lanes.",
+  "labels": {
+    "domain": "banking",
+    "dataClass": "counterparty-sensitive"
+  },
+  "rollout": {
+    "tenants": ["banking-prod"],
+    "environments": ["prod"],
+    "regions": ["us-east-1"],
+    "percentage": 100
+  },
+  "selectors": [
+    {
+      "id": "counterparty-name",
+      "type": "jsonpath",
+      "path": "$.counterparty.name",
+      "expectedCardinality": "zeroOrOne",
+      "matchKind": "value",
+      "description": "Counterparty legal name."
+    },
+    {
+      "id": "counterparty-tax-id",
+      "type": "jsonpath",
+      "path": "$.counterparty.taxId",
+      "expectedCardinality": "zeroOrOne",
+      "matchKind": "value",
+      "description": "Counterparty tax identifier."
+    }
+  ],
+  "rules": [
+    {
+      "id": "tokenize-counterparty-name",
+      "priority": 100,
+      "description": "Tokenize counterparty name for export routes.",
+      "when": {
+        "mode": "mask",
+        "routeIn": ["counterparty-export"],
+        "purposeIn": ["analytics", "ops"]
+      },
+      "match": {
+        "selectorRef": "counterparty-name",
+        "onNoMatch": "skip",
+        "expectedCardinality": "inherit"
+      },
+      "transform": {
+        "type": "tokenize",
+        "provider": "token-vault",
+        "capabilityRef": "banking-counterparty-name-token",
+        "preserveFormat": false,
+        "reversible": true
+      },
+      "onFailure": "failClosed"
+    },
+    {
+      "id": "encrypt-counterparty-tax-id",
+      "priority": 110,
+      "description": "Encrypt counterparty tax IDs for export routes.",
+      "when": {
+        "mode": "mask",
+        "routeIn": ["counterparty-export"]
+      },
+      "match": {
+        "selectorRef": "counterparty-tax-id",
+        "onNoMatch": "skip",
+        "expectedCardinality": "inherit"
+      },
+      "transform": {
+        "type": "encrypt",
+        "provider": "kms-aes-gcm",
+        "capabilityRef": "banking-counterparty-taxid-encryption",
+        "preserveFormat": false,
+        "reversible": true,
+        "aadTemplate": ["tenantId", "policyId", "selectorId", "requestId"]
+      },
+      "onFailure": "failClosed"
+    }
+  ],
+  "options": {
+    "emitAudit": true,
+    "loggable": false,
+    "returnMatchesByDefault": false,
+    "failClosed": true,
+    "allowExplainSimulation": true
+  },
+  "tests": [
+    {
+      "name": "counterparty-export-protects-name-and-tax-id",
+      "request": {
+        "mode": "mask",
+        "tenantId": "banking-prod",
+        "contentType": "application/json",
+        "context": {
+          "route": "counterparty-export",
+          "environment": "prod",
+          "purpose": "analytics",
+          "region": "us-east-1"
+        },
+        "payload": {
+          "counterparty": {
+            "name": "Example Counterparty LLC",
+            "taxId": "12-3456789"
+          }
+        },
+        "options": {
+          "dryRun": false,
+          "emitAudit": true,
+          "returnMatches": false
+        }
+      },
+      "assert": [
+        {
+          "target": "payload",
+          "path": "$.counterparty.name",
+          "operator": "changed"
+        },
+        {
+          "target": "payload",
+          "path": "$.counterparty.taxId",
+          "operator": "changed"
+        }
+      ]
+    }
+  ]
+}

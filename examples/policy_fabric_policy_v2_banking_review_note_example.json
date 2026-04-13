@@ -1,0 +1,93 @@
+{
+  "apiVersion": "policy.fabric/v2",
+  "policyId": "banking-review-note-redaction",
+  "version": "0.1.0",
+  "owner": "banking-governance",
+  "status": "approved",
+  "description": "Hash operator review comments before broader distribution or audit replication outside restricted review lanes.",
+  "labels": {
+    "domain": "banking",
+    "dataClass": "operator-sensitive"
+  },
+  "rollout": {
+    "tenants": ["banking-prod"],
+    "environments": ["prod", "stage"],
+    "regions": ["us-east-1"],
+    "percentage": 100
+  },
+  "selectors": [
+    {
+      "id": "review-comment",
+      "type": "jsonpath",
+      "path": "$.review.comment",
+      "expectedCardinality": "zeroOrOne",
+      "matchKind": "value",
+      "description": "Free-form review comment."
+    }
+  ],
+  "rules": [
+    {
+      "id": "hash-review-comment",
+      "priority": 100,
+      "description": "Hash review comments when leaving the restricted review lane.",
+      "when": {
+        "mode": "mask",
+        "routeIn": ["review-export", "audit-replication"],
+        "environmentIn": ["prod", "stage"]
+      },
+      "match": {
+        "selectorRef": "review-comment",
+        "onNoMatch": "skip",
+        "expectedCardinality": "inherit"
+      },
+      "transform": {
+        "type": "hash",
+        "provider": "sha256-default",
+        "capabilityRef": "banking-review-comment-hash",
+        "preserveFormat": false,
+        "reversible": false
+      },
+      "onFailure": "failClosed"
+    }
+  ],
+  "options": {
+    "emitAudit": true,
+    "loggable": false,
+    "returnMatchesByDefault": false,
+    "failClosed": true,
+    "allowExplainSimulation": true
+  },
+  "tests": [
+    {
+      "name": "review-export-hashes-sensitive-comment",
+      "request": {
+        "mode": "mask",
+        "tenantId": "banking-prod",
+        "contentType": "application/json",
+        "context": {
+          "route": "review-export",
+          "environment": "prod",
+          "purpose": "ops",
+          "region": "us-east-1"
+        },
+        "payload": {
+          "review": {
+            "comment": "Potential capital override rationale and internal names"
+          }
+        },
+        "options": {
+          "dryRun": false,
+          "emitAudit": true,
+          "returnMatches": false
+        }
+      },
+      "assert": [
+        {
+          "target": "payload",
+          "path": "$.review.comment",
+          "operator": "changed"
+        }
+      ]
+    }
+  ]
+}
