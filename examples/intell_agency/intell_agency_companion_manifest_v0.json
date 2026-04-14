@@ -1,0 +1,49 @@
+{
+  "slice_id": "intell_agency_companion_v0",
+  "status": "placement-tranche",
+  "canonical_home": "SocioProphet/policy-fabric",
+  "downstream_execution_consumer": "SocioProphet/agentplane",
+  "families": [
+    {
+      "name": "typed_substrate",
+      "description": "Typed surfaces for agents, observations, policy references, world-model references, and gossip payloads.",
+      "target_surface": "contracts_or_examples_review"
+    },
+    {
+      "name": "policy_guards",
+      "description": "Runtime policy guards and rights-critical overlays.",
+      "target_surface": "contracts_or_examples_review"
+    },
+    {
+      "name": "audit_harness",
+      "description": "Fit classification, threshold rationale, verdict generation, and boundary comparison tooling.",
+      "target_surface": "examples_and_docs"
+    },
+    {
+      "name": "control_fixtures",
+      "description": "Positive, negative, and edge-case fixtures with normative expectations.",
+      "target_surface": "examples"
+    },
+    {
+      "name": "release_gates",
+      "description": "Promotion blocking semantics for rights-critical domains and governed verdict consumption.",
+      "target_surface": "docs_specs_and_contract_review"
+    }
+  ],
+  "first_tranche_paths": [
+    "docs/specs/INTELL_AGENCY_POLICY_BINDING_V0.md",
+    "docs/assessments/INTELL_AGENCY_COMPANION_PLACEMENT_V0.md",
+    "examples/intell_agency/README.md",
+    "examples/intell_agency/intell_agency_companion_manifest_v0.json"
+  ],
+  "non_goals": [
+    "mirror the entire companion repository as a top-level subtree in one tranche",
+    "move execution-plane ownership into policy-fabric",
+    "decide every standards-repo promotion boundary in v0"
+  ],
+  "next_tranches": [
+    "promote stable machine-readable contracts into contracts/ where appropriate",
+    "add an agentplane integration tranche documenting verdict consumption",
+    "decide whether any canon-worthy contracts belong in socioprophet-standards-storage"
+  ]
+}
