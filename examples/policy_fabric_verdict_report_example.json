@@ -1,0 +1,93 @@
+{
+  "apiVersion": "policy.fabric.verdict/v1",
+  "kind": "VerdictReport",
+  "metadata": {
+    "generatedAt": "2026-04-14T03:05:00Z",
+    "generator": "intell-agency-audit-harness/0.1.0",
+    "runId": "intell-agency-verdict-2026-04-14-001"
+  },
+  "subject": {
+    "type": "policyBundle",
+    "ref": "examples/intell_agency/intell_agency_companion_manifest_v0.json",
+    "version": "0.1.0"
+  },
+  "thresholds": {
+    "minBijectiveStability": 0.6,
+    "surjectionUpperBoundMultiplier": 0.7,
+    "injectionUpperBoundMultiplier": 0.98
+  },
+  "summary": {
+    "status": "mixed",
+    "domainCount": 3,
+    "blockedCount": 2,
+    "rightsCriticalBlockedCount": 1
+  },
+  "verdicts": [
+    {
+      "domain": "protest",
+      "rightsCritical": true,
+      "promote": false,
+      "fit": "surjection",
+      "failedPredicates": [
+        "rights_critical_requires_bijection",
+        "fit_surjection"
+      ],
+      "reasons": [
+        "rights-critical domain is not bijective",
+        "representation may be underfit or proxy-dependent"
+      ],
+      "margins": {
+        "stability_minus_min": 0.12,
+        "f1_minus_ub_lo_x_surjection_multiplier": -0.08,
+        "f1_minus_ub_hi_x_injection_multiplier": -0.26
+      },
+      "summary": "Blocked because the domain is rights-critical and classified as surjection.",
+      "artifactRefs": {
+        "verdictArtifactRef": "report/verdicts.json",
+        "verdictExplanationRef": "report/verdict_explanations.json"
+      }
+    },
+    {
+      "domain": "credit",
+      "rightsCritical": false,
+      "promote": false,
+      "fit": "injection",
+      "failedPredicates": [
+        "fit_injection"
+      ],
+      "reasons": [
+        "representation may be overfit or unstable"
+      ],
+      "margins": {
+        "stability_minus_min": -0.04,
+        "f1_minus_ub_lo_x_surjection_multiplier": 0.24,
+        "f1_minus_ub_hi_x_injection_multiplier": 0.01
+      },
+      "summary": "Blocked because stability is below the minimum required threshold.",
+      "artifactRefs": {
+        "verdictArtifactRef": "report/verdicts.json",
+        "verdictExplanationRef": "report/verdict_explanations.json"
+      }
+    },
+    {
+      "domain": "health",
+      "rightsCritical": true,
+      "promote": true,
+      "fit": "bijection",
+      "failedPredicates": [],
+      "reasons": [
+        "passes configured gates"
+      ],
+      "margins": {
+        "stability_minus_min": 0.21,
+        "f1_minus_ub_lo_x_surjection_multiplier": 0.31,
+        "f1_minus_ub_hi_x_injection_multiplier": 0.04
+      },
+      "summary": "Promotable under current gate settings.",
+      "artifactRefs": {
+        "verdictArtifactRef": "report/verdicts.json",
+        "verdictExplanationRef": "report/verdict_explanations.json"
+      }
+    }
+  ]
+}
