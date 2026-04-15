@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.internal/policy-fabric/schemas/policy_fabric_verdict_report_v1.schema.json",
+  "title": "Policy Fabric Verdict Report v1",
+  "description": "Machine-readable promotion and blocking verdict evidence for rights-critical and non-rights-critical domains.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "subject",
+    "thresholds",
+    "summary",
+    "verdicts"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "policy.fabric.verdict/v1"
+    },
+    "kind": {
+      "const": "VerdictReport"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generatedAt",
+        "generator"
+      ],
+      "properties": {
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "generator": {
+          "type": "string"
+        },
+        "runId": {
+          "type": "string"
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "ref",
+        "version"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "policyBundle",
+            "releasePack",
+            "executionLane"
+          ]
+        },
+        "ref": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minBijectiveStability",
+        "surjectionUpperBoundMultiplier",
+        "injectionUpperBoundMultiplier"
+      ],
+      "properties": {
+        "minBijectiveStability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "surjectionUpperBoundMultiplier": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "injectionUpperBoundMultiplier": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "domainCount",
+        "blockedCount"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "promotable",
+            "blocked",
+            "mixed"
+          ]
+        },
+        "domainCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blockedCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rightsCriticalBlockedCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "verdicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "domain",
+          "rightsCritical",
+          "promote",
+          "fit",
+          "failedPredicates"
+        ],
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "rightsCritical": {
+            "type": "boolean"
+          },
+          "promote": {
+            "type": "boolean"
+          },
+          "fit": {
+            "enum": [
+              "surjection",
+              "injection",
+              "bijection"
+            ]
+          },
+          "failedPredicates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "margins": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "summary": {
+            "type": "string"
+          },
+          "artifactRefs": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "verdictArtifactRef": {
+                "type": "string"
+              },
+              "verdictExplanationRef": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
