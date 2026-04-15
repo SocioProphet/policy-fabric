@@ -3,12 +3,12 @@
   "kind": "VerdictReport",
   "metadata": {
     "generatedAt": "2026-04-14T03:05:00Z",
-    "generator": "intell-agency-audit-harness/0.1.0",
-    "runId": "intell-agency-verdict-2026-04-14-001"
+    "generator": "companion-audit-harness/0.1.0",
+    "runId": "companion-verdict-2026-04-14-001"
   },
   "subject": {
     "type": "policyBundle",
-    "ref": "examples/intell_agency/intell_agency_companion_manifest_v0.json",
+    "ref": "examples/companion/companion_manifest_v0.json",
     "version": "0.1.0"
   },
   "thresholds": {
