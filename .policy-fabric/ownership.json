@@ -25,6 +25,9 @@
     "docs/research/**",
     "docs/specs/**",
     "docs/turns/**",
+    "docs/MAINTAINER_RUNBOOK.md",
+    "docs/PUBLIC_REPO_NAMING_HYGIENE.md",
+    "docs/SEMANTIC_VALIDATION.md",
     "examples/**",
     "scripts/**"
   ],
@@ -110,6 +113,9 @@
     "docs/TRUST_AND_SECURITY_MODEL.md",
     "SUPPORT.md",
     "docs/QUICKSTART.md",
-    "docs/FAQ.md"
+    "docs/FAQ.md",
+    "docs/MAINTAINER_RUNBOOK.md",
+    "docs/PUBLIC_REPO_NAMING_HYGIENE.md",
+    "docs/SEMANTIC_VALIDATION.md"
   ]
 }
