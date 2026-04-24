@@ -1,0 +1,26 @@
+{
+  "policy_decision_id": "policy_decision_0001",
+  "subject_ref": "model://model.semantic-stack.2026-04-05",
+  "action_ref": "action://eval-fabric/tool_write/logical_route",
+  "decision": "allow_with_approval_and_rollback",
+  "required_gates": [
+    "authorization_gate",
+    "scope_gate",
+    "policy_gate",
+    "risk_gate",
+    "evidence_gate",
+    "approval_gate",
+    "rollback_gate"
+  ],
+  "approval_ref": "approval://operator/eval-fabric-0001",
+  "rollback_requirement": "required_before_side_effect",
+  "validation_evidence": [
+    "benchmark_report",
+    "evidence_receipt",
+    "event_envelope"
+  ],
+  "notes": [
+    "Example governed decision compatible with downstream eval-fabric gate activation and promotion semantics.",
+    "This example is machine-readable but intentionally thin."
+  ]
+}
