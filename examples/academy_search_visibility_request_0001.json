@@ -1,0 +1,23 @@
+{
+  "request_id": "academy_visibility_request_0001",
+  "action": "academy.search.read",
+  "actor": {
+    "actor_id": "user-a",
+    "workspace_id": "workspace-a",
+    "jurisdiction_id": "jurisdiction-a"
+  },
+  "resource": {
+    "resource_id": "academy_record_0001",
+    "source": "ALEXANDRIAN_ACADEMY",
+    "entity_type": "LEARNING_ACTION_EXPLANATION",
+    "target_ref": "learning_loop_0001",
+    "policy_tags": ["learning-loop", "search"],
+    "visibility": {
+      "allowed_actor_ids": ["user-a"],
+      "allowed_workspace_ids": ["workspace-a"],
+      "allowed_jurisdiction_ids": ["jurisdiction-a"]
+    }
+  },
+  "evidence_refs": ["evidence://academy/span/0001"],
+  "governance_refs": ["policy-fabric://decision/example-0001"]
+}

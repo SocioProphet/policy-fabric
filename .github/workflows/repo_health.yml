@@ -56,6 +56,9 @@ jobs:
       - name: GitHub publish prep
         run: python scripts/github_publish_prep.py
 
+      - name: Academy visibility contracts
+        run: python scripts/validate_academy_visibility_contracts.py
+
       - name: Doctor
         run: python scripts/doctor.py
 

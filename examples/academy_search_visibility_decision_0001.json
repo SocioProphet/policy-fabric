@@ -1,0 +1,26 @@
+{
+  "policy_decision_id": "academy_visibility_decision_0001",
+  "request_id": "academy_visibility_request_0001",
+  "subject_ref": "academy://search-record/academy_record_0001",
+  "action_ref": "action://academy/search/read",
+  "decision": "allow",
+  "required_gates": [
+    "actor_gate",
+    "workspace_gate",
+    "jurisdiction_gate",
+    "policy_tag_gate",
+    "evidence_gate"
+  ],
+  "reason": "actor, workspace, and jurisdiction match the resource visibility scope",
+  "visibility_scope": {
+    "actor_id": "user-a",
+    "workspace_id": "workspace-a",
+    "jurisdiction_id": "jurisdiction-a"
+  },
+  "validation_evidence": [
+    "academy_search_visibility_request_0001"
+  ],
+  "notes": [
+    "Visibility decision example for Alexandrian Academy search records."
+  ]
+}

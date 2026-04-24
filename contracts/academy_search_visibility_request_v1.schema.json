@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/policy-fabric/academy_search_visibility_request_v1.schema.json",
+  "title": "AcademySearchVisibilityRequestV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["request_id", "actor", "resource", "action"],
+  "properties": {
+    "request_id": {"type": "string", "minLength": 1},
+    "action": {"type": "string", "const": "academy.search.read"},
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor_id"],
+      "properties": {
+        "actor_id": {"type": "string", "minLength": 1},
+        "workspace_id": {"type": "string"},
+        "jurisdiction_id": {"type": "string"}
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resource_id", "source", "entity_type"],
+      "properties": {
+        "resource_id": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "const": "ALEXANDRIAN_ACADEMY"},
+        "entity_type": {"type": "string", "enum": ["LEARNING_ACTION_EXPLANATION", "LEARNING_LOOP_RECORD"]},
+        "target_ref": {"type": "string"},
+        "policy_tags": {"type": "array", "items": {"type": "string"}},
+        "visibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "allowed_actor_ids": {"type": "array", "items": {"type": "string"}},
+            "allowed_workspace_ids": {"type": "array", "items": {"type": "string"}},
+            "allowed_jurisdiction_ids": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    },
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "governance_refs": {"type": "array", "items": {"type": "string"}}
+  }
+}
