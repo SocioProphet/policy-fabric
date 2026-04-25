@@ -8,6 +8,7 @@ on:
       - 'docs/**'
       - 'fix/**'
       - 'spike/**'
+      - 'ops/**'
   pull_request:
 
 jobs:
@@ -61,6 +62,9 @@ jobs:
 
       - name: Fog control contracts
         run: python scripts/validate_fog_control_contracts.py
+
+      - name: Prophet operations action decision contracts
+        run: python scripts/validate_prophet_operations_action_decision.py
 
       - name: Doctor
         run: python scripts/doctor.py
