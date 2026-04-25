@@ -59,6 +59,9 @@ jobs:
       - name: Academy visibility contracts
         run: python scripts/validate_academy_visibility_contracts.py
 
+      - name: Fog control contracts
+        run: python scripts/validate_fog_control_contracts.py
+
       - name: Doctor
         run: python scripts/doctor.py
 
