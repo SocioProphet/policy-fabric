@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/policy-fabric/fog_control_decision_v1.schema.json",
+  "title": "FogControlDecisionV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "policy_decision_id",
+    "request_id",
+    "subject_ref",
+    "action_ref",
+    "decision",
+    "required_gates",
+    "reason"
+  ],
+  "properties": {
+    "policy_decision_id": {"type": "string", "minLength": 1},
+    "request_id": {"type": "string", "minLength": 1},
+    "subject_ref": {"type": "string", "minLength": 1},
+    "action_ref": {
+      "type": "string",
+      "enum": [
+        "action://fog/posture/transition",
+        "action://fog/quarantine",
+        "action://fog/break-glass",
+        "action://fog/remote-execution"
+      ]
+    },
+    "decision": {"type": "string", "enum": ["allow", "deny"]},
+    "required_gates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "capability_gate",
+          "attestation_gate",
+          "trust_zone_gate",
+          "approval_gate",
+          "evidence_gate",
+          "freshness_gate"
+        ]
+      }
+    },
+    "reason": {"type": "string", "minLength": 1},
+    "control_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "site_ref": {"type": "string"},
+        "from_state": {"type": "string"},
+        "to_state": {"type": "string"},
+        "target_ref": {"type": "string"}
+      }
+    },
+    "validation_evidence": {"type": "array", "items": {"type": "string"}},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}

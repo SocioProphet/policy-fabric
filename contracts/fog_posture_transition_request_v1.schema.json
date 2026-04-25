@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/policy-fabric/fog_posture_transition_request_v1.schema.json",
+  "title": "FogPostureTransitionRequestV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "site_ref",
+    "subject_ref",
+    "action_ref",
+    "from_state",
+    "to_state",
+    "reason"
+  ],
+  "properties": {
+    "request_id": {"type": "string", "minLength": 1},
+    "site_ref": {"type": "string", "minLength": 1},
+    "subject_ref": {"type": "string", "minLength": 1},
+    "action_ref": {"type": "string", "const": "action://fog/posture/transition"},
+    "from_state": {"type": "string", "enum": ["local_operational", "fleet_managed", "federated", "quarantine", "break_glass"]},
+    "to_state": {"type": "string", "enum": ["local_operational", "fleet_managed", "federated", "quarantine", "break_glass"]},
+    "capability_refs": {"type": "array", "items": {"type": "string"}},
+    "attestation_refs": {"type": "array", "items": {"type": "string"}},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "reason": {"type": "string", "minLength": 1},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}

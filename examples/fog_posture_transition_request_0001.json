@@ -1,0 +1,23 @@
+{
+  "request_id": "fog-pt-0001",
+  "site_ref": "site://alpha",
+  "subject_ref": "human://security-oncall-1",
+  "action_ref": "action://fog/posture/transition",
+  "from_state": "fleet_managed",
+  "to_state": "quarantine",
+  "capability_refs": [
+    "cap://fog/quarantine/site-alpha"
+  ],
+  "attestation_refs": [
+    "att://fog/runtime/block-evidence/site-alpha/0001"
+  ],
+  "evidence_refs": [
+    "evidence://fog/denied-flows/site-alpha/0001",
+    "evidence://fog/runtime-events/site-alpha/0007"
+  ],
+  "reason": "Repeated denied flows and runtime policy blocks exceeded threshold.",
+  "notes": [
+    "Initiated from Security on-call review window.",
+    "Expected follow-on is site quarantine until operator clearance."
+  ]
+}
