@@ -1,0 +1,29 @@
+{
+  "policy_decision_id": "fog-cd-0001",
+  "request_id": "fog-pt-0001",
+  "subject_ref": "human://security-oncall-1",
+  "action_ref": "action://fog/posture/transition",
+  "decision": "allow",
+  "required_gates": [
+    "capability_gate",
+    "attestation_gate",
+    "evidence_gate",
+    "freshness_gate"
+  ],
+  "reason": "Requester holds quarantine capability and evidence bundle is fresh and sufficient.",
+  "control_scope": {
+    "site_ref": "site://alpha",
+    "from_state": "fleet_managed",
+    "to_state": "quarantine",
+    "target_ref": "site://alpha"
+  },
+  "validation_evidence": [
+    "evidence://fog/denied-flows/site-alpha/0001",
+    "evidence://fog/runtime-events/site-alpha/0007",
+    "att://fog/runtime/block-evidence/site-alpha/0001"
+  ],
+  "notes": [
+    "This decision is intended to be consumed by Fog runtime control planes.",
+    "Shared contract lives in policy-fabric rather than any single runtime repo."
+  ]
+}
