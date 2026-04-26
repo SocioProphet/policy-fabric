@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BrokerPolicyDecision",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "decision_id": { "type": "string", "minLength": 1 },
+    "request_id": { "type": "string", "minLength": 1 },
+    "provider_binding_id": { "type": "string", "minLength": 1 },
+    "decision": { "type": "string", "enum": ["allow", "deny", "allow_with_exception", "requires_review"] },
+    "policy_pack_ids": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "policy_snapshot_ref": { "type": "string", "minLength": 1 },
+    "required_evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "exception_id": { "type": "string" },
+    "rationale": { "type": "string", "minLength": 1 },
+    "decided_at": { "type": "string", "minLength": 1 }
+  },
+  "required": ["decision_id", "request_id", "provider_binding_id", "decision", "policy_pack_ids", "policy_snapshot_ref", "rationale", "decided_at"]
+}
