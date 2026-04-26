@@ -15,6 +15,7 @@
     "BACKLOG.md",
     "CHANGELOG.md",
     "CONTRIBUTING.md",
+    "Makefile",
     "README.md",
     "SECURITY.md",
     "contracts/**",
@@ -29,7 +30,9 @@
     "docs/PUBLIC_REPO_NAMING_HYGIENE.md",
     "docs/SEMANTIC_VALIDATION.md",
     "examples/**",
-    "scripts/**"
+    "policy_fabric/**",
+    "scripts/**",
+    "tools/**"
   ],
   "generatedPaths": [
     "docs/reports/**",
@@ -61,7 +64,9 @@
     ".policy-fabric/branch_policy.json",
     "contracts/**",
     "examples/**",
+    "policy_fabric/**",
     "scripts/**",
+    "tools/**",
     "docs/specs/**",
     "docs/assessments/**",
     "README.md",
@@ -69,6 +74,7 @@
     "BACKLOG.md",
     "CHANGELOG.md",
     "CONTRIBUTING.md",
+    "Makefile",
     "SECURITY.md",
     ".agentplane/WORKFLOW.md",
     ".agentplane/agents/CODER.json",
