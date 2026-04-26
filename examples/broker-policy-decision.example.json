@@ -1,0 +1,17 @@
+{
+  "decision_id": "decision-standard-app-env-001",
+  "request_id": "req-standard-app-env-001",
+  "provider_binding_id": "binding-standard-app-env-public-cloud-001",
+  "decision": "allow",
+  "policy_pack_ids": [
+    "policy.identity.baseline.v1",
+    "policy.cost-allocation.required.v1",
+    "policy.observability.required.v1"
+  ],
+  "policy_snapshot_ref": "policy-snapshot.standard-env.2026-04-26",
+  "required_evidence_refs": [
+    "evidence.standard-environment.v1"
+  ],
+  "rationale": "Request matches approved environment service class, provider binding, and required baseline controls.",
+  "decided_at": "2026-04-26T18:15:00Z"
+}
