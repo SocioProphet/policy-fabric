@@ -1,0 +1,25 @@
+{
+  "apiVersion": "policy-fabric.socioprophet.dev/v1",
+  "kind": "PolicySubjectFixture",
+  "metadata": {
+    "name": "lattice-runtime-policy-subject",
+    "version": "0.1.0"
+  },
+  "subject": {
+    "sourceRecordKind": "PlatformAssetRecord",
+    "assetId": "runtime-asset:prophet-python-ml:0.1.0",
+    "assetKind": "runtime-asset",
+    "producerRepo": "SocioProphet/lattice-forge",
+    "policySubjectClass": "RuntimePolicySubject",
+    "promotionChannel": "dev",
+    "policyRef": null,
+    "compatibilitySurfaces": ["jupyter", "ray", "beam", "agentplane", "sourceos-user", "prophet-platform"]
+  },
+  "policyQuestions": [
+    "Is this runtime allowed for this workspace, project, org, or agent?",
+    "Which validation or replay report justifies this policy state?",
+    "Which release pack authorized this promotion channel?",
+    "Which policy exception, if any, allowed deviation?"
+  ],
+  "expectedGateStatus": "candidate-review-required"
+}
