@@ -1,0 +1,30 @@
+name: broker-policy-decision
+
+on:
+  pull_request:
+    paths:
+      - "contracts/schemas/broker-policy-decision.schema.json"
+      - "examples/broker-policy-decision.example.json"
+      - "scripts/validate_broker_policy_decision.py"
+      - ".github/workflows/broker-policy-decision.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "contracts/schemas/broker-policy-decision.schema.json"
+      - "examples/broker-policy-decision.example.json"
+      - "scripts/validate_broker_policy_decision.py"
+      - ".github/workflows/broker-policy-decision.yml"
+
+jobs:
+  validate-broker-policy-decision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install validation dependency
+        run: python -m pip install jsonschema
+      - name: Validate broker PolicyDecision example
+        run: python scripts/validate_broker_policy_decision.py
