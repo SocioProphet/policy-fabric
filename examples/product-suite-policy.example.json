@@ -1,0 +1,45 @@
+{
+  "apiVersion": "policy.socioprophet.dev/v1",
+  "kind": "ProductSuitePolicyPack",
+  "metadata": {
+    "name": "socioprophet-sourceos-holmes-product-suite",
+    "version": "0.1.0"
+  },
+  "spec": {
+    "agentLanePolicy": {
+      "copilotAllowedFor": ["repo-local-code", "validators", "fixtures", "makefile-targets", "bounded-docs", "tests"],
+      "codexAllowedFor": ["cross-repo-integration", "architecture-review", "policy-synthesis", "evidence-synthesis", "follow-up-issues"],
+      "humanRequiredFor": ["merge", "release", "policy-override", "destructive-operation", "secret-approval"]
+    },
+    "timingTelemetryPolicy": {
+      "requiredFields": ["taskId", "agentId", "agentKind", "workstream", "repo", "command", "queueStartedAt", "runStartedAt", "runCompletedAt", "wallClockMs", "status", "exitCode", "retryCount", "evidenceRef", "replayRef"],
+      "sourceOfTruth": "SocioProphet/agentplane",
+      "aggregationTarget": "SocioProphet/global-devsecops-intelligence"
+    },
+    "mergeReadinessPolicy": {
+      "requiredChecks": ["scope-compliance", "validation-pass", "evidence-present", "no-secrets", "no-unapproved-artifacts", "sourceos-carry-boundary", "human-review"],
+      "autoMergeAllowed": false
+    },
+    "sourceosCarryPolicy": {
+      "role": "carry-only",
+      "mayInstall": ["clients", "launchers", "profile-managers", "cache-managers", "evidence-collectors"],
+      "mustNot": ["promote-models", "replace-service-artifacts", "own-mutable-model-lifecycle-authority"],
+      "canonicalRepos": ["SourceOS-Linux/sourceos-model-carry", "SourceOS-Linux/sourceos-boot", "SourceOS-Linux/sourceos-spec"]
+    },
+    "progressReportingPolicy": {
+      "sourceOfTruth": "SocioProphet/sociosphere",
+      "mustReportOverallPercent": true,
+      "mustReportWorkstreams": ["Release/Install", "SourceOS Carry", "Prophet CLI", "Holmes", "Platform Registry", "Agent Execution", "Policy Fabric", "Governance/SocioSphere", "DevSecOps Intelligence", "Alexandrian Academy", "Web/UI", "Query/Search", "Model Governance", "Labs/MLOps", "SourceOS Boot/Spec"],
+      "countPlanningOnlyAsComplete": false
+    },
+    "serviceDeskMetricsPolicy": {
+      "sourceOfTruth": "SocioProphet/global-devsecops-intelligence",
+      "requiredMetrics": ["timeToFirstActionMs", "timeToFirstPRMs", "timeToMergeMs", "timeToCloseMs", "turnsToCompletion", "agentWallClockMs", "ciWallClockMs", "validationWallClockMs", "retryCount", "reworkCount", "failureCount", "blockedDurationMs", "handoffCount", "evidenceCompletenessScore", "scopeComplianceStatus", "mergeGateStatus"]
+    },
+    "learningLoopPolicy": {
+      "sourceOfTruth": "SocioProphet/alexandrian-academy",
+      "failureTaxonomyRequired": true,
+      "evalRegressionRequiredForRepeatFailures": true
+    }
+  }
+}
