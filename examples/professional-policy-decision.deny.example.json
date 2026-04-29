@@ -1,0 +1,19 @@
+{
+  "decision_id": "ppd-deny-0001",
+  "request_id": "pi-request-deny-0001",
+  "workspace_ref": "workroom://workroom-demo-0001",
+  "subject_ref": "agent://workspace-setup-agent",
+  "action": "write-memory",
+  "resource_ref": "memory://restricted/demo",
+  "resource_class": "memory-scope",
+  "decision": "deny",
+  "policy_family": "memory-recall",
+  "policy_id": "policy-memory-scope-demo",
+  "policy_version": "v0.1",
+  "obligation_refs": [],
+  "required_evidence_refs": [
+    "evidence://policy/ppd-deny-0001"
+  ],
+  "rationale": "Requested memory write is outside the approved workroom scope.",
+  "decided_at": "2026-04-29T15:45:00Z"
+}

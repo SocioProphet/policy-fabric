@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProfessionalPolicyDecision",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "decision_id": { "type": "string", "minLength": 1 },
+    "request_id": { "type": "string", "minLength": 1 },
+    "workspace_ref": { "type": "string", "minLength": 1 },
+    "subject_ref": { "type": "string", "minLength": 1 },
+    "action": { "type": "string", "minLength": 1 },
+    "resource_ref": { "type": "string", "minLength": 1 },
+    "resource_class": { "type": "string", "minLength": 1 },
+    "decision": { "type": "string", "enum": ["allow", "deny", "require_approval", "escalate"] },
+    "policy_family": {
+      "type": "string",
+      "enum": [
+        "ai-use-restriction",
+        "information-barrier",
+        "workspace-access",
+        "memory-recall",
+        "tool-grant",
+        "model-routing",
+        "contract-obligation-enforcement",
+        "conflict-review-routing",
+        "evidence-retention"
+      ]
+    },
+    "policy_id": { "type": "string", "minLength": 1 },
+    "policy_version": { "type": "string", "minLength": 1 },
+    "obligation_refs": { "type": "array", "items": { "type": "string" } },
+    "required_evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "rationale": { "type": "string", "minLength": 1 },
+    "decided_at": { "type": "string", "minLength": 1 }
+  },
+  "required": [
+    "decision_id",
+    "request_id",
+    "workspace_ref",
+    "subject_ref",
+    "action",
+    "resource_ref",
+    "resource_class",
+    "decision",
+    "policy_family",
+    "policy_id",
+    "policy_version",
+    "rationale",
+    "decided_at"
+  ]
+}
