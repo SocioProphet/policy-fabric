@@ -1,0 +1,22 @@
+{
+  "decision_id": "ppd-review-0001",
+  "request_id": "pi-request-review-0001",
+  "workspace_ref": "workroom://workroom-demo-0001",
+  "subject_ref": "agent://opportunity-review-agent",
+  "action": "summarize",
+  "resource_ref": "document://demo/confidential-source",
+  "resource_class": "confidential-document",
+  "decision": "require_approval",
+  "policy_family": "ai-use-restriction",
+  "policy_id": "policy-demo-ai-use",
+  "policy_version": "v0.1",
+  "obligation_refs": [
+    "obligation://obl-demo-0001"
+  ],
+  "required_evidence_refs": [
+    "evidence://policy/ppd-review-0001",
+    "evidence://obligation/obl-demo-0001"
+  ],
+  "rationale": "Generated summary action is permitted only after reviewer approval because an AI-use obligation applies.",
+  "decided_at": "2026-04-29T15:45:00Z"
+}
