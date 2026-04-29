@@ -1,0 +1,19 @@
+{
+  "decision_id": "ppd-allow-0001",
+  "request_id": "pi-request-allow-0001",
+  "workspace_ref": "workroom://workroom-demo-0001",
+  "subject_ref": "agent://relationship-agent",
+  "action": "read-context",
+  "resource_ref": "context-pack://pi-demo-0001",
+  "resource_class": "context-pack",
+  "decision": "allow",
+  "policy_family": "workspace-access",
+  "policy_id": "policy-workspace-access-demo",
+  "policy_version": "v0.1",
+  "obligation_refs": [],
+  "required_evidence_refs": [
+    "evidence://workspace-access/ppd-allow-0001"
+  ],
+  "rationale": "Subject has scoped access to the demo workroom context pack.",
+  "decided_at": "2026-04-29T15:45:00Z"
+}
