@@ -1,0 +1,30 @@
+name: professional-policy-decision
+
+on:
+  pull_request:
+    paths:
+      - "contracts/schemas/professional-policy-decision.schema.json"
+      - "examples/professional-policy-decision.*.example.json"
+      - "scripts/validate_professional_policy_decision.py"
+      - ".github/workflows/professional-policy-decision.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "contracts/schemas/professional-policy-decision.schema.json"
+      - "examples/professional-policy-decision.*.example.json"
+      - "scripts/validate_professional_policy_decision.py"
+      - ".github/workflows/professional-policy-decision.yml"
+
+jobs:
+  validate-professional-policy-decision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install validation dependency
+        run: python -m pip install jsonschema
+      - name: Validate Professional PolicyDecision examples
+        run: python scripts/validate_professional_policy_decision.py
