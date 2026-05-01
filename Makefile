@@ -1,6 +1,6 @@
-.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate
+.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate
 
-validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate
+validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate
 	@echo "OK: validate"
 
 operations-decision-smoke:
@@ -16,3 +16,6 @@ product-suite-policy-validate:
 
 model-fabric-release-policy-validate:
 	python3 tools/validate_model_fabric_release_policy.py
+
+lattice-data-governai-policy-subjects-validate:
+	python3 tools/validate_lattice_data_governai_policy_subjects.py
