@@ -1,0 +1,141 @@
+{
+  "apiVersion": "policy.socioprophet.dev/v1",
+  "kind": "LatticeRuntimeProfilePolicySubjectPack",
+  "metadata": {
+    "name": "lattice-runtime-profile-policy-subjects",
+    "version": "0.1.0",
+    "description": "Policy subjects and decisions for Lattice notebook, Ray, and Beam RuntimeAssets plus RuntimeProfileBinding records."
+  },
+  "spec": {
+    "sourceOfTruth": "SocioProphet/policy-fabric",
+    "trackingRefs": [
+      "SocioProphet/prophet-platform#291",
+      "SocioProphet/lattice-forge#11",
+      "SocioProphet/prophet-platform#306",
+      "SocioProphet/agentplane#77",
+      "SocioProphet/sociosphere#240",
+      "SocioProphet/sherlock-search#32",
+      "SocioProphet/slash-topics#25",
+      "SocioProphet/new-hope#9"
+    ],
+    "subjectKinds": [
+      "RuntimeAsset",
+      "RuntimeProfileBinding",
+      "RuntimeRoleBinding",
+      "NotebookRuntimeProfile",
+      "RayRuntimeProfile",
+      "BeamRuntimeProfile"
+    ],
+    "actions": [
+      "discover-runtime",
+      "select-runtime",
+      "launch-notebook-runtime",
+      "run-ray-runtime",
+      "run-beam-runtime",
+      "consume-runtime-profile-binding",
+      "promote-runtime",
+      "promote-ray-runtime",
+      "promote-beam-runtime"
+    ],
+    "promotionGates": {
+      "notebookRuntimeLaunch": [
+        "RuntimeAsset-present",
+        "policyRef-present",
+        "evidenceCorrelationId-present",
+        "RuntimeProfileBinding-present",
+        "notebook-role-present"
+      ],
+      "rayRuntimeExecution": [
+        "RuntimeAsset-present",
+        "policyRef-present",
+        "evidenceCorrelationId-present",
+        "RuntimeProfileBinding-present",
+        "ray-role-present",
+        "dry-run-or-approval-required"
+      ],
+      "beamRuntimeExecution": [
+        "RuntimeAsset-present",
+        "policyRef-present",
+        "evidenceCorrelationId-present",
+        "RuntimeProfileBinding-present",
+        "beam-role-present",
+        "dry-run-or-approval-required"
+      ],
+      "runtimeProfileBindingConsumption": [
+        "RuntimeProfileBinding-present",
+        "all-runtimeRefs-present",
+        "agentplane-consumer-ref-present",
+        "topology-ref-present"
+      ]
+    },
+    "runtimeRefs": {
+      "notebookRuntimeRef": "runtime-asset:prophet-python-ml:0.1.0",
+      "rayRuntimeRef": "runtime-asset:prophet-ray-ml:0.1.0",
+      "beamRuntimeRef": "runtime-asset:prophet-beam-dataops:0.1.0",
+      "runtimeProfileBindingRef": "runtime-profile-binding:lattice-data-governai:0.1.0"
+    },
+    "decisions": [
+      {
+        "decisionId": "decision:lattice:runtime:notebook:allow-launch",
+        "subjectRef": "runtime-asset:prophet-python-ml:0.1.0",
+        "subjectKind": "NotebookRuntimeProfile",
+        "action": "launch-notebook-runtime",
+        "result": "allow",
+        "because": [
+          "runtime role is notebook/query/publication reproduction",
+          "policyRef-present",
+          "RuntimeProfileBinding-present"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:runtime-prophet-python-ml-demo"]
+      },
+      {
+        "decisionId": "decision:lattice:runtime:ray:review-promote",
+        "subjectRef": "runtime-asset:prophet-ray-ml:0.1.0",
+        "subjectKind": "RayRuntimeProfile",
+        "action": "promote-ray-runtime",
+        "result": "review-required",
+        "because": [
+          "runtime role includes model and RAG execution",
+          "stable promotion requires runtime review",
+          "dry-run execution is allowed through AgentPlane"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:runtime-prophet-ray-ml-demo"]
+      },
+      {
+        "decisionId": "decision:lattice:runtime:beam:review-promote",
+        "subjectRef": "runtime-asset:prophet-beam-dataops:0.1.0",
+        "subjectKind": "BeamRuntimeProfile",
+        "action": "promote-beam-runtime",
+        "result": "review-required",
+        "because": [
+          "runtime role includes dataset construction and quality workflows",
+          "stable promotion requires runtime review",
+          "dry-run execution is allowed through AgentPlane"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:runtime-prophet-beam-dataops-demo"]
+      },
+      {
+        "decisionId": "decision:lattice:runtime-profile-binding:allow-consume",
+        "subjectRef": "runtime-profile-binding:lattice-data-governai:0.1.0",
+        "subjectKind": "RuntimeProfileBinding",
+        "action": "consume-runtime-profile-binding",
+        "result": "allow",
+        "because": [
+          "notebook runtime ref present",
+          "ray runtime ref present",
+          "beam runtime ref present",
+          "AgentPlane consumer ref present"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:lattice-runtime-profile-bindings-demo"]
+      }
+    ],
+    "nonNegotiables": {
+      "noParallelMetadataSpines": true,
+      "runtimeAssetOwner": "SocioProphet/lattice-forge",
+      "runtimeProfileBindingOwner": "SocioProphet/prophet-platform",
+      "executionConsumer": "SocioProphet/agentplane",
+      "topologyGovernor": "SocioProphet/sociosphere",
+      "mustNotBypassPolicyFabric": true
+    }
+  }
+}
