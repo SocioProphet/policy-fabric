@@ -1,0 +1,137 @@
+{
+  "apiVersion": "policy.socioprophet.dev/v1",
+  "kind": "LatticeDataGovernAIPolicySubjectPack",
+  "metadata": {
+    "name": "lattice-data-governai-policy-subjects",
+    "version": "0.1.0",
+    "description": "Policy subject pack for Lattice data, runtime, notebook, model, prompt, agent, evaluation, factsheet, and publication assets."
+  },
+  "spec": {
+    "sourceOfTruth": "SocioProphet/policy-fabric",
+    "trackingRefs": [
+      "SocioProphet/prophet-platform#291",
+      "SocioProphet/prophet-platform#292",
+      "SourceOS-Linux/sourceos-spec#75",
+      "SocioProphet/lattice-forge#10",
+      "SocioProphet/prophet-platform-fabric-mlops-ts-suite#33"
+    ],
+    "subjectKinds": [
+      "DataProduct",
+      "DataContract",
+      "RuntimeAsset",
+      "NotebookSession",
+      "QueryRun",
+      "ModelAsset",
+      "ModelZooEntry",
+      "PromptAsset",
+      "RAGPipeline",
+      "AgentAsset",
+      "EvaluationBundle",
+      "Factsheet",
+      "PublicationArtifact",
+      "ResearchPackage"
+    ],
+    "actions": [
+      "discover",
+      "request-access",
+      "query",
+      "launch-runtime",
+      "run-notebook",
+      "run-ray-job",
+      "run-beam-pipeline",
+      "promote-model",
+      "promote-prompt",
+      "publish-research-package",
+      "execute-agent",
+      "export-artifact"
+    ],
+    "promotionGates": {
+      "dataProductAccess": [
+        "ownerRef-present",
+        "dataContract-present",
+        "qualityProfile-present",
+        "licensePolicy-present",
+        "policyRef-present",
+        "evidenceRef-present"
+      ],
+      "runtimeEligibility": [
+        "runtimeAssetRef-present",
+        "lockfile-or-buildRef-present",
+        "sbomRef-present",
+        "signatureRef-present",
+        "scanRef-present"
+      ],
+      "modelPromotion": [
+        "trainingData-lineage-present",
+        "evaluationData-lineage-present",
+        "EvaluationBundle-present",
+        "Factsheet-present",
+        "approvalWorkflow-present"
+      ],
+      "publicationReview": [
+        "PublicationArtifact-present",
+        "reproductionRecipe-present",
+        "ReviewThread-present",
+        "evidenceRefs-present"
+      ],
+      "agentExecution": [
+        "AgentAsset-present",
+        "tool-scope-present",
+        "runtime-isolation-present",
+        "policyRef-present",
+        "replay-evidence-required"
+      ]
+    },
+    "decisions": [
+      {
+        "decisionId": "decision:lattice:data-product-query:allow",
+        "subjectRef": "urn:srcos:data-product:community_truth_demo",
+        "subjectKind": "DataProduct",
+        "action": "query",
+        "result": "allow",
+        "because": [
+          "dataContract-present",
+          "qualityProfile-present",
+          "queryAllowed=true",
+          "policyRef-present"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:community_truth_demo_data_product"]
+      },
+      {
+        "decisionId": "decision:lattice:model-promotion:review",
+        "subjectRef": "urn:srcos:model:community_truth_demo_candidate",
+        "subjectKind": "ModelAsset",
+        "action": "promote-model",
+        "result": "review-required",
+        "because": [
+          "EvaluationBundle.verdict=needs-review",
+          "Factsheet.approval.state=needs-review",
+          "riskTier=medium"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:community_truth_demo_model_eval"]
+      },
+      {
+        "decisionId": "decision:lattice:publication-export:deny",
+        "subjectRef": "urn:srcos:publication-artifact:community_truth_demo_report",
+        "subjectKind": "PublicationArtifact",
+        "action": "export-artifact",
+        "result": "deny",
+        "because": [
+          "review.state=under-review",
+          "export requires accepted publication state",
+          "policyRef missing for export grant"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:community_truth_demo_report"]
+      }
+    ],
+    "nonNegotiables": {
+      "noParallelMetadataSpines": true,
+      "canonicalSchemaOwner": "SourceOS-Linux/sourceos-spec",
+      "platformRecordProducer": "SocioProphet/prophet-platform",
+      "executionConsumer": "SocioProphet/agentplane",
+      "searchConsumer": "SocioProphet/sherlock-search",
+      "topicConsumer": "SocioProphet/slash-topics",
+      "semanticMembraneConsumer": "SocioProphet/new-hope"
+    }
+  }
+}
