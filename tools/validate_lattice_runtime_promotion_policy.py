@@ -33,6 +33,17 @@ REQUIRED_ACTIONS = {
     "block-stable-runtime-promotion",
     "request-stable-runtime-review",
 }
+TOKEN_ALIASES = {
+    "RuntimeAsset-present": "RuntimeAsset",
+    "SBOM-present": "SBOM",
+    "scan-report-pass": "scan-report",
+    "attestation-present": "attestation",
+    "signature-present": "signature",
+    "RuntimePromotionManifest-present": "RuntimePromotionManifest",
+    "external-scanner-evidence-present": "external-scanner-evidence",
+    "external-signing-authority-evidence-present": "external-signing-authority-evidence",
+    "human-approval-present": "human-approval",
+}
 
 
 def fail(message: str) -> int:
@@ -43,6 +54,10 @@ def fail(message: str) -> int:
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise ValueError(message)
+
+
+def normalize(tokens: list[str]) -> set[str]:
+    return {TOKEN_ALIASES.get(token, token) for token in tokens}
 
 
 def main() -> int:
@@ -62,8 +77,8 @@ def main() -> int:
 
         gates = spec.get("promotionGates")
         require(isinstance(gates, dict), "promotionGates must be object")
-        require(REQUIRED_GENERATED <= set(gates.get("devRuntimePromotion", [])), "devRuntimePromotion gate incomplete")
-        require(REQUIRED_STABLE <= set(gates.get("stableRuntimePromotion", [])), "stableRuntimePromotion gate incomplete")
+        require(REQUIRED_GENERATED <= normalize(gates.get("devRuntimePromotion", [])), "devRuntimePromotion gate incomplete")
+        require(REQUIRED_STABLE <= normalize(gates.get("stableRuntimePromotion", [])), "stableRuntimePromotion gate incomplete")
 
         decisions = spec.get("decisions")
         require(isinstance(decisions, list) and len(decisions) >= 5, "decisions missing")
