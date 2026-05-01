@@ -1,0 +1,200 @@
+{
+  "apiVersion": "policy.socioprophet.dev/v1",
+  "kind": "LatticeDataGovernAIExpandedPolicySubjectPack",
+  "metadata": {
+    "name": "lattice-data-governai-expanded-policy-subjects",
+    "version": "0.1.0",
+    "description": "Expanded policy subject pack for later Lattice Studio/Data/GovernAI assets."
+  },
+  "spec": {
+    "sourceOfTruth": "SocioProphet/policy-fabric",
+    "trackingRefs": [
+      "SocioProphet/prophet-platform#291",
+      "SocioProphet/prophet-platform#300",
+      "SocioProphet/prophet-platform#301",
+      "SocioProphet/prophet-platform#302",
+      "SocioProphet/prophet-platform#303",
+      "SocioProphet/prophet-platform#304",
+      "SocioProphet/prophet-platform#305",
+      "SocioProphet/sherlock-search#31",
+      "SocioProphet/slash-topics#24",
+      "SocioProphet/new-hope#8"
+    ],
+    "subjectKinds": [
+      "ModelZooEntry",
+      "ModelEndpoint",
+      "PromptAsset",
+      "RAGPipeline",
+      "VectorIndex",
+      "ResearchPackage",
+      "ReviewThread",
+      "ReviewDecision",
+      "CitationGraph",
+      "ReproductionAttempt",
+      "LabelingProject",
+      "AnnotationReliabilityScore",
+      "TrainingDataset",
+      "EvaluationDataset",
+      "TrainingDatasetRecipe",
+      "TrainingUsePolicy",
+      "ActiveMetadataEvent",
+      "TrustSignal",
+      "TrustPostureSummary"
+    ],
+    "actions": [
+      "discover",
+      "inspect",
+      "request-access",
+      "select-runtime",
+      "launch-notebook",
+      "run-evaluation",
+      "promote-model",
+      "promote-prompt",
+      "publish-research-package",
+      "export-artifact",
+      "use-for-demo-training",
+      "ingest-active-metadata",
+      "consume-trust-posture"
+    ],
+    "promotionGates": {
+      "modelZooPromotion": [
+        "ModelZooEntry-present",
+        "ModelCard-present",
+        "ModelRuntimeProfile-present",
+        "EvaluationBundle-present",
+        "Factsheet-present",
+        "usePolicy-present",
+        "approvalWorkflow-present"
+      ],
+      "promptRAGPromotion": [
+        "PromptAsset-present",
+        "RAGPipeline-present",
+        "RetrievalCorpus-present",
+        "VectorIndex-present",
+        "GroundingEvaluation-present",
+        "RegressionGate-present",
+        "PromptFactsheet-present"
+      ],
+      "researchPackagePublication": [
+        "ResearchPackage-present",
+        "PublicationArtifact-present",
+        "ReviewThread-present",
+        "ReviewDecision-present",
+        "CitationGraph-present",
+        "ReproductionAttempt-present",
+        "reproducibilityScore-present"
+      ],
+      "annotationTrainingUse": [
+        "LabelingProject-present",
+        "AnnotationReliabilityScore-present",
+        "TrainingDataset-present",
+        "EvaluationDataset-present",
+        "TrainingUsePolicy-present",
+        "sourceDataProduct-lineage-present"
+      ],
+      "activeMetadataIngestion": [
+        "ActiveMetadataEvent-present",
+        "PlatformAssetRecord-ref-present",
+        "policyRef-present",
+        "evidenceCorrelationId-present",
+        "consumer-routing-present"
+      ],
+      "trustPostureConsumption": [
+        "TrustSignal-present",
+        "TrustPostureSummary-present",
+        "evidenceRefs-present",
+        "promotionRisk-present",
+        "not-authoritative-until-reviewed"
+      ]
+    },
+    "decisions": [
+      {
+        "decisionId": "decision:lattice:model-zoo-entry:review",
+        "subjectRef": "urn:srcos:model-zoo-entry:community_truth_demo_candidate",
+        "subjectKind": "ModelZooEntry",
+        "action": "promote-model",
+        "result": "review-required",
+        "because": [
+          "EvaluationBundle.verdict=needs-review",
+          "Factsheet.approval.state=needs-review",
+          "usePolicy.requiresApprovalFor includes promotion"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:community_truth_demo_model_eval"]
+      },
+      {
+        "decisionId": "decision:lattice:rag-pipeline:review",
+        "subjectRef": "urn:srcos:rag-pipeline:community_truth_demo_grounded_answer",
+        "subjectKind": "RAGPipeline",
+        "action": "promote-prompt",
+        "result": "review-required",
+        "because": [
+          "GroundingEvaluation.verdict=needs-review",
+          "citation_coverage=warn",
+          "RegressionGate.blocksPromotion=true"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:community_truth_demo_grounding_eval"]
+      },
+      {
+        "decisionId": "decision:lattice:training-dataset:allow-scoped",
+        "subjectRef": "urn:srcos:dataset:community_truth_demo_training",
+        "subjectKind": "TrainingDataset",
+        "action": "use-for-demo-training",
+        "result": "allow",
+        "because": [
+          "TrainingUsePolicy.allowedUses includes demo-training",
+          "sourceDataProduct-lineage-present",
+          "AnnotationReliabilityScore.score=0.81"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:community_truth_demo_training_dataset"]
+      },
+      {
+        "decisionId": "decision:lattice:research-package:deny-export",
+        "subjectRef": "urn:srcos:research-package:community_truth_demo_report",
+        "subjectKind": "ResearchPackage",
+        "action": "export-artifact",
+        "result": "deny",
+        "because": [
+          "ReviewDecision.state=needs-revision",
+          "ReproductionAttempt.status=partial-pass",
+          "publication export requires accepted review"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:community_truth_demo_reproduction_attempt_001"]
+      },
+      {
+        "decisionId": "decision:lattice:active-metadata:allow-ingest",
+        "subjectRef": "active-metadata:product-spine:data-product:urn-srcos-data-product-community_truth_demo",
+        "subjectKind": "ActiveMetadataEvent",
+        "action": "ingest-active-metadata",
+        "result": "allow",
+        "because": [
+          "event carries policyRef",
+          "event carries evidenceCorrelationId",
+          "event routes to Sherlock SlashTopics NewHope PolicyFabric SocioSphere"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:community_truth_demo_data_product"]
+      },
+      {
+        "decisionId": "decision:lattice:trust-posture:review",
+        "subjectRef": "urn:srcos:trust-posture:lattice-data-governai-demo",
+        "subjectKind": "TrustPostureSummary",
+        "action": "consume-trust-posture",
+        "result": "review-required",
+        "because": [
+          "promotionRisk=medium",
+          "trust posture is not authoritative until reviewed",
+          "evidenceRefs-present"
+        ],
+        "evidenceRefs": ["urn:srcos:evidence:community_truth_demo_data_product"]
+      }
+    ],
+    "nonNegotiables": {
+      "noParallelMetadataSpines": true,
+      "canonicalSchemaOwner": "SourceOS-Linux/sourceos-spec",
+      "platformRecordProducer": "SocioProphet/prophet-platform",
+      "topicPublicSurface": "SocioProphet/slash-topics",
+      "semanticMembrane": "SocioProphet/new-hope",
+      "searchConsumer": "SocioProphet/sherlock-search",
+      "executionConsumer": "SocioProphet/agentplane"
+    }
+  }
+}
