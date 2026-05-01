@@ -1,0 +1,28 @@
+name: lattice-runtime-policy
+
+on:
+  pull_request:
+    paths:
+      - "examples/lattice-runtime-profile-policy-subjects.example.json"
+      - "tools/validate_lattice_runtime_profile_policy_subjects.py"
+      - ".github/workflows/lattice-runtime-policy.yml"
+      - "Makefile"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate runtime policy pack
+        run: python tools/validate_lattice_runtime_profile_policy_subjects.py
