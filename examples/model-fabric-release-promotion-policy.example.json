@@ -1,0 +1,109 @@
+{
+  "apiVersion": "policy.socioprophet.dev/v1",
+  "kind": "ModelFabricReleasePromotionPolicyPack",
+  "metadata": {
+    "name": "model-fabric-release-promotion-policy",
+    "version": "0.1.0",
+    "description": "Policy pack for promoting model-fabric tools from development formulae to stable immutable release artifacts."
+  },
+  "spec": {
+    "sourceOfTruth": "SocioProphet/policy-fabric",
+    "releaseLanes": [
+      {
+        "name": "development-source-formula",
+        "purpose": "Local development and CI validation only.",
+        "stableReleaseReady": false,
+        "allowedArtifactRefs": [
+          "git-ref",
+          "local-dist-manifest",
+          "dry-run-manifest"
+        ],
+        "forbiddenClaims": [
+          "stable-release",
+          "production-certification",
+          "installable-homebrew-artifact"
+        ]
+      },
+      {
+        "name": "stable-release-artifact-formula",
+        "purpose": "Immutable release artifact consumable by Homebrew and release automation.",
+        "stableReleaseReady": true,
+        "requiredPromotionGates": [
+          "release-dry-run",
+          "versioned-github-release",
+          "immutable-artifact-url",
+          "sha256",
+          "sbom",
+          "provenance",
+          "homebrew-formula-test",
+          "sourceos-carry-boundary"
+        ]
+      }
+    ],
+    "promotionGates": {
+      "releaseDryRunRequiredBeforeReleaseCandidate": true,
+      "versionedGithubReleaseRequiredBeforeStableFormula": true,
+      "immutableArtifactUrlRequired": true,
+      "sha256Required": true,
+      "sbomRequired": true,
+      "provenanceRequired": true,
+      "homebrewFormulaTestRequired": true,
+      "noFakeChecksumsOrPlaceholderUrlsInActiveFormulae": true,
+      "sourceosCarryOnlyBoundaryRetained": true
+    },
+    "activeFormulaRules": {
+      "placeholderUrlsAllowed": false,
+      "placeholderSha256Allowed": false,
+      "templatePlaceholdersAllowedOnlyUnder": [
+        "Formula/templates/",
+        "templates/",
+        "docs/"
+      ],
+      "mustNotInvent": [
+        "release-url",
+        "sha256",
+        "sbom-url",
+        "provenance-url",
+        "certification-claim"
+      ]
+    },
+    "sourceosBoundary": {
+      "role": "carry-only",
+      "allowed": [
+        "clients",
+        "launchers",
+        "profile-managers",
+        "cache-managers",
+        "evidence-collectors",
+        "release-inspectors"
+      ],
+      "mustNot": [
+        "own-mutable-model-lifecycle-authority",
+        "replace-service-artifacts",
+        "promote-models-without-ledger-evidence",
+        "store-model-weights-in-os-image"
+      ]
+    },
+    "evidenceRequirements": {
+      "requiredPerPromotion": [
+        "dryRunManifestRef",
+        "releaseTag",
+        "artifactUrl",
+        "artifactSha256",
+        "sbomRef",
+        "provenanceRef",
+        "formulaTestEvidenceRef",
+        "ledgerPromotionRecordRef"
+      ],
+      "readinessIsCertification": false
+    },
+    "toolCoverage": [
+      "model-router",
+      "guardrail-fabric",
+      "model-governance-ledger",
+      "agent-registry",
+      "prophet-cli",
+      "homebrew-prophet"
+    ]
+  }
+}

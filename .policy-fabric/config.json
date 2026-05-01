@@ -19,6 +19,8 @@
     "tools/**",
     "docs/specs/**",
     "docs/assessments/**",
+    "docs/integrations/**",
+    "docs/MODEL_FABRIC_RELEASE_PROMOTION_POLICY.md",
     "README.md",
     "AGENTS.md",
     "BACKLOG.md",
