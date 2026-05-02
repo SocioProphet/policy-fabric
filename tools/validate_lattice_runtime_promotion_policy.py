@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLE = ROOT / "examples" / "lattice-runtime-promotion-policy.example.json"
-MANIFEST = "runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.1.0"
+MANIFEST = "runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.2.0"
 RUNTIME_REFS = {
     "runtime-asset:prophet-python-ml:0.1.0",
     "runtime-asset:prophet-ray-ml:0.1.0",
@@ -26,12 +26,10 @@ REQUIRED_STABLE = {
     "external-signing-authority-evidence",
     "human-approval",
 }
-REQUIRED_RESULTS = {"allow", "deny", "review-required"}
 REQUIRED_ACTIONS = {
     "evaluate-runtime-promotion",
     "allow-dev-runtime-promotion",
-    "block-stable-runtime-promotion",
-    "request-stable-runtime-review",
+    "allow-stable-runtime-promotion",
 }
 TOKEN_ALIASES = {
     "RuntimeAsset-present": "RuntimeAsset",
@@ -41,8 +39,11 @@ TOKEN_ALIASES = {
     "signature-present": "signature",
     "RuntimePromotionManifest-present": "RuntimePromotionManifest",
     "external-scanner-evidence-present": "external-scanner-evidence",
+    "external-scanner-evidence-pass": "external-scanner-evidence",
     "external-signing-authority-evidence-present": "external-signing-authority-evidence",
+    "external-signing-authority-evidence-verified": "external-signing-authority-evidence",
     "human-approval-present": "human-approval",
+    "human-approval-approved": "human-approval",
 }
 
 
@@ -67,49 +68,61 @@ def main() -> int:
         data = json.loads(EXAMPLE.read_text(encoding="utf-8"))
         require(data.get("apiVersion") == "policy.socioprophet.dev/v1", "apiVersion mismatch")
         require(data.get("kind") == "LatticeRuntimePromotionPolicyPack", "kind mismatch")
+        metadata = data.get("metadata")
+        require(isinstance(metadata, dict), "metadata must be object")
+        require(metadata.get("version") == "0.2.0", "metadata.version must be 0.2.0")
         spec = data.get("spec")
         require(isinstance(spec, dict), "spec must be object")
+        require("SocioProphet/lattice-forge#13" in spec.get("trackingRefs", []), "trackingRefs must include lattice-forge#13")
         require(spec.get("runtimePromotionManifestRef") == MANIFEST, "manifest ref mismatch")
         require(set(spec.get("runtimeRefs", [])) == RUNTIME_REFS, "runtimeRefs mismatch")
         require(REQUIRED_GENERATED <= set(spec.get("requiredGeneratedEvidence", [])), "requiredGeneratedEvidence incomplete")
         require(REQUIRED_STABLE <= set(spec.get("requiredStableEvidence", [])), "requiredStableEvidence incomplete")
         require(REQUIRED_ACTIONS <= set(spec.get("actions", [])), "actions incomplete")
+        require("block-stable-runtime-promotion" not in spec.get("actions", []), "stable block action must be removed after stable evidence gates exist")
+        require("request-stable-runtime-review" not in spec.get("actions", []), "stable review action must be removed after stable evidence gates exist")
 
         gates = spec.get("promotionGates")
         require(isinstance(gates, dict), "promotionGates must be object")
         require(REQUIRED_GENERATED <= normalize(gates.get("devRuntimePromotion", [])), "devRuntimePromotion gate incomplete")
         require(REQUIRED_STABLE <= normalize(gates.get("stableRuntimePromotion", [])), "stableRuntimePromotion gate incomplete")
+        stable_tokens = set(gates.get("stableRuntimePromotion", []))
+        for token in ["external-scanner-evidence-pass", "external-signing-authority-evidence-verified", "human-approval-approved"]:
+            require(token in stable_tokens, f"stableRuntimePromotion missing {token}")
 
         decisions = spec.get("decisions")
-        require(isinstance(decisions, list) and len(decisions) >= 5, "decisions missing")
-        results = set()
-        actions = set()
-        subjects = set()
+        require(isinstance(decisions, list) and len(decisions) >= 6, "decisions missing")
+        dev_subjects = set()
+        stable_subjects = set()
         for decision in decisions:
             require(isinstance(decision, dict), "decision must be object")
             for key in ["decisionId", "subjectRef", "subjectKind", "action", "result", "because", "evidenceRefs"]:
                 require(key in decision, f"decision missing {key}")
             require(decision["subjectKind"] == "RuntimePromotionManifest", "subjectKind must be RuntimePromotionManifest")
             require(decision["action"] in REQUIRED_ACTIONS, f"unexpected action {decision['action']}")
-            require(decision["result"] in REQUIRED_RESULTS, f"unexpected result {decision['result']}")
+            require(decision["result"] == "allow", "all decisions must be allow when evidence gates are satisfied")
             require(isinstance(decision["because"], list) and decision["because"], "because must be non-empty")
-            require(decision["evidenceRefs"] == [MANIFEST], "evidenceRefs must point to manifest")
-            results.add(decision["result"])
-            actions.add(decision["action"])
-            subjects.add(decision["subjectRef"])
-        require(REQUIRED_RESULTS <= results, f"missing result coverage: {REQUIRED_RESULTS - results}")
-        require(RUNTIME_REFS <= subjects, "missing per-runtime dev allow subjects")
-        require(MANIFEST in subjects, "missing manifest-level stable promotion decisions")
-        require("allow-dev-runtime-promotion" in actions, "missing dev allow action")
-        require("block-stable-runtime-promotion" in actions, "missing stable deny action")
-        require("request-stable-runtime-review" in actions, "missing stable review action")
+            require(decision["evidenceRefs"] == [MANIFEST], "evidenceRefs must point to manifest v0.2.0")
+            if decision["action"] == "allow-dev-runtime-promotion":
+                dev_subjects.add(decision["subjectRef"])
+            if decision["action"] == "allow-stable-runtime-promotion":
+                stable_subjects.add(decision["subjectRef"])
+                because = "\n".join(decision["because"])
+                require("external-scanner-evidence" in because, "stable decision must mention external scanner evidence")
+                require("external-signing-authority-evidence" in because, "stable decision must mention external signing authority evidence")
+                require("human-approval" in because, "stable decision must mention human approval")
+        require(dev_subjects == RUNTIME_REFS, f"dev allow subjects mismatch: {dev_subjects}")
+        require(stable_subjects == RUNTIME_REFS, f"stable allow subjects mismatch: {stable_subjects}")
 
         non = spec.get("nonNegotiables")
         require(isinstance(non, dict), "nonNegotiables must be object")
         require(non.get("runtimeAssetOwner") == "SocioProphet/lattice-forge", "runtimeAssetOwner mismatch")
         require(non.get("policyDecisionOwner") == "SocioProphet/policy-fabric", "policyDecisionOwner mismatch")
-        require(non.get("stablePromotionDefault") == "blocked", "stable promotion default mismatch")
+        require(non.get("stablePromotionDefault") == "evidence-gated", "stable promotion default mismatch")
         require(non.get("mustNotAllowStablePromotionWithGeneratedEvidenceOnly") is True, "stable generated-only bypass must be forbidden")
+        require(non.get("mustRequireExternalScannerEvidence") is True, "external scanner requirement missing")
+        require(non.get("mustRequireExternalSigningAuthorityEvidence") is True, "external signing authority requirement missing")
+        require(non.get("mustRequireHumanApproval") is True, "human approval requirement missing")
         require(non.get("mustNotBypassPolicyFabric") is True, "policy bypass must be forbidden")
     except Exception as exc:  # noqa: BLE001
         return fail(str(exc))

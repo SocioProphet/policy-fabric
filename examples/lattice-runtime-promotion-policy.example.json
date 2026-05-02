@@ -3,14 +3,15 @@
   "kind": "LatticeRuntimePromotionPolicyPack",
   "metadata": {
     "name": "lattice-runtime-promotion-policy",
-    "version": "0.1.0",
-    "description": "Policy decisions that consume RuntimePromotionManifest evidence for Lattice RuntimeAsset promotion."
+    "version": "0.2.0",
+    "description": "Policy decisions that consume RuntimePromotionManifest v0.2.0 evidence for Lattice RuntimeAsset dev and stable promotion."
   },
   "spec": {
     "sourceOfTruth": "SocioProphet/policy-fabric",
     "trackingRefs": [
       "SocioProphet/prophet-platform#291",
       "SocioProphet/lattice-forge#12",
+      "SocioProphet/lattice-forge#13",
       "SocioProphet/sociosphere#242"
     ],
     "subjectKinds": [
@@ -22,10 +23,9 @@
     "actions": [
       "evaluate-runtime-promotion",
       "allow-dev-runtime-promotion",
-      "block-stable-runtime-promotion",
-      "request-stable-runtime-review"
+      "allow-stable-runtime-promotion"
     ],
-    "runtimePromotionManifestRef": "runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.1.0",
+    "runtimePromotionManifestRef": "runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.2.0",
     "runtimeRefs": [
       "runtime-asset:prophet-python-ml:0.1.0",
       "runtime-asset:prophet-ray-ml:0.1.0",
@@ -57,9 +57,11 @@
       "stableRuntimePromotion": [
         "RuntimePromotionManifest-present",
         "external-scanner-evidence-present",
+        "external-scanner-evidence-pass",
         "external-signing-authority-evidence-present",
+        "external-signing-authority-evidence-verified",
         "human-approval-present",
-        "promotion.channel=stable"
+        "human-approval-approved"
       ]
     },
     "decisions": [
@@ -70,12 +72,12 @@
         "action": "allow-dev-runtime-promotion",
         "result": "allow",
         "because": [
-          "RuntimePromotionManifest-present",
+          "RuntimePromotionManifest v0.2.0 present",
           "generated RuntimeAsset evidence present",
           "generated SBOM scan attestation and signature evidence present",
           "promotion.channel=dev"
         ],
-        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.1.0"]
+        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.2.0"]
       },
       {
         "decisionId": "decision:lattice:runtime-promotion:ray-ml:dev-allow",
@@ -84,12 +86,12 @@
         "action": "allow-dev-runtime-promotion",
         "result": "allow",
         "because": [
-          "RuntimePromotionManifest-present",
+          "RuntimePromotionManifest v0.2.0 present",
           "generated RuntimeAsset evidence present",
           "generated SBOM scan attestation and signature evidence present",
           "promotion.channel=dev"
         ],
-        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.1.0"]
+        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.2.0"]
       },
       {
         "decisionId": "decision:lattice:runtime-promotion:beam-dataops:dev-allow",
@@ -98,47 +100,65 @@
         "action": "allow-dev-runtime-promotion",
         "result": "allow",
         "because": [
-          "RuntimePromotionManifest-present",
+          "RuntimePromotionManifest v0.2.0 present",
           "generated RuntimeAsset evidence present",
           "generated SBOM scan attestation and signature evidence present",
           "promotion.channel=dev"
         ],
-        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.1.0"]
+        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.2.0"]
       },
       {
-        "decisionId": "decision:lattice:runtime-promotion:stable:block-without-external-evidence",
-        "subjectRef": "runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.1.0",
+        "decisionId": "decision:lattice:runtime-promotion:python-ml:stable-allow",
+        "subjectRef": "runtime-asset:prophet-python-ml:0.1.0",
         "subjectKind": "RuntimePromotionManifest",
-        "action": "block-stable-runtime-promotion",
-        "result": "deny",
+        "action": "allow-stable-runtime-promotion",
+        "result": "allow",
         "because": [
-          "external-scanner-evidence missing",
-          "external-signing-authority-evidence missing",
-          "human-approval missing",
-          "stable promotion default is blocked"
+          "external-scanner-evidence present and pass",
+          "external-signing-authority-evidence present and verified",
+          "human-approval present and approved",
+          "stable evidence gates pass"
         ],
-        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.1.0"]
+        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.2.0"]
       },
       {
-        "decisionId": "decision:lattice:runtime-promotion:stable:review-required",
-        "subjectRef": "runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.1.0",
+        "decisionId": "decision:lattice:runtime-promotion:ray-ml:stable-allow",
+        "subjectRef": "runtime-asset:prophet-ray-ml:0.1.0",
         "subjectKind": "RuntimePromotionManifest",
-        "action": "request-stable-runtime-review",
-        "result": "review-required",
+        "action": "allow-stable-runtime-promotion",
+        "result": "allow",
         "because": [
-          "stable promotion requires external scanner evidence",
-          "stable promotion requires external signing authority evidence",
-          "stable promotion requires human approval"
+          "external-scanner-evidence present and pass",
+          "external-signing-authority-evidence present and verified",
+          "human-approval present and approved",
+          "stable evidence gates pass"
         ],
-        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.1.0"]
+        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.2.0"]
+      },
+      {
+        "decisionId": "decision:lattice:runtime-promotion:beam-dataops:stable-allow",
+        "subjectRef": "runtime-asset:prophet-beam-dataops:0.1.0",
+        "subjectKind": "RuntimePromotionManifest",
+        "action": "allow-stable-runtime-promotion",
+        "result": "allow",
+        "because": [
+          "external-scanner-evidence present and pass",
+          "external-signing-authority-evidence present and verified",
+          "human-approval present and approved",
+          "stable evidence gates pass"
+        ],
+        "evidenceRefs": ["runtime-promotion-manifest:lattice-runtime-promotion-manifest:0.2.0"]
       }
     ],
     "nonNegotiables": {
       "runtimeAssetOwner": "SocioProphet/lattice-forge",
       "policyDecisionOwner": "SocioProphet/policy-fabric",
       "topologyGovernor": "SocioProphet/sociosphere",
-      "stablePromotionDefault": "blocked",
+      "stablePromotionDefault": "evidence-gated",
       "mustNotAllowStablePromotionWithGeneratedEvidenceOnly": true,
+      "mustRequireExternalScannerEvidence": true,
+      "mustRequireExternalSigningAuthorityEvidence": true,
+      "mustRequireHumanApproval": true,
       "mustNotBypassPolicyFabric": true
     }
   }
