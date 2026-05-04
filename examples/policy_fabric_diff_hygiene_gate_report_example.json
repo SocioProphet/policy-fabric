@@ -1,0 +1,85 @@
+{
+  "apiVersion": "policy.fabric.diff-hygiene/v0",
+  "kind": "DiffHygieneGateReport",
+  "metadata": {
+    "name": "agentplane-pr-84-pre-review",
+    "repository": "SocioProphet/agentplane",
+    "pullRequest": "https://github.com/SocioProphet/agentplane/pull/84",
+    "issueRef": "https://github.com/SocioProphet/agentplane/issues/82",
+    "workOrderRef": "examples/agentic-pr-work-order.example.json",
+    "baseSha": "d8822ee0f2d5cf4d3c2a740aa64d8296da056909",
+    "headSha": "e8b729563762058f4abc5674cd68d08f8253d435",
+    "generatedAt": "2026-05-04T17:20:00Z"
+  },
+  "spec": {
+    "lane": "pre-review",
+    "verdict": "warn",
+    "changedFiles": {
+      "count": 3,
+      "additions": 403,
+      "deletions": 0,
+      "paths": [
+        "docs/agentic-pr-control-plane-v0.md",
+        "examples/agentic-pr-work-order.example.json",
+        "schemas/agentic-pr-work-order.schema.v0.1.json"
+      ]
+    },
+    "thresholds": {
+      "maxChangedFiles": 6,
+      "changedFileAllowance": 2,
+      "deniedPathPrefixes": [
+        ".venv/",
+        ".venv-tools/",
+        "venv/",
+        "env/",
+        "node_modules/",
+        ".mypy_cache/",
+        ".pytest_cache/",
+        "__pycache__/",
+        ".ruff_cache/",
+        ".tox/",
+        ".nox/",
+        ".cache/",
+        "dist/",
+        "build/",
+        "target/"
+      ],
+      "allowedPathPrefixes": [
+        "docs/",
+        "schemas/",
+        "examples/"
+      ]
+    },
+    "findings": [
+      {
+        "rule": "changed-file-count",
+        "severity": "info",
+        "message": "Changed-file count is within the issue-scoped allowance."
+      },
+      {
+        "rule": "denied-generated-paths",
+        "severity": "info",
+        "message": "No denied virtual environment, generated dependency tree, cache directory, or build-output path appears in the changed-file list."
+      },
+      {
+        "rule": "review-readiness-evidence",
+        "severity": "warn",
+        "message": "The PR is acceptable for pre-review, but full local doctor validation was not run from the connector session."
+      }
+    ],
+    "requiredPrSections": [
+      {"name": "summary", "present": true},
+      {"name": "changed-files", "present": true},
+      {"name": "validation", "present": true},
+      {"name": "known-gaps", "present": true},
+      {"name": "self-critique", "present": true},
+      {"name": "linked-issue", "present": true},
+      {"name": "policy-evidence", "present": true}
+    ],
+    "exceptionsUsed": [],
+    "requiredActions": [
+      "Run repository-local validation before converting the draft PR to ready for review.",
+      "Re-run this gate at pre-merge time against the expected head SHA."
+    ]
+  }
+}

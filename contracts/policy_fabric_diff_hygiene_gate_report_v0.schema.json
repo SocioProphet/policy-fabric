@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/policy-fabric/policy_fabric_diff_hygiene_gate_report_v0.schema.json",
+  "title": "Policy Fabric Diff Hygiene Gate Report v0",
+  "description": "Pre-review and pre-merge report for agent-produced pull request diff hygiene.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": {"const": "policy.fabric.diff-hygiene/v0"},
+    "kind": {"const": "DiffHygieneGateReport"},
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "repository", "pullRequest", "issueRef", "baseSha", "headSha", "generatedAt"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "repository": {"type": "string", "minLength": 1},
+        "pullRequest": {"type": "string", "minLength": 1},
+        "issueRef": {"type": "string", "minLength": 1},
+        "workOrderRef": {"type": "string", "minLength": 1},
+        "baseSha": {"type": "string", "minLength": 7},
+        "headSha": {"type": "string", "minLength": 7},
+        "generatedAt": {"type": "string", "format": "date-time"}
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lane", "verdict", "changedFiles", "thresholds", "findings", "requiredPrSections", "exceptionsUsed", "requiredActions"],
+      "properties": {
+        "lane": {"type": "string", "enum": ["pre-review", "pre-merge"]},
+        "verdict": {"type": "string", "enum": ["allow", "warn", "block", "needs_exception"]},
+        "changedFiles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["count", "paths"],
+          "properties": {
+            "count": {"type": "integer", "minimum": 0},
+            "additions": {"type": "integer", "minimum": 0},
+            "deletions": {"type": "integer", "minimum": 0},
+            "paths": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+          }
+        },
+        "thresholds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["maxChangedFiles", "changedFileAllowance", "deniedPathPrefixes", "allowedPathPrefixes"],
+          "properties": {
+            "maxChangedFiles": {"type": "integer", "minimum": 1},
+            "changedFileAllowance": {"type": "integer", "minimum": 0},
+            "deniedPathPrefixes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "allowedPathPrefixes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+          }
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["rule", "severity", "message"],
+            "properties": {
+              "rule": {"type": "string", "minLength": 1},
+              "severity": {"type": "string", "enum": ["info", "warn", "block", "needs_exception"]},
+              "message": {"type": "string", "minLength": 1},
+              "paths": {"type": "array", "items": {"type": "string"}},
+              "exceptionRequired": {"type": "boolean"}
+            }
+          }
+        },
+        "requiredPrSections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "present"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "present": {"type": "boolean"}
+            }
+          }
+        },
+        "exceptionsUsed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "authorized", "rationale"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "authorized": {"type": "boolean"},
+              "rationale": {"type": "string"}
+            }
+          }
+        },
+        "requiredActions": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

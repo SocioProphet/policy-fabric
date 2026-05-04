@@ -1,0 +1,87 @@
+{
+  "apiVersion": "policy.fabric.diff-hygiene/v0",
+  "kind": "DiffHygieneGateReport",
+  "metadata": {
+    "name": "agent-pr-blocked-vendored-env",
+    "repository": "SocioProphet/example-repo",
+    "pullRequest": "https://github.com/SocioProphet/example-repo/pull/327",
+    "issueRef": "https://github.com/SocioProphet/example-repo/issues/327",
+    "workOrderRef": "examples/agentic-pr-work-order.example.json",
+    "baseSha": "1111111111111111111111111111111111111111",
+    "headSha": "2222222222222222222222222222222222222222",
+    "generatedAt": "2026-05-04T17:25:00Z"
+  },
+  "spec": {
+    "lane": "pre-review",
+    "verdict": "block",
+    "changedFiles": {
+      "count": 1178,
+      "additions": 405894,
+      "deletions": 0,
+      "paths": [
+        "schemas/example.schema.json",
+        ".venv-tools/bin/python",
+        ".venv-tools/lib/python3.12/site-packages/example/__init__.py"
+      ]
+    },
+    "thresholds": {
+      "maxChangedFiles": 6,
+      "changedFileAllowance": 2,
+      "deniedPathPrefixes": [
+        ".venv/",
+        ".venv-tools/",
+        "venv/",
+        "env/",
+        "node_modules/",
+        ".mypy_cache/",
+        ".pytest_cache/",
+        "__pycache__/",
+        ".ruff_cache/",
+        ".tox/",
+        ".nox/",
+        ".cache/",
+        "dist/",
+        "build/",
+        "target/"
+      ],
+      "allowedPathPrefixes": [
+        "schemas/",
+        "docs/",
+        "examples/"
+      ]
+    },
+    "findings": [
+      {
+        "rule": "changed-file-count",
+        "severity": "block",
+        "message": "Changed-file count exceeds the issue-scoped allowance.",
+        "exceptionRequired": false
+      },
+      {
+        "rule": "denied-generated-paths",
+        "severity": "block",
+        "message": "The diff includes a vendored virtual environment under .venv-tools/.",
+        "paths": [
+          ".venv-tools/bin/python",
+          ".venv-tools/lib/python3.12/site-packages/example/__init__.py"
+        ],
+        "exceptionRequired": false
+      }
+    ],
+    "requiredPrSections": [
+      {"name": "summary", "present": true},
+      {"name": "changed-files", "present": false},
+      {"name": "validation", "present": true},
+      {"name": "known-gaps", "present": false},
+      {"name": "self-critique", "present": false},
+      {"name": "linked-issue", "present": true},
+      {"name": "policy-evidence", "present": false}
+    ],
+    "exceptionsUsed": [],
+    "requiredActions": [
+      "Remove the committed virtual environment and regenerate the PR from a clean worktree.",
+      "Reduce the changed-file set to the issue-scoped expected files before semantic review.",
+      "Do not allow reviewer approval to override this blocker."
+    ]
+  }
+}
