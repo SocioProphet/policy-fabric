@@ -1,0 +1,15 @@
+{
+  "decisionFamily": "browser_event_export",
+  "decisionId": "urn:srcos:policy-decision:ops-history-browser-event-export-demo-0001",
+  "specVersion": "0.1.0",
+  "input": {
+    "bearHistoryEventRef": "urn:srcos:bearhistory-event:agent-runtime-navigation-0001",
+    "profileClass": "agent-runtime",
+    "payloadMode": "metadata-only",
+    "credentialMaterialIncluded": false,
+    "cookieMaterialIncluded": false
+  },
+  "outcome": "metadata-only",
+  "obligations": ["deny-human-profile-export", "deny-credentials", "deny-cookies", "preserve-profile-boundary"],
+  "evidenceRefs": ["urn:srcos:evidence:ops-history-browser-event-export-demo-0001"]
+}
