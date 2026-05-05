@@ -1,0 +1,14 @@
+{
+  "decisionFamily": "export_artifact",
+  "decisionId": "urn:srcos:policy-decision:ops-history-export-artifact-demo-0001",
+  "specVersion": "0.1.0",
+  "input": {
+    "artifactRef": "urn:srcos:artifact-ref:agentplane-context-intake-demo-0001",
+    "requestingActorRef": "urn:srcos:agent:codex-demo",
+    "payloadMode": "ref-only",
+    "targetScope": "urn:srcos:workroom:professional-intelligence-demo"
+  },
+  "outcome": "ref-only",
+  "obligations": ["no-inline-artifact-payload", "preserve-content-hash", "require-audit-ref"],
+  "evidenceRefs": ["urn:srcos:evidence:ops-history-export-artifact-demo-0001"]
+}
