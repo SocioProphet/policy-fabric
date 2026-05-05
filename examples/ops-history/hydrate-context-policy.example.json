@@ -1,0 +1,15 @@
+{
+  "decisionFamily": "hydrate_context",
+  "decisionId": "urn:srcos:policy-decision:ops-history-hydrate-context-demo-0001",
+  "specVersion": "0.1.0",
+  "input": {
+    "contextPackRef": "urn:srcos:context-pack:ops-history-demo-0001",
+    "requestingAgentRef": "urn:srcos:agent:codex-demo",
+    "agentRegistryRef": "urn:srcos:agent-registry-grant:codex-demo-read-summary",
+    "scope": "urn:srcos:workroom:professional-intelligence-demo",
+    "requestedPayloadMode": "summary"
+  },
+  "outcome": "summary-only",
+  "obligations": ["no-raw-transcript", "preserve-source-event-refs", "honor-redaction-refs"],
+  "evidenceRefs": ["urn:srcos:evidence:ops-history-hydrate-context-demo-0001"]
+}
