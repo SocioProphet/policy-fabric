@@ -1,6 +1,6 @@
-.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate
+.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate ops-history-policy-validate
 
-validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate
+validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate ops-history-policy-validate
 	@echo "OK: validate"
 
 operations-decision-smoke:
@@ -13,3 +13,6 @@ operations-decision-api-smoke:
 
 product-suite-policy-validate:
 	python3 tools/validate_product_suite_policy.py
+
+ops-history-policy-validate:
+	python3 tools/validate_ops_history_policy_examples.py
