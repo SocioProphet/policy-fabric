@@ -1,0 +1,23 @@
+{
+  "decisionFamily": "replicate_event",
+  "decisionId": "urn:srcos:policy-decision:ops-history-replicate-event-demo-0001",
+  "specVersion": "0.1.0",
+  "input": {
+    "eventRef": "urn:srcos:ops-history-event:demo-agentterm-0001",
+    "eventClass": "agent.handoff",
+    "sourcePlane": "agent-term",
+    "payloadMode": "summary",
+    "targetScope": "urn:srcos:workroom:professional-intelligence-demo",
+    "actorRef": "urn:srcos:agent:codex-demo",
+    "agentRegistryRef": "urn:srcos:agent-registry-grant:codex-demo-read-summary"
+  },
+  "outcome": "summary-only",
+  "obligations": [
+    "preserve-policy-decision-ref",
+    "preserve-agent-registry-ref",
+    "deny-raw-sensitive-payloads"
+  ],
+  "evidenceRefs": [
+    "urn:srcos:evidence:ops-history-replicate-event-demo-0001"
+  ]
+}
