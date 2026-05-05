@@ -1,0 +1,22 @@
+{
+  "decisionFamily": "redact_event",
+  "decisionId": "urn:srcos:policy-decision:ops-history-redact-event-demo-0001",
+  "specVersion": "0.1.0",
+  "input": {
+    "tombstoneRef": "urn:srcos:redaction-tombstone:demo-credential-boundary-0001",
+    "targetRefs": [
+      "urn:srcos:ops-history-event:demo-agentterm-0001",
+      "urn:srcos:context-pack:ops-history-demo-0001"
+    ],
+    "reasonClass": "sensitive-context",
+    "priority": "critical"
+  },
+  "outcome": "redaction-required",
+  "obligations": [
+    "invalidate-context-packs",
+    "invalidate-memory-writebacks",
+    "invalidate-artifact-exports",
+    "notify-affected-agents"
+  ],
+  "evidenceRefs": ["urn:srcos:evidence:ops-history-redact-event-demo-0001"]
+}
