@@ -1,0 +1,14 @@
+{
+  "decisionFamily": "receipt_event_export",
+  "decisionId": "urn:srcos:policy-decision:ops-history-receipt-event-export-demo-0001",
+  "specVersion": "0.1.0",
+  "input": {
+    "receiptEventRef": "urn:srcos:shell-receipt-event:command-request-demo-0001",
+    "payloadMode": "metadata-only",
+    "contentCaptureEnabled": false,
+    "targetScope": "urn:srcos:workroom:professional-intelligence-demo"
+  },
+  "outcome": "metadata-only",
+  "obligations": ["content-capture-disabled", "preserve-evidence-ref", "deny-inline-result-material"],
+  "evidenceRefs": ["urn:srcos:evidence:ops-history-receipt-event-export-demo-0001"]
+}
