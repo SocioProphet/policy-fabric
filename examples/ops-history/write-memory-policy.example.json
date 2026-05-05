@@ -1,0 +1,14 @@
+{
+  "decisionFamily": "write_memory",
+  "decisionId": "urn:srcos:policy-decision:ops-history-write-memory-demo-0001",
+  "specVersion": "0.1.0",
+  "input": {
+    "contextPackRef": "urn:srcos:context-pack:ops-history-demo-0001",
+    "memoryMeshRef": "urn:srcos:memory-mesh:context-pack-demo-0001",
+    "mode": "dry-run",
+    "requestedRetention": "ephemeral"
+  },
+  "outcome": "deny-writeback",
+  "obligations": ["dry-run-no-writeback", "preserve-context-pack-ref", "emit-decision-ref"],
+  "evidenceRefs": ["urn:srcos:evidence:ops-history-write-memory-demo-0001"]
+}
