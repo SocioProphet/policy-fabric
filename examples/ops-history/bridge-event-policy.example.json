@@ -1,0 +1,15 @@
+{
+  "decisionFamily": "bridge_event",
+  "decisionId": "urn:srcos:policy-decision:ops-history-bridge-event-demo-0001",
+  "specVersion": "0.1.0",
+  "input": {
+    "eventRef": "urn:srcos:ops-history-event:demo-agentterm-0001",
+    "sourceSubstrate": "matrix",
+    "targetBridge": "github",
+    "targetTrustDomain": "urn:srcos:trust-domain:public-repo",
+    "payloadMode": "summary"
+  },
+  "outcome": "ref-only",
+  "obligations": ["strip-nonpublic-content", "preserve-event-ref", "preserve-policy-decision-ref"],
+  "evidenceRefs": ["urn:srcos:evidence:ops-history-bridge-event-demo-0001"]
+}
