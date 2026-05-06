@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.io/schemas/policy-fabric/agent-harness-policy-gate-decision-v0.schema.json",
+  "title": "Agent Harness Policy Gate Decision v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "const": "policy.fabric.agent-harness/v0" },
+    "kind": { "const": "AgentHarnessPolicyGateDecision" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "repository", "generatedAt", "subjectRef"],
+      "properties": {
+        "name": { "type": "string" },
+        "repository": { "type": "string" },
+        "generatedAt": { "type": "string" },
+        "subjectRef": { "type": "string" },
+        "agentplaneRunRef": { "type": "string" },
+        "deliveryExcellenceRef": { "type": "string" }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gateType", "decision", "riskTier", "checks", "evidenceRefs", "requiredActions"],
+      "properties": {
+        "gateType": {
+          "type": "string",
+          "enum": [
+            "outcome-admission",
+            "plan-graph-review",
+            "graph-admission",
+            "run-admission",
+            "tool-grant",
+            "skill-grant",
+            "mcp-grant",
+            "browser-action",
+            "terminal-action",
+            "memory",
+            "judge",
+            "human-control",
+            "promotion"
+          ]
+        },
+        "decision": { "type": "string", "enum": ["allow", "warn", "block", "needs-human-review"] },
+        "riskTier": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+        "controlledAction": { "type": "string" },
+        "policyRefs": { "type": "array", "items": { "type": "string" } },
+        "grantRefs": { "type": "array", "items": { "type": "string" } },
+        "scopeRefs": { "type": "array", "items": { "type": "string" } },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "status", "message"],
+            "properties": {
+              "name": { "type": "string" },
+              "status": { "type": "string", "enum": ["pass", "warn", "fail", "not-applicable"] },
+              "message": { "type": "string" },
+              "evidenceRef": { "type": "string" }
+            }
+          }
+        },
+        "humanControlRequired": { "type": "boolean" },
+        "scopeDRiskRef": { "type": "string" },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+        "deliveryMetricRefs": { "type": "array", "items": { "type": "string" } },
+        "requiredActions": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}
