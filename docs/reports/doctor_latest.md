@@ -36,12 +36,21 @@ Overall status: PASS
 - [OK] exists:scripts/agentplane_probe.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/branch_audit.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/github_publish_prep.py — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:contracts/operation_plane_policy_gate_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/operation_plane_policy_gate_record_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/operation_plane_policy_eval_request_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/operation_plane_policy_eval_response_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:docs/specs/operation_plane_policy_gate_v1.md — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:scripts/validate_operation_plane_policy_gate.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] validate:policy-example — PFD010_SCHEMA_OK — policy example validates against policy schema
 - [OK] validate:plan-example — PFD010_SCHEMA_OK — compiled plan validates against plan schema
 - [OK] validate:release-pack-example — PFD010_SCHEMA_OK — release pack example validates against release pack schema
 - [OK] validate:capability-catalog-example — PFD010_SCHEMA_OK — capability catalog example validates against capability catalog schema
 - [OK] validate:validation-report-example — PFD010_SCHEMA_OK — validation report example validates against validation report schema
 - [OK] validate:replay-report-example — PFD010_SCHEMA_OK — replay report example validates against replay report schema
+- [OK] validate:operation-plane-gate-record-example — PFD010_SCHEMA_OK — operation plane gate record example validates against gate schema
+- [OK] validate:operation-plane-eval-request-example — PFD010_SCHEMA_OK — operation plane eval request example validates against gate schema
+- [OK] validate:operation-plane-eval-response-example — PFD010_SCHEMA_OK — operation plane eval response example validates against gate schema
 - [OK] parse:openapi — PFD020_OPENAPI_OK — openapi parses and contains expected core surfaces
 - [OK] ownership:managed-sync — PFD030_OWNERSHIP_SYNC_OK — config managed paths match ownership contract
 - [OK] ownership:generated-sync — PFD030_OWNERSHIP_SYNC_OK — config generated paths match ownership contract

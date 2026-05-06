@@ -1,9 +1,9 @@
 # Reconcile Report
 
-Generated at: `2026-04-09T03:09:05.095859Z`
+Generated at: `2026-05-06T19:16:55.198117Z`
 
-Current HEAD: `36b6e6b`
+Current HEAD: `0887aae`
 
 Dirty working tree: `yes`
 
-Tracked file count in manifest: `178`
+Tracked file count in manifest: `254`

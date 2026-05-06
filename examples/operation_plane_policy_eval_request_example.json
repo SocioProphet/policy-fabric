@@ -1,0 +1,31 @@
+{
+  "kind": "PolicyEvaluationRequest",
+  "schema_version": "v1",
+  "request_id": "polreq-admit-artifact-0001",
+  "requested_at": "2026-05-06T18:59:55Z",
+  "command": "AdmitArtifact",
+  "actor": {
+    "id": "user:jsmith@acme.corp",
+    "type": "user",
+    "display_name": "Jane Smith"
+  },
+  "workspace_id": "ws-acme-prod-001",
+  "tenant_id": "tenant-acme-corp",
+  "operation_id": "op-admit-20260506-001",
+  "artifact_ref": "artifact://workspace/ws-acme-prod-001/uploads/analysis-notebook-v3.ipynb",
+  "artifact_metadata": {
+    "filename": "analysis-notebook-v3.ipynb",
+    "content_type": "application/x-ipynb+json",
+    "size_bytes": 482304,
+    "checksum_sha256": "a3f2bc1e4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1",
+    "uploaded_by": "user:jsmith@acme.corp",
+    "upload_source": "browser-upload"
+  },
+  "trust_boundary_refs": [],
+  "context": {
+    "environment": "prod",
+    "region": "us-east-1",
+    "purpose": "data-analysis",
+    "source": "workspace-ui"
+  }
+}

@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-05-06T19:10:05.729570Z",
+    "generatedAt": "2026-05-06T19:17:04.143992Z",
     "generator": "policy-fabric-doctor/0.5.0",
-    "runId": "doctor-2026-05-06T19:10:05.729570Z"
+    "runId": "doctor-2026-05-06T19:17:04.143992Z"
   },
   "subject": {
     "type": "releasePack",
@@ -13,7 +13,7 @@
   },
   "summary": {
     "status": "pass",
-    "checkCount": 89,
+    "checkCount": 98,
     "failCount": 0,
     "warnCount": 0
   },
@@ -291,6 +291,54 @@
       "artifactRef": "scripts/github_publish_prep.py"
     },
     {
+      "id": "exists:contracts/operation_plane_policy_gate_v1.schema.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "contracts/operation_plane_policy_gate_v1.schema.json"
+    },
+    {
+      "id": "exists:examples/operation_plane_policy_gate_record_example.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "examples/operation_plane_policy_gate_record_example.json"
+    },
+    {
+      "id": "exists:examples/operation_plane_policy_eval_request_example.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "examples/operation_plane_policy_eval_request_example.json"
+    },
+    {
+      "id": "exists:examples/operation_plane_policy_eval_response_example.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "examples/operation_plane_policy_eval_response_example.json"
+    },
+    {
+      "id": "exists:docs/specs/operation_plane_policy_gate_v1.md",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "docs/specs/operation_plane_policy_gate_v1.md"
+    },
+    {
+      "id": "exists:scripts/validate_operation_plane_policy_gate.py",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "scripts/validate_operation_plane_policy_gate.py"
+    },
+    {
       "id": "validate:policy-example",
       "status": "pass",
       "severity": "info",
@@ -337,6 +385,30 @@
       "code": "PFD010_SCHEMA_OK",
       "message": "replay report example validates against replay report schema",
       "artifactRef": "examples/policy_fabric_replay_report_example.json"
+    },
+    {
+      "id": "validate:operation-plane-gate-record-example",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD010_SCHEMA_OK",
+      "message": "operation plane gate record example validates against gate schema",
+      "artifactRef": "examples/operation_plane_policy_gate_record_example.json"
+    },
+    {
+      "id": "validate:operation-plane-eval-request-example",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD010_SCHEMA_OK",
+      "message": "operation plane eval request example validates against gate schema",
+      "artifactRef": "examples/operation_plane_policy_eval_request_example.json"
+    },
+    {
+      "id": "validate:operation-plane-eval-response-example",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD010_SCHEMA_OK",
+      "message": "operation plane eval response example validates against gate schema",
+      "artifactRef": "examples/operation_plane_policy_eval_response_example.json"
     },
     {
       "id": "parse:openapi",

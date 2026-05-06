@@ -710,7 +710,104 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '422':
           $ref: '#/components/responses/Unprocessable'
-components:
+  /v2/operations/gate/evaluate:
+    post:
+      operationId: evaluateOperationGate
+      summary: Evaluate a Policy Fabric gate for an Operation Plane command before execution.
+      description: >
+        The Operation Plane runtime calls this endpoint before executing any authorized command.
+        Policy logic must not be embedded in the caller. The response is actor-relative and
+        remediation-ready. UI components may render response fields but must not act as policy authority.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './operation_plane_policy_gate_v1.schema.json#/$defs/PolicyEvaluationRequest'
+            examples:
+              admit-artifact:
+                value:
+                  kind: PolicyEvaluationRequest
+                  schema_version: v1
+                  request_id: polreq-admit-artifact-0001
+                  requested_at: '2026-05-06T18:59:55Z'
+                  command: AdmitArtifact
+                  actor:
+                    id: 'user:jsmith@acme.corp'
+                    type: user
+                    display_name: Jane Smith
+                  workspace_id: ws-acme-prod-001
+                  tenant_id: tenant-acme-corp
+                  operation_id: op-admit-20260506-001
+                  artifact_ref: 'artifact://workspace/ws-acme-prod-001/uploads/analysis-notebook-v3.ipynb'
+                  artifact_metadata:
+                    filename: analysis-notebook-v3.ipynb
+                    content_type: application/x-ipynb+json
+                    size_bytes: 482304
+                  trust_boundary_refs: []
+                  context:
+                    environment: prod
+                    region: us-east-1
+      responses:
+        '200':
+          description: Policy evaluation response with authorization outcome and remediation options.
+          content:
+            application/json:
+              schema:
+                $ref: './operation_plane_policy_gate_v1.schema.json#/$defs/PolicyEvaluationResponse'
+              examples:
+                deny-secret-detected:
+                  value:
+                    kind: PolicyEvaluationResponse
+                    schema_version: v1
+                    response_id: polresp-admit-artifact-0001
+                    request_id: polreq-admit-artifact-0001
+                    evaluated_at: '2026-05-06T18:59:55Z'
+                    command: AdmitArtifact
+                    outcome: deny
+                    reason: 'security.secret_detected: The artifact contains detected secrets. Admission is blocked.'
+                    responsible_actor: user
+                    audit_required: true
+                    remediation_options:
+                      - actor: user
+                        action: remove_secret_and_resubmit
+                        description: Remove the detected secret, rotate it in your secrets manager, and resubmit.
+                        link_ref: 'https://docs.socioprophet.org/policy-fabric/remediation/secret-detected'
+                    gate_record_ids:
+                      - gate-admit-artifact-secret-0001
+                    policy_refs:
+                      - 'policy://policy-fabric/artifact-admission/secret-detection/v1'
+                    expires_at: null
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /v2/operations/gate/records/{gateId}:
+    get:
+      operationId: getOperationGateRecord
+      summary: Retrieve a persisted PolicyGateRecord by ID.
+      parameters:
+        - name: gateId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique gate record identifier returned by evaluate.
+      responses:
+        '200':
+          description: The requested PolicyGateRecord.
+          content:
+            application/json:
+              schema:
+                $ref: './operation_plane_policy_gate_v1.schema.json#/$defs/PolicyGateRecord'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '403':
+          $ref: '#/components/responses/Forbidden'
   responses:
     BadRequest:
       description: Malformed request.

@@ -2,8 +2,14 @@
 
 Overall status: PASS
 
-Check count: `89`; fails: `0`; warnings: `0`
+Check count: `98`; fails: `0`; warnings: `0`
 
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
@@ -44,6 +50,9 @@ Check count: `89`; fails: `0`; warnings: `0`
 - `PFD010_SCHEMA_OK` — pass — capability catalog example validates against capability catalog schema
 - `PFD010_SCHEMA_OK` — pass — validation report example validates against validation report schema
 - `PFD010_SCHEMA_OK` — pass — replay report example validates against replay report schema
+- `PFD010_SCHEMA_OK` — pass — operation plane gate record example validates against gate schema
+- `PFD010_SCHEMA_OK` — pass — operation plane eval request example validates against gate schema
+- `PFD010_SCHEMA_OK` — pass — operation plane eval response example validates against gate schema
 - `PFD020_OPENAPI_OK` — pass — openapi parses and contains expected core surfaces
 - `PFD030_OWNERSHIP_SYNC_OK` — pass — config managed paths match ownership contract
 - `PFD030_OWNERSHIP_SYNC_OK` — pass — config generated paths match ownership contract
