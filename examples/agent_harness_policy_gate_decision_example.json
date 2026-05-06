@@ -1,0 +1,54 @@
+{
+  "apiVersion": "policy.fabric.agent-harness/v0",
+  "kind": "AgentHarnessPolicyGateDecision",
+  "metadata": {
+    "name": "agent-harness-browser-action-form-submit-review",
+    "repository": "SocioProphet/policy-fabric",
+    "generatedAt": "2026-05-05T00:00:00Z",
+    "subjectRef": "github://SourceOS-Linux/BearBrowser/pull/22",
+    "agentplaneRunRef": "github://SocioProphet/agentplane/pull/107",
+    "deliveryExcellenceRef": "github://SocioProphet/delivery-excellence-automation/pull/7"
+  },
+  "spec": {
+    "gateType": "browser-action",
+    "decision": "needs-human-review",
+    "riskTier": "medium",
+    "controlledAction": "form-submit",
+    "policyRefs": [
+      "policyfabric://agent-harness/browser-action-gate"
+    ],
+    "grantRefs": [
+      "sourceos://bearbrowser/grant/form-submit-review-required"
+    ],
+    "scopeRefs": [
+      "sourceos://network-profile/customer-safe-demo"
+    ],
+    "checks": [
+      {
+        "name": "policy-ref-present",
+        "status": "pass",
+        "message": "Browser action has an explicit policy gate reference.",
+        "evidenceRef": "github://SocioProphet/policy-fabric/docs/specs/agent-harness-policy-gates.md"
+      },
+      {
+        "name": "human-review-required",
+        "status": "warn",
+        "message": "Form submission is externally mutating and requires human review unless pre-granted.",
+        "evidenceRef": "github://SourceOS-Linux/BearBrowser/pull/22"
+      }
+    ],
+    "humanControlRequired": true,
+    "scopeDRiskRef": "github://SocioProphet/SCOPE-D/pull/1",
+    "evidenceRefs": [
+      "github://SourceOS-Linux/BearBrowser/pull/22",
+      "github://SocioProphet/agentplane/pull/107"
+    ],
+    "deliveryMetricRefs": [
+      "github://SocioProphet/delivery-excellence-automation/pull/7"
+    ],
+    "requiredActions": [
+      "Record a HumanControlEvent before live form submission.",
+      "Attach BrowserActionReceipt and screenshot or DOM/action pointer to AgentPlane EvidencePack."
+    ]
+  }
+}
