@@ -1,0 +1,72 @@
+{
+  "repo": "SocioProphet/policy-fabric",
+  "domain": "policy",
+  "specVersion": "0.1.0",
+  "ownedSchemas": [
+    "PolicyDecision",
+    "PolicyBundle",
+    "PolicyPrecedence",
+    "PolicyReasonCode"
+  ],
+  "syncEngines": [
+    {
+      "engineId": "sourceos.sync.policy-fabric",
+      "collection": "policy",
+      "schemaVersion": "0.1.0",
+      "ownerRepo": "SocioProphet/policy-fabric",
+      "defaultEnabled": true,
+      "policyClass": "critical",
+      "encryptionScope": "org",
+      "mergeStrategy": "strongest_policy_wins",
+      "supportsTombstones": true,
+      "supportsRollback": true,
+      "supportsExport": true,
+      "dangerousFields": [
+        "policyBundles",
+        "policyPrecedence",
+        "authorityRefs",
+        "capabilityGrantRules"
+      ],
+      "auditEvents": [
+        "policy.decision.allow",
+        "policy.decision.deny",
+        "policy.decision.require_review",
+        "policy.decision.quarantine",
+        "policy.bundle.updated",
+        "policy.downgrade.denied"
+      ]
+    }
+  ],
+  "sourceChannels": [
+    "policy.evaluate",
+    "policy.explain",
+    "policy.bundle.apply"
+  ],
+  "policyClasses": [
+    "critical"
+  ],
+  "auditEvents": [
+    "policy.decision.allow",
+    "policy.decision.deny",
+    "policy.decision.require_review",
+    "policy.decision.quarantine",
+    "policy.bundle.updated",
+    "policy.downgrade.denied"
+  ],
+  "dangerousSurfaces": [
+    "policy.bundle.update",
+    "policy.precedence.update",
+    "agent.lease.grant",
+    "model.route.update",
+    "shell.profile.apply",
+    "memory.promote",
+    "browser.bridge.agent",
+    "secret.lease.issue",
+    "sync.collection.wipe"
+  ],
+  "authorityRepos": [
+    "SourceOS-Linux/sourceos-spec",
+    "SocioProphet/guardrail-fabric"
+  ],
+  "notes": "Policy authority for SourceOS/SociOS local-first agentic graph sync, SourceChannel decisions, memory promotion, shell/browser/model gates, and agent capability leases."
+}
