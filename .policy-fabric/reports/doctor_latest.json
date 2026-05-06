@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-04-09T03:09:05.186819Z",
+    "generatedAt": "2026-05-06T19:10:05.729570Z",
     "generator": "policy-fabric-doctor/0.5.0",
-    "runId": "doctor-2026-04-09T03:09:05.186819Z"
+    "runId": "doctor-2026-05-06T19:10:05.729570Z"
   },
   "subject": {
     "type": "releasePack",
@@ -13,7 +13,7 @@
   },
   "summary": {
     "status": "pass",
-    "checkCount": 85,
+    "checkCount": 89,
     "failCount": 0,
     "warnCount": 0
   },
@@ -563,11 +563,43 @@
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     },
     {
-      "id": "policy:selector-overlap-heuristics",
+      "id": "policy:selector-overlap-normalized",
       "status": "pass",
       "severity": "info",
       "code": "PFV010_SELECTOR_OVERLAP_OK",
-      "message": "no likely selector overlaps detected beyond exact identity checks",
+      "message": "no normalized-path selector equivalence detected",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:selector-overlap-prefix",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV010_SELECTOR_OVERLAP_OK",
+      "message": "no path-prefix selector overlap detected",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:selector-overlap-wildcard",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV010_SELECTOR_OVERLAP_OK",
+      "message": "no wildcard-shadow selector overlap detected",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:selector-overlap-regex-equivalence",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV010_SELECTOR_OVERLAP_OK",
+      "message": "no regex normalized-equivalence detected",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:selector-overlap-regex-shadow",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV010_SELECTOR_OVERLAP_OK",
+      "message": "no regex shadow-heuristic detected",
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     },
     {
@@ -598,8 +630,8 @@
       "id": "policy:negative-fixtures",
       "status": "pass",
       "severity": "info",
-      "code": "PFV016_NEGATIVE_FIXTURE_OK",
-      "message": "negative fixtures are well formed and reference known rules/selectors",
+      "code": "PFV017_NEGATIVE_FIXTURE_SEMANTICS_OK",
+      "message": "negative fixtures are well formed across failure and no-op semantics",
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     },
     {

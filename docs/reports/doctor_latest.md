@@ -70,11 +70,15 @@ Overall status: PASS
 - [OK] policy:provider-capability-authorization — PFV000_POLICY_SEMANTICS_OK — enabled rules use authorized provider and capability pairs within rollout scope
 - [OK] policy:reidentify-governance — PFV000_POLICY_SEMANTICS_OK — re-identification boundary rules are satisfied or no re-identification transforms are present
 - [OK] policy:selector-conflicts — PFV000_POLICY_SEMANTICS_OK — no enabled rules conflict on the same exact selector identity
-- [OK] policy:selector-overlap-heuristics — PFV010_SELECTOR_OVERLAP_OK — no likely selector overlaps detected beyond exact identity checks
+- [OK] policy:selector-overlap-normalized — PFV010_SELECTOR_OVERLAP_OK — no normalized-path selector equivalence detected
+- [OK] policy:selector-overlap-prefix — PFV010_SELECTOR_OVERLAP_OK — no path-prefix selector overlap detected
+- [OK] policy:selector-overlap-wildcard — PFV010_SELECTOR_OVERLAP_OK — no wildcard-shadow selector overlap detected
+- [OK] policy:selector-overlap-regex-equivalence — PFV010_SELECTOR_OVERLAP_OK — no regex normalized-equivalence detected
+- [OK] policy:selector-overlap-regex-shadow — PFV010_SELECTOR_OVERLAP_OK — no regex shadow-heuristic detected
 - [OK] policy:illegal-transform-chains — PFV000_POLICY_SEMANTICS_OK — no illegal exact-target transform chains were detected
 - [OK] policy:attestation-readiness — PFV000_POLICY_SEMANTICS_OK — compiled plan attestation fields are aligned to audit and explain requirements
 - [OK] policy:test-readiness — PFV000_POLICY_SEMANTICS_OK — policy fixtures cover approved-state minimums and attestation-aware assertions
-- [OK] policy:negative-fixtures — PFV016_NEGATIVE_FIXTURE_OK — negative fixtures are well formed and reference known rules/selectors
+- [OK] policy:negative-fixtures — PFV017_NEGATIVE_FIXTURE_SEMANTICS_OK — negative fixtures are well formed across failure and no-op semantics
 - [OK] agentplane-bridge:contract-shape — PFD090_AGENTPLANE_BRIDGE_OK — AgentPlane bridge contract targets official AgentPlane with a hybrid bridge model
 - [OK] agentplane-bridge:expected-findings — PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK — AgentPlane bridge contract records expected current-state findings
 - [OK] agentplane-probe:report-shape — PFD095_AGENTPLANE_PROBE_OK — AgentPlane probe report present with expected API version
