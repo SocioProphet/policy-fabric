@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/policy-fabric/policy_fabric_break_glass_override_v1.schema.json",
+  "title": "Policy Fabric Break Glass Override v1",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec", "status"],
+  "properties": {
+    "apiVersion": { "const": "policy.fabric.break-glass/v1" },
+    "kind": { "const": "BreakGlassOverride" },
+    "metadata": {
+      "type": "object",
+      "required": ["overrideId", "createdAt", "expiresAt"],
+      "properties": {
+        "overrideId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "relatedPolicyDecisionId": { "type": ["string", "null"] },
+        "relatedStopGateId": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "required": ["approver", "scope", "actionClass", "resource", "reason", "auditRef", "constraints"],
+      "properties": {
+        "approver": {
+          "type": "object",
+          "required": ["id", "type"],
+          "properties": {
+            "id": { "type": "string" },
+            "type": { "enum": ["human", "service-account"] },
+            "displayName": { "type": ["string", "null"] }
+          },
+          "additionalProperties": false
+        },
+        "scope": { "enum": ["enterprise", "organization", "repository", "local", "user", "runtime"] },
+        "actionClass": { "enum": ["shell", "filesystem", "git", "network", "model", "browser", "infra", "database", "package", "runtime", "unknown"] },
+        "resource": { "type": "string" },
+        "reason": { "type": "string", "minLength": 1 },
+        "auditRef": { "type": "string", "minLength": 1 },
+        "constraints": {
+          "type": "object",
+          "required": ["singleUse", "maxUses", "allowedCommands", "allowedPaths", "allowedProviders"],
+          "properties": {
+            "singleUse": { "type": "boolean" },
+            "maxUses": { "type": "integer", "minimum": 1 },
+            "allowedCommands": { "type": "array", "items": { "type": "string" } },
+            "allowedPaths": { "type": "array", "items": { "type": "string" } },
+            "allowedProviders": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
+        },
+        "signature": {
+          "type": ["object", "null"],
+          "properties": {
+            "scheme": { "type": "string" },
+            "keyRef": { "type": "string" },
+            "signature": { "type": "string" }
+          },
+          "required": ["scheme", "keyRef", "signature"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "type": "object",
+      "required": ["state", "usedCount"],
+      "properties": {
+        "state": { "enum": ["active", "expired", "revoked", "consumed", "invalid"] },
+        "usedCount": { "type": "integer", "minimum": 0 },
+        "lastUsedAt": { "type": ["string", "null"], "format": "date-time" },
+        "revokedAt": { "type": ["string", "null"], "format": "date-time" },
+        "revocationReason": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
