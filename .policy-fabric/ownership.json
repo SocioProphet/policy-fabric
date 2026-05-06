@@ -43,7 +43,8 @@
     "dist/**",
     "REPO_MANIFEST.json",
     ".agentplane/workflows/**",
-    ".agentplane/.upgrade/**"
+    ".agentplane/.upgrade/**",
+    ".sourceos/**"
   ],
   "localOverridePaths": [
     ".policy-fabric/local-notes/**",
