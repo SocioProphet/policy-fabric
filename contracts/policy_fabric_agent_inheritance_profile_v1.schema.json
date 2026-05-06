@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/policy-fabric/policy_fabric_agent_inheritance_profile_v1.schema.json",
+  "title": "Policy Fabric Agent Inheritance Profile v1",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "const": "policy.fabric.agent-inheritance/v1" },
+    "kind": { "const": "AgentPolicyInheritanceProfile" },
+    "metadata": {
+      "type": "object",
+      "required": ["name", "createdAt", "version"],
+      "properties": {
+        "name": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "version": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "required": ["scopePrecedence", "conflictResolution", "layers", "breakGlass"],
+      "properties": {
+        "scopePrecedence": {
+          "type": "array",
+          "items": { "enum": ["enterprise", "organization", "repository", "local", "user", "runtime"] },
+          "minItems": 1
+        },
+        "conflictResolution": { "enum": ["stricter-wins", "higher-scope-wins", "deny-wins"] },
+        "layers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["scope", "policyRef", "canTighten", "canWeakenHigherScope"],
+            "properties": {
+              "scope": { "enum": ["enterprise", "organization", "repository", "local", "user", "runtime"] },
+              "policyRef": { "type": "string" },
+              "profileRef": { "type": ["string", "null"] },
+              "canTighten": { "type": "boolean" },
+              "canWeakenHigherScope": { "type": "boolean" },
+              "forceEnabledPolicies": { "type": "array", "items": { "type": "string" } },
+              "forceDeniedActions": { "type": "array", "items": { "type": "string" } },
+              "requiresAudit": { "type": "boolean" },
+              "failClosed": { "type": "boolean" },
+              "providerAllowlist": { "type": "array", "items": { "type": "string" } },
+              "toolAllowlist": { "type": "array", "items": { "type": "string" } }
+            },
+            "additionalProperties": false
+          }
+        },
+        "breakGlass": {
+          "type": "object",
+          "required": ["allowed", "requiresHumanApprover", "requiresExpiry", "requiresReason", "requiresAuditRef"],
+          "properties": {
+            "allowed": { "type": "boolean" },
+            "requiresHumanApprover": { "type": "boolean" },
+            "requiresExpiry": { "type": "boolean" },
+            "requiresReason": { "type": "boolean" },
+            "requiresAuditRef": { "type": "boolean" },
+            "maxDurationMinutes": { "type": "integer", "minimum": 1 },
+            "allowedActionClasses": {
+              "type": "array",
+              "items": { "enum": ["shell", "filesystem", "git", "network", "model", "browser", "infra", "database", "package", "runtime", "unknown"] }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,44 @@
+{
+  "apiVersion": "policy.fabric.break-glass/v1",
+  "kind": "BreakGlassOverride",
+  "metadata": {
+    "overrideId": "urn:srcos:override:example-break-glass",
+    "createdAt": "2026-05-06T00:00:00Z",
+    "expiresAt": "2026-05-06T00:30:00Z",
+    "relatedPolicyDecisionId": "decision-123",
+    "relatedStopGateId": "sourceos.default.agent-completion"
+  },
+  "spec": {
+    "approver": {
+      "id": "human:mdheller",
+      "type": "human",
+      "displayName": "mdheller"
+    },
+    "scope": "repository",
+    "actionClass": "git",
+    "resource": "SocioProphet/agentplane:work/example-break-glass",
+    "reason": "Temporarily waive a stop-gate failure after human review of branch and PR evidence.",
+    "auditRef": "urn:srcos:audit:break-glass:example-break-glass",
+    "constraints": {
+      "singleUse": true,
+      "maxUses": 1,
+      "allowedCommands": [
+        "git push origin work/example-break-glass"
+      ],
+      "allowedPaths": [],
+      "allowedProviders": []
+    },
+    "signature": {
+      "scheme": "sourceos-dev-placeholder-v0",
+      "keyRef": "did:example:mdheller#agent-approval-key",
+      "signature": "placeholder-signature-for-schema-validation"
+    }
+  },
+  "status": {
+    "state": "active",
+    "usedCount": 0,
+    "lastUsedAt": null,
+    "revokedAt": null,
+    "revocationReason": null
+  }
+}

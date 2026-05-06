@@ -1,6 +1,6 @@
-.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate
+.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate
 
-validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate
+validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate
 	@echo "OK: validate"
 
 operations-decision-smoke:
@@ -31,3 +31,6 @@ lattice-runtime-promotion-policy-validate:
 
 diff-hygiene-gate-validate:
 	python3 tools/validate_diff_hygiene_gate.py
+
+agent-reliability-overrides-validate:
+	python3 tools/validate_agent_reliability_overrides.py

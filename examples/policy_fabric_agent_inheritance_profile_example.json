@@ -1,0 +1,125 @@
+{
+  "apiVersion": "policy.fabric.agent-inheritance/v1",
+  "kind": "AgentPolicyInheritanceProfile",
+  "metadata": {
+    "name": "sourceos-agent-reliability-default",
+    "createdAt": "2026-05-06T00:00:00Z",
+    "version": "0.1.0",
+    "description": "Default SourceOS Agent Reliability policy inheritance profile."
+  },
+  "spec": {
+    "scopePrecedence": [
+      "enterprise",
+      "organization",
+      "repository",
+      "local",
+      "user",
+      "runtime"
+    ],
+    "conflictResolution": "stricter-wins",
+    "layers": [
+      {
+        "scope": "enterprise",
+        "policyRef": "policyfabric/enterprise/sourceos-agent-reliability@0.1.0",
+        "profileRef": "enterprise-default",
+        "canTighten": true,
+        "canWeakenHigherScope": false,
+        "forceEnabledPolicies": [
+          "sourceos/anti-tamper/block-evidence-mutation",
+          "sourceos/secrets/block-secret-file-access",
+          "sourceos/git/block-protected-branch-mutation"
+        ],
+        "forceDeniedActions": [
+          "infra.production.mutation",
+          "policy.self-disable",
+          "evidence.delete"
+        ],
+        "requiresAudit": true,
+        "failClosed": true,
+        "providerAllowlist": [
+          "local",
+          "openai",
+          "anthropic"
+        ],
+        "toolAllowlist": [
+          "Bash",
+          "Read",
+          "Write",
+          "Edit",
+          "MultiEdit"
+        ]
+      },
+      {
+        "scope": "repository",
+        "policyRef": "project/sourceos-agent-reliability/repo-default@0.1.0",
+        "profileRef": "repo-default",
+        "canTighten": true,
+        "canWeakenHigherScope": false,
+        "forceEnabledPolicies": [
+          "sourceos/package/block-publish",
+          "sourceos/infra/escalate-mutation"
+        ],
+        "forceDeniedActions": [
+          "direct-main-commit",
+          "force-push"
+        ],
+        "requiresAudit": true,
+        "failClosed": true,
+        "providerAllowlist": [
+          "local",
+          "openai",
+          "anthropic"
+        ],
+        "toolAllowlist": [
+          "Bash",
+          "Read",
+          "Write",
+          "Edit",
+          "MultiEdit"
+        ]
+      },
+      {
+        "scope": "runtime",
+        "policyRef": "agentplane/default-stop-gates@0.1.0",
+        "profileRef": "agentplane-guarded-workcell",
+        "canTighten": true,
+        "canWeakenHigherScope": false,
+        "forceEnabledPolicies": [
+          "agentplane/stop-gate/branch-pushed",
+          "agentplane/stop-gate/ci-green",
+          "agentplane/stop-gate/guardrail-clear"
+        ],
+        "forceDeniedActions": [
+          "claim-done-without-stop-gate"
+        ],
+        "requiresAudit": true,
+        "failClosed": true,
+        "providerAllowlist": [
+          "local",
+          "openai",
+          "anthropic"
+        ],
+        "toolAllowlist": [
+          "Bash",
+          "Read",
+          "Write",
+          "Edit",
+          "MultiEdit"
+        ]
+      }
+    ],
+    "breakGlass": {
+      "allowed": true,
+      "requiresHumanApprover": true,
+      "requiresExpiry": true,
+      "requiresReason": true,
+      "requiresAuditRef": true,
+      "maxDurationMinutes": 60,
+      "allowedActionClasses": [
+        "git",
+        "runtime",
+        "package"
+      ]
+    }
+  }
+}
