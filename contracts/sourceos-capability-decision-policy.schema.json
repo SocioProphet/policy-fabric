@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/policy-fabric/sourceos-capability-decision-policy.schema.json",
+  "title": "SourceOS Capability Decision Policy",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "policyId",
+    "status",
+    "owner",
+    "purpose",
+    "defaultDecision",
+    "serviceClasses",
+    "capabilityRules",
+    "telemetryRules",
+    "identityRules",
+    "launchRules",
+    "trustRules",
+    "eventRules",
+    "auditRules"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "policy-fabric.sourceos-capability-decision-policy.v1" },
+    "policyId": { "const": "sourceos.capability_decision.baseline" },
+    "status": { "type": "string", "enum": ["draft", "active", "deprecated"] },
+    "owner": { "type": "string", "minLength": 1 },
+    "purpose": { "type": "string", "minLength": 1 },
+    "defaultDecision": { "const": "deny" },
+    "serviceClasses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["serviceClass", "authorityDomain", "requiredCapabilities", "optionalCapabilities", "deniedCapabilities"],
+        "properties": {
+          "serviceClass": { "type": "string", "minLength": 1 },
+          "authorityDomain": { "type": "string", "enum": ["system", "user", "session", "app", "container", "sandbox", "compatibility", "agent", "developer"] },
+          "requiredCapabilities": { "type": "array", "items": { "type": "string" } },
+          "optionalCapabilities": { "type": "array", "items": { "type": "string" } },
+          "deniedCapabilities": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "emitsCanonicalEvents": { "type": "boolean" },
+          "requiresIncidentBundle": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "capabilityRules": {
+      "type": "object",
+      "required": ["allow", "deny", "requirePolicyTrace"],
+      "properties": {
+        "allow": { "type": "array", "items": { "$ref": "#/$defs/rule" } },
+        "deny": { "type": "array", "items": { "$ref": "#/$defs/rule" } },
+        "requirePolicyTrace": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "telemetryRules": {
+      "type": "object",
+      "required": ["remoteDefault", "localDefault", "requiresExplicitGrant", "canonicalEventRequired"],
+      "properties": {
+        "remoteDefault": { "const": "deny" },
+        "localDefault": { "type": "string", "enum": ["allow", "audit", "deny"] },
+        "requiresExplicitGrant": { "const": true },
+        "canonicalEventRequired": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "identityRules": {
+      "type": "object",
+      "required": ["upstreamProductIdentityLeak", "engineProvenanceAllowed", "productSurfaceIdentityRequired"],
+      "properties": {
+        "upstreamProductIdentityLeak": { "const": "deny" },
+        "engineProvenanceAllowed": { "const": true },
+        "productSurfaceIdentityRequired": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "launchRules": {
+      "type": "object",
+      "required": ["inheritUserShell", "duplicatePathEntries", "developerPathDefault", "manifestRequiredForApps"],
+      "properties": {
+        "inheritUserShell": { "const": "deny" },
+        "duplicatePathEntries": { "const": "deny" },
+        "developerPathDefault": { "type": "string", "enum": ["warn", "deny"] },
+        "manifestRequiredForApps": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "trustRules": {
+      "type": "object",
+      "required": ["defaultTrustMode", "silentRemoteTrustLookup", "networkLookupRequiresPolicy"],
+      "properties": {
+        "defaultTrustMode": { "const": "local_first" },
+        "silentRemoteTrustLookup": { "const": "deny" },
+        "networkLookupRequiresPolicy": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "eventRules": {
+      "type": "object",
+      "required": ["canonicalEventRequired", "operatorNarrativeRequired", "causalityRequired", "expectedDenialsSeverityMax"],
+      "properties": {
+        "canonicalEventRequired": { "const": true },
+        "operatorNarrativeRequired": { "const": true },
+        "causalityRequired": { "const": true },
+        "expectedDenialsSeverityMax": { "const": "notice" }
+      },
+      "additionalProperties": false
+    },
+    "auditRules": {
+      "type": "object",
+      "required": ["requireDecisionId", "requireExplanationCode", "requireActor", "requireSubject", "requireRetentionClass"],
+      "properties": {
+        "requireDecisionId": { "const": true },
+        "requireExplanationCode": { "const": true },
+        "requireActor": { "const": true },
+        "requireSubject": { "const": true },
+        "requireRetentionClass": { "const": true }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "required": ["capability", "serviceClass", "decision", "explanationCode"],
+      "properties": {
+        "capability": { "type": "string", "minLength": 1 },
+        "serviceClass": { "type": "string", "minLength": 1 },
+        "decision": { "type": "string", "enum": ["allow", "deny", "audit", "defer"] },
+        "explanationCode": { "type": "string", "pattern": "^[A-Z0-9_]+$" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
