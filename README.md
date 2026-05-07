@@ -39,6 +39,34 @@ Current state: active buildout, with official AgentPlane successfully integrated
 
 The repository is usable now, but the platform is still being shaped through semantic tranches. Expect active refinement of schemas, validator logic, examples, and release semantics.
 
+## SourceOS repo context policy
+
+Policy Fabric now carries the external policy contract for `sourceos.repo_context.read_only`, the policy profile used by Smart Tree / `sourceos-context` in the Lampstand, Sherlock, Memory Mesh, and AgentPlane integration lane.
+
+The contract, example, and validator live at:
+
+- `contracts/sourceos-repo-context-policy.schema.json`
+- `examples/sourceos/sourceos-repo-context-read-only.policy.json`
+- `tools/validate_sourceos_repo_context_policy.py`
+
+Validate locally:
+
+```bash
+python -m pip install jsonschema
+python tools/validate_sourceos_repo_context_policy.py
+```
+
+The policy preserves the required boundaries:
+
+- only bounded `~/dev/**` repo roots are allowed;
+- unbounded home, system, hidden-sensitive, and symlink traversal are denied;
+- Lampstand remains the desktop/local search authority;
+- raw content publication is denied;
+- Lampstand publishing requires an explicit flag;
+- Smart Tree native memory persistence is denied;
+- Memory Mesh remains the durable memory authority;
+- network callbacks and writes are denied by default.
+
 ## Repository map
 
 - `contracts/` — active machine-readable contracts and schemas

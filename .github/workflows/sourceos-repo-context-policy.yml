@@ -1,0 +1,32 @@
+name: sourceos-repo-context-policy
+
+on:
+  pull_request:
+    paths:
+      - "contracts/sourceos-repo-context-policy.schema.json"
+      - "examples/sourceos/sourceos-repo-context-read-only.policy.json"
+      - "tools/validate_sourceos_repo_context_policy.py"
+      - ".github/workflows/sourceos-repo-context-policy.yml"
+      - "README.md"
+  push:
+    branches:
+      - main
+    paths:
+      - "contracts/sourceos-repo-context-policy.schema.json"
+      - "examples/sourceos/sourceos-repo-context-read-only.policy.json"
+      - "tools/validate_sourceos_repo_context_policy.py"
+      - ".github/workflows/sourceos-repo-context-policy.yml"
+      - "README.md"
+
+jobs:
+  validate-sourceos-repo-context-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install validation dependency
+        run: python -m pip install jsonschema
+      - name: Validate SourceOS repo context policy
+        run: python tools/validate_sourceos_repo_context_policy.py

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "policy-fabric.sourceos-repo-context-policy.v1",
+  "policyId": "sourceos.repo_context.read_only",
+  "status": "active",
+  "owner": "sourceos-agent-infrastructure",
+  "purpose": "Constrain Smart Tree/sourceos-context usage to bounded, read-only repo context collection and governed local Lampstand record publication.",
+  "allowedRoots": ["~/dev/**"],
+  "allowedCapabilities": [
+    "repo.tree.read",
+    "repo.stats.read",
+    "repo.git_status.read",
+    "repo.security_scan.read",
+    "lampstand.project_root.consume",
+    "lampstand.search_record.publish.local",
+    "memory_mesh.promotion_packet.emit",
+    "sherlock.adapter_record_search.emit"
+  ],
+  "deniedCapabilities": [
+    "repo.write",
+    "hooks.install",
+    "hooks.modify",
+    "dashboard.expose",
+    "dashboard.network_bind",
+    "pty.spawn",
+    "memory.persist.native",
+    "network.callback",
+    "external.update_check",
+    "external.feedback_submit",
+    "desktop.search.bypass_lampstand",
+    "home.scan.unbounded",
+    "system.scan",
+    "symlink.follow"
+  ],
+  "pathRules": {
+    "defaultDecision": "deny",
+    "allow": ["~/dev/**"],
+    "deny": [
+      "/",
+      "/etc/**",
+      "/proc/**",
+      "/sys/**",
+      "/dev/**",
+      "/run/**",
+      "/tmp/**",
+      "~/.ssh/**",
+      "~/.gnupg/**",
+      "~/.aws/**",
+      "~/.config/**",
+      "~/Library/**",
+      "~/**"
+    ]
+  },
+  "scanRules": {
+    "respectGitignore": true,
+    "useDefaultIgnores": true,
+    "followSymlinks": false,
+    "hiddenFilesDefault": false,
+    "maxDepthDefault": 5,
+    "contentSearchRequiresExplicitQuery": true,
+    "snippetPublicationRequiresRedactionCheck": true,
+    "securityScanMode": "advisory"
+  },
+  "lampstandRules": {
+    "consumeProjectRoots": true,
+    "publishLocalRecords": true,
+    "publishRawContent": false,
+    "publishSnippetsDefault": false,
+    "publishRequiresExplicitFlag": true,
+    "desktopSearchAuthority": "lampstand",
+    "requiredRecordTypes": [
+      "RepoContextRecord",
+      "RepoStructureRecord",
+      "SymbolSearchRecord",
+      "SecuritySearchRecord",
+      "MemoryCandidateRecord"
+    ]
+  },
+  "memoryMeshRules": {
+    "nativeSmartTreeMemoryPersistence": false,
+    "emitCandidatesOnly": true,
+    "promotionRequiresMemoryMesh": true,
+    "promotionPacketModeDefault": "review_only"
+  },
+  "networkRules": {
+    "defaultDecision": "deny",
+    "allowedEndpoints": []
+  },
+  "writeRules": {
+    "defaultDecision": "deny",
+    "allowedOperations": [],
+    "escalationPath": "GitOps branch/patch/PR flow only after separate approval"
+  },
+  "auditRules": {
+    "requirePolicyDecisionTrace": true,
+    "requireToolProvenance": true,
+    "requireTimestamp": true,
+    "requireSourceRoot": true,
+    "redactAbsolutePathsWhenRequired": true
+  }
+}

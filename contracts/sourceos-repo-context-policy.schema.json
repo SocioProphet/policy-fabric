@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/policy-fabric/sourceos-repo-context-policy.schema.json",
+  "title": "SourceOS Repo Context Policy",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "policyId",
+    "status",
+    "owner",
+    "purpose",
+    "allowedRoots",
+    "allowedCapabilities",
+    "deniedCapabilities",
+    "pathRules",
+    "scanRules",
+    "lampstandRules",
+    "memoryMeshRules",
+    "networkRules",
+    "writeRules",
+    "auditRules"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "policy-fabric.sourceos-repo-context-policy.v1" },
+    "policyId": { "const": "sourceos.repo_context.read_only" },
+    "status": { "type": "string", "enum": ["draft", "active", "deprecated"] },
+    "owner": { "type": "string", "minLength": 1 },
+    "purpose": { "type": "string", "minLength": 1 },
+    "allowedRoots": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "allowedCapabilities": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "deniedCapabilities": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "pathRules": {
+      "type": "object",
+      "required": ["defaultDecision", "allow", "deny"],
+      "properties": {
+        "defaultDecision": { "const": "deny" },
+        "allow": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "deny": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      },
+      "additionalProperties": true
+    },
+    "scanRules": {
+      "type": "object",
+      "required": ["respectGitignore", "followSymlinks", "hiddenFilesDefault", "contentSearchRequiresExplicitQuery", "securityScanMode"],
+      "properties": {
+        "respectGitignore": { "const": true },
+        "followSymlinks": { "const": false },
+        "hiddenFilesDefault": { "const": false },
+        "contentSearchRequiresExplicitQuery": { "const": true },
+        "securityScanMode": { "const": "advisory" }
+      },
+      "additionalProperties": true
+    },
+    "lampstandRules": {
+      "type": "object",
+      "required": ["consumeProjectRoots", "publishLocalRecords", "publishRawContent", "publishRequiresExplicitFlag", "desktopSearchAuthority"],
+      "properties": {
+        "consumeProjectRoots": { "const": true },
+        "publishLocalRecords": { "const": true },
+        "publishRawContent": { "const": false },
+        "publishRequiresExplicitFlag": { "const": true },
+        "desktopSearchAuthority": { "const": "lampstand" }
+      },
+      "additionalProperties": true
+    },
+    "memoryMeshRules": {
+      "type": "object",
+      "required": ["nativeSmartTreeMemoryPersistence", "emitCandidatesOnly", "promotionRequiresMemoryMesh"],
+      "properties": {
+        "nativeSmartTreeMemoryPersistence": { "const": false },
+        "emitCandidatesOnly": { "const": true },
+        "promotionRequiresMemoryMesh": { "const": true }
+      },
+      "additionalProperties": true
+    },
+    "networkRules": {
+      "type": "object",
+      "required": ["defaultDecision", "allowedEndpoints"],
+      "properties": {
+        "defaultDecision": { "const": "deny" },
+        "allowedEndpoints": { "type": "array", "maxItems": 0 }
+      },
+      "additionalProperties": true
+    },
+    "writeRules": {
+      "type": "object",
+      "required": ["defaultDecision", "allowedOperations"],
+      "properties": {
+        "defaultDecision": { "const": "deny" },
+        "allowedOperations": { "type": "array", "maxItems": 0 }
+      },
+      "additionalProperties": true
+    },
+    "auditRules": {
+      "type": "object",
+      "required": ["requirePolicyDecisionTrace", "requireToolProvenance", "requireTimestamp", "requireSourceRoot"],
+      "properties": {
+        "requirePolicyDecisionTrace": { "const": true },
+        "requireToolProvenance": { "const": true },
+        "requireTimestamp": { "const": true },
+        "requireSourceRoot": { "const": true }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
