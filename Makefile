@@ -1,6 +1,6 @@
-.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke
+.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate
 
-validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke
+validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate
 	@echo "OK: validate"
 
 operations-decision-smoke:
@@ -37,3 +37,6 @@ agent-reliability-overrides-validate:
 
 prophet-understand-smoke:
 	python3 tools/smoke_prophet_understand_policy.py
+
+semantic-enterprise-policy-input-validate:
+	python3 tools/validate_semantic_enterprise_policy_input.py
