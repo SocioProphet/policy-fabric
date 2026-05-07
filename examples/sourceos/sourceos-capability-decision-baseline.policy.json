@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "policy-fabric.sourceos-capability-decision-policy.v1",
+  "policyId": "sourceos.capability_decision.baseline",
+  "status": "active",
+  "owner": "SocioProphet/PolicyFabric + SourceOS-Linux",
+  "purpose": "Baseline SourceOS capability-decision policy for canonical events, service manifests, product identity, launch hygiene, telemetry, and local-first trust posture.",
+  "defaultDecision": "deny",
+  "serviceClasses": [
+    {
+      "serviceClass": "sourceos.app.browser",
+      "authorityDomain": "app",
+      "requiredCapabilities": [
+        "browser.profile.read",
+        "browser.renderer.spawn",
+        "browser.gpu.spawn",
+        "network.client.web",
+        "diagnostics.local.incident",
+        "events.canonical.emit"
+      ],
+      "optionalCapabilities": [
+        "ai.inference.local",
+        "security.reputation.query",
+        "telemetry.emit.local",
+        "agent.browser.sidecar"
+      ],
+      "deniedCapabilities": [
+        "telemetry.emit.remote.default",
+        "ipc.lookup.cloud.sync.ambient",
+        "identity.product.upstream_leak",
+        "launch.inherit_user_shell"
+      ],
+      "emitsCanonicalEvents": true,
+      "requiresIncidentBundle": true
+    },
+    {
+      "serviceClass": "sourceos.developer.terminal",
+      "authorityDomain": "developer",
+      "requiredCapabilities": [
+        "developer.session.provenance",
+        "events.canonical.emit",
+        "diagnostics.local.incident"
+      ],
+      "optionalCapabilities": [
+        "developer.command.hash",
+        "developer.project_scope.enable",
+        "agent.local.dispatch"
+      ],
+      "deniedCapabilities": [
+        "telemetry.emit.remote.default",
+        "privilege.escalation.untraced",
+        "launch.inherit_user_shell.unbounded"
+      ],
+      "emitsCanonicalEvents": true,
+      "requiresIncidentBundle": true
+    }
+  ],
+  "capabilityRules": {
+    "allow": [
+      {
+        "capability": "events.canonical.emit",
+        "serviceClass": "sourceos.app.browser",
+        "decision": "allow",
+        "explanationCode": "CAPABILITY_ALLOWED_CANONICAL_EVENT_EMIT",
+        "notes": "Browser products must emit local canonical events for launch, policy decisions, and incidents."
+      },
+      {
+        "capability": "telemetry.emit.local",
+        "serviceClass": "sourceos.app.browser",
+        "decision": "audit",
+        "explanationCode": "CAPABILITY_AUDIT_LOCAL_TELEMETRY",
+        "notes": "Local telemetry is allowed only as local-first evidence and operator diagnostics."
+      },
+      {
+        "capability": "developer.session.provenance",
+        "serviceClass": "sourceos.developer.terminal",
+        "decision": "allow",
+        "explanationCode": "CAPABILITY_ALLOWED_DEVELOPER_SESSION_PROVENANCE",
+        "notes": "Developer terminal sessions need local provenance receipts."
+      }
+    ],
+    "deny": [
+      {
+        "capability": "telemetry.emit.remote.default",
+        "serviceClass": "sourceos.app.browser",
+        "decision": "deny",
+        "explanationCode": "CAPABILITY_DENIED_REMOTE_TELEMETRY_DEFAULT",
+        "notes": "Remote telemetry requires an explicit policy grant and user/operator consent."
+      },
+      {
+        "capability": "identity.product.upstream_leak",
+        "serviceClass": "sourceos.app.browser",
+        "decision": "deny",
+        "explanationCode": "CAPABILITY_DENIED_PRODUCT_IDENTITY_LEAK",
+        "notes": "Upstream engine names may appear only as provenance/source/license metadata, not product identity."
+      },
+      {
+        "capability": "launch.inherit_user_shell",
+        "serviceClass": "sourceos.app.browser",
+        "decision": "deny",
+        "explanationCode": "CAPABILITY_DENIED_INHERIT_USER_SHELL",
+        "notes": "Packaged apps must use hermetic launch manifests and must not inherit polluted user shells."
+      },
+      {
+        "capability": "privilege.escalation.untraced",
+        "serviceClass": "sourceos.developer.terminal",
+        "decision": "deny",
+        "explanationCode": "CAPABILITY_DENIED_UNTRACED_PRIVILEGE_ESCALATION",
+        "notes": "Privileged developer actions require receipts and actor/session attribution."
+      }
+    ],
+    "requirePolicyTrace": true
+  },
+  "telemetryRules": {
+    "remoteDefault": "deny",
+    "localDefault": "audit",
+    "requiresExplicitGrant": true,
+    "canonicalEventRequired": true
+  },
+  "identityRules": {
+    "upstreamProductIdentityLeak": "deny",
+    "engineProvenanceAllowed": true,
+    "productSurfaceIdentityRequired": true
+  },
+  "launchRules": {
+    "inheritUserShell": "deny",
+    "duplicatePathEntries": "deny",
+    "developerPathDefault": "warn",
+    "manifestRequiredForApps": true
+  },
+  "trustRules": {
+    "defaultTrustMode": "local_first",
+    "silentRemoteTrustLookup": "deny",
+    "networkLookupRequiresPolicy": true
+  },
+  "eventRules": {
+    "canonicalEventRequired": true,
+    "operatorNarrativeRequired": true,
+    "causalityRequired": true,
+    "expectedDenialsSeverityMax": "notice"
+  },
+  "auditRules": {
+    "requireDecisionId": true,
+    "requireExplanationCode": true,
+    "requireActor": true,
+    "requireSubject": true,
+    "requireRetentionClass": true
+  }
+}
