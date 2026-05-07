@@ -1,0 +1,62 @@
+{
+  "specVersion": "0.1.0",
+  "decisionSetId": "urn:srcos:policy-decision-set:ops-history-demo-0001",
+  "decisions": [
+    {
+      "decisionFamily": "replicate_event",
+      "decisionId": "urn:srcos:policy-decision:ops-history-replicate-event-demo-0001",
+      "outcome": "summary-only",
+      "inputRefs": ["urn:srcos:ops-history-event:demo-agentterm-0001"],
+      "obligations": ["preserve-policy-decision-ref", "deny-sensitive-payloads"]
+    },
+    {
+      "decisionFamily": "hydrate_context",
+      "decisionId": "urn:srcos:policy-decision:ops-history-hydrate-context-demo-0001",
+      "outcome": "summary-only",
+      "inputRefs": ["urn:srcos:context-pack:ops-history-demo-0001"],
+      "obligations": ["no-raw-transcript", "honor-redaction-refs"]
+    },
+    {
+      "decisionFamily": "write_memory",
+      "decisionId": "urn:srcos:policy-decision:ops-history-write-memory-demo-0001",
+      "outcome": "deny-writeback",
+      "inputRefs": ["urn:srcos:context-pack:ops-history-demo-0001"],
+      "obligations": ["dry-run-no-writeback"]
+    },
+    {
+      "decisionFamily": "redact_event",
+      "decisionId": "urn:srcos:policy-decision:ops-history-redact-event-demo-0001",
+      "outcome": "redaction-required",
+      "inputRefs": ["urn:srcos:redaction-tombstone:demo-credential-boundary-0001"],
+      "obligations": ["invalidate-context-packs", "invalidate-memory-writebacks", "notify-affected-agents"]
+    },
+    {
+      "decisionFamily": "bridge_event",
+      "decisionId": "urn:srcos:policy-decision:ops-history-bridge-event-demo-0001",
+      "outcome": "ref-only",
+      "inputRefs": ["urn:srcos:ops-history-event:demo-agentterm-0001"],
+      "obligations": ["strip-nonpublic-content", "preserve-event-ref"]
+    },
+    {
+      "decisionFamily": "export_artifact",
+      "decisionId": "urn:srcos:policy-decision:ops-history-export-artifact-demo-0001",
+      "outcome": "ref-only",
+      "inputRefs": ["urn:srcos:artifact-ref:agentplane-context-intake-demo-0001"],
+      "obligations": ["no-inline-artifact-payload", "preserve-content-hash"]
+    },
+    {
+      "decisionFamily": "browser_event_export",
+      "decisionId": "urn:srcos:policy-decision:ops-history-browser-event-export-demo-0001",
+      "outcome": "metadata-only",
+      "inputRefs": ["urn:srcos:bearhistory-event:agent-runtime-navigation-0001"],
+      "obligations": ["deny-human-profile-export", "deny-credentials", "deny-cookies"]
+    },
+    {
+      "decisionFamily": "receipt_event_export",
+      "decisionId": "urn:srcos:policy-decision:ops-history-receipt-event-export-demo-0001",
+      "outcome": "metadata-only",
+      "inputRefs": ["urn:srcos:shell-receipt-event:request-metadata-demo-0001"],
+      "obligations": ["content-capture-disabled", "deny-inline-result-material"]
+    }
+  ]
+}
