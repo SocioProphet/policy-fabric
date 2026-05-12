@@ -34,7 +34,9 @@
     "docs/SEMANTIC_VALIDATION.md",
     "examples/**",
     "policy_fabric/**",
+    "schemas/**",
     "scripts/**",
+    "tests/fixtures/**",
     "tools/**"
   ],
   "generatedPaths": [
@@ -69,6 +71,8 @@
     "contracts/**",
     "examples/**",
     "policy_fabric/**",
+    "schemas/**",
+    "tests/fixtures/**",
     "scripts/**",
     "tools/**",
     "docs/specs/**",
