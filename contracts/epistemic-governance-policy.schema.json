@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/policy-fabric/epistemic-governance-policy.schema.json",
+  "title": "Epistemic Governance Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "policyId",
+    "policyKind",
+    "status",
+    "owner",
+    "purpose",
+    "upstreamStandard",
+    "rules"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "policy-fabric.epistemic-governance-policy.v1" },
+    "policyId": { "type": "string", "pattern": "^epigov\\.[a-z0-9_.-]+$" },
+    "policyKind": {
+      "type": "string",
+      "enum": [
+        "intervention",
+        "profile_projection",
+        "retention",
+        "drift_freeze",
+        "claim_promotion"
+      ]
+    },
+    "status": { "type": "string", "enum": ["draft", "active", "deprecated"] },
+    "owner": { "type": "string", "minLength": 1 },
+    "purpose": { "type": "string", "minLength": 1 },
+    "upstreamStandard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "namespace"],
+      "properties": {
+        "name": { "const": "Epistemic Governance" },
+        "version": { "type": "string", "minLength": 1 },
+        "namespace": { "const": "standards/epistemic-governance" }
+      }
+    },
+    "rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "severityRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/severityRule" }
+        },
+        "projectionRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/projectionRule" }
+        },
+        "driftRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/driftRule" }
+        },
+        "promotionRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/promotionRule" }
+        },
+        "retentionRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/retentionRule" }
+        }
+      },
+      "anyOf": [
+        { "required": ["severityRules"] },
+        { "required": ["projectionRules"] },
+        { "required": ["driftRules"] },
+        { "required": ["promotionRules"] },
+        { "required": ["retentionRules"] }
+      ]
+    }
+  },
+  "$defs": {
+    "severity": { "type": "string", "enum": ["info", "warn", "block"] },
+    "policyEffect": {
+      "type": "string",
+      "enum": [
+        "log_only",
+        "show_repair",
+        "require_acknowledgement",
+        "pause_generation",
+        "pause_promotion",
+        "pause_publication",
+        "require_review"
+      ]
+    },
+    "severityRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ruleId", "severity", "requiredCounterTests", "defaultRepairs", "policyEffects"],
+      "properties": {
+        "ruleId": { "type": "string", "pattern": "^(LOGFALL|COGBIAS|TECHCLAIM)\\.[A-Z0-9_.-]+\\.V[0-9]+$" },
+        "severity": { "$ref": "#/$defs/severity" },
+        "threshold": { "type": "number", "minimum": 0, "maximum": 1 },
+        "requiredCounterTests": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^(CTEST|TTEST)\\.[A-Z0-9+_./-]+\\.V[0-9]+$" }
+        },
+        "defaultRepairs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "policyEffects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/policyEffect" },
+          "minItems": 1
+        },
+        "appealAllowed": { "type": "boolean", "default": true }
+      }
+    },
+    "projectionRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projectionScope", "allowedViewers", "minimumMeasurementQuality", "forbidPublicRanking", "requireTransitionReceipt"],
+      "properties": {
+        "projectionScope": { "type": "string", "enum": ["self_private", "coach_view", "team_aggregate", "mission_fit_limited", "institutional_review_limited"] },
+        "allowedViewers": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "minimumMeasurementQuality": { "type": "string", "enum": ["LOW", "LIMITED", "OK", "HIGH"] },
+        "forbidPublicRanking": { "const": true },
+        "requireTransitionReceipt": { "const": true },
+        "lowNBehavior": { "type": "string", "enum": ["self_private_only", "suppress_comparison", "enumerate_examples"] }
+      }
+    },
+    "driftRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["metric", "threshold", "window", "effect", "requiresSignedUpdate"],
+      "properties": {
+        "metric": { "type": "string", "minLength": 1 },
+        "threshold": { "type": "number", "minimum": 0 },
+        "window": { "type": "string", "minLength": 1 },
+        "effect": { "type": "string", "enum": ["alert", "freeze_threshold_change", "require_review"] },
+        "requiresSignedUpdate": { "const": true }
+      }
+    },
+    "promotionRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claimType", "requiredGates", "requiredEvidenceClasses", "requiresAuthority", "requiresAuditRecord"],
+      "properties": {
+        "claimType": { "type": "string", "minLength": 1 },
+        "requiredGates": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "requiredEvidenceClasses": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "requiresAuthority": { "const": true },
+        "requiresAuditRecord": { "const": true },
+        "appealAllowed": { "type": "boolean", "default": true }
+      }
+    },
+    "retentionRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["privacyTier", "rawTextRetention", "hashCommitmentRequired", "tombstoneRequired"],
+      "properties": {
+        "privacyTier": { "type": "string", "enum": ["public", "internal", "sensitive", "local_only", "hash_commitment_only", "redacted", "sealed"] },
+        "rawTextRetention": { "type": "string", "enum": ["retain", "redact", "encrypt", "hash_only", "local_only"] },
+        "hashCommitmentRequired": { "const": true },
+        "tombstoneRequired": { "type": "boolean" }
+      }
+    }
+  }
+}
