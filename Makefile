@@ -1,6 +1,6 @@
-.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate
+.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate policy-fabric-cancellation-binding-tier2-binding-ci
 
-validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate
+validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate policy-fabric-cancellation-binding-tier2-binding-ci
 	@echo "OK: validate"
 
 operations-decision-smoke:
@@ -46,3 +46,10 @@ ops-history-policy-validate:
 
 sourceos-capability-decision-policy-validate:
 	python3 tools/validate_sourceos_capability_decision_policy.py
+
+policy-fabric-cancellation-binding-tier2-binding-ci:
+	python3 -m json.tool schemas/composition/policy-fabric-cancellation-binding-tier2-binding.v1.json >/dev/null
+	python3 -m json.tool tests/fixtures/composition/policy-fabric-cancellation-binding-tier2-binding.synthetic.json >/dev/null
+	python3 -m json.tool tests/fixtures/composition/policy-fabric-cancellation-binding-tier2-binding.runtime-field.invalid.synthetic.json >/dev/null
+	python3 tools/check_policy_fabric_cancellation_binding_tier2_binding.py tests/fixtures/composition/policy-fabric-cancellation-binding-tier2-binding.synthetic.json
+	! python3 tools/check_policy_fabric_cancellation_binding_tier2_binding.py tests/fixtures/composition/policy-fabric-cancellation-binding-tier2-binding.runtime-field.invalid.synthetic.json
