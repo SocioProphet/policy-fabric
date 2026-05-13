@@ -1,0 +1,60 @@
+{
+  "composition_id": "policy_fabric.cancellation_binding",
+  "composition_kind": "cancellation_binding_composition",
+  "binding_doctrine_version": "v0.1",
+  "cancellation_binding_refs": [
+    {
+      "ref_kind": "cancellation_binding",
+      "ref_id": "cancel.binding.agentplane-execution-deny",
+      "opaque_hash": "sha256:c123456789abcdefc123456789abcdefc123456789abcdefc123456789abcdef"
+    }
+  ],
+  "cancellation_target_refs": [
+    {
+      "ref_kind": "cancellation_target",
+      "ref_id": "target.agentplane.execution.synthetic",
+      "opaque_hash": "sha256:d23456789abcdef1d23456789abcdef1d23456789abcdef1d23456789abcdef1"
+    }
+  ],
+  "cancellation_evidence_refs": [
+    {
+      "ref_kind": "cancellation_evidence",
+      "ref_id": "evidence.fail-closed-policy.synthetic",
+      "opaque_hash": "sha256:f456789abcdef123f456789abcdef123f456789abcdef123f456789abcdef123"
+    }
+  ],
+  "break_glass_authority_refs": [
+    {
+      "ref_kind": "break_glass_authority",
+      "ref_id": "breakglass.authority.synthetic",
+      "opaque_hash": "sha256:a56789abcdef1234a56789abcdef1234a56789abcdef1234a56789abcdef1234"
+    }
+  ],
+  "fail_closed_propagation_targets": [
+    {
+      "plane_id": "agentplane",
+      "target_id": "agentplane.execution.synthetic",
+      "opaque_hash": "sha256:b6789abcdef12345b6789abcdef12345b6789abcdef12345b6789abcdef12345"
+    }
+  ],
+  "bound_modes": {
+    "receipt_integration": "hash_bound_reference",
+    "authority_scope_analysis": "declared_scope_lattice_v1",
+    "non_claim_analysis": "explicit_propagate_or_resolve_v1",
+    "monitor_independence_analysis": "declared_monitor_independence_v1",
+    "evidence_freshness_analysis": "declared_evidence_freshness_v1"
+  },
+  "non_claims": [
+    "no_runtime_receipt_lookup",
+    "no_runtime_non_claim_verification",
+    "no_runtime_monitor_attestation",
+    "no_timestamp_authenticity",
+    "opaque_hashes_not_resolved",
+    "no_runtime_cancellation_execution",
+    "no_runtime_break_glass_resolution",
+    "no_cross_plane_cancellation_runtime_propagation",
+    "no_fail_closed_runtime_attestation",
+    "no_admission_decision_at_composition"
+  ],
+  "runtime_cancellation_execution": true
+}
