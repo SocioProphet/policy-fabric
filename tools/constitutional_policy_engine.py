@@ -42,7 +42,7 @@ class A5Result:
 class A7Result:
     passed: bool
     slope: float
-    p_value: float
+    nonincrease_indicator: float
 
 
 def as_native_json_dict(result: object) -> dict[str, object]:
@@ -165,6 +165,14 @@ def check_A5_rate_distortion(
 
 
 def check_A7_lyapunov(times: np.ndarray, lyapunov: np.ndarray, alpha: float = 0.05) -> A7Result:
+    """Check Lyapunov non-increase with a provisional indicator.
+
+    `nonincrease_indicator` is a placeholder threshold indicator, not a
+    statistical p-value. It returns 1.0 when the current provisional check sees
+    non-increase, else 0.0. Replace with an OLS regression t-statistic or
+    bootstrap significance calculation before treating A7 as a statistical
+    inference surface.
+    """
     if times.shape != lyapunov.shape or times.ndim != 1:
         raise ValueError("times and lyapunov must be one-dimensional arrays of equal length")
     if times.size < 3:
@@ -174,11 +182,8 @@ def check_A7_lyapunov(times: np.ndarray, lyapunov: np.ndarray, alpha: float = 0.
     if denom == 0.0:
         raise ValueError("times must not all be equal")
     slope = float(np.sum(centered * (lyapunov - lyapunov.mean())) / denom)
-    residuals = lyapunov - (lyapunov.mean() + slope * centered)
-    sigma2 = float(np.sum(residuals * residuals) / max(times.size - 2, 1))
-    stderr = float(np.sqrt(sigma2 / denom)) if denom > 0 else float("inf")
-    p_value = 1.0 if slope <= 0 or stderr == 0.0 else 0.0
-    return A7Result(bool((slope <= 0.0) or (p_value >= alpha)), slope, p_value)
+    nonincrease_indicator = 1.0 if slope <= 0.0 else 0.0
+    return A7Result(bool(nonincrease_indicator >= alpha), slope, nonincrease_indicator)
 
 
 def _self_test() -> dict[str, dict[str, object]]:
