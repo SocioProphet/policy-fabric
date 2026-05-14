@@ -37,13 +37,17 @@ examples/constitutional/
 
 ## Axiom surface
 
-The OpenAPI contract exposes `/verdict`, `/axioms/A1`, `/axioms/A3`, `/axioms/A4`, `/axioms/A5`, `/axioms/A7`, and `/merge/barycenter`.
+The v0.1 review stub exposes `POST /axioms/{axiom_id}` for the landed numeric checks, with `axiom_id` restricted to `A1`, `A3`, `A4`, `A5`, or `A7`. It also records `/verdict` as contract-only until the LTL-to-SMT-LIB translator and solver backend land, and preserves `/merge/barycenter` as part of the uploaded source-drop surface but not as a materialized review-stub endpoint.
+
+A2 is deferred to the solver-backed `/verdict` path. A6 is deferred pending scope definition. See `contracts/constitutional/API_SURFACE.md` for the authoritative v0.1 status table.
 
 The Python reference engine implements A1, A3, A4, A5, A7, and a lightweight barycenter helper. It is intentionally library-only. It does not choose an HTTP framework, queue model, registry host, or audit-log substrate.
 
 ## Explicit non-claims
 
 This tranche does not implement LTL-to-SMT translation. `/verdict` is a contract shape until a Z3-backed translator lands.
+
+This tranche does not define A6 semantics or expose an A6 evaluation surface.
 
 This tranche does not implement Hopf-shell observables, ESO ontology export, mixed-effects power-table recomputation, or the SRC-025 session runner.
 
