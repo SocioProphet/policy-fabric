@@ -16,97 +16,43 @@ info:
     - Response fields intentionally mirror the current Python reference
       result dataclasses, which return `passed: boolean` rather than a
       string verdict enum.
+    - A2 and A6 are not implemented in this v0.1 per-axiom numeric stub.
 
 paths:
-  /a1/evaluate:
+  /axioms/{axiom_id}:
     post:
-      summary: "A1 coherence-share function"
-      operationId: evaluateA1
+      summary: "Evaluate one landed constitutional axiom check"
+      operationId: evaluateAxiom
+      parameters:
+        - name: axiom_id
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [A1, A3, A4, A5, A7]
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/A1Request"
+              oneOf:
+                - $ref: "#/components/schemas/A1Request"
+                - $ref: "#/components/schemas/A3Request"
+                - $ref: "#/components/schemas/A4Request"
+                - $ref: "#/components/schemas/A5Request"
+                - $ref: "#/components/schemas/A7Request"
       responses:
         "200":
-          description: A1 evaluation result
+          description: Per-axiom evaluation result
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/A1Response"
-
-  /a3/evaluate:
-    post:
-      summary: "A3 identity-continuity function"
-      operationId: evaluateA3
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/A3Request"
-      responses:
-        "200":
-          description: A3 evaluation result
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/A3Response"
-
-  /a4/evaluate:
-    post:
-      summary: "A4 spawn spectral-stability function"
-      operationId: evaluateA4
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/A4Request"
-      responses:
-        "200":
-          description: A4 evaluation result
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/A4Response"
-
-  /a5/evaluate:
-    post:
-      summary: "A5 rate-distortion communications-budget function"
-      operationId: evaluateA5
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/A5Request"
-      responses:
-        "200":
-          description: A5 evaluation result
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/A5Response"
-
-  /a7/evaluate:
-    post:
-      summary: "A7 Lyapunov non-increase function"
-      operationId: evaluateA7
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/A7Request"
-      responses:
-        "200":
-          description: A7 evaluation result
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/A7Response"
+                oneOf:
+                  - $ref: "#/components/schemas/A1Response"
+                  - $ref: "#/components/schemas/A3Response"
+                  - $ref: "#/components/schemas/A4Response"
+                  - $ref: "#/components/schemas/A5Response"
+                  - $ref: "#/components/schemas/A7Response"
 
 components:
   schemas:
@@ -250,12 +196,12 @@ components:
 
     A7Response:
       type: object
-      description: "Mirrors A7Result."
+      description: "Mirrors A7Result. nonincrease_indicator is a placeholder threshold indicator, not a statistical p-value."
       properties:
         passed:
           type: boolean
         slope:
           type: number
-        p_value:
+        nonincrease_indicator:
           type: number
-      required: [passed, slope, p_value]
+      required: [passed, slope, nonincrease_indicator]
