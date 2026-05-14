@@ -40,6 +40,13 @@ class A5Result:
 
 @dataclass(frozen=True)
 class A7Result:
+    """A7 result for the provisional Lyapunov non-increase check.
+
+    `nonincrease_indicator` is a threshold indicator, not a statistical
+    p-value. It is 1.0 when the fitted slope is nonpositive and 0.0 when the
+    fitted slope is positive. The statistical upgrade is tracked in issue #84.
+    """
+
     passed: bool
     slope: float
     nonincrease_indicator: float
@@ -165,14 +172,35 @@ def check_A5_rate_distortion(
 
 
 def check_A7_lyapunov(times: np.ndarray, lyapunov: np.ndarray, alpha: float = 0.05) -> A7Result:
-    """Check Lyapunov non-increase with a provisional indicator.
+    """Check Lyapunov non-increase (constitutional axiom A7).
 
-    `nonincrease_indicator` is a placeholder threshold indicator, not a
-    statistical p-value. It returns 1.0 when the current provisional check sees
-    non-increase, else 0.0. Replace with an OLS regression t-statistic or
-    bootstrap significance calculation before treating A7 as a statistical
-    inference surface.
+    This v0.1 implementation returns a thresholded indicator, not a
+    regression-based significance test. The `alpha` parameter is retained for
+    forward-compatible signature shape and must be in (0, 1), but it is not a
+    statistical significance level in this tranche.
+
+    Returns
+    -------
+    A7Result with:
+        passed:
+            True if the fitted OLS slope is nonpositive.
+        slope:
+            OLS slope of lyapunov against times.
+        nonincrease_indicator:
+            Provisional placeholder for a real p-value. Returns 1.0 when
+            slope <= 0 and 0.0 when slope > 0. This is NOT a Wald test,
+            bootstrap p-value, or any other statistical significance measure.
+            Consumers MUST NOT apply standard p-value thresholds, FDR
+            correction, or Bonferroni adjustment to this field.
+
+    Notes
+    -----
+    Planned upgrade: compute a one-sided inferential statistic for the slope
+    under OLS assumptions, or a bootstrap/permutation interval if assumptions
+    are not met. The upgrade is tracked in issue #84.
     """
+    if not (0.0 < alpha < 1.0):
+        raise ValueError("alpha must be in the open interval (0, 1)")
     if times.shape != lyapunov.shape or times.ndim != 1:
         raise ValueError("times and lyapunov must be one-dimensional arrays of equal length")
     if times.size < 3:
@@ -183,7 +211,7 @@ def check_A7_lyapunov(times: np.ndarray, lyapunov: np.ndarray, alpha: float = 0.
         raise ValueError("times must not all be equal")
     slope = float(np.sum(centered * (lyapunov - lyapunov.mean())) / denom)
     nonincrease_indicator = 1.0 if slope <= 0.0 else 0.0
-    return A7Result(bool(nonincrease_indicator >= alpha), slope, nonincrease_indicator)
+    return A7Result(bool(slope <= 0.0), slope, nonincrease_indicator)
 
 
 def _self_test() -> dict[str, dict[str, object]]:
