@@ -1,0 +1,40 @@
+{
+  "kind": "PolicyEvaluationResponse",
+  "schema_version": "v1",
+  "response_id": "polresp-admit-artifact-0001",
+  "request_id": "polreq-admit-artifact-0001",
+  "evaluated_at": "2026-05-06T18:59:55Z",
+  "command": "AdmitArtifact",
+  "outcome": "deny",
+  "reason": "security.secret_detected: The artifact contains one or more detected secrets (github_pat, aws_access_key). Admission is blocked until secrets are removed and rotated.",
+  "responsible_actor": "user",
+  "audit_required": true,
+  "remediation_options": [
+    {
+      "actor": "user",
+      "action": "remove_secret_and_resubmit",
+      "description": "Remove the detected secret from the artifact, rotate the secret in your secrets manager, and resubmit the artifact for admission.",
+      "link_ref": "https://docs.socioprophet.org/policy-fabric/remediation/secret-detected"
+    },
+    {
+      "actor": "workspace_owner",
+      "action": "review_and_request_override",
+      "description": "Workspace owner may review the artifact and request a scoped override if the detection is a false positive.",
+      "link_ref": null
+    },
+    {
+      "actor": "tenant_admin",
+      "action": "grant_tenant_level_override",
+      "description": "Tenant administrator may issue a time-bounded override for this gate type within the workspace scope after audited review.",
+      "link_ref": null
+    }
+  ],
+  "gate_record_ids": [
+    "gate-admit-artifact-secret-0001"
+  ],
+  "policy_refs": [
+    "policy://policy-fabric/artifact-admission/secret-detection/v1",
+    "policy://policy-fabric/artifact-admission/security-gates/v1"
+  ],
+  "expires_at": null
+}

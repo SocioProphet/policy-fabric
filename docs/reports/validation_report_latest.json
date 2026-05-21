@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-04-09T03:09:05.186819Z",
+    "generatedAt": "2026-05-06T19:17:04.143992Z",
     "generator": "policy-fabric-doctor/0.5.0",
-    "runId": "doctor-2026-04-09T03:09:05.186819Z"
+    "runId": "doctor-2026-05-06T19:17:04.143992Z"
   },
   "subject": {
     "type": "releasePack",
@@ -13,7 +13,7 @@
   },
   "summary": {
     "status": "pass",
-    "checkCount": 85,
+    "checkCount": 98,
     "failCount": 0,
     "warnCount": 0
   },
@@ -291,6 +291,54 @@
       "artifactRef": "scripts/github_publish_prep.py"
     },
     {
+      "id": "exists:contracts/operation_plane_policy_gate_v1.schema.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "contracts/operation_plane_policy_gate_v1.schema.json"
+    },
+    {
+      "id": "exists:examples/operation_plane_policy_gate_record_example.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "examples/operation_plane_policy_gate_record_example.json"
+    },
+    {
+      "id": "exists:examples/operation_plane_policy_eval_request_example.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "examples/operation_plane_policy_eval_request_example.json"
+    },
+    {
+      "id": "exists:examples/operation_plane_policy_eval_response_example.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "examples/operation_plane_policy_eval_response_example.json"
+    },
+    {
+      "id": "exists:docs/specs/operation_plane_policy_gate_v1.md",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "docs/specs/operation_plane_policy_gate_v1.md"
+    },
+    {
+      "id": "exists:scripts/validate_operation_plane_policy_gate.py",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "scripts/validate_operation_plane_policy_gate.py"
+    },
+    {
       "id": "validate:policy-example",
       "status": "pass",
       "severity": "info",
@@ -337,6 +385,30 @@
       "code": "PFD010_SCHEMA_OK",
       "message": "replay report example validates against replay report schema",
       "artifactRef": "examples/policy_fabric_replay_report_example.json"
+    },
+    {
+      "id": "validate:operation-plane-gate-record-example",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD010_SCHEMA_OK",
+      "message": "operation plane gate record example validates against gate schema",
+      "artifactRef": "examples/operation_plane_policy_gate_record_example.json"
+    },
+    {
+      "id": "validate:operation-plane-eval-request-example",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD010_SCHEMA_OK",
+      "message": "operation plane eval request example validates against gate schema",
+      "artifactRef": "examples/operation_plane_policy_eval_request_example.json"
+    },
+    {
+      "id": "validate:operation-plane-eval-response-example",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD010_SCHEMA_OK",
+      "message": "operation plane eval response example validates against gate schema",
+      "artifactRef": "examples/operation_plane_policy_eval_response_example.json"
     },
     {
       "id": "parse:openapi",
@@ -563,11 +635,43 @@
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     },
     {
-      "id": "policy:selector-overlap-heuristics",
+      "id": "policy:selector-overlap-normalized",
       "status": "pass",
       "severity": "info",
       "code": "PFV010_SELECTOR_OVERLAP_OK",
-      "message": "no likely selector overlaps detected beyond exact identity checks",
+      "message": "no normalized-path selector equivalence detected",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:selector-overlap-prefix",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV010_SELECTOR_OVERLAP_OK",
+      "message": "no path-prefix selector overlap detected",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:selector-overlap-wildcard",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV010_SELECTOR_OVERLAP_OK",
+      "message": "no wildcard-shadow selector overlap detected",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:selector-overlap-regex-equivalence",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV010_SELECTOR_OVERLAP_OK",
+      "message": "no regex normalized-equivalence detected",
+      "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
+    },
+    {
+      "id": "policy:selector-overlap-regex-shadow",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFV010_SELECTOR_OVERLAP_OK",
+      "message": "no regex shadow-heuristic detected",
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     },
     {
@@ -598,8 +702,8 @@
       "id": "policy:negative-fixtures",
       "status": "pass",
       "severity": "info",
-      "code": "PFV016_NEGATIVE_FIXTURE_OK",
-      "message": "negative fixtures are well formed and reference known rules/selectors",
+      "code": "PFV017_NEGATIVE_FIXTURE_SEMANTICS_OK",
+      "message": "negative fixtures are well formed across failure and no-op semantics",
       "artifactRef": "examples/policy_fabric_policy_v2_enhanced_example.json"
     },
     {

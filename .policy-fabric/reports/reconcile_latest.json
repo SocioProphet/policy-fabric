@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-04-09T03:09:05.095859Z",
+  "generatedAt": "2026-05-06T19:16:55.198117Z",
   "git": {
-    "rev": "36b6e6b",
+    "rev": "0887aae",
     "dirty": true
   },
-  "fileCount": 178,
+  "fileCount": 254,
   "localOverridePaths": [
     ".policy-fabric/local-notes/**",
     ".agentplane/policy/incidents.md"
@@ -15,6 +15,7 @@
     "dist/**",
     "REPO_MANIFEST.json",
     ".agentplane/workflows/**",
-    ".agentplane/.upgrade/**"
+    ".agentplane/.upgrade/**",
+    ".sourceos/**"
   ]
 }

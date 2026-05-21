@@ -1,0 +1,509 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/policy-fabric/operation_plane_policy_gate_v1.schema.json",
+  "title": "Operation Plane Policy Gate v1",
+  "description": "Defines the Policy Fabric boundary for Workspace Operation Plane commands, artifact admission, trust boundaries, and human/agent remediation. Policy logic must not be embedded inside prophet-platform, UI repos, TurtleTerm, BearBrowser, or agents.",
+  "type": "object",
+  "required": ["kind", "schema_version"],
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": [
+        "PolicyGateRecord",
+        "PolicyEvaluationRequest",
+        "PolicyEvaluationResponse",
+        "TrustBoundaryRecord",
+        "OverridePolicyRecord"
+      ]
+    },
+    "schema_version": { "const": "v1" }
+  },
+  "oneOf": [
+    { "$ref": "#/$defs/PolicyGateRecord" },
+    { "$ref": "#/$defs/PolicyEvaluationRequest" },
+    { "$ref": "#/$defs/PolicyEvaluationResponse" },
+    { "$ref": "#/$defs/TrustBoundaryRecord" },
+    { "$ref": "#/$defs/OverridePolicyRecord" }
+  ],
+  "$defs": {
+    "ArtifactAdmissionGateType": {
+      "type": "string",
+      "enum": [
+        "metadata.required",
+        "security.secret_detected",
+        "security.malware_blocked",
+        "security.pii_phi_review_required",
+        "encryption.key_unavailable",
+        "quota.workspace_limit",
+        "conversion.failed",
+        "indexing.unsupported",
+        "policy.external_sharing_blocked",
+        "agent.review_required",
+        "license.unverified",
+        "provenance.unknown"
+      ],
+      "description": "The set of artifact admission gate types that Policy Fabric enforces. Each gate type maps to a distinct block reason and responsible actor."
+    },
+    "OperationCommand": {
+      "type": "string",
+      "enum": [
+        "CreateOperation",
+        "StartOperation",
+        "RetryTask",
+        "CancelOperation",
+        "ResolveDecision",
+        "AdmitArtifact",
+        "ActivateArtifact",
+        "ExportDiagnostics",
+        "RequestOverride"
+      ],
+      "description": "Operation Plane commands authorized to call Policy Fabric gate evaluation."
+    },
+    "RemediationActor": {
+      "type": "string",
+      "enum": [
+        "user",
+        "workspace_owner",
+        "tenant_admin",
+        "external_owner",
+        "connector_owner",
+        "model_provider",
+        "local_device_owner",
+        "agent_operator"
+      ],
+      "description": "The actor responsible for resolving a policy gate block. Determines who can fix the block."
+    },
+    "TrustBoundaryType": {
+      "type": "string",
+      "enum": [
+        "external_connector",
+        "third_party_model_endpoint",
+        "remote_agent",
+        "customer_key_service",
+        "imported_repo",
+        "enterprise_firewall"
+      ],
+      "description": "Categories of trust boundaries recognized by the Operation Plane policy gate."
+    },
+    "GateStatus": {
+      "type": "string",
+      "enum": [
+        "open",
+        "blocked",
+        "override_active",
+        "expired",
+        "cleared"
+      ],
+      "description": "The current state of a policy gate record."
+    },
+    "TrustLevel": {
+      "type": "string",
+      "enum": ["trusted", "conditional", "untrusted", "unknown"]
+    },
+    "ActorRef": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": {
+          "type": "string",
+          "enum": ["user", "service_account", "agent", "system"]
+        },
+        "display_name": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "RemediationOption": {
+      "type": "object",
+      "required": ["actor", "action", "description"],
+      "properties": {
+        "actor": { "$ref": "#/$defs/RemediationActor" },
+        "action": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Machine-readable action key the responsible actor must perform."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of what the actor must do to resolve the gate."
+        },
+        "link_ref": {
+          "type": ["string", "null"],
+          "description": "Optional URI or reference to a resource that assists with remediation."
+        }
+      },
+      "additionalProperties": true
+    },
+    "PolicyGateRecord": {
+      "type": "object",
+      "description": "A machine-checkable and serializable record of a policy gate evaluation result for an Operation Plane command. Aligned with prophet-core-contracts#1.",
+      "required": [
+        "kind",
+        "schema_version",
+        "gate_id",
+        "gate_type",
+        "command",
+        "gate_status",
+        "workspace_id",
+        "tenant_id",
+        "created_at",
+        "responsible_actor",
+        "audit_required",
+        "remediation_options",
+        "policy_refs"
+      ],
+      "properties": {
+        "kind": { "const": "PolicyGateRecord" },
+        "schema_version": { "const": "v1" },
+        "gate_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Unique identifier for this gate record instance."
+        },
+        "gate_type": { "$ref": "#/$defs/ArtifactAdmissionGateType" },
+        "command": { "$ref": "#/$defs/OperationCommand" },
+        "gate_status": { "$ref": "#/$defs/GateStatus" },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tenant_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_ref": {
+          "type": ["string", "null"],
+          "description": "Reference to the artifact being gated, if applicable."
+        },
+        "operation_id": {
+          "type": ["string", "null"],
+          "description": "Reference to the Operation Plane operation that triggered this gate."
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "When this gate record expires. Null if no expiry."
+        },
+        "responsible_actor": { "$ref": "#/$defs/RemediationActor" },
+        "audit_required": {
+          "type": "boolean",
+          "description": "Whether an audit trail must be generated for this gate event."
+        },
+        "remediation_options": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RemediationOption" },
+          "description": "Actor-relative list of remediation actions available to unblock this gate."
+        },
+        "trust_boundary_ref": {
+          "type": ["string", "null"],
+          "description": "Reference to a TrustBoundaryRecord if a trust boundary was involved."
+        },
+        "policy_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Policy references that triggered this gate."
+        },
+        "override_ref": {
+          "type": ["string", "null"],
+          "description": "Reference to an active OverridePolicyRecord that has cleared this gate."
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Additional gate metadata for downstream consumers."
+        }
+      },
+      "additionalProperties": true
+    },
+    "PolicyEvaluationRequest": {
+      "type": "object",
+      "description": "Request shape for Policy Fabric gate evaluation of an Operation Plane command. The Operation Plane runtime calls Policy Fabric with this shape before executing any authorized command.",
+      "required": [
+        "kind",
+        "schema_version",
+        "request_id",
+        "requested_at",
+        "command",
+        "actor",
+        "workspace_id",
+        "tenant_id"
+      ],
+      "properties": {
+        "kind": { "const": "PolicyEvaluationRequest" },
+        "schema_version": { "const": "v1" },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Unique identifier for this evaluation request."
+        },
+        "requested_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "command": { "$ref": "#/$defs/OperationCommand" },
+        "actor": { "$ref": "#/$defs/ActorRef" },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tenant_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": ["string", "null"],
+          "description": "The Operation Plane operation being authorized, if already created."
+        },
+        "artifact_ref": {
+          "type": ["string", "null"],
+          "description": "Reference to the artifact subject of admission, if applicable."
+        },
+        "artifact_metadata": {
+          "type": ["object", "null"],
+          "additionalProperties": true,
+          "description": "Metadata about the artifact being admitted, used for admission gate evaluation."
+        },
+        "trust_boundary_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Trust boundary identifiers relevant to this evaluation.",
+          "default": []
+        },
+        "context": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Arbitrary context passed by the caller for policy evaluation."
+        }
+      },
+      "additionalProperties": true
+    },
+    "PolicyEvaluationResponse": {
+      "type": "object",
+      "description": "Response shape from Policy Fabric for an Operation Plane gate evaluation. Actor-relative and remediation-ready. UI may render response fields; UI must not be the policy authority.",
+      "required": [
+        "kind",
+        "schema_version",
+        "response_id",
+        "request_id",
+        "evaluated_at",
+        "command",
+        "outcome",
+        "reason",
+        "responsible_actor",
+        "audit_required",
+        "remediation_options",
+        "policy_refs"
+      ],
+      "properties": {
+        "kind": { "const": "PolicyEvaluationResponse" },
+        "schema_version": { "const": "v1" },
+        "response_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Unique identifier for this evaluation response."
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Correlates this response to the originating PolicyEvaluationRequest."
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "command": { "$ref": "#/$defs/OperationCommand" },
+        "outcome": {
+          "type": "string",
+          "enum": ["allow", "deny"],
+          "description": "Authorization decision. Only allow or deny; deferral is modeled as a pending gate record."
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Machine-readable reason for the outcome. UI may render this field."
+        },
+        "responsible_actor": {
+          "$ref": "#/$defs/RemediationActor",
+          "description": "The actor responsible for resolving the block, if outcome is deny."
+        },
+        "audit_required": {
+          "type": "boolean",
+          "description": "Whether an audit trail is required for this authorization decision."
+        },
+        "remediation_options": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RemediationOption" },
+          "description": "Actor-relative remediation options. Empty when outcome is allow."
+        },
+        "gate_record_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "IDs of PolicyGateRecord documents generated for this evaluation.",
+          "default": []
+        },
+        "policy_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Policy references that produced this response."
+        },
+        "expires_at": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "If outcome is allow with time-bounded scope, the expiry of the authorization."
+        }
+      },
+      "additionalProperties": true
+    },
+    "TrustBoundaryRecord": {
+      "type": "object",
+      "description": "A record describing a trust boundary that Policy Fabric must evaluate when processing Operation Plane commands.",
+      "required": [
+        "kind",
+        "schema_version",
+        "boundary_id",
+        "boundary_type",
+        "display_name",
+        "owner_actor",
+        "trust_level",
+        "policy_refs",
+        "created_at"
+      ],
+      "properties": {
+        "kind": { "const": "TrustBoundaryRecord" },
+        "schema_version": { "const": "v1" },
+        "boundary_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Unique identifier for this trust boundary."
+        },
+        "boundary_type": { "$ref": "#/$defs/TrustBoundaryType" },
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_actor": { "$ref": "#/$defs/RemediationActor" },
+        "trust_level": { "$ref": "#/$defs/TrustLevel" },
+        "policy_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Policy references governing this trust boundary."
+        },
+        "workspace_id": {
+          "type": ["string", "null"]
+        },
+        "tenant_id": {
+          "type": ["string", "null"]
+        },
+        "connector_ref": {
+          "type": ["string", "null"],
+          "description": "Reference to the external connector configuration, if boundary_type is external_connector."
+        },
+        "endpoint_ref": {
+          "type": ["string", "null"],
+          "description": "Reference to the model endpoint or service, if applicable."
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reviewed_at": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "When the trust boundary was last reviewed by its owner_actor."
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "OverridePolicyRecord": {
+      "type": "object",
+      "description": "An override policy record that allows a responsible actor to temporarily or permanently waive a policy gate within a defined scope. Every override must produce an audit record.",
+      "required": [
+        "kind",
+        "schema_version",
+        "override_id",
+        "scope",
+        "reason",
+        "actor",
+        "issued_at",
+        "expires_at",
+        "affected_gate_types",
+        "audit_record_ref",
+        "status"
+      ],
+      "properties": {
+        "kind": { "const": "OverridePolicyRecord" },
+        "schema_version": { "const": "v1" },
+        "override_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Unique identifier for this override record."
+        },
+        "scope": {
+          "type": "string",
+          "enum": ["workspace", "tenant", "artifact", "operation", "connector"],
+          "description": "The scope within which this override applies."
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable justification for the override, retained for audit."
+        },
+        "actor": { "$ref": "#/$defs/ActorRef" },
+        "issued_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this override expires. All overrides must have an expiry."
+        },
+        "affected_artifact_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Artifact references affected by this override.",
+          "default": []
+        },
+        "affected_gate_types": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ArtifactAdmissionGateType" },
+          "minItems": 1,
+          "description": "The gate types this override waives."
+        },
+        "affected_commands": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/OperationCommand" },
+          "description": "The Operation Plane commands this override applies to.",
+          "default": []
+        },
+        "audit_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Reference to the audit record generated for this override. Required; no override may be issued without an audit record."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "expired", "revoked"],
+          "description": "Current lifecycle state of the override."
+        },
+        "revocation_reason": {
+          "type": ["string", "null"],
+          "description": "Reason the override was revoked before expiry, if applicable."
+        },
+        "workspace_id": { "type": ["string", "null"] },
+        "tenant_id": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

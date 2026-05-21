@@ -66,6 +66,9 @@ jobs:
       - name: Prophet operations action decision contracts
         run: python scripts/validate_prophet_operations_action_decision.py
 
+      - name: Operation plane policy gate contracts
+        run: python scripts/validate_operation_plane_policy_gate.py
+
       - name: Doctor
         run: python scripts/doctor.py
 

@@ -33,7 +33,7 @@
     },
     "openapi": {
       "artifactRef": "contracts/policy_fabric_openapi_v2.yaml",
-      "sha256": "83a24c8962d52476b70dcac565673d51d8adc938696be7f0bdbe5252cfdae11f",
+      "sha256": "c98b73191a7fd0b1b4414e65fff4432fc35137cd9f7b918246e719573ec28bdc",
       "mediaType": "application/yaml",
       "description": "Service contract expected by validation and explain flows."
     },

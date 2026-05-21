@@ -118,6 +118,12 @@ required = [
     'scripts/agentplane_probe.py',
     'scripts/branch_audit.py',
     'scripts/github_publish_prep.py',
+    'contracts/operation_plane_policy_gate_v1.schema.json',
+    'examples/operation_plane_policy_gate_record_example.json',
+    'examples/operation_plane_policy_eval_request_example.json',
+    'examples/operation_plane_policy_eval_response_example.json',
+    'docs/specs/operation_plane_policy_gate_v1.md',
+    'scripts/validate_operation_plane_policy_gate.py',
 ]
 for rel in required:
     p = ROOT / rel
@@ -133,6 +139,9 @@ pairs = [
     ('validate:capability-catalog-example', 'contracts/policy_fabric_capability_catalog_v1.schema.json', 'examples/policy_fabric_capability_catalog_example.json', 'capability catalog example validates against capability catalog schema'),
     ('validate:validation-report-example', 'contracts/policy_fabric_validation_report_v1.schema.json', 'examples/policy_fabric_validation_report_example.json', 'validation report example validates against validation report schema'),
     ('validate:replay-report-example', 'contracts/policy_fabric_replay_report_v1.schema.json', 'examples/policy_fabric_replay_report_example.json', 'replay report example validates against replay report schema'),
+    ('validate:operation-plane-gate-record-example', 'contracts/operation_plane_policy_gate_v1.schema.json', 'examples/operation_plane_policy_gate_record_example.json', 'operation plane gate record example validates against gate schema'),
+    ('validate:operation-plane-eval-request-example', 'contracts/operation_plane_policy_gate_v1.schema.json', 'examples/operation_plane_policy_eval_request_example.json', 'operation plane eval request example validates against gate schema'),
+    ('validate:operation-plane-eval-response-example', 'contracts/operation_plane_policy_gate_v1.schema.json', 'examples/operation_plane_policy_eval_response_example.json', 'operation plane eval response example validates against gate schema'),
 ]
 for check_id, schema_rel, example_rel, message in pairs:
     try:

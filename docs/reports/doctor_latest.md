@@ -36,12 +36,21 @@ Overall status: PASS
 - [OK] exists:scripts/agentplane_probe.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/branch_audit.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/github_publish_prep.py — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:contracts/operation_plane_policy_gate_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/operation_plane_policy_gate_record_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/operation_plane_policy_eval_request_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/operation_plane_policy_eval_response_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:docs/specs/operation_plane_policy_gate_v1.md — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:scripts/validate_operation_plane_policy_gate.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] validate:policy-example — PFD010_SCHEMA_OK — policy example validates against policy schema
 - [OK] validate:plan-example — PFD010_SCHEMA_OK — compiled plan validates against plan schema
 - [OK] validate:release-pack-example — PFD010_SCHEMA_OK — release pack example validates against release pack schema
 - [OK] validate:capability-catalog-example — PFD010_SCHEMA_OK — capability catalog example validates against capability catalog schema
 - [OK] validate:validation-report-example — PFD010_SCHEMA_OK — validation report example validates against validation report schema
 - [OK] validate:replay-report-example — PFD010_SCHEMA_OK — replay report example validates against replay report schema
+- [OK] validate:operation-plane-gate-record-example — PFD010_SCHEMA_OK — operation plane gate record example validates against gate schema
+- [OK] validate:operation-plane-eval-request-example — PFD010_SCHEMA_OK — operation plane eval request example validates against gate schema
+- [OK] validate:operation-plane-eval-response-example — PFD010_SCHEMA_OK — operation plane eval response example validates against gate schema
 - [OK] parse:openapi — PFD020_OPENAPI_OK — openapi parses and contains expected core surfaces
 - [OK] ownership:managed-sync — PFD030_OWNERSHIP_SYNC_OK — config managed paths match ownership contract
 - [OK] ownership:generated-sync — PFD030_OWNERSHIP_SYNC_OK — config generated paths match ownership contract
@@ -70,11 +79,15 @@ Overall status: PASS
 - [OK] policy:provider-capability-authorization — PFV000_POLICY_SEMANTICS_OK — enabled rules use authorized provider and capability pairs within rollout scope
 - [OK] policy:reidentify-governance — PFV000_POLICY_SEMANTICS_OK — re-identification boundary rules are satisfied or no re-identification transforms are present
 - [OK] policy:selector-conflicts — PFV000_POLICY_SEMANTICS_OK — no enabled rules conflict on the same exact selector identity
-- [OK] policy:selector-overlap-heuristics — PFV010_SELECTOR_OVERLAP_OK — no likely selector overlaps detected beyond exact identity checks
+- [OK] policy:selector-overlap-normalized — PFV010_SELECTOR_OVERLAP_OK — no normalized-path selector equivalence detected
+- [OK] policy:selector-overlap-prefix — PFV010_SELECTOR_OVERLAP_OK — no path-prefix selector overlap detected
+- [OK] policy:selector-overlap-wildcard — PFV010_SELECTOR_OVERLAP_OK — no wildcard-shadow selector overlap detected
+- [OK] policy:selector-overlap-regex-equivalence — PFV010_SELECTOR_OVERLAP_OK — no regex normalized-equivalence detected
+- [OK] policy:selector-overlap-regex-shadow — PFV010_SELECTOR_OVERLAP_OK — no regex shadow-heuristic detected
 - [OK] policy:illegal-transform-chains — PFV000_POLICY_SEMANTICS_OK — no illegal exact-target transform chains were detected
 - [OK] policy:attestation-readiness — PFV000_POLICY_SEMANTICS_OK — compiled plan attestation fields are aligned to audit and explain requirements
 - [OK] policy:test-readiness — PFV000_POLICY_SEMANTICS_OK — policy fixtures cover approved-state minimums and attestation-aware assertions
-- [OK] policy:negative-fixtures — PFV016_NEGATIVE_FIXTURE_OK — negative fixtures are well formed and reference known rules/selectors
+- [OK] policy:negative-fixtures — PFV017_NEGATIVE_FIXTURE_SEMANTICS_OK — negative fixtures are well formed across failure and no-op semantics
 - [OK] agentplane-bridge:contract-shape — PFD090_AGENTPLANE_BRIDGE_OK — AgentPlane bridge contract targets official AgentPlane with a hybrid bridge model
 - [OK] agentplane-bridge:expected-findings — PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK — AgentPlane bridge contract records expected current-state findings
 - [OK] agentplane-probe:report-shape — PFD095_AGENTPLANE_PROBE_OK — AgentPlane probe report present with expected API version

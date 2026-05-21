@@ -2,8 +2,14 @@
 
 Overall status: PASS
 
-Check count: `85`; fails: `0`; warnings: `0`
+Check count: `98`; fails: `0`; warnings: `0`
 
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
@@ -44,6 +50,9 @@ Check count: `85`; fails: `0`; warnings: `0`
 - `PFD010_SCHEMA_OK` — pass — capability catalog example validates against capability catalog schema
 - `PFD010_SCHEMA_OK` — pass — validation report example validates against validation report schema
 - `PFD010_SCHEMA_OK` — pass — replay report example validates against replay report schema
+- `PFD010_SCHEMA_OK` — pass — operation plane gate record example validates against gate schema
+- `PFD010_SCHEMA_OK` — pass — operation plane eval request example validates against gate schema
+- `PFD010_SCHEMA_OK` — pass — operation plane eval response example validates against gate schema
 - `PFD020_OPENAPI_OK` — pass — openapi parses and contains expected core surfaces
 - `PFD030_OWNERSHIP_SYNC_OK` — pass — config managed paths match ownership contract
 - `PFD030_OWNERSHIP_SYNC_OK` — pass — config generated paths match ownership contract
@@ -72,11 +81,15 @@ Check count: `85`; fails: `0`; warnings: `0`
 - `PFV000_POLICY_SEMANTICS_OK` — pass — enabled rules use authorized provider and capability pairs within rollout scope
 - `PFV000_POLICY_SEMANTICS_OK` — pass — re-identification boundary rules are satisfied or no re-identification transforms are present
 - `PFV000_POLICY_SEMANTICS_OK` — pass — no enabled rules conflict on the same exact selector identity
-- `PFV010_SELECTOR_OVERLAP_OK` — pass — no likely selector overlaps detected beyond exact identity checks
+- `PFV010_SELECTOR_OVERLAP_OK` — pass — no normalized-path selector equivalence detected
+- `PFV010_SELECTOR_OVERLAP_OK` — pass — no path-prefix selector overlap detected
+- `PFV010_SELECTOR_OVERLAP_OK` — pass — no wildcard-shadow selector overlap detected
+- `PFV010_SELECTOR_OVERLAP_OK` — pass — no regex normalized-equivalence detected
+- `PFV010_SELECTOR_OVERLAP_OK` — pass — no regex shadow-heuristic detected
 - `PFV000_POLICY_SEMANTICS_OK` — pass — no illegal exact-target transform chains were detected
 - `PFV000_POLICY_SEMANTICS_OK` — pass — compiled plan attestation fields are aligned to audit and explain requirements
 - `PFV000_POLICY_SEMANTICS_OK` — pass — policy fixtures cover approved-state minimums and attestation-aware assertions
-- `PFV016_NEGATIVE_FIXTURE_OK` — pass — negative fixtures are well formed and reference known rules/selectors
+- `PFV017_NEGATIVE_FIXTURE_SEMANTICS_OK` — pass — negative fixtures are well formed across failure and no-op semantics
 - `PFD090_AGENTPLANE_BRIDGE_OK` — pass — AgentPlane bridge contract targets official AgentPlane with a hybrid bridge model
 - `PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK` — pass — AgentPlane bridge contract records expected current-state findings
 - `PFD095_AGENTPLANE_PROBE_OK` — pass — AgentPlane probe report present with expected API version
