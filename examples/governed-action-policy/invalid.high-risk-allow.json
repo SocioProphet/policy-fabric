@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.1",
+  "kind": "governed_action_policy_decision",
+  "decision_id": "pd-synthetic-invalid-high-risk-allow",
+  "policy_input": {
+    "proposal_id": "ap-high-risk-001",
+    "action_type": "external_side_effect_action",
+    "risk_class": "high",
+    "requested_by": "SocioProphet/agentplane",
+    "evidence_grade": "implementation_safe"
+  },
+  "decision": {
+    "result": "allow",
+    "reason": "This should fail because high-risk actions cannot be allowed in v0."
+  },
+  "rule_refs": ["policy-fabric:governed-action-v0:invalid"],
+  "evidence_refs": [
+    {
+      "ref": "SocioProphet/sherlock-search#58:valid.confirmed-bibliographic",
+      "source_quality": "confirmed_bibliographic",
+      "implementation_safe": true
+    }
+  ],
+  "audit_payload": {
+    "decision_ref": "pd-synthetic-invalid-high-risk-allow",
+    "proposal_ref": "ap-high-risk-001",
+    "result": "allow",
+    "evidence_summary": "High-risk action was incorrectly allowed."
+  }
+}

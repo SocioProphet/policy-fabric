@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SocioProphet/policy-fabric/contracts/governed-action-policy-decision.v0.schema.json",
+  "title": "Governed Action Policy Decision v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "decision_id",
+    "policy_input",
+    "decision",
+    "rule_refs",
+    "evidence_refs",
+    "audit_payload"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "kind": {"const": "governed_action_policy_decision"},
+    "decision_id": {"type": "string", "minLength": 3},
+    "policy_input": {"$ref": "#/$defs/policyInput"},
+    "decision": {"$ref": "#/$defs/decision"},
+    "rule_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "evidence_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/evidenceRef"}
+    },
+    "runtime_constraints": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/runtimeConstraint"}
+    },
+    "escalation_requirement": {"$ref": "#/$defs/escalationRequirement"},
+    "audit_payload": {"$ref": "#/$defs/auditPayload"}
+  },
+  "$defs": {
+    "sourceQuality": {
+      "enum": [
+        "confirmed_official",
+        "confirmed_bibliographic",
+        "confirmed_pdf",
+        "confirmed_artifact",
+        "plausible_needs_source",
+        "speculative_do_not_use"
+      ]
+    },
+    "policyInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proposal_id", "action_type", "risk_class", "requested_by", "evidence_grade"],
+      "properties": {
+        "proposal_id": {"type": "string", "minLength": 1},
+        "action_type": {"type": "string", "minLength": 1},
+        "risk_class": {"enum": ["low", "moderate", "high", "critical"]},
+        "requested_by": {"type": "string", "minLength": 1},
+        "evidence_grade": {"enum": ["implementation_safe", "research_only", "blocked"]}
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "reason"],
+      "properties": {
+        "result": {"enum": ["allow", "deny", "modify", "escalate"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "source_quality", "implementation_safe"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1},
+        "source_quality": {"$ref": "#/$defs/sourceQuality"},
+        "implementation_safe": {"type": "boolean"}
+      }
+    },
+    "runtimeConstraint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["constraint_id", "constraint_type", "description"],
+      "properties": {
+        "constraint_id": {"type": "string", "minLength": 1},
+        "constraint_type": {"enum": ["scope_limit", "human_review", "audit_required", "no_external_side_effects"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "escalationRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "reason"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "reason": {"type": "string"}
+      }
+    },
+    "auditPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_ref", "proposal_ref", "result", "evidence_summary"],
+      "properties": {
+        "decision_ref": {"type": "string", "minLength": 1},
+        "proposal_ref": {"type": "string", "minLength": 1},
+        "result": {"enum": ["allow", "deny", "modify", "escalate"]},
+        "evidence_summary": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

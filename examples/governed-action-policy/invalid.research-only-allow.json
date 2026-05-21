@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.1",
+  "kind": "governed_action_policy_decision",
+  "decision_id": "pd-synthetic-invalid-research-allow",
+  "policy_input": {
+    "proposal_id": "ap-record-event-instance-002",
+    "action_type": "record_event_instance",
+    "risk_class": "low",
+    "requested_by": "SocioProphet/agentplane",
+    "evidence_grade": "research_only"
+  },
+  "decision": {
+    "result": "allow",
+    "reason": "This should fail because research-only evidence cannot allow implementation-grade action."
+  },
+  "rule_refs": ["policy-fabric:governed-action-v0:invalid"],
+  "evidence_refs": [
+    {
+      "ref": "SocioProphet/sherlock-search#58:research-only-fixture",
+      "source_quality": "plausible_needs_source",
+      "implementation_safe": false
+    }
+  ],
+  "audit_payload": {
+    "decision_ref": "pd-synthetic-invalid-research-allow",
+    "proposal_ref": "ap-record-event-instance-002",
+    "result": "allow",
+    "evidence_summary": "Research-only evidence was incorrectly allowed."
+  }
+}
