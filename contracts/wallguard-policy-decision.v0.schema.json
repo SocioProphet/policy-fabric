@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SocioProphet/policy-fabric/contracts/wallguard-policy-decision.v0.schema.json",
+  "title": "WallGuard Policy Decision v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "decision_id",
+    "policy_ref",
+    "wall_context",
+    "subject",
+    "action",
+    "resources",
+    "destination",
+    "decision",
+    "receipt"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "kind": {"const": "wallguard_policy_decision"},
+    "decision_id": {"type": "string", "minLength": 3},
+    "policy_ref": {"$ref": "#/$defs/policyRef"},
+    "wall_context": {"$ref": "#/$defs/wallContext"},
+    "subject": {"$ref": "#/$defs/subject"},
+    "action": {"$ref": "#/$defs/action"},
+    "resources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/resource"}
+    },
+    "destination": {"$ref": "#/$defs/destination"},
+    "decision": {"$ref": "#/$defs/decision"},
+    "receipt": {"$ref": "#/$defs/receipt"},
+    "clean_room_release": {"$ref": "#/$defs/cleanRoomRelease"}
+  },
+  "$defs": {
+    "policyRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_id", "policy_version"],
+      "properties": {
+        "policy_id": {"type": "string", "minLength": 1},
+        "policy_version": {"type": "string", "minLength": 1},
+        "policy_authority": {"type": "string", "minLength": 1}
+      }
+    },
+    "wallContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workroom_id", "client_id", "matter_id", "wall_id", "confidentiality_class"],
+      "properties": {
+        "workroom_id": {"type": "string", "minLength": 1},
+        "client_id": {"type": "string", "minLength": 1},
+        "matter_id": {"type": "string", "minLength": 1},
+        "wall_id": {"type": "string", "minLength": 1},
+        "confidentiality_class": {
+          "enum": [
+            "public",
+            "firm_approved",
+            "client_confidential",
+            "matter_restricted",
+            "wall_restricted",
+            "clean_room_derived"
+          ]
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject_id", "subject_type", "wall_memberships", "session_state"],
+      "properties": {
+        "subject_id": {"type": "string", "minLength": 1},
+        "subject_type": {"enum": ["human", "agent", "subagent", "service_account", "tool", "model", "connector", "workroom"]},
+        "wall_memberships": {"type": "array", "items": {"type": "string"}},
+        "acknowledgments": {"type": "array", "items": {"type": "string"}},
+        "recusal_state": {"enum": ["none", "recused", "revoked", "expired"]},
+        "session_state": {"enum": ["clean", "wall_scoped", "contaminated", "unknown"]}
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_type", "enforcement_point"],
+      "properties": {
+        "action_type": {
+          "enum": [
+            "retrieve",
+            "rank",
+            "rerank",
+            "summarize",
+            "collaborate",
+            "delegate",
+            "invoke_tool",
+            "invoke_model",
+            "call_connector",
+            "read_memory",
+            "write_memory",
+            "export_artifact",
+            "clean_room_release"
+          ]
+        },
+        "enforcement_point": {
+          "enum": [
+            "prophet_platform",
+            "agent_registry",
+            "agentplane",
+            "guardrail_fabric",
+            "memory_mesh",
+            "sherlock_search",
+            "holmes",
+            "prophet_core_ingest",
+            "prophet_core_catalog",
+            "prophet_core_query",
+            "prophet_core_ledger",
+            "connector_gateway"
+          ]
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resource_id", "resource_type", "labels"],
+      "properties": {
+        "resource_id": {"type": "string", "minLength": 1},
+        "resource_type": {
+          "enum": [
+            "document",
+            "message",
+            "chunk",
+            "embedding",
+            "memory",
+            "graph_edge",
+            "search_result",
+            "tool_output",
+            "generated_artifact",
+            "secret",
+            "audit_record"
+          ]
+        },
+        "labels": {"$ref": "#/$defs/labels"}
+      }
+    },
+    "destination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["destination_id", "destination_type", "labels"],
+      "properties": {
+        "destination_id": {"type": "string", "minLength": 1},
+        "destination_type": {"enum": ["workroom", "human", "agent", "memory_compartment", "search_index", "graph_store", "connector", "public_artifact", "ledger"]},
+        "labels": {"$ref": "#/$defs/labels"}
+      }
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["client_id", "matter_id", "wall_id", "confidentiality_class"],
+      "properties": {
+        "client_id": {"type": "string", "minLength": 1},
+        "matter_id": {"type": "string", "minLength": 1},
+        "wall_id": {"type": "string", "minLength": 1},
+        "confidentiality_class": {
+          "enum": [
+            "public",
+            "firm_approved",
+            "client_confidential",
+            "matter_restricted",
+            "wall_restricted",
+            "clean_room_derived"
+          ]
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "reason_code", "reason"],
+      "properties": {
+        "outcome": {"enum": ["allow", "deny", "redact", "quarantine", "escalate", "clean_room_release_requested", "clean_room_release_allowed", "clean_room_release_denied"]},
+        "reason_code": {
+          "enum": [
+            "same_wall_allowed",
+            "missing_wall_context",
+            "subject_outside_wall",
+            "resource_outside_wall",
+            "incompatible_client_or_matter",
+            "revoked_or_expired_membership",
+            "missing_acknowledgment",
+            "recused_subject",
+            "contaminated_session_state",
+            "prohibited_memory_compartment",
+            "prohibited_retrieval_source",
+            "prohibited_tool_or_connector",
+            "prohibited_destination",
+            "metadata_visibility_denied",
+            "clean_room_release_required",
+            "override_required",
+            "policy_version_mismatch"
+          ]
+        },
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt_id", "decision_id", "policy_id", "policy_version", "outcome", "reason_code", "receipt_visibility_class", "evidence_refs"],
+      "properties": {
+        "receipt_id": {"type": "string", "minLength": 3},
+        "decision_id": {"type": "string", "minLength": 3},
+        "policy_id": {"type": "string", "minLength": 1},
+        "policy_version": {"type": "string", "minLength": 1},
+        "outcome": {"enum": ["allow", "deny", "redact", "quarantine", "escalate", "clean_room_release_requested", "clean_room_release_allowed", "clean_room_release_denied"]},
+        "reason_code": {"type": "string", "minLength": 1},
+        "receipt_visibility_class": {"enum": ["public", "public_sanitized", "internal", "sealed", "withheld_specific"]},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}},
+        "redaction_summary": {"type": "string"},
+        "residual_restrictions": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "cleanRoomRelease": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requested", "allowed", "release_scope", "residual_restrictions"],
+      "properties": {
+        "requested": {"type": "boolean"},
+        "allowed": {"type": "boolean"},
+        "release_scope": {"type": "string"},
+        "residual_restrictions": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
