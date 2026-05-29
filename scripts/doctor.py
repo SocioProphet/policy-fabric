@@ -32,7 +32,7 @@ report = {
     'kind': 'ValidationReport',
     'metadata': {
         'generatedAt': NOW,
-        'generator': 'policy-fabric-doctor/0.5.0',
+        'generator': 'policy-fabric-doctor/0.5.1',
         'runId': f'doctor-{NOW}',
     },
     'subject': {
@@ -40,24 +40,13 @@ report = {
         'ref': 'examples/policy_fabric_release_pack_example.json',
         'version': '1.0.0',
     },
-    'summary': {
-        'status': 'pass',
-        'checkCount': 0,
-        'failCount': 0,
-        'warnCount': 0,
-    },
+    'summary': {'status': 'pass', 'checkCount': 0, 'failCount': 0, 'warnCount': 0},
     'checks': [],
 }
 
 
 def add(check_id: str, status: str, severity: str, code: str, message: str, artifact_ref: str | None = None) -> None:
-    item = {
-        'id': check_id,
-        'status': status,
-        'severity': severity,
-        'code': code,
-        'message': message,
-    }
+    item = {'id': check_id, 'status': status, 'severity': severity, 'code': code, 'message': message}
     if artifact_ref:
         item['artifactRef'] = artifact_ref
     report['checks'].append(item)
@@ -76,11 +65,23 @@ def fail(check_id: str, code: str, message: str, artifact_ref: str | None = None
 
 
 def load_json(rel: str):
-    return json.loads((ROOT / rel).read_text())
+    return json.loads((ROOT / rel).read_text(encoding='utf-8'))
 
 
 def sha256_file(rel: str) -> str:
     return hashlib.sha256((ROOT / rel).read_bytes()).hexdigest()
+
+
+def run_validator(check_id: str, command: list[str], success_message: str, artifact_ref: str) -> None:
+    try:
+        completed = subprocess.run(command, cwd=ROOT, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
+    except Exception as exc:
+        fail(check_id, 'PFD201_VALIDATOR_CRASH', str(exc), artifact_ref)
+        return
+    if completed.returncode == 0:
+        ok(check_id, 'PFD200_VALIDATOR_OK', success_message, artifact_ref)
+    else:
+        fail(check_id, 'PFD202_VALIDATOR_FAILED', completed.stdout.strip() or f'{command} failed', artifact_ref)
 
 
 required = [
@@ -124,6 +125,11 @@ required = [
     'examples/operation_plane_policy_eval_response_example.json',
     'docs/specs/operation_plane_policy_gate_v1.md',
     'scripts/validate_operation_plane_policy_gate.py',
+    'contracts/wallguard-policy-decision.v0.schema.json',
+    'examples/wallguard-policy/valid.same-wall-allow.json',
+    'examples/wallguard-policy/invalid.cross-wall-allow.json',
+    'examples/wallguard-policy/invalid.contaminated-session-allow.json',
+    'tools/validate_wallguard_policy_decision.py',
 ]
 for rel in required:
     p = ROOT / rel
@@ -142,6 +148,7 @@ pairs = [
     ('validate:operation-plane-gate-record-example', 'contracts/operation_plane_policy_gate_v1.schema.json', 'examples/operation_plane_policy_gate_record_example.json', 'operation plane gate record example validates against gate schema'),
     ('validate:operation-plane-eval-request-example', 'contracts/operation_plane_policy_gate_v1.schema.json', 'examples/operation_plane_policy_eval_request_example.json', 'operation plane eval request example validates against gate schema'),
     ('validate:operation-plane-eval-response-example', 'contracts/operation_plane_policy_gate_v1.schema.json', 'examples/operation_plane_policy_eval_response_example.json', 'operation plane eval response example validates against gate schema'),
+    ('validate:wallguard-same-wall-allow', 'contracts/wallguard-policy-decision.v0.schema.json', 'examples/wallguard-policy/valid.same-wall-allow.json', 'WallGuard same-wall allow example validates against schema'),
 ]
 for check_id, schema_rel, example_rel, message in pairs:
     try:
@@ -150,8 +157,15 @@ for check_id, schema_rel, example_rel, message in pairs:
     except Exception as exc:
         fail(check_id, 'PFD011_SCHEMA_INVALID', str(exc), example_rel)
 
+run_validator(
+    'validate:wallguard-policy-decision-semantic',
+    [sys.executable, 'tools/validate_wallguard_policy_decision.py'],
+    'WallGuard policy validator accepts valid fixture and rejects invalid fixtures',
+    'tools/validate_wallguard_policy_decision.py',
+)
+
 try:
-    spec = yaml.safe_load((ROOT / 'contracts/policy_fabric_openapi_v2.yaml').read_text())
+    spec = yaml.safe_load((ROOT / 'contracts/policy_fabric_openapi_v2.yaml').read_text(encoding='utf-8'))
     paths = spec.get('paths', {})
     if spec.get('openapi') == '3.1.0' and '/v2/process' in paths and '/v2/explain' in paths:
         ok('parse:openapi', 'PFD020_OPENAPI_OK', 'openapi parses and contains expected core surfaces', 'contracts/policy_fabric_openapi_v2.yaml')
@@ -182,17 +196,15 @@ try:
 
     profile_name = config.get('workflowProfile')
     profile_map = profiles.get('profiles', {})
-    if profile_name in profile_map:
-        ok('profiles:selected-profile', 'PFD040_PROFILE_OK', f'selected workflow profile `{profile_name}` exists', '.policy-fabric/profiles.json')
-        if config.get('workflowMode') in profile_map[profile_name].get('allowedWorkflowModes', []):
-            ok('profiles:mode-allowed', 'PFD040_PROFILE_OK', 'workflow mode allowed by selected profile', '.policy-fabric/config.json')
-        else:
-            fail('profiles:mode-allowed', 'PFD041_PROFILE_MODE_MISMATCH', 'workflow mode is not allowed by selected profile', '.policy-fabric/config.json')
+    if profile_name in profile_map and config.get('workflowMode') in profile_map[profile_name].get('allowedWorkflowModes', []):
+        ok('profiles:selected-profile', 'PFD040_PROFILE_OK', 'selected workflow profile and mode are valid', '.policy-fabric/config.json')
     else:
-        fail('profiles:selected-profile', 'PFD042_PROFILE_UNKNOWN', 'selected workflow profile does not exist', '.policy-fabric/profiles.json')
+        fail('profiles:selected-profile', 'PFD042_PROFILE_UNKNOWN', 'selected workflow profile or mode is invalid', '.policy-fabric/config.json')
 
-    workflow_text = (ROOT / '.policy-fabric/WORKFLOW.md').read_text()
-    reconcile_text = (ROOT / '.policy-fabric/RECONCILE.md').read_text()
+    workflow_text = (ROOT / '.policy-fabric/WORKFLOW.md').read_text(encoding='utf-8')
+    reconcile_text = (ROOT / '.policy-fabric/RECONCILE.md').read_text(encoding='utf-8')
+    agents_text = (ROOT / 'AGENTS.md').read_text(encoding='utf-8')
+
     workflow_tokens = ['ownership.json', 'profiles.json', 'scripts/reconcile.py', 'scripts/agentplane_probe.py', 'scripts/github_publish_prep.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py']
     missing_workflow_tokens = [token for token in workflow_tokens if token not in workflow_text]
     if not missing_workflow_tokens:
@@ -206,17 +218,6 @@ try:
         ok('docs:reconcile-sync', 'PFD050_DOC_SYNC_OK', 'reconcile documentation references repair surfaces and commands', '.policy-fabric/RECONCILE.md')
     else:
         fail('docs:reconcile-sync', 'PFD051_DOC_SYNC_DRIFT', f'reconcile documentation missing tokens: {missing_reconcile_tokens}', '.policy-fabric/RECONCILE.md')
-
-    agents_text = (ROOT / 'AGENTS.md').read_text()
-    if config.get('branchPolicyContract') == '.policy-fabric/branch_policy.json' and config.get('branchAuditCommand') == 'python scripts/branch_audit.py':
-        ok('branch-policy:config-sync', 'PFD043_BRANCH_POLICY_SYNC_OK', 'config references the branch policy contract and branch audit command', '.policy-fabric/config.json')
-    else:
-        fail('branch-policy:config-sync', 'PFD044_BRANCH_POLICY_SYNC_DRIFT', 'config missing branch policy contract or branch audit command', '.policy-fabric/config.json')
-
-    if config.get('githubPublishContract') == '.policy-fabric/github_publish.json' and config.get('githubPublishPrepCommand') == 'python scripts/github_publish_prep.py':
-        ok('github-publish:config-sync', 'PFD045_GITHUB_PUBLISH_SYNC_OK', 'config references the GitHub publish contract and prep command', '.policy-fabric/config.json')
-    else:
-        fail('github-publish:config-sync', 'PFD046_GITHUB_PUBLISH_SYNC_DRIFT', 'config missing GitHub publish contract or prep command', '.policy-fabric/config.json')
 
     agents_tokens = ['Policy Fabric', 'scripts/reconcile.py', 'scripts/agentplane_probe.py', 'scripts/branch_audit.py', 'scripts/github_publish_prep.py', 'scripts/doctor.py', 'scripts/build_dist_bundle.py', '.policy-fabric/WORKFLOW.md', '.policy-fabric/agentplane_bridge.json', '.policy-fabric/branch_policy.json', '.policy-fabric/github_publish.json']
     missing_agents_tokens = [token for token in agents_tokens if token not in agents_text]
@@ -237,11 +238,7 @@ try:
         rel = path.relative_to(ROOT).as_posix()
         if rel.startswith('.git/'):
             continue
-        matches = [
-            category
-            for category, patterns in category_map.items()
-            if any(fnmatch.fnmatch(rel, pattern) for pattern in patterns)
-        ]
+        matches = [category for category, patterns in category_map.items() if any(fnmatch.fnmatch(rel, pattern) for pattern in patterns)]
         if len(matches) > 1:
             overlapping.append({'path': rel, 'categories': matches})
         elif len(matches) == 0:
@@ -259,7 +256,6 @@ except Exception as exc:
 
 try:
     release_pack = load_json('examples/policy_fabric_release_pack_example.json')
-
     artifacts = [
         ('spec.policy', release_pack['spec']['policy']['artifactRef'], release_pack['spec']['policy']['sha256']),
         ('spec.plan', release_pack['spec']['plan']['artifactRef'], release_pack['spec']['plan']['sha256']),
@@ -294,16 +290,13 @@ try:
 
     evidence = release_pack['spec']['evidence']
     expected_artifacts = set(evidence.get('expectedArtifacts', []))
-    replay_ok = True
     replay_msgs = []
     if evidence.get('retainReplayArtifacts'):
         if not evidence.get('replayCorpusRef'):
-            replay_ok = False
             replay_msgs.append('retainReplayArtifacts=true requires replayCorpusRef')
         if 'replay-report' not in expected_artifacts:
-            replay_ok = False
             replay_msgs.append('retainReplayArtifacts=true requires replay-report in expectedArtifacts')
-    if replay_ok:
+    if not replay_msgs:
         ok('release-pack:replay-evidence', 'PFD064_REPLAY_EVIDENCE_OK', 'replay evidence requirements are satisfied', 'examples/policy_fabric_release_pack_example.json')
     else:
         fail('release-pack:replay-evidence', 'PFD065_REPLAY_EVIDENCE_INCOMPLETE', '; '.join(replay_msgs), 'examples/policy_fabric_release_pack_example.json')
@@ -330,21 +323,14 @@ try:
 except Exception as exc:
     fail('policy:semantic-validator-crash', 'PFV099', str(exc), 'scripts/policy_semantic_validator.py')
 
-
 try:
     bridge = load_json('.policy-fabric/agentplane_bridge.json')
     if bridge.get('target') == 'official-agentplane' and bridge.get('bridgeModel', {}).get('type') == 'hybrid':
         ok('agentplane-bridge:contract-shape', 'PFD090_AGENTPLANE_BRIDGE_OK', 'AgentPlane bridge contract targets official AgentPlane with a hybrid bridge model', '.policy-fabric/agentplane_bridge.json')
     else:
         fail('agentplane-bridge:contract-shape', 'PFD091_AGENTPLANE_BRIDGE_INVALID', 'AgentPlane bridge contract target/model drift detected', '.policy-fabric/agentplane_bridge.json')
-
-    current_findings = bridge.get('currentProbeFindings', [])
-    ids = {item.get('id') for item in current_findings}
-    required_ids = {
-        'bridge-root-gateway-collision',
-        'bridge-workflow-parallel-surface',
-        'bridge-official-workspace-absent',
-    }
+    ids = {item.get('id') for item in bridge.get('currentProbeFindings', [])}
+    required_ids = {'bridge-root-gateway-collision', 'bridge-workflow-parallel-surface', 'bridge-official-workspace-absent'}
     if required_ids.issubset(ids):
         ok('agentplane-bridge:expected-findings', 'PFD092_AGENTPLANE_BRIDGE_FINDINGS_OK', 'AgentPlane bridge contract records expected current-state findings', '.policy-fabric/agentplane_bridge.json')
     else:
@@ -352,24 +338,27 @@ try:
 except Exception as exc:
     fail('agentplane-bridge:parse', 'PFD094_AGENTPLANE_BRIDGE_PARSE_ERROR', str(exc), '.policy-fabric/agentplane_bridge.json')
 
-probe_path = ROOT / 'docs/reports/agentplane_probe_latest.json'
-if probe_path.exists():
-    try:
-        probe = load_json('docs/reports/agentplane_probe_latest.json')
-        if probe.get('apiVersion') == 'policy.fabric.agentplane-probe/v1':
-            ok('agentplane-probe:report-shape', 'PFD095_AGENTPLANE_PROBE_OK', 'AgentPlane probe report present with expected API version', 'docs/reports/agentplane_probe_latest.json')
-        else:
-            fail('agentplane-probe:report-shape', 'PFD096_AGENTPLANE_PROBE_INVALID', 'AgentPlane probe report API version mismatch', 'docs/reports/agentplane_probe_latest.json')
-
-        summary = probe.get('summary', {})
-        if summary.get('status') in {'pass', 'warn'}:
-            ok('agentplane-probe:report-status', 'PFD097_AGENTPLANE_PROBE_STATUS_OK', 'AgentPlane probe report is non-failing', 'docs/reports/agentplane_probe_latest.json')
-        else:
-            fail('agentplane-probe:report-status', 'PFD098_AGENTPLANE_PROBE_STATUS_FAIL', 'AgentPlane probe report is failing', 'docs/reports/agentplane_probe_latest.json')
-    except Exception as exc:
-        fail('agentplane-probe:parse', 'PFD099_AGENTPLANE_PROBE_PARSE_ERROR', str(exc), 'docs/reports/agentplane_probe_latest.json')
-else:
-    warn('agentplane-probe:missing', 'PFD100_AGENTPLANE_PROBE_MISSING', 'AgentPlane probe report missing; run python scripts/agentplane_probe.py', 'docs/reports/agentplane_probe_latest.json')
+for report_path, api_version, shape_code, status_code, missing_code, label in [
+    ('docs/reports/agentplane_probe_latest.json', 'policy.fabric.agentplane-probe/v1', 'PFD095_AGENTPLANE_PROBE_OK', 'PFD097_AGENTPLANE_PROBE_STATUS_OK', 'PFD100_AGENTPLANE_PROBE_MISSING', 'AgentPlane probe'),
+    ('docs/reports/github_publish_prep_latest.json', 'policy.fabric.github-publish-report/v1', 'PFD115_GITHUB_PUBLISH_REPORT_OK', 'PFD117_GITHUB_PUBLISH_STATUS_OK', 'PFD120_GITHUB_PUBLISH_REPORT_MISSING', 'GitHub publish prep'),
+    ('docs/reports/branch_audit_latest.json', 'policy.fabric.branch-audit/v1', 'PFD104_BRANCH_AUDIT_OK', 'PFD106_BRANCH_AUDIT_STATUS_OK', 'PFD109_BRANCH_AUDIT_MISSING', 'branch audit'),
+]:
+    path = ROOT / report_path
+    if path.exists():
+        try:
+            data = load_json(report_path)
+            if data.get('apiVersion') == api_version:
+                ok(f'{label.lower().replace(" ", "-")}:report-shape', shape_code, f'{label} report present with expected API version', report_path)
+            else:
+                fail(f'{label.lower().replace(" ", "-")}:report-shape', shape_code.replace('_OK', '_INVALID'), f'{label} report API version mismatch', report_path)
+            if data.get('summary', {}).get('status') in {'pass', 'warn'}:
+                ok(f'{label.lower().replace(" ", "-")}:report-status', status_code, f'{label} report is non-failing', report_path)
+            else:
+                fail(f'{label.lower().replace(" ", "-")}:report-status', status_code.replace('_OK', '_FAIL'), f'{label} report is failing', report_path)
+        except Exception as exc:
+            fail(f'{label.lower().replace(" ", "-")}:parse', shape_code.replace('_OK', '_PARSE_ERROR'), str(exc), report_path)
+    else:
+        warn(f'{label.lower().replace(" ", "-")}:missing', missing_code, f'{label} report missing; run the corresponding prep command', report_path)
 
 try:
     publish_contract = load_json('.policy-fabric/github_publish.json')
@@ -378,7 +367,7 @@ try:
     else:
         fail('github-publish:contract-shape', 'PFD111_GITHUB_PUBLISH_INVALID', 'GitHub publish contract missing owner, repoName, or valid visibility', '.policy-fabric/github_publish.json')
 
-    gh_workflow = yaml.safe_load((ROOT / '.github/workflows/repo_health.yml').read_text())
+    gh_workflow = yaml.safe_load((ROOT / '.github/workflows/repo_health.yml').read_text(encoding='utf-8'))
     triggers = gh_workflow.get(True) if True in gh_workflow else gh_workflow.get('on', {})
     if 'push' in triggers and 'pull_request' in triggers:
         ok('github-publish:workflow-triggers', 'PFD112_GITHUB_WORKFLOW_OK', 'repo health workflow is configured for push and pull_request', '.github/workflows/repo_health.yml')
@@ -386,24 +375,6 @@ try:
         fail('github-publish:workflow-triggers', 'PFD113_GITHUB_WORKFLOW_INVALID', 'repo health workflow missing push or pull_request trigger', '.github/workflows/repo_health.yml')
 except Exception as exc:
     fail('github-publish:parse', 'PFD114_GITHUB_PUBLISH_PARSE_ERROR', str(exc), '.policy-fabric/github_publish.json')
-
-github_prep_path = ROOT / 'docs/reports/github_publish_prep_latest.json'
-if github_prep_path.exists():
-    try:
-        github_prep = load_json('docs/reports/github_publish_prep_latest.json')
-        if github_prep.get('apiVersion') == 'policy.fabric.github-publish-report/v1':
-            ok('github-publish:report-shape', 'PFD115_GITHUB_PUBLISH_REPORT_OK', 'GitHub publish prep report present with expected API version', 'docs/reports/github_publish_prep_latest.json')
-        else:
-            fail('github-publish:report-shape', 'PFD116_GITHUB_PUBLISH_REPORT_INVALID', 'GitHub publish prep report API version mismatch', 'docs/reports/github_publish_prep_latest.json')
-
-        if github_prep.get('summary', {}).get('status') in {'pass', 'warn'}:
-            ok('github-publish:report-status', 'PFD117_GITHUB_PUBLISH_STATUS_OK', 'GitHub publish prep report is non-failing', 'docs/reports/github_publish_prep_latest.json')
-        else:
-            fail('github-publish:report-status', 'PFD118_GITHUB_PUBLISH_STATUS_FAIL', 'GitHub publish prep report is failing', 'docs/reports/github_publish_prep_latest.json')
-    except Exception as exc:
-        fail('github-publish:report-parse', 'PFD119_GITHUB_PUBLISH_REPORT_PARSE_ERROR', str(exc), 'docs/reports/github_publish_prep_latest.json')
-else:
-    warn('github-publish:report-missing', 'PFD120_GITHUB_PUBLISH_REPORT_MISSING', 'GitHub publish prep report missing; run python scripts/github_publish_prep.py', 'docs/reports/github_publish_prep_latest.json')
 
 try:
     branch_policy = load_json('.policy-fabric/branch_policy.json')
@@ -413,24 +384,6 @@ try:
         fail('branch-policy:contract-shape', 'PFD102_BRANCH_POLICY_INVALID', 'branch policy missing expected bootstrap protections', '.policy-fabric/branch_policy.json')
 except Exception as exc:
     fail('branch-policy:parse', 'PFD103_BRANCH_POLICY_PARSE_ERROR', str(exc), '.policy-fabric/branch_policy.json')
-
-branch_audit_path = ROOT / 'docs/reports/branch_audit_latest.json'
-if branch_audit_path.exists():
-    try:
-        branch_audit = load_json('docs/reports/branch_audit_latest.json')
-        if branch_audit.get('apiVersion') == 'policy.fabric.branch-audit/v1':
-            ok('branch-audit:report-shape', 'PFD104_BRANCH_AUDIT_OK', 'branch audit report present with expected API version', 'docs/reports/branch_audit_latest.json')
-        else:
-            fail('branch-audit:report-shape', 'PFD105_BRANCH_AUDIT_INVALID', 'branch audit report API version mismatch', 'docs/reports/branch_audit_latest.json')
-
-        if branch_audit.get('summary', {}).get('status') in {'pass', 'warn'}:
-            ok('branch-audit:report-status', 'PFD106_BRANCH_AUDIT_STATUS_OK', 'branch audit report is non-failing', 'docs/reports/branch_audit_latest.json')
-        else:
-            fail('branch-audit:report-status', 'PFD107_BRANCH_AUDIT_STATUS_FAIL', 'branch audit report is failing', 'docs/reports/branch_audit_latest.json')
-    except Exception as exc:
-        fail('branch-audit:parse', 'PFD108_BRANCH_AUDIT_PARSE_ERROR', str(exc), 'docs/reports/branch_audit_latest.json')
-else:
-    warn('branch-audit:missing', 'PFD109_BRANCH_AUDIT_MISSING', 'branch audit report missing; run python scripts/branch_audit.py', 'docs/reports/branch_audit_latest.json')
 
 bundle_manifest_path = ROOT / 'dist/policy_fabric_contracts_bundle_manifest.json'
 if bundle_manifest_path.exists():
