@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.1",
+  "kind": "workspace_context_policy_decision",
+  "decision_id": "wcpd-invalid-promote-allow-001",
+  "request": {
+    "request_id": "workspace-context-request-002",
+    "operation": "workspace.context.recall.promote",
+    "risk_class": "moderate",
+    "requested_by": "SocioProphet/memory-mesh",
+    "sensitivity": "internal",
+    "release_mode": "none",
+    "recall_mode": "approved-writeback",
+    "workroom_ref": "workroom://workroom-demo-0001",
+    "context_graph_ref": "ctxgraph-demo-0001",
+    "authority_binding_ref": "workspace-context-authority-binding-demo-0001"
+  },
+  "decision": {
+    "result": "allow",
+    "reason": "This should fail because recall promotion requires review or escalation in v0."
+  },
+  "rule_refs": [
+    "policy-fabric:workspace-context-v0:invalid-promote"
+  ],
+  "evidence_refs": [
+    "memory-mesh://workspace-recall-promotion-demo-0001"
+  ],
+  "audit_payload": {
+    "decision_ref": "wcpd-invalid-promote-allow-001",
+    "request_ref": "workspace-context-request-002",
+    "result": "allow",
+    "summary": "Invalid promotion allow fixture."
+  }
+}
