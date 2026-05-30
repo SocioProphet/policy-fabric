@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "kind": "workspace_context_policy_decision",
+  "decision_id": "wcpd-invalid-missing-evidence-allow-001",
+  "request": {
+    "request_id": "workspace-context-request-003",
+    "operation": "workspace.context.share",
+    "risk_class": "low",
+    "requested_by": "SocioProphet/prophet-workspace",
+    "sensitivity": "internal",
+    "release_mode": "public",
+    "recall_mode": "none",
+    "workroom_ref": "workroom://workroom-demo-0001",
+    "context_graph_ref": "ctxgraph-demo-0001",
+    "authority_binding_ref": "workspace-context-authority-binding-demo-0001"
+  },
+  "decision": {
+    "result": "allow",
+    "reason": "This should fail because allow requires evidence and public release is restricted in v0."
+  },
+  "rule_refs": [
+    "policy-fabric:workspace-context-v0:invalid-missing-evidence"
+  ],
+  "evidence_refs": [],
+  "audit_payload": {
+    "decision_ref": "wcpd-invalid-missing-evidence-allow-001",
+    "request_ref": "workspace-context-request-003",
+    "result": "allow",
+    "summary": "Invalid missing evidence allow fixture."
+  }
+}
