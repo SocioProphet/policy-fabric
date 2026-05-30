@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SocioProphet/policy-fabric/contracts/workspace-context-policy-decision.v0.schema.json",
+  "title": "Workspace Context Policy Decision v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "decision_id",
+    "request",
+    "decision",
+    "rule_refs",
+    "evidence_refs",
+    "audit_payload"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "kind": {"const": "workspace_context_policy_decision"},
+    "decision_id": {"type": "string", "minLength": 3},
+    "request": {"$ref": "#/$defs/request"},
+    "decision": {"$ref": "#/$defs/decision"},
+    "rule_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "evidence_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "runtime_constraints": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/runtimeConstraint"}
+    },
+    "audit_payload": {"$ref": "#/$defs/auditPayload"}
+  },
+  "$defs": {
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_id", "operation", "risk_class", "requested_by", "sensitivity", "release_mode", "recall_mode"],
+      "properties": {
+        "request_id": {"type": "string", "minLength": 1},
+        "operation": {
+          "enum": [
+            "workspace.context.capture",
+            "workspace.context.project",
+            "workspace.context.share",
+            "workspace.context.recall.propose",
+            "workspace.context.recall.promote",
+            "workspace.context.continuation.record"
+          ]
+        },
+        "risk_class": {"enum": ["low", "moderate", "high", "critical"]},
+        "requested_by": {"type": "string", "minLength": 1},
+        "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+        "release_mode": {"enum": ["none", "internal", "recipient-bound", "public"]},
+        "recall_mode": {"enum": ["none", "candidate-only", "review-only", "approved-writeback"]},
+        "workroom_ref": {"type": "string"},
+        "context_graph_ref": {"type": "string"},
+        "authority_binding_ref": {"type": "string"}
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "reason"],
+      "properties": {
+        "result": {"enum": ["allow", "deny", "modify", "escalate"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "runtimeConstraint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["constraint_id", "constraint_type", "description"],
+      "properties": {
+        "constraint_id": {"type": "string", "minLength": 1},
+        "constraint_type": {"enum": ["scope_limit", "human_review", "audit_required", "no_public_release", "no_durable_writeback"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "auditPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_ref", "request_ref", "result", "summary"],
+      "properties": {
+        "decision_ref": {"type": "string", "minLength": 1},
+        "request_ref": {"type": "string", "minLength": 1},
+        "result": {"enum": ["allow", "deny", "modify", "escalate"]},
+        "summary": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
