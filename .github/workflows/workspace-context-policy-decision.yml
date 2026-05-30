@@ -1,0 +1,33 @@
+name: workspace-context-policy-decision
+
+on:
+  pull_request:
+    paths:
+      - "docs/workspace-context-policy-decision.md"
+      - "contracts/workspace-context-policy-decision.v0.schema.json"
+      - "examples/workspace-context-policy/**"
+      - "tools/validate_workspace_context_policy_decision.py"
+      - ".github/workflows/workspace-context-policy-decision.yml"
+      - "Makefile"
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/workspace-context-policy-decision.md"
+      - "contracts/workspace-context-policy-decision.v0.schema.json"
+      - "examples/workspace-context-policy/**"
+      - "tools/validate_workspace_context_policy_decision.py"
+      - ".github/workflows/workspace-context-policy-decision.yml"
+      - "Makefile"
+  workflow_dispatch:
+
+jobs:
+  validate-workspace-context-policy-decision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate Workspace Context policy decision
+        run: make workspace-context-policy-decision-validate
