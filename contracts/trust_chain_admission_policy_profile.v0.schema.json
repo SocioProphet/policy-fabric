@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.dev/policy-fabric/trust-chain-admission-policy-profile.v0.schema.json",
+  "title": "Trust Chain Admission Policy Profile v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile_id", "scope", "required_evidence", "posture_requirements", "exception_policy", "decision_policy", "non_claims"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "profile_id": {"type": "string", "pattern": "^policy://trust-chain/[a-z0-9._/-]+$"},
+    "description": {"type": "string"},
+    "scope": {"type": "object", "additionalProperties": false, "required": ["environment", "risk_tier", "artifact_types"], "properties": {"environment": {"enum": ["preview", "staging", "production"]}, "risk_tier": {"enum": ["internal", "enterprise", "regulated_enterprise"]}, "artifact_types": {"type": "array", "items": {"enum": ["RuntimeAsset", "PackageArtifact", "ModelArtifact", "AgentArtifact", "ToolArtifact", "WorkflowArtifact"]}, "minItems": 1, "uniqueItems": true}}},
+    "required_evidence": {"type": "object", "additionalProperties": false, "required": ["sbom_ref", "vex_ref", "lockfile_ref", "signature_ref", "scan_record_ref", "policy_profile_ref"], "properties": {"sbom_ref": {"type": "boolean"}, "vex_ref": {"type": "boolean"}, "lockfile_ref": {"type": "boolean"}, "signature_ref": {"type": "boolean"}, "scan_record_ref": {"type": "boolean"}, "policy_profile_ref": {"type": "boolean"}, "agentplane_validation_ref": {"type": "boolean"}, "runtime_receipt_ref": {"type": "boolean"}, "promotion_evidence_ref": {"type": "boolean"}, "rollback_evidence_ref": {"type": "boolean"}}},
+    "posture_requirements": {"type": "object", "additionalProperties": false, "required": ["vulnerability_posture", "patch_posture", "source_channel_trust", "promotion_posture"], "properties": {"vulnerability_posture": {"enum": ["no_known_blocking_findings", "review_required", "not_evaluated"]}, "patch_posture": {"enum": ["current_for_scope", "review_required", "not_evaluated"]}, "source_channel_trust": {"enum": ["trusted", "mixed_allowed_with_review", "unknown_requires_review"]}, "promotion_posture": {"enum": ["preview_allowed", "production_allowed", "review_required"]}}},
+    "exception_policy": {"type": "object", "additionalProperties": false, "required": ["allowed", "requires_authority", "requires_expiration", "requires_compensating_control", "requires_review_evidence"], "properties": {"allowed": {"type": "boolean"}, "requires_authority": {"type": "boolean"}, "requires_expiration": {"type": "boolean"}, "requires_compensating_control": {"type": "boolean"}, "requires_review_evidence": {"type": "boolean"}, "max_duration_days": {"type": "integer", "minimum": 1}}},
+    "decision_policy": {"type": "object", "additionalProperties": false, "required": ["missing_required_evidence", "restricted_posture", "reviewable_posture", "satisfied"], "properties": {"missing_required_evidence": {"enum": ["deny", "escalate", "quarantine"]}, "restricted_posture": {"enum": ["deny", "escalate", "quarantine"]}, "reviewable_posture": {"enum": ["escalate", "allow_with_context", "provisional"]}, "satisfied": {"enum": ["allow", "allow_with_context"]}}},
+    "example_exception": {"type": "object", "additionalProperties": false, "required": ["authority", "expires_at", "compensating_control", "review_evidence_ref"], "properties": {"authority": {"type": "string"}, "expires_at": {"type": "string"}, "compensating_control": {"type": "string"}, "review_evidence_ref": {"type": "string"}}},
+    "non_claims": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+  }
+}
