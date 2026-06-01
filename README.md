@@ -40,6 +40,38 @@ Current state: active buildout, with official AgentPlane successfully integrated
 
 The repository is usable now, but the platform is still being shaped through semantic tranches. Expect active refinement of schemas, validator logic, examples, and release semantics.
 
+## Prophet Trust Chain admission policy profiles
+
+Policy Fabric owns the policy-profile slice of Prophet Trust Chain. The platform standard and admission contract live in `SocioProphet/prophet-platform`:
+
+- `docs/standards/PROPHET_TRUST_CHAIN_V0.md`
+- `docs/TRUST_CHAIN_ADMISSION_CONTRACT.md`
+- `docs/standards/PROPHET_TRUST_CHAIN_IMPLEMENTATION_MAP.md`
+
+This repo now carries machine-readable admission policy profiles for the first RuntimeAsset lane:
+
+- preview-scope regulated-enterprise admission;
+- production-scope regulated-enterprise admission;
+- invalid production fixture proving fail-closed semantic validation.
+
+Relevant files:
+
+- `contracts/trust_chain_admission_policy_profile.v0.schema.json`
+- `examples/trust-chain/trust-chain-admission-policy.preview.example.json`
+- `examples/trust-chain/trust-chain-admission-policy.production.example.json`
+- `examples/trust-chain/trust-chain-admission-policy.production.invalid.json`
+- `tools/validate_trust_chain_admission_policy.py`
+
+Validate locally:
+
+```bash
+make trust-chain-admission-policy-validate
+```
+
+Production regulated-enterprise policy requires all core evidence flags: SBOM, VEX, lockfile, signature, scan record, policy profile, AgentPlane validation, runtime receipt, promotion evidence, and rollback evidence. It also requires strict posture: no known blocking findings, current-for-scope patch posture, trusted source-channel posture, and production-allowed promotion posture.
+
+Boundary: Policy Fabric defines policy requirements, exception requirements, and decision semantics. It does not perform live scanning, certify runtime production readiness by itself, or replace Lattice Forge, Guardrail Fabric, AgentPlane, Model Governance Ledger, or Prophet Platform admission authority.
+
 ## SourceOS repo context policy
 
 Policy Fabric now carries the external policy contract for `sourceos.repo_context.read_only`, the policy profile used by Smart Tree / `sourceos-context` in the Lampstand, Sherlock, Memory Mesh, and AgentPlane integration lane.
