@@ -1,0 +1,207 @@
+openapi: "3.1.0"
+info:
+  title: Constitutional Policy Engine v0.1
+  version: "0.1.0"
+  description: |
+    Stub contract for the A1/A3/A4/A5/A7 policy functions.
+    Full OpenAPI spec to follow as a separate artifact once connector
+    upload is unblocked. This stub is sufficient for PR review of the
+    contract shape.
+
+    Non-claims:
+    - This stub does not constitute a deployed API contract.
+    - Endpoint paths and request/response schemas are indicative, not
+      binding, pending full spec upload.
+    - No runtime execution is claimed by the presence of this stub.
+    - Response fields intentionally mirror the current Python reference
+      result dataclasses, which return `passed: boolean` rather than a
+      string verdict enum.
+    - A2 and A6 are not implemented in this v0.1 per-axiom numeric stub.
+
+paths:
+  /axioms/{axiom_id}:
+    post:
+      summary: "Evaluate one landed constitutional axiom check"
+      operationId: evaluateAxiom
+      parameters:
+        - name: axiom_id
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [A1, A3, A4, A5, A7]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/A1Request"
+                - $ref: "#/components/schemas/A3Request"
+                - $ref: "#/components/schemas/A4Request"
+                - $ref: "#/components/schemas/A5Request"
+                - $ref: "#/components/schemas/A7Request"
+      responses:
+        "200":
+          description: Per-axiom evaluation result
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/A1Response"
+                  - $ref: "#/components/schemas/A3Response"
+                  - $ref: "#/components/schemas/A4Response"
+                  - $ref: "#/components/schemas/A5Response"
+                  - $ref: "#/components/schemas/A7Response"
+
+components:
+  schemas:
+    A1Request:
+      type: object
+      description: "Stub for check_A1_coherence(harmonics, ell_star, threshold=0.85)."
+      properties:
+        harmonics:
+          type: array
+          items:
+            type: object
+        ell_star:
+          type: integer
+          minimum: 0
+        threshold:
+          type: number
+          default: 0.85
+      required: [harmonics, ell_star]
+
+    A1Response:
+      type: object
+      description: "Mirrors A1Result."
+      properties:
+        passed:
+          type: boolean
+        coherence_share:
+          type: number
+      required: [passed, coherence_share]
+
+    A3Request:
+      type: object
+      description: "Stub for check_A3_identity(bins_a, weights_a, bins_b, weights_b, threshold=0.1, n_projections=64)."
+      properties:
+        bins_a:
+          type: array
+          items:
+            type: array
+            items: { type: number }
+        weights_a:
+          type: array
+          items: { type: number }
+        bins_b:
+          type: array
+          items:
+            type: array
+            items: { type: number }
+        weights_b:
+          type: array
+          items: { type: number }
+        threshold:
+          type: number
+          default: 0.1
+        n_projections:
+          type: integer
+          default: 64
+      required: [bins_a, weights_a, bins_b, weights_b]
+
+    A3Response:
+      type: object
+      description: "Mirrors A3Result."
+      properties:
+        passed:
+          type: boolean
+        d_id:
+          type: number
+        method_used:
+          type: string
+      required: [passed, d_id, method_used]
+
+    A4Request:
+      type: object
+      description: "Stub for check_A4_spawn(jacobian, gamma_min=0.15)."
+      properties:
+        jacobian:
+          type: array
+          items:
+            type: array
+            items: { type: number }
+        gamma_min:
+          type: number
+          default: 0.15
+      required: [jacobian]
+
+    A4Response:
+      type: object
+      description: "Mirrors A4Result."
+      properties:
+        passed:
+          type: boolean
+        spectral_radius:
+          type: number
+        gamma:
+          type: number
+      required: [passed, spectral_radius, gamma]
+
+    A5Request:
+      type: object
+      description: "Stub for check_A5_rate_distortion(D_current, capacity_sum_nats_per_sec, source_entropy_rate, distortion_kind='deontic_01')."
+      properties:
+        D_current:
+          type: number
+          minimum: 0
+        capacity_sum_nats_per_sec:
+          type: number
+          minimum: 0
+        source_entropy_rate:
+          type: number
+          minimum: 0
+        distortion_kind:
+          type: string
+          enum: [deontic_01, quadratic]
+          default: deontic_01
+      required: [D_current, capacity_sum_nats_per_sec, source_entropy_rate]
+
+    A5Response:
+      type: object
+      description: "Mirrors A5Result."
+      properties:
+        passed:
+          type: boolean
+        R_of_D:
+          type: number
+        headroom:
+          type: number
+      required: [passed, R_of_D, headroom]
+
+    A7Request:
+      type: object
+      description: "Stub for check_A7_lyapunov(times, lyapunov, alpha=0.05)."
+      properties:
+        times:
+          type: array
+          items: { type: number }
+        lyapunov:
+          type: array
+          items: { type: number }
+        alpha:
+          type: number
+          default: 0.05
+      required: [times, lyapunov]
+
+    A7Response:
+      type: object
+      description: "Mirrors A7Result. nonincrease_indicator is a placeholder threshold indicator, not a statistical p-value."
+      properties:
+        passed:
+          type: boolean
+        slope:
+          type: number
+        nonincrease_indicator:
+          type: number
+      required: [passed, slope, nonincrease_indicator]

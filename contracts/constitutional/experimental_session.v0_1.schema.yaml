@@ -1,0 +1,6 @@
+'$schema': https://json-schema.org/draft/2020-12/schema
+'$id': https://socioprophet.io/schemas/experimental_session.v0_1.json
+title: Deprecated Experimental Session Alias
+description: Deprecated alias retained for PR continuity. Use experimental_session_core.v0_1.schema.yaml for the minimal session core. The full experimental-session schema remains a follow-up artifact.
+deprecated: true
+'$ref': https://socioprophet.io/schemas/experimental_session_core.v0_1.json

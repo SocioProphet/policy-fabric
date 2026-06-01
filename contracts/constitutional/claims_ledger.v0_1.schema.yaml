@@ -1,0 +1,62 @@
+'$schema': https://json-schema.org/draft/2020-12/schema
+'$id': https://socioprophet.io/schemas/claims_ledger.v0_1.json
+title: Claim Record
+description: Claim record mapped to evidence IDs, methods, citations, status, confidence, predicates, and falsification protocol.
+type: object
+required:
+  - claim_id
+  - statement
+  - status
+  - confidence
+  - predicates
+additionalProperties: false
+properties:
+  claim_id:
+    type: string
+    format: uuid
+  statement:
+    type: string
+  predicates:
+    type: array
+    description: Machine-readable subset of LTL/FOL for later SMT dispatch.
+    items:
+      type: object
+      required: [op, operands]
+      properties:
+        op:
+          type: string
+          enum: [forall, exists, implies, and, or, not, G, F, X, U, leq, geq, eq, in_range]
+        operands:
+          type: array
+  supports:
+    type: array
+    items: {type: string, format: uuid}
+  refutes:
+    type: array
+    items: {type: string, format: uuid}
+  method:
+    type: string
+    enum: [analytical, simulation, experiment, literature, derivation]
+  citations:
+    type: array
+    items: {type: string}
+  status:
+    type: string
+    enum: [conjecture, supported, refuted, pending, withdrawn]
+  confidence:
+    type: number
+    minimum: 0
+    maximum: 1
+  uaibb_axiom_ref:
+    type: string
+    enum: [A1, A2, A3, A4, A5, A6, A7, none]
+  falsification_protocol:
+    type: object
+    properties:
+      test: {type: string}
+      decision_rule: {type: string}
+      required_n: {type: integer, minimum: 1}
+      alpha: {type: number, minimum: 0, maximum: 1}
+      preregistration_hash:
+        type: string
+        pattern: '^[a-f0-9]{64}$'

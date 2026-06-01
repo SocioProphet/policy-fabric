@@ -1,0 +1,94 @@
+'$schema': https://json-schema.org/draft/2020-12/schema
+'$id': https://socioprophet.io/schemas/agent_identity.v0_1.json
+title: SAI Agent Identity Record
+description: Identity record for immutable traits, public-law commitments, self-model distribution, and spawn lineage.
+type: object
+required:
+  - agent_id
+  - did
+  - kind
+  - immutable_traits
+  - self_model_distribution
+  - spawn_lineage
+additionalProperties: false
+properties:
+  agent_id:
+    type: string
+    format: uuid
+  did:
+    type: string
+  kind:
+    type: string
+    enum: [user, SAI, UAIBB_shell, external]
+  immutable_traits:
+    type: object
+    additionalProperties:
+      type: [string, number, boolean]
+  public_law_commitments:
+    type: array
+    items:
+      type: object
+      required: [commitment_id, statement, ltl]
+      properties:
+        commitment_id: {type: string, format: uuid}
+        statement: {type: string}
+        ltl: {type: string}
+        scope:
+          type: string
+          enum: [self, cohort, mesh, global]
+  self_model_distribution:
+    type: object
+    required: [bins, weights]
+    properties:
+      bins:
+        type: array
+        items:
+          type: array
+          items: {type: number}
+      weights:
+        type: array
+        items: {type: number, minimum: 0}
+      dim:
+        type: integer
+        minimum: 1
+      encoding:
+        type: string
+        enum: [sliced_wasserstein, full_histogram, kernel_density]
+  spawn_lineage:
+    type: object
+    required: [parent_ids, generation, spectral_radius]
+    properties:
+      parent_ids:
+        type: array
+        items: {type: string, format: uuid}
+      generation:
+        type: integer
+        minimum: 0
+      spectral_radius:
+        type: number
+        minimum: 0
+      margin_gamma:
+        type: number
+        minimum: 0
+  coherence:
+    type: object
+    properties:
+      ell_star:
+        type: integer
+        minimum: 0
+      coherence_share:
+        type: number
+        minimum: 0
+        maximum: 1
+  comms_budget:
+    type: object
+    properties:
+      R_of_D:
+        type: number
+        minimum: 0
+      capacity_sum:
+        type: number
+        minimum: 0
+      D_current:
+        type: number
+        minimum: 0
