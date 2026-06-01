@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "profile_id": "policy://trust-chain/dependency-admission/regulated-enterprise-production-invalid",
+  "description": "Invalid production-scope RuntimeAsset profile proving fail-closed policy validation.",
+  "scope": {
+    "environment": "production",
+    "risk_tier": "regulated_enterprise",
+    "artifact_types": ["RuntimeAsset"]
+  },
+  "required_evidence": {
+    "sbom_ref": true,
+    "vex_ref": false,
+    "lockfile_ref": true,
+    "signature_ref": true,
+    "scan_record_ref": true,
+    "policy_profile_ref": true,
+    "agentplane_validation_ref": false,
+    "runtime_receipt_ref": false,
+    "promotion_evidence_ref": false,
+    "rollback_evidence_ref": false
+  },
+  "posture_requirements": {
+    "vulnerability_posture": "review_required",
+    "patch_posture": "review_required",
+    "source_channel_trust": "mixed_allowed_with_review",
+    "promotion_posture": "review_required"
+  },
+  "exception_policy": {
+    "allowed": true,
+    "requires_authority": true,
+    "requires_expiration": false,
+    "requires_compensating_control": true,
+    "requires_review_evidence": true,
+    "max_duration_days": 30
+  },
+  "decision_policy": {
+    "missing_required_evidence": "escalate",
+    "restricted_posture": "escalate",
+    "reviewable_posture": "allow_with_context",
+    "satisfied": "allow"
+  },
+  "non_claims": [
+    "This invalid fixture is expected to fail semantic validation.",
+    "Production policy must not pass with missing VEX, AgentPlane validation, runtime receipt, promotion evidence, rollback evidence, or expiration requirements."
+  ]
+}
