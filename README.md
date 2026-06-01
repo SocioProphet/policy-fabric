@@ -7,6 +7,7 @@ Policy Fabric is a governed platform for authoring, validating, packaging, and r
 - [Quickstart](docs/QUICKSTART.md)
 - [Architecture Overview](docs/ARCHITECTURE_OVERVIEW.md)
 - [Trust and Security Model](docs/TRUST_AND_SECURITY_MODEL.md)
+- [Agent Harness Policy Gate Model](docs/specs/agent-harness-policy-gates.md)
 - [Support](SUPPORT.md)
 - [FAQ](docs/FAQ.md)
 
