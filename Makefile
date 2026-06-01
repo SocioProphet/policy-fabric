@@ -1,6 +1,6 @@
-.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate governed-action-policy-decision-validate workspace-context-policy-decision-validate wallguard-policy-decision-validate agent-harness-policy-gate-validate policy-fabric-cancellation-binding-tier2-binding-ci
+.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate trust-chain-admission-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate governed-action-policy-decision-validate workspace-context-policy-decision-validate wallguard-policy-decision-validate agent-harness-policy-gate-validate policy-fabric-cancellation-binding-tier2-binding-ci
 
-validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate governed-action-policy-decision-validate workspace-context-policy-decision-validate wallguard-policy-decision-validate agent-harness-policy-gate-validate policy-fabric-cancellation-binding-tier2-binding-ci
+validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate trust-chain-admission-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate governed-action-policy-decision-validate workspace-context-policy-decision-validate wallguard-policy-decision-validate agent-harness-policy-gate-validate policy-fabric-cancellation-binding-tier2-binding-ci
 	@echo "OK: validate"
 
 operations-decision-smoke:
@@ -28,6 +28,10 @@ lattice-runtime-profile-policy-subjects-validate:
 
 lattice-runtime-promotion-policy-validate:
 	python3 tools/validate_lattice_runtime_promotion_policy.py
+
+trust-chain-admission-policy-validate:
+	python3 -m pip install --user jsonschema >/dev/null
+	python3 tools/validate_trust_chain_admission_policy.py
 
 diff-hygiene-gate-validate:
 	python3 tools/validate_diff_hygiene_gate.py
