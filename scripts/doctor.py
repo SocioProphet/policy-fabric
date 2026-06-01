@@ -83,6 +83,25 @@ def sha256_file(rel: str) -> str:
     return hashlib.sha256((ROOT / rel).read_bytes()).hexdigest()
 
 
+def run_validator(check_id: str, command: list[str], success_message: str, artifact_ref: str) -> None:
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            check=False,
+        )
+    except Exception as exc:
+        fail(check_id, 'PFD201_VALIDATOR_CRASH', str(exc), artifact_ref)
+        return
+    if completed.returncode == 0:
+        ok(check_id, 'PFD200_VALIDATOR_OK', success_message, artifact_ref)
+    else:
+        fail(check_id, 'PFD202_VALIDATOR_FAILED', completed.stdout.strip() or f'{command} failed', artifact_ref)
+
+
 required = [
     'contracts/policy_fabric_policy_v2.schema.json',
     'contracts/policy_fabric_execution_plan_ir_v1.schema.json',
@@ -124,6 +143,11 @@ required = [
     'examples/operation_plane_policy_eval_response_example.json',
     'docs/specs/operation_plane_policy_gate_v1.md',
     'scripts/validate_operation_plane_policy_gate.py',
+    'contracts/wallguard-policy-decision.v0.schema.json',
+    'examples/wallguard-policy/valid.same-wall-allow.json',
+    'examples/wallguard-policy/invalid.cross-wall-allow.json',
+    'examples/wallguard-policy/invalid.contaminated-session-allow.json',
+    'tools/validate_wallguard_policy_decision.py',
 ]
 for rel in required:
     p = ROOT / rel
@@ -142,6 +166,7 @@ pairs = [
     ('validate:operation-plane-gate-record-example', 'contracts/operation_plane_policy_gate_v1.schema.json', 'examples/operation_plane_policy_gate_record_example.json', 'operation plane gate record example validates against gate schema'),
     ('validate:operation-plane-eval-request-example', 'contracts/operation_plane_policy_gate_v1.schema.json', 'examples/operation_plane_policy_eval_request_example.json', 'operation plane eval request example validates against gate schema'),
     ('validate:operation-plane-eval-response-example', 'contracts/operation_plane_policy_gate_v1.schema.json', 'examples/operation_plane_policy_eval_response_example.json', 'operation plane eval response example validates against gate schema'),
+    ('validate:wallguard-same-wall-allow', 'contracts/wallguard-policy-decision.v0.schema.json', 'examples/wallguard-policy/valid.same-wall-allow.json', 'WallGuard same-wall allow example validates against schema'),
 ]
 for check_id, schema_rel, example_rel, message in pairs:
     try:
@@ -149,6 +174,13 @@ for check_id, schema_rel, example_rel, message in pairs:
         ok(check_id, 'PFD010_SCHEMA_OK', message, example_rel)
     except Exception as exc:
         fail(check_id, 'PFD011_SCHEMA_INVALID', str(exc), example_rel)
+
+run_validator(
+    'validate:wallguard-policy-decision-semantic',
+    [sys.executable, 'tools/validate_wallguard_policy_decision.py'],
+    'WallGuard policy validator accepts valid fixture and rejects invalid fixtures',
+    'tools/validate_wallguard_policy_decision.py',
+)
 
 try:
     spec = yaml.safe_load((ROOT / 'contracts/policy_fabric_openapi_v2.yaml').read_text())

@@ -1,6 +1,6 @@
-.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate governed-action-policy-decision-validate workspace-context-policy-decision-validate policy-fabric-cancellation-binding-tier2-binding-ci
+.PHONY: validate operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate governed-action-policy-decision-validate workspace-context-policy-decision-validate wallguard-policy-decision-validate policy-fabric-cancellation-binding-tier2-binding-ci
 
-validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate governed-action-policy-decision-validate workspace-context-policy-decision-validate policy-fabric-cancellation-binding-tier2-binding-ci
+validate: operations-decision-smoke operations-decision-api-smoke product-suite-policy-validate model-fabric-release-policy-validate lattice-data-governai-policy-subjects-validate lattice-data-governai-expanded-policy-subjects-validate lattice-runtime-profile-policy-subjects-validate lattice-runtime-promotion-policy-validate diff-hygiene-gate-validate agent-reliability-overrides-validate prophet-understand-smoke semantic-enterprise-policy-input-validate ops-history-policy-validate sourceos-capability-decision-policy-validate governed-action-policy-decision-validate workspace-context-policy-decision-validate wallguard-policy-decision-validate policy-fabric-cancellation-binding-tier2-binding-ci
 	@echo "OK: validate"
 
 operations-decision-smoke:
@@ -54,6 +54,10 @@ governed-action-policy-decision-validate:
 workspace-context-policy-decision-validate:
 	python3 -m pip install --user jsonschema >/dev/null
 	python3 tools/validate_workspace_context_policy_decision.py
+
+wallguard-policy-decision-validate:
+	python3 -m pip install --user jsonschema >/dev/null
+	python3 tools/validate_wallguard_policy_decision.py
 
 policy-fabric-cancellation-binding-tier2-binding-ci:
 	python3 -m json.tool schemas/composition/policy-fabric-cancellation-binding-tier2-binding.v1.json >/dev/null
