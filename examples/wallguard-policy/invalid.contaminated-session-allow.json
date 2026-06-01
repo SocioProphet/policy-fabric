@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1",
+  "kind": "wallguard_policy_decision",
+  "decision_id": "wg-decision-contaminated-session-allow-invalid-001",
+  "policy_ref": {"policy_id": "wallguard.professional_workroom.v0", "policy_version": "0.1.0", "policy_authority": "SocioProphet/policy-fabric#86"},
+  "wall_context": {"workroom_id": "workroom-client-a-matter-x", "client_id": "client-a", "matter_id": "matter-x", "wall_id": "wall-client-a-matter-x", "confidentiality_class": "matter_restricted"},
+  "subject": {"subject_id": "agent-research-001", "subject_type": "agent", "wall_memberships": ["wall-client-a-matter-x"], "acknowledgments": ["ack-wall-client-a-matter-x-v0"], "recusal_state": "none", "session_state": "contaminated"},
+  "action": {"action_type": "write_memory", "enforcement_point": "memory_mesh"},
+  "resources": [{"resource_id": "memory-client-a-matter-x-summary-001", "resource_type": "memory", "labels": {"client_id": "client-a", "matter_id": "matter-x", "wall_id": "wall-client-a-matter-x", "confidentiality_class": "matter_restricted"}}],
+  "destination": {"destination_id": "memory-global-firm-approved", "destination_type": "memory_compartment", "labels": {"client_id": "firm", "matter_id": "global", "wall_id": "none", "confidentiality_class": "firm_approved"}},
+  "decision": {"outcome": "allow", "reason_code": "same_wall_allowed", "reason": "This intentionally invalid fixture allows contaminated session state to write to global memory."},
+  "receipt": {"receipt_id": "wg-receipt-contaminated-session-allow-invalid-001", "decision_id": "wg-decision-contaminated-session-allow-invalid-001", "policy_id": "wallguard.professional_workroom.v0", "policy_version": "0.1.0", "outcome": "allow", "reason_code": "same_wall_allowed", "receipt_visibility_class": "internal", "evidence_refs": ["SocioProphet/ProCybernetica#103"], "redaction_summary": "No payload content included in receipt.", "residual_restrictions": ["matter_restricted"]}
+}
