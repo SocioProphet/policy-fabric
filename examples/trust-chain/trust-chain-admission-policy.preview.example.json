@@ -1,0 +1,47 @@
+{
+  "schema_version": "0.1",
+  "profile_id": "policy://trust-chain/dependency-admission/regulated-enterprise-preview",
+  "description": "Preview-scope RuntimeAsset admission profile for Prophet Trust Chain evidence composition.",
+  "scope": {
+    "environment": "preview",
+    "risk_tier": "regulated_enterprise",
+    "artifact_types": ["RuntimeAsset"]
+  },
+  "required_evidence": {
+    "sbom_ref": true,
+    "vex_ref": true,
+    "lockfile_ref": true,
+    "signature_ref": true,
+    "scan_record_ref": true,
+    "policy_profile_ref": true,
+    "agentplane_validation_ref": false,
+    "runtime_receipt_ref": false,
+    "promotion_evidence_ref": false,
+    "rollback_evidence_ref": false
+  },
+  "posture_requirements": {
+    "vulnerability_posture": "no_known_blocking_findings",
+    "patch_posture": "current_for_scope",
+    "source_channel_trust": "trusted",
+    "promotion_posture": "preview_allowed"
+  },
+  "exception_policy": {
+    "allowed": true,
+    "requires_authority": true,
+    "requires_expiration": true,
+    "requires_compensating_control": true,
+    "requires_review_evidence": true,
+    "max_duration_days": 14
+  },
+  "decision_policy": {
+    "missing_required_evidence": "escalate",
+    "restricted_posture": "escalate",
+    "reviewable_posture": "allow_with_context",
+    "satisfied": "allow"
+  },
+  "non_claims": [
+    "This profile does not certify production readiness.",
+    "This profile does not perform live vulnerability scanning.",
+    "This profile is consumed by Prophet Platform admission rather than replacing runtime evidence authorities."
+  ]
+}
