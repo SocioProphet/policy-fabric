@@ -1,0 +1,53 @@
+{
+  "schema_version": "0.1",
+  "profile_id": "policy://trust-chain/dependency-admission/regulated-enterprise-production",
+  "description": "Production-scope RuntimeAsset admission profile for Prophet Trust Chain evidence composition.",
+  "scope": {
+    "environment": "production",
+    "risk_tier": "regulated_enterprise",
+    "artifact_types": ["RuntimeAsset"]
+  },
+  "required_evidence": {
+    "sbom_ref": true,
+    "vex_ref": true,
+    "lockfile_ref": true,
+    "signature_ref": true,
+    "scan_record_ref": true,
+    "policy_profile_ref": true,
+    "agentplane_validation_ref": true,
+    "runtime_receipt_ref": true,
+    "promotion_evidence_ref": true,
+    "rollback_evidence_ref": true
+  },
+  "posture_requirements": {
+    "vulnerability_posture": "no_known_blocking_findings",
+    "patch_posture": "current_for_scope",
+    "source_channel_trust": "trusted",
+    "promotion_posture": "production_allowed"
+  },
+  "exception_policy": {
+    "allowed": true,
+    "requires_authority": true,
+    "requires_expiration": true,
+    "requires_compensating_control": true,
+    "requires_review_evidence": true,
+    "max_duration_days": 7
+  },
+  "decision_policy": {
+    "missing_required_evidence": "deny",
+    "restricted_posture": "deny",
+    "reviewable_posture": "escalate",
+    "satisfied": "allow"
+  },
+  "example_exception": {
+    "authority": "security-review-board://regulated-enterprise-runtime-admission",
+    "expires_at": "2026-06-08T00:00:00Z",
+    "compensating_control": "production deployment blocked until AgentPlane replay and runtime receipt refs are present",
+    "review_evidence_ref": "sociosphere:review:trust-chain-production-exception-demo"
+  },
+  "non_claims": [
+    "This profile does not perform live vulnerability scanning.",
+    "This profile does not certify production readiness without external runtime, policy, guardrail, and AgentPlane evidence.",
+    "This profile defines admission policy requirements; Prophet Platform composes the final admission response."
+  ]
+}
