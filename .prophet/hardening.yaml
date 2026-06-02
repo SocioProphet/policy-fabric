@@ -1,21 +1,22 @@
 schema_version: effective-authority/v0.1
 repo: SocioProphet/policy-fabric
 zone: A
-owner: Policy Fabric guardrail lane
+owner: Policy Fabric runtime law lane
 maturity: draft
 
 authority_classes:
   - policy_evaluator
   - default_deny_ruleset
-  - fail_closed_enforcement
+  - consent_gate
+  - fail_closed_runtime_policy
 observation_channels: []
 control_channels: []
 egress_classes:
   - policy
-  - schema
+  - metadata
 background_workers: []
 runtime_subjects:
-  - native_process
+  - policy_evaluator
 connector_surfaces: []
 policy_sources:
   - repo
