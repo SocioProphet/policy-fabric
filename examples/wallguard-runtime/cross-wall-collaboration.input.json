@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1",
+  "kind": "wallguard_policy_decision",
+  "decision_id": "cross-wall-collaboration-001",
+  "policy_ref": {"policy_id": "wallguard.professional_workroom.v0", "policy_version": "0.1.0", "policy_authority": "SocioProphet/policy-fabric#93"},
+  "wall_context": {"workroom_id": "workroom-client-a-matter-x", "client_id": "client-a", "matter_id": "matter-x", "wall_id": "wall-client-a-matter-x", "confidentiality_class": "matter_restricted"},
+  "subject": {"subject_id": "agent-alpha", "subject_type": "agent", "wall_memberships": ["wall-client-a-matter-x"], "acknowledgments": ["ack-wall-client-a-matter-x-v0"], "recusal_state": "none", "session_state": "wall_scoped"},
+  "action": {"action_type": "collaborate", "enforcement_point": "agentplane"},
+  "resources": [{"resource_id": "agent-beta-context", "resource_type": "agent_context", "labels": {"client_id": "client-b", "matter_id": "matter-y", "wall_id": "wall-client-b-matter-y", "confidentiality_class": "matter_restricted"}}],
+  "destination": {"destination_id": "agent-beta", "destination_type": "agent", "labels": {"client_id": "client-b", "matter_id": "matter-y", "wall_id": "wall-client-b-matter-y", "confidentiality_class": "matter_restricted"}},
+  "decision": {"outcome": "allow", "reason_code": "runtime_evaluator_overwrites_input", "reason": "placeholder"},
+  "receipt": {"receipt_id": "placeholder", "decision_id": "cross-wall-collaboration-001", "policy_id": "wallguard.professional_workroom.v0", "policy_version": "0.1.0", "outcome": "allow", "reason_code": "runtime_evaluator_overwrites_input", "receipt_visibility_class": "internal", "evidence_refs": ["SocioProphet/policy-fabric#93"], "redaction_summary": "placeholder", "residual_restrictions": ["matter_restricted"]}
+}
