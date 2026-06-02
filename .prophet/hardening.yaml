@@ -1,0 +1,27 @@
+schema_version: effective-authority/v0.1
+repo: SocioProphet/policy-fabric
+zone: A
+owner: Policy Fabric guardrail lane
+maturity: draft
+
+authority_classes:
+  - policy_evaluator
+  - default_deny_ruleset
+  - fail_closed_enforcement
+observation_channels: []
+control_channels: []
+egress_classes:
+  - policy
+  - schema
+background_workers: []
+runtime_subjects:
+  - native_process
+connector_surfaces: []
+policy_sources:
+  - repo
+  - signed_config
+  - system_invariant
+ledger_sinks:
+  - model-governance-ledger
+ci_validators:
+  - effective-authority-ci
