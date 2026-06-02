@@ -22,11 +22,11 @@ GLOBAL_CLASSES = {"public", "firm_approved"}
 
 MISSING_CONTEXT = "missing_wall_context"
 SUBJECT_OUTSIDE_WALL = "subject_outside_wall"
-SUBJECT_RECUSED = "subject_recused"
+SUBJECT_RECUSED = "recused_subject"
 CONTAMINATED_SESSION = "contaminated_session_state"
 RESOURCE_OUTSIDE_WALL = "resource_outside_wall"
 PROHIBITED_DESTINATION = "prohibited_destination"
-RESTRICTED_GLOBAL_MEMORY = "restricted_global_memory_write"
+RESTRICTED_GLOBAL_MEMORY = "prohibited_memory_compartment"
 CLEAN_ROOM_REQUIRED = "clean_room_release_required"
 SAME_WALL_ALLOWED = "same_wall_allowed"
 
