@@ -61,11 +61,15 @@
     ".agentplane/policy/workflow.release.md",
     ".agentplane/policy/workflow.upgrade.md",
     ".gitignore",
+    ".prophet/hardening.yaml",
     "docs/blueprints/**",
     "docs/comparison/**",
+    "docs/governed-action-policy-decision.md",
+    "docs/openapi/**",
     "docs/rebrand/**",
     "docs/research/**",
     "docs/turns/**",
+    "docs/workspace-context-policy-decision.md",
     ".policy-fabric/github_publish.json",
     ".github/**",
     "scripts/github_publish_prep.py",
@@ -80,6 +84,7 @@
     "docs/SEMANTIC_VALIDATION.md"
   ],
   "generatedPaths": [
+    ".DS_Store",
     "docs/reports/**",
     ".policy-fabric/reports/**",
     "dist/**",
