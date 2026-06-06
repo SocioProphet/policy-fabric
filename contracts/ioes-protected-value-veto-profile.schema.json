@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.dev/policy-fabric/ioes-protected-value-veto-profile.schema.json",
+  "title": "IOES Protected Value Veto Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile_id", "scope", "protected_values", "decision_policy", "fail_closed_defaults", "non_claims"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "profile_id": {"type": "string", "pattern": "^policy://ioes/protected-value/[a-z0-9._/-]+$"},
+    "description": {"type": "string"},
+    "scope": {"type": "object", "additionalProperties": false, "required": ["action_families", "risk_tier", "human_impacting"], "properties": {"action_families": {"type": "array", "items": {"enum": ["identity.projection.emit", "identity.prime_topic.merge", "stewardship.edge.assign", "stewardship.edge.transfer", "stewardship.edge.revoke", "ontogenesis.state.update", "gaia.dependency.record", "learning.artifact.promote", "learning.nba.emit", "agent.bundle.execute", "delivery.outcome.score"]}, "minItems": 1, "uniqueItems": true}, "risk_tier": {"enum": ["internal", "human_impacting", "regulated", "minor_or_protected_context"]}, "human_impacting": {"type": "boolean"}}},
+    "protected_values": {"type": "object", "additionalProperties": false, "required": ["human_dignity", "consent", "stewardship_without_ownership", "developmental_integrity", "ecological_accountability", "provenance", "succession", "agent_boundedness"], "properties": {"human_dignity": {"$ref": "#/$defs/ProtectedValueRule"}, "consent": {"$ref": "#/$defs/ProtectedValueRule"}, "stewardship_without_ownership": {"$ref": "#/$defs/ProtectedValueRule"}, "developmental_integrity": {"$ref": "#/$defs/ProtectedValueRule"}, "ecological_accountability": {"$ref": "#/$defs/ProtectedValueRule"}, "provenance": {"$ref": "#/$defs/ProtectedValueRule"}, "succession": {"$ref": "#/$defs/ProtectedValueRule"}, "agent_boundedness": {"$ref": "#/$defs/ProtectedValueRule"}}},
+    "decision_policy": {"type": "object", "additionalProperties": false, "required": ["missing_consent", "missing_authority", "missing_evidence", "developmental_state_mutation", "stewardship_transfer", "outward_projection", "model_only_evidence", "satisfied"], "properties": {"missing_consent": {"enum": ["deny", "repair"]}, "missing_authority": {"enum": ["deny", "repair"]}, "missing_evidence": {"enum": ["deny", "repair", "review"]}, "developmental_state_mutation": {"enum": ["review", "deny", "allow_with_explicit_rule"]}, "stewardship_transfer": {"enum": ["review", "deny", "allow_with_succession_rule"]}, "outward_projection": {"enum": ["deny_without_consent", "review", "allow_with_consent"]}, "model_only_evidence": {"enum": ["candidate_only", "deny", "review"]}, "satisfied": {"enum": ["allow", "allow_with_context", "review"]}}},
+    "fail_closed_defaults": {"type": "object", "additionalProperties": false, "required": ["deny_on_missing_consent", "deny_on_missing_authority", "deny_on_unreplayable_human_impact", "candidate_only_for_model_only_canonical_claims"], "properties": {"deny_on_missing_consent": {"type": "boolean"}, "deny_on_missing_authority": {"type": "boolean"}, "deny_on_unreplayable_human_impact": {"type": "boolean"}, "candidate_only_for_model_only_canonical_claims": {"type": "boolean"}}},
+    "exception_policy": {"type": "object", "additionalProperties": false, "required": ["allowed", "requires_authority", "requires_expiration", "requires_review_evidence"], "properties": {"allowed": {"type": "boolean"}, "requires_authority": {"type": "boolean"}, "requires_expiration": {"type": "boolean"}, "requires_review_evidence": {"type": "boolean"}, "max_duration_days": {"type": "integer", "minimum": 1}}},
+    "non_claims": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1}
+  },
+  "$defs": {
+    "ProtectedValueRule": {"type": "object", "additionalProperties": false, "required": ["enabled", "veto_capable", "required_evidence"], "properties": {"enabled": {"type": "boolean"}, "veto_capable": {"type": "boolean"}, "required_evidence": {"type": "array", "items": {"enum": ["consent_receipt", "authority_ref", "evidence_ref", "policy_snapshot_ref", "keeper_log_ref", "succession_rule_ref", "gaia_dependency_ref", "review_record_ref", "replay_evidence_ref"]}, "uniqueItems": true}, "repair_action": {"type": "string"}}}
+  }
+}
