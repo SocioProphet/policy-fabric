@@ -1,0 +1,94 @@
+{
+  "schema_version": "0.1",
+  "profile_id": "policy://ioes/protected-value/rejected-consent-required",
+  "description": "Rejected semantic-test fixture: human-impacting projection posture is intentionally incomplete and must not be accepted by IOES validation.",
+  "scope": {
+    "action_families": [
+      "identity.projection.emit"
+    ],
+    "risk_tier": "human_impacting",
+    "human_impacting": true
+  },
+  "protected_values": {
+    "human_dignity": {
+      "enabled": true,
+      "veto_capable": true,
+      "required_evidence": [
+        "policy_snapshot_ref"
+      ]
+    },
+    "consent": {
+      "enabled": true,
+      "veto_capable": true,
+      "required_evidence": []
+    },
+    "stewardship_without_ownership": {
+      "enabled": true,
+      "veto_capable": true,
+      "required_evidence": [
+        "keeper_log_ref"
+      ]
+    },
+    "developmental_integrity": {
+      "enabled": true,
+      "veto_capable": true,
+      "required_evidence": [
+        "review_record_ref"
+      ]
+    },
+    "ecological_accountability": {
+      "enabled": true,
+      "veto_capable": true,
+      "required_evidence": [
+        "gaia_dependency_ref"
+      ]
+    },
+    "provenance": {
+      "enabled": true,
+      "veto_capable": true,
+      "required_evidence": [
+        "evidence_ref"
+      ]
+    },
+    "succession": {
+      "enabled": true,
+      "veto_capable": true,
+      "required_evidence": [
+        "succession_rule_ref"
+      ]
+    },
+    "agent_boundedness": {
+      "enabled": true,
+      "veto_capable": true,
+      "required_evidence": [
+        "authority_ref"
+      ]
+    }
+  },
+  "decision_policy": {
+    "missing_consent": "repair",
+    "missing_authority": "deny",
+    "missing_evidence": "repair",
+    "developmental_state_mutation": "review",
+    "stewardship_transfer": "review",
+    "outward_projection": "allow_with_consent",
+    "model_only_evidence": "candidate_only",
+    "satisfied": "allow"
+  },
+  "fail_closed_defaults": {
+    "deny_on_missing_consent": false,
+    "deny_on_missing_authority": true,
+    "deny_on_unreplayable_human_impact": true,
+    "candidate_only_for_model_only_canonical_claims": true
+  },
+  "exception_policy": {
+    "allowed": false,
+    "requires_authority": true,
+    "requires_expiration": true,
+    "requires_review_evidence": true
+  },
+  "non_claims": [
+    "This is a rejected semantic-test fixture, not an operative policy.",
+    "Human-impacting projection must require consent evidence and fail-closed missing-consent posture."
+  ]
+}
