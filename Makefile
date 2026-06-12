@@ -80,3 +80,6 @@ policy-fabric-cancellation-binding-tier2-binding-ci:
 	python3 -m json.tool tests/fixtures/composition/policy-fabric-cancellation-binding-tier2-binding.runtime-field.invalid.synthetic.json >/dev/null
 	python3 tools/check_policy_fabric_cancellation_binding_tier2_binding.py tests/fixtures/composition/policy-fabric-cancellation-binding-tier2-binding.synthetic.json
 	! python3 tools/check_policy_fabric_cancellation_binding_tier2_binding.py tests/fixtures/composition/policy-fabric-cancellation-binding-tier2-binding.runtime-field.invalid.synthetic.json
+
+enrichment-placement-locus-policy-validate:
+	python3 tools/validate_enrichment_placement_locus_policy.py

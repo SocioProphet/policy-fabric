@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/policy-fabric/enrichment-placement-locus-policy.v0.1.schema.json",
+  "title": "EnrichmentPlacementLocusPolicy",
+  "description": "Governs which execution loci are eligible for an Enrichment Twin analysis unit, keyed by asset sensitivity class. Locus eligibility is evaluated BEFORE cost optimization — governance precedes resources. Implements the placement contract from ProCybernetica/docs/architecture/enrichment-twin-mission-spec.md §5.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "policyId",
+    "status",
+    "owner",
+    "purpose",
+    "localFirstOrdering",
+    "sensitivityClasses",
+    "approvalGates",
+    "nonClaims"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "v0.1" },
+    "policyId": {
+      "type": "string",
+      "pattern": "^policy:enrichment/placement/[a-z0-9_-]+$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "draft", "deprecated"]
+    },
+    "owner": { "type": "string", "minLength": 1 },
+    "purpose": { "type": "string", "minLength": 1 },
+    "localFirstOrdering": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enforced", "rationale"],
+      "properties": {
+        "enforced": { "type": "boolean" },
+        "rationale": { "type": "string", "minLength": 1 },
+        "locusOrder": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/locusId" }
+        }
+      }
+    },
+    "sensitivityClasses": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sensitivityClassEntry" },
+      "description": "One entry per sensitivity class. All three classes (public, internal, sensitive) must be declared."
+    },
+    "approvalGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["burst_cloud_placement", "host_index_writeback"],
+      "properties": {
+        "burst_cloud_placement": { "$ref": "#/$defs/approvalGate" },
+        "host_index_writeback": { "$ref": "#/$defs/approvalGate" }
+      }
+    },
+    "nonClaims": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Explicit non-production claims scoped to this policy"
+    }
+  },
+  "$defs": {
+    "locusId": {
+      "type": "string",
+      "enum": ["local", "trusted_private", "attested_fog", "burst_cloud"]
+    },
+    "sensitivityClassEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sensitivityClass",
+        "description",
+        "exampleModalities",
+        "eligibleLoci",
+        "burstCloudRequiresApproval"
+      ],
+      "properties": {
+        "sensitivityClass": {
+          "type": "string",
+          "enum": ["public", "internal", "sensitive"]
+        },
+        "description": { "type": "string", "minLength": 1 },
+        "exampleModalities": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "eligibleLoci": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/locusId" }
+        },
+        "burstCloudRequiresApproval": { "type": "boolean" },
+        "notes": { "type": "string" }
+      }
+    },
+    "approvalGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "rationale"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "rationale": { "type": "string", "minLength": 1 },
+        "approvalRef": { "type": "string" }
+      }
+    }
+  }
+}

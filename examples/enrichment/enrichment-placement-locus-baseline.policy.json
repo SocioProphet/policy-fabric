@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "v0.1",
+  "policyId": "policy:enrichment/placement/locus-baseline",
+  "status": "active",
+  "owner": "SocioProphet/policy-fabric",
+  "purpose": "Governs execution locus eligibility for Enrichment Twin analysis units. Implements the placement contract from enrichment-twin-mission-spec.md §5. Locus eligibility is gated before cost optimization — governance precedes resources.",
+  "localFirstOrdering": {
+    "enforced": true,
+    "rationale": "Local-first is a hard law: analysis that can run locally must not be routed to a remote locus without a policy gate. Cost and latency optimization apply only within the eligible set, not before it.",
+    "locusOrder": ["local", "trusted_private", "attested_fog", "burst_cloud"]
+  },
+  "sensitivityClasses": [
+    {
+      "sensitivityClass": "public",
+      "description": "Non-identifying perceptual or structural features. No individual can be identified or re-identified from the claim. Safe for any eligible locus.",
+      "exampleModalities": ["perceptual_hash", "scene", "object", "document_structure"],
+      "eligibleLoci": ["local", "trusted_private", "attested_fog", "burst_cloud"],
+      "burstCloudRequiresApproval": true,
+      "notes": "burst_cloud is listed as eligible but always requires the burst_cloud_placement approval gate from the genesis seed. Absence of approval keeps locus set to local/trusted_private/attested_fog."
+    },
+    {
+      "sensitivityClass": "internal",
+      "description": "Object or scene specifics that, in aggregate, could reveal behavioral patterns or preferences. Not directly identifying but sensitive in context.",
+      "exampleModalities": ["scene", "object", "moment", "text_ocr"],
+      "eligibleLoci": ["local", "trusted_private", "attested_fog"],
+      "burstCloudRequiresApproval": true,
+      "notes": "burst_cloud is ineligible regardless of approval gate. Attestation required for attested_fog; unattrested fog nodes are treated as ineligible."
+    },
+    {
+      "sensitivityClass": "sensitive",
+      "description": "Directly identifying or highly sensitive data. Faces, OCR of personal documents, precise GPS location. Must never leave the trusted perimeter.",
+      "exampleModalities": ["face_cluster", "text_ocr", "location"],
+      "eligibleLoci": ["local", "trusted_private"],
+      "burstCloudRequiresApproval": true,
+      "notes": "attested_fog and burst_cloud are ineligible regardless of approval. text_ocr is listed under both internal and sensitive — the scheduler must treat it as sensitive unless the asset is confirmed to contain only non-personal text."
+    }
+  ],
+  "approvalGates": {
+    "burst_cloud_placement": {
+      "required": true,
+      "rationale": "Burst cloud placement crosses a trust boundary. The asset content (or its hash) leaves the local trust perimeter. Explicit approval from the genesis seed approval_profile is required before the scheduler may select burst_cloud as a locus.",
+      "approvalRef": "seed.approval_profile.burst_cloud_placement"
+    },
+    "host_index_writeback": {
+      "required": true,
+      "rationale": "Writing enrichment claims back into a System-Space index segment crosses the immutability boundary of System Space. Approval gates the query-API activation path, not a write path. Recommendation per ADR-0002 §3: query-API only, never mutate System Space.",
+      "approvalRef": "seed.approval_profile.host_index_writeback"
+    }
+  },
+  "nonClaims": [
+    "This policy does not claim that local-locus enrichment is free from all data risks — it only constrains which loci may be used per sensitivity class.",
+    "This policy does not govern model selection or adapter routing — that is owned by model-router.",
+    "This policy does not certify any node as 'trusted_private' or 'attested_fog' — attestation is governed separately by the node identity and attestation pipeline.",
+    "Burst cloud eligibility declared here does not mean burst cloud is enabled — it requires the approval gate in the genesis seed approval_profile."
+  ]
+}
