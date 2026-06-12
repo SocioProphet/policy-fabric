@@ -1,9 +1,14 @@
 # Validation Report
 
-Overall status: PASS
+Overall status: FAIL
 
-Check count: `98`; fails: `0`; warnings: `0`
+Check count: `105`; fails: `1`; warnings: `0`
 
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
+- `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
 - `PFD001_REQUIRED_FILE_PRESENT` — pass — required file present
@@ -53,6 +58,8 @@ Check count: `98`; fails: `0`; warnings: `0`
 - `PFD010_SCHEMA_OK` — pass — operation plane gate record example validates against gate schema
 - `PFD010_SCHEMA_OK` — pass — operation plane eval request example validates against gate schema
 - `PFD010_SCHEMA_OK` — pass — operation plane eval response example validates against gate schema
+- `PFD010_SCHEMA_OK` — pass — WallGuard same-wall allow example validates against schema
+- `PFD200_VALIDATOR_OK` — pass — WallGuard policy validator accepts valid fixture and rejects invalid fixtures
 - `PFD020_OPENAPI_OK` — pass — openapi parses and contains expected core surfaces
 - `PFD030_OWNERSHIP_SYNC_OK` — pass — config managed paths match ownership contract
 - `PFD030_OWNERSHIP_SYNC_OK` — pass — config generated paths match ownership contract
@@ -65,7 +72,7 @@ Check count: `98`; fails: `0`; warnings: `0`
 - `PFD045_GITHUB_PUBLISH_SYNC_OK` — pass — config references the GitHub publish contract and prep command
 - `PFD050_DOC_SYNC_OK` — pass — AGENTS.md references the active repository workflow surfaces
 - `PFD032_OWNERSHIP_OVERLAP_FREE` — pass — ownership categories do not overlap on actual files
-- `PFD034_OWNERSHIP_CLASSIFICATION_OK` — pass — all tracked files are classified by the ownership contract
+- `PFD035_OWNERSHIP_UNCLASSIFIED` — fail — unclassified files found: ['.DS_Store', '.prophet/hardening.yaml', 'docs/governed-action-policy-decision.md', 'docs/openapi/README.md', 'docs/openapi/constitutional-policy-engine-v0_1.stub.yaml', 'docs/workspace-context-policy-decision.md']
 - `PFD060_RELEASE_PACK_DIGEST_OK` — pass — release-pack artifact digests match referenced files
 - `PFD062_PROMOTION_GATE_OK` — pass — promotion gate semantics satisfy current lane requirements
 - `PFD064_REPLAY_EVIDENCE_OK` — pass — replay evidence requirements are satisfied

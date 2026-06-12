@@ -1,6 +1,6 @@
 # Doctor Report
 
-Overall status: PASS
+Overall status: FAIL
 
 - [OK] exists:contracts/policy_fabric_policy_v2.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:contracts/policy_fabric_execution_plan_ir_v1.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
@@ -42,6 +42,11 @@ Overall status: PASS
 - [OK] exists:examples/operation_plane_policy_eval_response_example.json — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:docs/specs/operation_plane_policy_gate_v1.md — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] exists:scripts/validate_operation_plane_policy_gate.py — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:contracts/wallguard-policy-decision.v0.schema.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/wallguard-policy/valid.same-wall-allow.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/wallguard-policy/invalid.cross-wall-allow.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:examples/wallguard-policy/invalid.contaminated-session-allow.json — PFD001_REQUIRED_FILE_PRESENT — required file present
+- [OK] exists:tools/validate_wallguard_policy_decision.py — PFD001_REQUIRED_FILE_PRESENT — required file present
 - [OK] validate:policy-example — PFD010_SCHEMA_OK — policy example validates against policy schema
 - [OK] validate:plan-example — PFD010_SCHEMA_OK — compiled plan validates against plan schema
 - [OK] validate:release-pack-example — PFD010_SCHEMA_OK — release pack example validates against release pack schema
@@ -51,6 +56,8 @@ Overall status: PASS
 - [OK] validate:operation-plane-gate-record-example — PFD010_SCHEMA_OK — operation plane gate record example validates against gate schema
 - [OK] validate:operation-plane-eval-request-example — PFD010_SCHEMA_OK — operation plane eval request example validates against gate schema
 - [OK] validate:operation-plane-eval-response-example — PFD010_SCHEMA_OK — operation plane eval response example validates against gate schema
+- [OK] validate:wallguard-same-wall-allow — PFD010_SCHEMA_OK — WallGuard same-wall allow example validates against schema
+- [OK] validate:wallguard-policy-decision-semantic — PFD200_VALIDATOR_OK — WallGuard policy validator accepts valid fixture and rejects invalid fixtures
 - [OK] parse:openapi — PFD020_OPENAPI_OK — openapi parses and contains expected core surfaces
 - [OK] ownership:managed-sync — PFD030_OWNERSHIP_SYNC_OK — config managed paths match ownership contract
 - [OK] ownership:generated-sync — PFD030_OWNERSHIP_SYNC_OK — config generated paths match ownership contract
@@ -63,7 +70,7 @@ Overall status: PASS
 - [OK] github-publish:config-sync — PFD045_GITHUB_PUBLISH_SYNC_OK — config references the GitHub publish contract and prep command
 - [OK] docs:agents-gateway-sync — PFD050_DOC_SYNC_OK — AGENTS.md references the active repository workflow surfaces
 - [OK] ownership:no-overlap — PFD032_OWNERSHIP_OVERLAP_FREE — ownership categories do not overlap on actual files
-- [OK] ownership:no-unclassified — PFD034_OWNERSHIP_CLASSIFICATION_OK — all tracked files are classified by the ownership contract
+- [FAIL] ownership:no-unclassified — PFD035_OWNERSHIP_UNCLASSIFIED — unclassified files found: ['.DS_Store', '.prophet/hardening.yaml', 'docs/governed-action-policy-decision.md', 'docs/openapi/README.md', 'docs/openapi/constitutional-policy-engine-v0_1.stub.yaml', 'docs/workspace-context-policy-decision.md']
 - [OK] release-pack:digest-integrity — PFD060_RELEASE_PACK_DIGEST_OK — release-pack artifact digests match referenced files
 - [OK] release-pack:promotion-gate — PFD062_PROMOTION_GATE_OK — promotion gate semantics satisfy current lane requirements
 - [OK] release-pack:replay-evidence — PFD064_REPLAY_EVIDENCE_OK — replay evidence requirements are satisfied
