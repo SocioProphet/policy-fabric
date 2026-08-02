@@ -1,0 +1,33 @@
+{
+  "apiVersion": "policy.fabric.consent-plane/v1",
+  "kind": "PurposeAdmissibilityGateDecision",
+  "metadata": {
+    "name": "browser-agent-attempts-shell-write",
+    "generatedAt": "2026-08-02T00:00:00Z",
+    "subjectRef": "urn:socioprophet:agent:browser-runtime-01",
+    "actionOntologyReceiptRef": "urn:socioprophet:receipt:bb-140-001"
+  },
+  "spec": {
+    "request": {
+      "role": "implementer",
+      "surface": "browser",
+      "space": "user-space",
+      "tool": "source-mutate",
+      "declaredPurpose": "implement",
+      "context": "page-script requested a local file write"
+    },
+    "decision": "deny",
+    "denyReasons": [
+      "surface 'browser' denies purpose 'implement' (untrusted input)",
+      "surface 'browser' space_deny includes 'user-space' (pinned to agent-space)"
+    ],
+    "receipt": {
+      "role": "implementer",
+      "surface": "browser",
+      "space": "user-space",
+      "tool": "source-mutate",
+      "purpose": "implement",
+      "decision": "deny"
+    }
+  }
+}
