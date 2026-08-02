@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "kind": "governed_action_policy_decision",
+  "decision_id": "pd-synthetic-allow-method-family-001",
+  "policy_input": {
+    "proposal_id": "ap-record-event-instance-003",
+    "action_type": "record_event_instance",
+    "risk_class": "low",
+    "requested_by": "SocioProphet/agentplane",
+    "evidence_grade": "implementation_safe"
+  },
+  "decision": {
+    "result": "allow",
+    "reason": "Low-risk record_event_instance action; Kautz-family evidence was already admitted upstream and carries no forbidden-use claim."
+  },
+  "rule_refs": [
+    "policy-fabric:governed-action-v0:confirmed-evidence-low-risk",
+    "policy-fabric:governed-action-v0:method-family-benign"
+  ],
+  "evidence_refs": [
+    {
+      "ref": "SocioProphet/sherlock-search#58:valid.confirmed-bibliographic",
+      "source_quality": "confirmed_bibliographic",
+      "implementation_safe": true,
+      "method_family": "kautz",
+      "method_family_claim": "none"
+    }
+  ],
+  "runtime_constraints": [
+    {
+      "constraint_id": "no-external-side-effects-v0",
+      "constraint_type": "no_external_side_effects",
+      "description": "The allowed action is limited to recording a bounded internal event instance."
+    }
+  ],
+  "escalation_requirement": {
+    "required": false,
+    "reason": "Confirmed evidence, low-risk bounded action, no method-family forbidden-use claim."
+  },
+  "audit_payload": {
+    "decision_ref": "pd-synthetic-allow-method-family-001",
+    "proposal_ref": "ap-record-event-instance-003",
+    "result": "allow",
+    "evidence_summary": "Kautz-derived evidence, already-admitted, supports a low-risk internal record action with no forbidden-use claim."
+  }
+}

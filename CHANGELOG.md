@@ -1,4 +1,11 @@
 
+## 2026-08-01 — CHRONOS method-family gate on governed-action-policy-decision v0 (#97)
+
+- added optional `method_family` / `method_family_claim` fields to `evidence_refs[]` in `contracts/governed-action-policy-decision.v0.schema.json`, additive to the existing `risk_class`/`evidence_grade` fields (schema_version stays `0.1`)
+- extended `tools/validate_governed_action_policy_decision.py` with a `FORBIDDEN_BY_METHOD_FAMILY` enforcement table so a decision whose evidence carries a doctrine-forbidden method-family claim cannot resolve to `allow`
+- added `examples/governed-action-policy/valid.method-family-benign.json`, `invalid.dsr-dsp-live-controller-pre-admission.json`, and `invalid.neurasp-stable-model-bypass.json` fixtures
+- updated `docs/governed-action-policy-decision.md` with the new "CHRONOS method-family gate" section
+
 ## 2026-04-05
 
 - added GitHub publication and pair-programming preparation surfaces (`CONTRIBUTING.md`, `SECURITY.md`, `.github/`, `.policy-fabric/github_publish.json`, `scripts/github_publish_prep.py`)
