@@ -93,6 +93,7 @@
       }
     },
     "evidenceRef": {
+      "description": "Copilot review of policy-fabric#98 flagged that method_family_claim could be set without method_family and still pass, silently skipping the method-family gate in tools/validate_governed_action_policy_decision.py. The if/then below closes that: any non-'none' method_family_claim requires method_family to also be present. 'none' is deliberately exempt -- per methodFamilyClaim's own description, 'none' means no forbidden-use claim is being made for this evidence ref, so there is nothing to attribute to a method family.",
       "type": "object",
       "additionalProperties": false,
       "required": ["ref", "source_quality", "implementation_safe"],
@@ -102,6 +103,15 @@
         "implementation_safe": {"type": "boolean"},
         "method_family": {"$ref": "#/$defs/methodFamily"},
         "method_family_claim": {"$ref": "#/$defs/methodFamilyClaim"}
+      },
+      "if": {
+        "required": ["method_family_claim"],
+        "properties": {
+          "method_family_claim": {"not": {"const": "none"}}
+        }
+      },
+      "then": {
+        "required": ["method_family"]
       }
     },
     "runtimeConstraint": {

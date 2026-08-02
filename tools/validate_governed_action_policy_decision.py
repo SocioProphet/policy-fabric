@@ -97,9 +97,25 @@ def semantic_check(data: dict[str, Any]) -> None:
     for item in evidence_refs:
         method_family = item.get("method_family")
         claim = item.get("method_family_claim", "none")
-        if method_family is None or claim == "none":
+        if claim == "none":
             continue
-        forbidden_claims = FORBIDDEN_BY_METHOD_FAMILY.get(method_family, set())
+        # A non-"none" claim without a method_family used to `continue` here,
+        # silently bypassing the gate entirely (Copilot review, policy-fabric#98).
+        # The schema now rejects this combination too, but fail fast here as
+        # well rather than depend solely on schema validation running first.
+        if method_family is None:
+            raise ValueError(
+                f"method_family_claim '{claim}' is set without a method_family; "
+                "the method-family gate cannot be evaluated for this evidence ref"
+            )
+        if method_family not in FORBIDDEN_BY_METHOD_FAMILY:
+            # Fail closed: an unrecognized method_family must not be treated as
+            # having an empty forbidden-claims set (Copilot review, policy-fabric#98).
+            raise ValueError(
+                f"unrecognized method_family '{method_family}'; refusing to assume "
+                "it has no forbidden-use claims"
+            )
+        forbidden_claims = FORBIDDEN_BY_METHOD_FAMILY[method_family]
         if claim in forbidden_claims and result == "allow":
             raise ValueError(
                 f"method_family '{method_family}' forbids '{claim}' per "
