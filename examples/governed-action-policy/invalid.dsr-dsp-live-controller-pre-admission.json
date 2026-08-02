@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "kind": "governed_action_policy_decision",
+  "decision_id": "pd-synthetic-invalid-dsr-dsp-live-controller",
+  "policy_input": {
+    "proposal_id": "ap-live-controller-001",
+    "action_type": "external_side_effect_action",
+    "risk_class": "low",
+    "requested_by": "SocioProphet/agentplane",
+    "evidence_grade": "implementation_safe"
+  },
+  "decision": {
+    "result": "allow",
+    "reason": "This should fail because DSR/DSP evidence cannot run as a live controller before governance admission (neurosymbolic-chronos-alignment.md)."
+  },
+  "rule_refs": ["policy-fabric:governed-action-v0:invalid"],
+  "evidence_refs": [
+    {
+      "ref": "SocioProphet/sherlock-search#58:valid.confirmed-bibliographic",
+      "source_quality": "confirmed_bibliographic",
+      "implementation_safe": true,
+      "method_family": "dsr_dsp",
+      "method_family_claim": "live_controller_pre_admission"
+    }
+  ],
+  "audit_payload": {
+    "decision_ref": "pd-synthetic-invalid-dsr-dsp-live-controller",
+    "proposal_ref": "ap-live-controller-001",
+    "result": "allow",
+    "evidence_summary": "DSR/DSP evidence was incorrectly allowed to run as a live controller before admission."
+  }
+}

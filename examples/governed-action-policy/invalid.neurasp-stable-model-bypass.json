@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "kind": "governed_action_policy_decision",
+  "decision_id": "pd-synthetic-invalid-neurasp-stable-model-bypass",
+  "policy_input": {
+    "proposal_id": "ap-record-event-instance-004",
+    "action_type": "record_event_instance",
+    "risk_class": "low",
+    "requested_by": "SocioProphet/agentplane",
+    "evidence_grade": "implementation_safe"
+  },
+  "decision": {
+    "result": "allow",
+    "reason": "This should fail because a NeurASP stable model must not bypass policy admission (neurosymbolic-chronos-alignment.md)."
+  },
+  "rule_refs": ["policy-fabric:governed-action-v0:invalid"],
+  "evidence_refs": [
+    {
+      "ref": "SocioProphet/sherlock-search#58:valid.confirmed-bibliographic",
+      "source_quality": "confirmed_bibliographic",
+      "implementation_safe": true,
+      "method_family": "neurasp",
+      "method_family_claim": "stable_model_bypasses_admission"
+    }
+  ],
+  "audit_payload": {
+    "decision_ref": "pd-synthetic-invalid-neurasp-stable-model-bypass",
+    "proposal_ref": "ap-record-event-instance-004",
+    "result": "allow",
+    "evidence_summary": "NeurASP stable-model output was incorrectly allowed to bypass policy admission."
+  }
+}

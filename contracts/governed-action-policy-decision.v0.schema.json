@@ -48,6 +48,29 @@
         "speculative_do_not_use"
       ]
     },
+    "methodFamily": {
+      "description": "Neuro-symbolic method family taxonomy referenced by sociosphere/docs/integration/neurosymbolic-chronos-alignment.md (SocioProphet/socioprophet#498). Policy Fabric records this field but does not own the canonical taxonomy; it exists so a decision can express which method family produced the evidence being decided on.",
+      "enum": [
+        "kautz",
+        "ltn",
+        "lnn",
+        "neurasp",
+        "satnet",
+        "dilp",
+        "don_rrn",
+        "dsr_dsp"
+      ]
+    },
+    "methodFamilyClaim": {
+      "description": "The specific claimed use of method-family-sourced evidence, checked against the neurosymbolic-chronos-alignment.md negative rules that are currently evidenced (policy-fabric#97). 'none' means no forbidden-use claim is being made for this evidence ref.",
+      "enum": [
+        "none",
+        "live_controller_pre_admission",
+        "stable_model_bypasses_admission",
+        "soft_constraint_promoted_as_truth",
+        "symbolic_derivation_as_admission"
+      ]
+    },
     "policyInput": {
       "type": "object",
       "additionalProperties": false,
@@ -70,13 +93,25 @@
       }
     },
     "evidenceRef": {
+      "description": "Copilot review of policy-fabric#98 flagged that method_family_claim could be set without method_family and still pass, silently skipping the method-family gate in tools/validate_governed_action_policy_decision.py. The if/then below closes that: any non-'none' method_family_claim requires method_family to also be present. 'none' is deliberately exempt -- per methodFamilyClaim's own description, 'none' means no forbidden-use claim is being made for this evidence ref, so there is nothing to attribute to a method family.",
       "type": "object",
       "additionalProperties": false,
       "required": ["ref", "source_quality", "implementation_safe"],
       "properties": {
         "ref": {"type": "string", "minLength": 1},
         "source_quality": {"$ref": "#/$defs/sourceQuality"},
-        "implementation_safe": {"type": "boolean"}
+        "implementation_safe": {"type": "boolean"},
+        "method_family": {"$ref": "#/$defs/methodFamily"},
+        "method_family_claim": {"$ref": "#/$defs/methodFamilyClaim"}
+      },
+      "if": {
+        "required": ["method_family_claim"],
+        "properties": {
+          "method_family_claim": {"not": {"const": "none"}}
+        }
+      },
+      "then": {
+        "required": ["method_family"]
       }
     },
     "runtimeConstraint": {

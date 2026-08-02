@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "kind": "governed_action_policy_decision",
+  "decision_id": "pd-synthetic-invalid-claim-without-family",
+  "policy_input": {
+    "proposal_id": "ap-record-event-instance-005",
+    "action_type": "record_event_instance",
+    "risk_class": "low",
+    "requested_by": "SocioProphet/agentplane",
+    "evidence_grade": "implementation_safe"
+  },
+  "decision": {
+    "result": "allow",
+    "reason": "This should fail because a non-'none' method_family_claim is present without a method_family, which must not silently bypass the method-family gate (policy-fabric#98 Copilot review)."
+  },
+  "rule_refs": ["policy-fabric:governed-action-v0:invalid"],
+  "evidence_refs": [
+    {
+      "ref": "SocioProphet/sherlock-search#58:valid.confirmed-bibliographic",
+      "source_quality": "confirmed_bibliographic",
+      "implementation_safe": true,
+      "method_family_claim": "symbolic_derivation_as_admission"
+    }
+  ],
+  "audit_payload": {
+    "decision_ref": "pd-synthetic-invalid-claim-without-family",
+    "proposal_ref": "ap-record-event-instance-005",
+    "result": "allow",
+    "evidence_summary": "A method_family_claim was set without a method_family; the gate must not silently skip enforcement."
+  }
+}
