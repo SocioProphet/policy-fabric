@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.io/schemas/policy-fabric/purpose-admissibility-gate-decision-v1.schema.json",
+  "title": "Purpose Admissibility Gate Decision v1",
+  "description": "The consent-plane gate: admits a tool invocation only if its declared purpose is admissible for the (role, surface, space) context and consent is granted. Fail-closed. Conforms to socioprophet-agent-standards consent-plane/001.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "const": "policy.fabric.consent-plane/v1" },
+    "kind": { "const": "PurposeAdmissibilityGateDecision" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "generatedAt", "subjectRef"],
+      "properties": {
+        "name": { "type": "string" },
+        "generatedAt": { "type": "string" },
+        "subjectRef": { "type": "string", "description": "the machine identity making the request (authn/004)" },
+        "actionOntologyReceiptRef": { "type": "string" }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request", "decision", "receipt"],
+      "properties": {
+        "request": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["role", "surface", "space", "tool", "declaredPurpose"],
+          "properties": {
+            "role": { "enum": ["explorer", "reviewer", "implementer", "integrator", "operator", "governor"] },
+            "surface": { "enum": ["terminal", "notes", "browser", "cockpit", "ci-runner", "cluster-operator"] },
+            "space": { "enum": ["kernel-space", "system-space", "user-space", "agent-space", "data-namespace"] },
+            "tool": { "type": "string" },
+            "declaredPurpose": { "enum": ["discover", "implement", "verify", "ship", "operate", "egress", "administer"] },
+            "tenant": { "type": "string" },
+            "context": { "type": "string" }
+          }
+        },
+        "decision": { "enum": ["admit", "deny"] },
+        "denyReasons": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "which constraint decided a deny (role/surface/space/consent). MUST be non-empty when decision=deny."
+        },
+        "receipt": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["role", "surface", "space", "tool", "purpose", "decision"],
+          "description": "accountability record (GDPR 5(2)); MUST mirror the request + decision.",
+          "properties": {
+            "role": { "type": "string" },
+            "surface": { "type": "string" },
+            "space": { "type": "string" },
+            "tool": { "type": "string" },
+            "purpose": { "type": "string" },
+            "decision": { "enum": ["admit", "deny"] }
+          }
+        }
+      }
+    }
+  }
+}
