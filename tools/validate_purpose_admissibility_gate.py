@@ -19,8 +19,9 @@ def semantic_checks(inst: dict) -> list[str]:
     spec = inst["spec"]; req = spec["request"]; rec = spec["receipt"]
     if spec["decision"] == "deny" and not spec.get("denyReasons"):
         errs.append("decision=deny requires non-empty denyReasons (fail-closed)")
-    if spec["decision"] == "admit" and spec.get("denyReasons"):
-        errs.append("decision=admit must not carry denyReasons")
+    if spec["decision"] == "admit" and "denyReasons" in spec:
+        # key must be ABSENT for admit — a present-but-empty [] is still wrong
+        errs.append("decision=admit must not carry a denyReasons key")
     for k in ("role", "surface", "space", "tool"):
         if rec[k] != req[k]:
             errs.append(f"receipt.{k} must mirror request.{k}")
@@ -43,10 +44,16 @@ def main() -> int:
         print(f"FAIL: example does not match schema: {exc}", file=sys.stderr)
         return 1
     errs = semantic_checks(inst)
-    # self-test the checker fires: a tampered admit-with-reasons must be caught
-    bad = json.loads(EXAMPLE.read_text()); bad["spec"]["decision"] = "admit"
-    if not semantic_checks(bad):
-        print("FAIL: semantic checker did not fire on a tampered instance", file=sys.stderr)
+    # self-test the admit-must-not-carry-denyReasons rule in ISOLATION: build a
+    # fully-consistent admit (receipt mirrors it) that still carries denyReasons,
+    # so only that one rule should fire.
+    probe = json.loads(EXAMPLE.read_text())
+    probe["spec"]["decision"] = "admit"
+    probe["spec"]["receipt"]["decision"] = "admit"
+    probe["spec"]["receipt"]["purpose"] = probe["spec"]["request"]["declaredPurpose"]
+    probe_errs = semantic_checks(probe)
+    if not any("must not carry a denyReasons key" in e for e in probe_errs):
+        print("FAIL: self-test — admit-with-denyReasons rule did not fire", file=sys.stderr)
         return 1
     if errs:
         print("FAIL:", file=sys.stderr)

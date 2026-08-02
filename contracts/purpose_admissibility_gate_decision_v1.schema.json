@@ -51,11 +51,11 @@
           "required": ["role", "surface", "space", "tool", "purpose", "decision"],
           "description": "accountability record (GDPR 5(2)); MUST mirror the request + decision.",
           "properties": {
-            "role": { "type": "string" },
-            "surface": { "type": "string" },
-            "space": { "type": "string" },
+            "role": { "enum": ["explorer", "reviewer", "implementer", "integrator", "operator", "governor"] },
+            "surface": { "enum": ["terminal", "notes", "browser", "cockpit", "ci-runner", "cluster-operator"] },
+            "space": { "enum": ["kernel-space", "system-space", "user-space", "agent-space", "data-namespace"] },
             "tool": { "type": "string" },
-            "purpose": { "type": "string" },
+            "purpose": { "enum": ["discover", "implement", "verify", "ship", "operate", "egress", "administer"] },
             "decision": { "enum": ["admit", "deny"] }
           }
         }
