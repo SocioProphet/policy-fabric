@@ -30,8 +30,14 @@ spec:
       note: the agent's own sandbox/scratch — native home, untainted
     - id: data-namespace
       ring: tenant
-      taints: [{key: tenant, value: "<per-tenant>", effect: NoExecute}]
+      taints:
+        - {key: tenant, value: "<per-tenant>", effect: NoExecute}
+        - {key: region, value: "<jurisdiction>", effect: NoExecute}
       note: >
-        per-tenant/purpose data isolation. Crossing = cross-context transfer
-        needing a lawful basis; the tenant toleration IS the consent token.
-        NoExecute means withdrawing consent aborts running ops (GDPR Art 7(3)).
+        per-tenant/purpose data isolation AND geographic/jurisdictional residency.
+        Crossing = cross-context transfer needing a lawful basis; the tenant
+        toleration IS the consent token, and the region toleration asserts the
+        data may be processed in the operation's jurisdiction. Both are
+        request-scoped, revocable consent tokens (never blanket role properties).
+        NoExecute means withdrawing consent — or a residency violation — aborts
+        running ops (GDPR Art 7(3) withdrawal + Ch. V cross-border transfer).

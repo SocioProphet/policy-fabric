@@ -95,11 +95,22 @@ def test_deny_data_namespace_without_tenant_consent():
     assert any("per-tenant consent" in r for r in reasons)
 
 
-def test_admit_data_namespace_with_tenant_consent():
+def test_deny_data_namespace_without_region_toleration():
+    # tenant granted but NO region -> refused on the geographic-residency taint
+    reasons = gate.decide(req(role="operator", surface="cluster-operator", space="data-namespace",
+                               tool="cluster", declaredPurpose="operate", tenant="acme", region="EU",
+                               consent={"purposes": ["operate"], "tenants": ["acme"]}),
+                          CATALOGS)["spec"]["denyReasons"]
+    assert any("geographic-residency" in r and "EU" in r for r in reasons)
+
+
+def test_admit_data_namespace_with_tenant_and_region_consent():
     doc = gate.decide(req(role="operator", surface="cluster-operator", space="data-namespace",
-                          tool="cluster", declaredPurpose="operate", tenant="acme",
-                          consent={"purposes": ["operate"], "tenants": ["acme"]}), CATALOGS)
+                          tool="cluster", declaredPurpose="operate", tenant="acme", region="EU",
+                          consent={"purposes": ["operate"], "tenants": ["acme"], "regions": ["EU"]}),
+                      CATALOGS)
     assert doc["spec"]["decision"] == "admit", doc["spec"].get("denyReasons")
+    assert doc["spec"]["request"]["region"] == "EU"
 
 
 def test_deny_unknown_tool_fail_closed():
