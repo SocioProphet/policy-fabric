@@ -2,9 +2,9 @@
   "apiVersion": "policy.fabric.validation/v1",
   "kind": "ValidationReport",
   "metadata": {
-    "generatedAt": "2026-05-06T19:17:04.143992Z",
+    "generatedAt": "2026-08-03T01:26:37.246031Z",
     "generator": "policy-fabric-doctor/0.5.0",
-    "runId": "doctor-2026-05-06T19:17:04.143992Z"
+    "runId": "doctor-2026-08-03T01:26:37.246031Z"
   },
   "subject": {
     "type": "releasePack",
@@ -12,9 +12,9 @@
     "version": "1.0.0"
   },
   "summary": {
-    "status": "pass",
-    "checkCount": 98,
-    "failCount": 0,
+    "status": "fail",
+    "checkCount": 105,
+    "failCount": 1,
     "warnCount": 0
   },
   "checks": [
@@ -339,6 +339,46 @@
       "artifactRef": "scripts/validate_operation_plane_policy_gate.py"
     },
     {
+      "id": "exists:contracts/wallguard-policy-decision.v0.schema.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "contracts/wallguard-policy-decision.v0.schema.json"
+    },
+    {
+      "id": "exists:examples/wallguard-policy/valid.same-wall-allow.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "examples/wallguard-policy/valid.same-wall-allow.json"
+    },
+    {
+      "id": "exists:examples/wallguard-policy/invalid.cross-wall-allow.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "examples/wallguard-policy/invalid.cross-wall-allow.json"
+    },
+    {
+      "id": "exists:examples/wallguard-policy/invalid.contaminated-session-allow.json",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "examples/wallguard-policy/invalid.contaminated-session-allow.json"
+    },
+    {
+      "id": "exists:tools/validate_wallguard_policy_decision.py",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD001_REQUIRED_FILE_PRESENT",
+      "message": "required file present",
+      "artifactRef": "tools/validate_wallguard_policy_decision.py"
+    },
+    {
       "id": "validate:policy-example",
       "status": "pass",
       "severity": "info",
@@ -409,6 +449,22 @@
       "code": "PFD010_SCHEMA_OK",
       "message": "operation plane eval response example validates against gate schema",
       "artifactRef": "examples/operation_plane_policy_eval_response_example.json"
+    },
+    {
+      "id": "validate:wallguard-same-wall-allow",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD010_SCHEMA_OK",
+      "message": "WallGuard same-wall allow example validates against schema",
+      "artifactRef": "examples/wallguard-policy/valid.same-wall-allow.json"
+    },
+    {
+      "id": "validate:wallguard-policy-decision-semantic",
+      "status": "pass",
+      "severity": "info",
+      "code": "PFD200_VALIDATOR_OK",
+      "message": "WallGuard policy validator accepts valid fixture and rejects invalid fixtures",
+      "artifactRef": "tools/validate_wallguard_policy_decision.py"
     },
     {
       "id": "parse:openapi",
@@ -508,10 +564,10 @@
     },
     {
       "id": "ownership:no-unclassified",
-      "status": "pass",
-      "severity": "info",
-      "code": "PFD034_OWNERSHIP_CLASSIFICATION_OK",
-      "message": "all tracked files are classified by the ownership contract",
+      "status": "fail",
+      "severity": "error",
+      "code": "PFD035_OWNERSHIP_UNCLASSIFIED",
+      "message": "unclassified files found: ['.git']",
       "artifactRef": ".policy-fabric/ownership.json"
     },
     {
