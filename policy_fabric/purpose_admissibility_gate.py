@@ -124,6 +124,7 @@ def _evaluate(req: dict[str, Any], idx: dict[str, dict[str, Any]]) -> list[str]:
     consent = req.get("consent") or {}
     granted_purposes = set(consent.get("purposes", []))
     granted_tenants = set(consent.get("tenants", []))
+    granted_regions = set(consent.get("regions", []))
 
     role_rec = idx["roles"].get(role)
     surface_rec = idx["surfaces"].get(surface)
@@ -169,6 +170,13 @@ def _evaluate(req: dict[str, Any], idx: dict[str, dict[str, Any]]) -> list[str]:
                         f"space '{space}' requires a per-tenant consent toleration "
                         f"(GDPR Art 6/7); none for tenant '{tenant}'"
                     )
+            elif key == "region":
+                region = req.get("region")
+                if not region or region not in granted_regions:
+                    reasons.append(
+                        f"space '{space}' requires a geographic-residency toleration "
+                        f"(GDPR Ch. V cross-border transfer); none for region '{region}'"
+                    )
             else:
                 tol = f"{key}={value}"
                 if tol not in tolerations:
@@ -194,7 +202,7 @@ def decide(request: dict[str, Any], catalogs: dict[str, Any]) -> dict[str, Any]:
 
     req_out = {
         k: request[k]
-        for k in ("role", "surface", "space", "tool", "declaredPurpose", "tenant", "context")
+        for k in ("role", "surface", "space", "tool", "declaredPurpose", "tenant", "region", "context")
         if request.get(k) is not None
     }
     receipt = {
@@ -244,14 +252,18 @@ def _main(argv: list[str] | None = None) -> int:
     ap.add_argument("--tool", required=True)
     ap.add_argument("--purpose", required=True, dest="declaredPurpose")
     ap.add_argument("--tenant")
+    ap.add_argument("--region", help="jurisdiction the operation targets (data-namespace residency)")
     ap.add_argument("--consent-purpose", action="append", default=[], help="a purpose consent was granted for")
     ap.add_argument("--consent-tenant", action="append", default=[], help="a tenant consent was granted for")
+    ap.add_argument("--consent-region", action="append", default=[], help="a jurisdiction residency was granted for")
     ap.add_argument("--catalog-root")
     args = ap.parse_args(argv)
     request = {
         "role": args.role, "surface": args.surface, "space": args.space,
-        "tool": args.tool, "declaredPurpose": args.declaredPurpose, "tenant": args.tenant,
-        "consent": {"purposes": args.consent_purpose, "tenants": args.consent_tenant},
+        "tool": args.tool, "declaredPurpose": args.declaredPurpose,
+        "tenant": args.tenant, "region": args.region,
+        "consent": {"purposes": args.consent_purpose, "tenants": args.consent_tenant,
+                    "regions": args.consent_region},
     }
     try:
         catalogs = load_catalogs(args.catalog_root)

@@ -36,6 +36,7 @@
             "tool": { "type": "string" },
             "declaredPurpose": { "enum": ["discover", "implement", "verify", "ship", "operate", "egress", "administer"] },
             "tenant": { "type": "string" },
+            "region": { "type": "string", "description": "jurisdiction the operation targets; required as a residency toleration when the space carries a region taint (GDPR Ch. V)" },
             "context": { "type": "string" }
           }
         },

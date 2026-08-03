@@ -34,4 +34,9 @@ spec:
       tolerations: [ring=user]
       note: control-plane admin; no source mutation
   # data-namespace (tenant) tolerations are granted per (principal, tenant) as
-  # revocable consent, never as a blanket role property.
+  # revocable consent, never as a blanket role property. Likewise data-namespace
+  # (region) tolerations are granted per (principal, jurisdiction): a
+  # `region=<code>` grant asserts the principal may process data resident in that
+  # jurisdiction (GDPR Ch. V cross-border transfer). Both are request-scoped
+  # consent tokens carried on the invocation, not role tolerations — so they do
+  # not appear as `tolerations:` entries here.
