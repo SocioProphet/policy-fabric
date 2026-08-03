@@ -1,0 +1,37 @@
+apiVersion: agent-standards.socioprophet.org/v0.1
+kind: AgentRoleCatalog
+metadata:
+  name: agent-roles
+  version: v1
+# A role is a specialised machine identity's admissible-purpose set (extends
+# authentication/004 workload identity). Least privilege = GDPR data
+# minimisation (Art 5(1)(c)): a role holds the MINIMUM purposes for its charter.
+# `tolerations` are the space taints (spaces_v1.yaml) the role may cross.
+spec:
+  roles:
+    - id: explorer
+      admissible: [discover]
+      tolerations: []
+      note: read-only research (the Explore agent class)
+    - id: reviewer
+      admissible: [discover, verify]
+      tolerations: []
+      note: review + run tests; never mutates source
+    - id: implementer
+      admissible: [discover, implement, verify]
+      tolerations: [ring=user]
+      note: authors code; ship/operate require escalation
+    - id: integrator
+      admissible: [discover, implement, verify, ship]
+      tolerations: [ring=user]
+      note: may merge reviewed work to the default branch
+    - id: operator
+      admissible: [discover, verify, operate]
+      tolerations: [ring=user, ring=system, ring=kernel]
+      note: the ONLY role that tolerates system/kernel space; deploys/provisions
+    - id: governor
+      admissible: [discover, administer]
+      tolerations: [ring=user]
+      note: control-plane admin; no source mutation
+  # data-namespace (tenant) tolerations are granted per (principal, tenant) as
+  # revocable consent, never as a blanket role property.
