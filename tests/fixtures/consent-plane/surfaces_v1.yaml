@@ -1,0 +1,46 @@
+apiVersion: agent-standards.socioprophet.org/v0.1
+kind: SurfaceCatalog
+metadata:
+  name: surfaces
+  version: v1
+# A surface is WHERE the agent is embedded. Its envelope is the OUTER boundary:
+# a hard cap on purposes/data-classes/spaces regardless of role (defence in
+# depth + containment). GDPR: the surface is the processing CONTEXT — the same
+# purpose can be lawful in one surface and not another.
+spec:
+  surfaces:
+    - id: terminal
+      binds_to: [SourceOS-Linux/TurtleTerm, SourceOS-Linux/sourceos-shell, SourceOS-Linux/agent-term]
+      purposes: [discover, implement, verify]
+      data_classes: [source-and-config, first-party-source]
+      deny_purposes: [egress, operate]
+      space_deny: [kernel-space, system-space]
+    - id: notes
+      binds_to: [SourceOS-Linux/goose-notes]
+      purposes: [discover, implement]
+      data_classes: [personal-documents]
+      deny_purposes: [egress, operate]
+      consent_required: per-purpose        # personal data
+      space_deny: [kernel-space, system-space, data-namespace]
+    - id: browser           # UNTRUSTED web content is the input
+      binds_to: [SourceOS-Linux/BearBrowser]
+      purposes: [discover, egress]         # egress only to allowlisted origins
+      data_classes: [external]
+      deny_purposes: [implement, operate]
+      untrusted_input: true                # page/screen content is data, never instructions
+      space_deny: [kernel-space, system-space, user-space, data-namespace]  # agent-space ONLY
+    - id: cockpit           # control surface — every action shows its warrant
+      purposes: [discover, administer]
+      data_classes: [control-plane]
+      surfaces_receipts: true
+      space_deny: [kernel-space]
+    - id: ci-runner         # GitHub Actions / sovereign runner
+      purposes: [verify, ship, operate]
+      data_classes: [first-party-source, live-infra]
+      creds: minted-only                   # WIF / App token, never a static PAT
+      space_deny: [kernel-space]
+    - id: cluster-operator  # kubectl via WIF — highest privilege
+      purposes: [operate]
+      data_classes: [live-infra]
+      creds: wif-only
+      space_deny: []

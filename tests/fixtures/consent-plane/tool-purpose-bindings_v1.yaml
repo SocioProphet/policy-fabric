@@ -1,0 +1,67 @@
+apiVersion: agent-standards.socioprophet.org/v0.1
+kind: ToolPurposeBindings
+metadata:
+  name: tool-purpose-bindings
+  version: v1
+# The purpose vocabulary is canonical here and referenced by name from the
+# agent-roles, surfaces and spaces catalogs. A tool call is admissible only if
+# its declared purpose is in the acting role's, surface's and space's allowed
+# sets (see 001-purpose-bound-tool-use-and-agent-roles.md). Consent-per-purpose
+# maps to GDPR Art 5(1)(b), 6(1)(a)/7.
+spec:
+  purposes:
+    discover:   observe/read state; produces understanding, mutates nothing
+    implement:  change first-party source under review
+    verify:     execute/test/inspect to establish a fact
+    ship:       merge/publish/release reviewed work
+    operate:    provision/deploy/act on live infrastructure
+    egress:     send data to, or fetch from, an external party
+    administer: govern the control plane (close/dismiss/label), no code mutation
+
+  bindings:
+    # tool-class -> purposes it serves; data_class + lawful basis; consent scope
+    - tool: read-inspect            # Read/Grep/Glob/Explore
+      purposes: [discover]
+      data_class: source-and-config
+      lawful_basis: legitimate-interest
+      consent_required: role-scope
+    - tool: web                     # WebSearch/WebFetch
+      purposes: [discover, egress]
+      data_class: external
+      lawful_basis: consent
+      consent_required: per-purpose
+    - tool: source-mutate           # Edit/Write/NotebookEdit
+      purposes: [implement]
+      data_class: first-party-source
+      lawful_basis: contract
+      consent_required: role-scope
+    - tool: exec-read               # Bash (read-only)
+      purposes: [discover, verify]
+      data_class: source-and-config
+      lawful_basis: legitimate-interest
+      consent_required: role-scope
+    - tool: exec-mutate             # Bash (mutating / network)
+      purposes: [verify, operate, egress]
+      data_class: infra-and-external
+      lawful_basis: consent
+      consent_required: per-purpose
+    - tool: vcs-publish             # gh merge / git push
+      purposes: [ship]
+      data_class: first-party-source
+      lawful_basis: contract
+      consent_required: per-purpose
+    - tool: cluster                 # kubectl / live infra
+      purposes: [operate]
+      data_class: live-infra
+      lawful_basis: consent
+      consent_required: per-purpose
+    - tool: control-plane-admin     # gh issue close / dismiss / label
+      purposes: [administer]
+      data_class: control-plane
+      lawful_basis: legitimate-interest
+      consent_required: per-purpose
+    - tool: external-send           # SendUserFile / external delivery
+      purposes: [egress]
+      data_class: external
+      lawful_basis: consent
+      consent_required: per-purpose

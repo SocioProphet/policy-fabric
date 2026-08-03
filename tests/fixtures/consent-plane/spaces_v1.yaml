@@ -1,0 +1,37 @@
+apiVersion: agent-standards.socioprophet.org/v0.1
+kind: SpaceCatalog
+metadata:
+  name: spaces
+  version: v1
+# A space is which isolation ring the OPERATION targets (deeper than the
+# surface). Each carries k8s-style taints; an operation may act in a space only
+# if its (role,surface) context TOLERATES every blocking taint. Maps to OS
+# rings + Linux namespaces + k8s taints/tolerations; and to the org model:
+# kernel/system = SourceOS base-OS, agent/user = SociOS managed/agentic.
+# Taint effects: NoEntry (needs toleration), NoExecute (lose toleration -> abort),
+# PreferNoEntry (allowed, flagged).
+spec:
+  spaces:
+    - id: kernel-space
+      ring: 0
+      taints: [{key: ring, value: kernel, effect: NoEntry}]
+      note: OS / base-OS core (SourceOS territory)
+    - id: system-space
+      ring: 1
+      taints: [{key: ring, value: system, effect: NoEntry}]
+      note: system services, daemons, infra config
+    - id: user-space
+      ring: 3
+      taints: [{key: ring, value: user, effect: PreferNoEntry}]
+      note: user apps / workspaces
+    - id: agent-space
+      ring: 4
+      taints: []
+      note: the agent's own sandbox/scratch — native home, untainted
+    - id: data-namespace
+      ring: tenant
+      taints: [{key: tenant, value: "<per-tenant>", effect: NoExecute}]
+      note: >
+        per-tenant/purpose data isolation. Crossing = cross-context transfer
+        needing a lawful basis; the tenant toleration IS the consent token.
+        NoExecute means withdrawing consent aborts running ops (GDPR Art 7(3)).
