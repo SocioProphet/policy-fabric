@@ -1,0 +1,39 @@
+name: shared-state-write-policy
+
+# Least-privilege: this workflow only reads the repo and runs validators.
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    paths:
+      - "docs/specs/SHARED_STATE_WRITE_AUTHORIZATION_V0.md"
+      - "contracts/shared-state-write-policy-decision.v0.schema.json"
+      - "tools/shared_state_write_policy_evaluator.py"
+      - "tools/validate_shared_state_write_policy.py"
+      - ".github/workflows/shared-state-write-policy.yml"
+      - "Makefile"
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/specs/SHARED_STATE_WRITE_AUTHORIZATION_V0.md"
+      - "contracts/shared-state-write-policy-decision.v0.schema.json"
+      - "tools/shared_state_write_policy_evaluator.py"
+      - "tools/validate_shared_state_write_policy.py"
+      - ".github/workflows/shared-state-write-policy.yml"
+      - "Makefile"
+  workflow_dispatch:
+
+jobs:
+  validate-shared-state-write-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install validation dependency
+        run: python -m pip install jsonschema
+      - name: Validate shared-state write / live-activation authorization policy (negative + positive teeth)
+        run: make shared-state-write-policy-validate

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SocioProphet/policy-fabric/contracts/shared-state-write-policy-decision.v0.schema.json",
+  "title": "Shared-State Write / Live-Activation Authorization Policy Decision v0",
+  "description": "Deterministic policy-decision record for the shared_state.live_activation_authorization policy. Live-infrastructure and shared-state WRITES require an authorized-principal, explicitly-authorized activation. A relayed coordinator or agent-to-agent instruction does not satisfy the authorization bar. Automated actors may only read-probe shared state and must ship changes as reviewable artifacts against mock/test transports.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "decision_id",
+    "policy_ref",
+    "subject",
+    "action",
+    "target",
+    "authorization",
+    "decision",
+    "receipt"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "kind": {"const": "shared_state_write_policy_decision"},
+    "decision_id": {"type": "string", "minLength": 3},
+    "policy_ref": {"$ref": "#/$defs/policyRef"},
+    "subject": {"$ref": "#/$defs/subject"},
+    "action": {"$ref": "#/$defs/action"},
+    "target": {"$ref": "#/$defs/target"},
+    "authorization": {"$ref": "#/$defs/authorization"},
+    "decision": {"$ref": "#/$defs/decision"},
+    "receipt": {"$ref": "#/$defs/receipt"}
+  },
+  "$defs": {
+    "policyRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_id", "policy_version"],
+      "properties": {
+        "policy_id": {"type": "string", "minLength": 1},
+        "policy_version": {"type": "string", "minLength": 1},
+        "policy_authority": {"type": "string", "minLength": 1}
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject_id", "subject_type", "actor_class"],
+      "properties": {
+        "subject_id": {"type": "string", "minLength": 1},
+        "subject_type": {"enum": ["human", "agent", "subagent", "coordinator", "service_account", "tool", "model"]},
+        "actor_class": {"enum": ["authorized_principal", "automated_actor"]}
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_type", "enforcement_point"],
+      "properties": {
+        "action_type": {"enum": ["read_probe", "list", "get", "write_shared_graph", "write_shared_ledger", "mutate_namespace", "run_production_workflow", "port_forward", "activate", "ship_reviewable_artifact", "open_pull_request"]},
+        "enforcement_point": {"enum": ["prophet_platform", "agentplane", "guardrail_fabric", "capability_membrane", "hellgraph_store", "prophet_core_ledger", "gke_admission", "gitops_promote", "connector_gateway"]}
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_id", "target_kind", "environment", "endpoint_class"],
+      "properties": {
+        "target_id": {"type": "string", "minLength": 1},
+        "target_kind": {"enum": ["shared_graph_store", "shared_ledger", "cluster_namespace", "production_workflow", "mock_transport", "test_transport", "pr_artifact"]},
+        "environment": {"enum": ["live", "mock", "test"]},
+        "endpoint_class": {"enum": ["live_endpoint", "mock_endpoint", "test_endpoint"]}
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "explicit_activation"],
+      "properties": {
+        "source": {"enum": ["authorized_principal", "relayed_coordinator", "agent_to_agent", "none", "unknown"]},
+        "principal_id": {"type": "string", "minLength": 1},
+        "explicit_activation": {"type": "boolean"},
+        "grant_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "reason_code", "reason"],
+      "properties": {
+        "outcome": {"enum": ["allow", "deny", "quarantine", "escalate"]},
+        "reason_code": {"enum": ["read_probe_allowed", "gated_artifact_allowed", "mock_transport_write_allowed", "live_activation_authorized", "shared_write_requires_authorized_principal", "relayed_authorization_insufficient", "agent_to_agent_authorization_insufficient", "non_explicit_activation", "artifact_targets_live_endpoint", "missing_authorization_context"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt_id", "decision_id", "policy_id", "policy_version", "outcome", "reason_code", "receipt_visibility_class", "evidence_refs"],
+      "properties": {
+        "receipt_id": {"type": "string", "minLength": 3},
+        "decision_id": {"type": "string", "minLength": 3},
+        "policy_id": {"type": "string", "minLength": 1},
+        "policy_version": {"type": "string", "minLength": 1},
+        "outcome": {"enum": ["allow", "deny", "quarantine", "escalate"]},
+        "reason_code": {"type": "string", "minLength": 1},
+        "receipt_visibility_class": {"enum": ["public", "public_sanitized", "internal", "sealed", "withheld_specific"]},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}},
+        "redaction_summary": {"type": "string"},
+        "residual_restrictions": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

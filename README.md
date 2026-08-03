@@ -100,6 +100,33 @@ The policy preserves the required boundaries:
 - Memory Mesh remains the durable memory authority;
 - network callbacks and writes are denied by default.
 
+## Shared-state write / live-activation authorization policy
+
+Policy Fabric carries `shared_state.live_activation_authorization.v0`, the runtime
+policy that gates writes to shared state and live infrastructure. Shared-state /
+live-infrastructure WRITES require explicit authorized-principal authorization; a
+relayed coordinator or agent-to-agent instruction does not satisfy the bar. Automated
+actors may only read-probe shared state and must ship changes as reviewable artifacts
+against mock/test transports whose live activation is a separate, explicitly-authorized
+step. See [`docs/specs/SHARED_STATE_WRITE_AUTHORIZATION_V0.md`](docs/specs/SHARED_STATE_WRITE_AUTHORIZATION_V0.md).
+
+The contract, deterministic evaluator, and enforcement gate live at:
+
+- `contracts/shared-state-write-policy-decision.v0.schema.json`
+- `tools/shared_state_write_policy_evaluator.py`
+- `tools/validate_shared_state_write_policy.py`
+
+Validate locally (runs the NEGATIVE + POSITIVE teeth — a control that never fires is suspect):
+
+```bash
+make shared-state-write-policy-validate
+```
+
+The gate proves it fires in both directions: the 2026-08-03 relayed-coordinator
+HellGraph write is denied (`relayed_authorization_insufficient`), while a read-probe and
+a gated authorized-principal activation pass. It runs in the `shared-state-write-policy`
+CI workflow on every PR and on push to `main`.
+
 ## Repository map
 
 - `contracts/` — active machine-readable contracts and schemas
