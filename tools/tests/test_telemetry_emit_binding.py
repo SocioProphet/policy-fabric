@@ -43,8 +43,8 @@ def _binding():
 
 def req(**kw):
     base = {
-        "role": "operator",
-        "surface": "cockpit",
+        "role": "emitter",
+        "surface": "agent-runtime",
         "space": "agent-space",
         "tool": TOOL,
         "declaredPurpose": "egress",
@@ -103,21 +103,63 @@ def test_enforce_raises_so_an_unconsented_emission_cannot_proceed():
     raise AssertionError("an unconsented telemetry emission was allowed to proceed")
 
 
-# ------------------------------------------------------------------ the open decision
-def test_records_whether_any_role_may_egress():
-    """WO-4's emission path needs SOME role admitted for egress. Today none is, so
-    consented telemetry is still structurally blocked — by policy, not by code. This
-    asserts the fact is legible either way rather than freezing it."""
+# ------------------------------------------------------------------ the emitter path admits
+def test_consented_emission_from_the_emitter_role_is_admitted():
+    """The path WO-4 actually needs. Without this the whole consent plane would be
+    show-and-toggle: a person could grant consent and still have nothing be emitable."""
+    doc = gate.decide(req(consent={"purposes": ["egress"]}), CATALOGS)
+    assert doc["spec"]["decision"] == "admit", doc["spec"].get("denyReasons")
+    assert "denyReasons" not in doc["spec"]
+
+
+def test_enforce_returns_on_a_consented_emission():
+    doc = gate.enforce(req(consent={"purposes": ["egress"]}), CATALOGS)
+    assert doc["spec"]["decision"] == "admit"
+
+
+# --------------------------------------------------- and the permission stays narrow
+def test_emitter_cannot_do_anything_but_egress():
+    """The point of a dedicated role. If emitter could also discover, it would have a read
+    path whose output it could then send — which is the capability we refused to create."""
     roles = yaml.safe_load((FIXTURES / "agent-roles_v1.yaml").read_text())["spec"]["roles"]
-    egress_roles = [r["id"] for r in roles if "egress" in r["admissible"]]
-    if not egress_roles:
-        # Fail-closed default. Consent alone is not sufficient; a role must also be
-        # admitted for egress before WO-4 can emit anything.
-        doc = gate.decide(req(consent={"purposes": ["egress"]}), CATALOGS)
-        assert doc["spec"]["decision"] == "deny"
-        assert any("egress" in r for r in doc["spec"]["denyReasons"])
-    else:
-        # Once a role is granted egress, a consented emission from it must ADMIT —
-        # otherwise the consent plane would refuse the very thing consent authorizes.
-        doc = gate.decide(req(role=egress_roles[0], consent={"purposes": ["egress"]}), CATALOGS)
-        assert doc["spec"]["decision"] in {"admit", "deny"}
+    emitter = next(r for r in roles if r["id"] == "emitter")
+    assert emitter["admissible"] == ["egress"]
+    assert emitter["tolerations"] == []
+    for purpose in ["discover", "implement", "verify", "ship", "operate", "administer"]:
+        doc = gate.decide(req(declaredPurpose=purpose, consent={"purposes": [purpose]}), CATALOGS)
+        assert doc["spec"]["decision"] == "deny", purpose
+
+
+def test_agent_runtime_surface_cannot_do_anything_but_egress():
+    doc = gate.decide(
+        req(role="explorer", declaredPurpose="discover", consent={"purposes": ["discover"]}),
+        CATALOGS,
+    )
+    assert doc["spec"]["decision"] == "deny"
+    assert any("agent-runtime" in r for r in doc["spec"]["denyReasons"])
+
+
+def test_emitter_cannot_reach_system_or_kernel_space():
+    for space in ["kernel-space", "system-space"]:
+        doc = gate.decide(req(space=space, consent={"purposes": ["egress"]}), CATALOGS)
+        assert doc["spec"]["decision"] == "deny", space
+
+
+def test_emitter_still_cannot_egress_from_another_surface():
+    """The role does not carry the permission around with it — the surface envelope is
+    checked independently, so an emitter on the terminal is still refused."""
+    doc = gate.decide(req(surface="terminal", consent={"purposes": ["egress"]}), CATALOGS)
+    assert doc["spec"]["decision"] == "deny"
+
+
+def test_another_role_cannot_egress_from_the_agent_runtime_surface():
+    """Symmetric to the above: the surface does not grant the purpose to whoever stands on
+    it. Both halves must independently permit egress."""
+    doc = gate.decide(req(role="operator", consent={"purposes": ["egress"]}), CATALOGS)
+    assert doc["spec"]["decision"] == "deny"
+    assert any("role 'operator'" in r for r in doc["spec"]["denyReasons"])
+
+
+def test_emitter_is_the_only_role_admitting_egress():
+    roles = yaml.safe_load((FIXTURES / "agent-roles_v1.yaml").read_text())["spec"]["roles"]
+    assert [r["id"] for r in roles if "egress" in r["admissible"]] == ["emitter"]
