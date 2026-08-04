@@ -16,3 +16,5 @@ jobs:
       - run: python tools/validate_purpose_admissibility_gate.py
       - name: Decision engine (admit/deny proven both ways, fail-closed)
         run: python -m pytest tools/tests/test_purpose_admissibility_gate_engine.py -q
+      - name: telemetry.emit binding (consent is load-bearing, not decorative)
+        run: python -m pytest tools/tests/test_telemetry_emit_binding.py -q
