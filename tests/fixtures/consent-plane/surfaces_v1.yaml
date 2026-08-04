@@ -44,3 +44,14 @@ spec:
       data_classes: [live-infra]
       creds: wif-only
       space_deny: []
+    # The agent runtime emitting consent-gated telemetry about its own operation
+    # (Noetica agent-machine). A dedicated surface, not a widened cockpit or terminal: the
+    # surface envelope is checked independently of the role, so putting egress on cockpit
+    # would let the whole operator UI egress. This one admits egress and NOTHING else — it
+    # cannot discover, so there is no read path whose output it could then send.
+    - id: agent-runtime
+      purposes: [egress]
+      data_classes: [personal-usage]
+      deny_purposes: [discover, implement, verify, operate, ship, administer]
+      consent_required: per-purpose        # belt-and-braces with the telemetry.emit binding
+      space_deny: [kernel-space, system-space, data-namespace]  # agent/user space only

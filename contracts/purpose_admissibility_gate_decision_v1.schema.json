@@ -30,8 +30,8 @@
           "additionalProperties": false,
           "required": ["role", "surface", "space", "tool", "declaredPurpose"],
           "properties": {
-            "role": { "enum": ["explorer", "reviewer", "implementer", "integrator", "operator", "governor"] },
-            "surface": { "enum": ["terminal", "notes", "browser", "cockpit", "ci-runner", "cluster-operator"] },
+            "role": { "enum": ["explorer", "reviewer", "implementer", "integrator", "operator", "governor", "emitter"] },
+            "surface": { "enum": ["terminal", "notes", "browser", "cockpit", "ci-runner", "cluster-operator", "agent-runtime"] },
             "space": { "enum": ["kernel-space", "system-space", "user-space", "agent-space", "data-namespace"] },
             "tool": { "type": "string" },
             "declaredPurpose": { "enum": ["discover", "implement", "verify", "ship", "operate", "egress", "administer"] },
@@ -52,8 +52,8 @@
           "required": ["role", "surface", "space", "tool", "purpose", "decision"],
           "description": "accountability record (GDPR 5(2)); MUST mirror the request + decision.",
           "properties": {
-            "role": { "enum": ["explorer", "reviewer", "implementer", "integrator", "operator", "governor"] },
-            "surface": { "enum": ["terminal", "notes", "browser", "cockpit", "ci-runner", "cluster-operator"] },
+            "role": { "enum": ["explorer", "reviewer", "implementer", "integrator", "operator", "governor", "emitter"] },
+            "surface": { "enum": ["terminal", "notes", "browser", "cockpit", "ci-runner", "cluster-operator", "agent-runtime"] },
             "space": { "enum": ["kernel-space", "system-space", "user-space", "agent-space", "data-namespace"] },
             "tool": { "type": "string" },
             "purpose": { "enum": ["discover", "implement", "verify", "ship", "operate", "egress", "administer"] },

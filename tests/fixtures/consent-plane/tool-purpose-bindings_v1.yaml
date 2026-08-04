@@ -65,3 +65,16 @@ spec:
       data_class: external
       lawful_basis: consent
       consent_required: per-purpose
+    # Telemetry about a person's own usage leaving their device. lawful_basis is CONSENT
+    # and nothing else: there is no legitimate-interest reading under which a product
+    # observes its user by default, so a missing grant is a deny rather than a judgement
+    # call. Bound to egress, not operate — the defining act is that the data LEAVES, and
+    # calling it operate would understate what is being agreed to.
+    # The consent ledger (socioprophet-web/server src/services/consentLedger.ts) mints one
+    # canonical mcp-a2a-zero-trust Grant per consented surface against this binding; the
+    # grant's policy_hash cites policy-fabric:telemetry.emit.
+    - tool: telemetry.emit          # consent-gated telemetry publisher
+      purposes: [egress]
+      data_class: personal-usage
+      lawful_basis: consent
+      consent_required: per-purpose

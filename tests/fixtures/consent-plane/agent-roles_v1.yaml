@@ -33,6 +33,16 @@ spec:
       admissible: [discover, administer]
       tolerations: [ring=user]
       note: control-plane admin; no source mutation
+    # Consent-gated telemetry emission, and nothing else. A DEDICATED role rather than
+    # widening an existing one: `egress` on explorer would let everything it reads leave,
+    # and on operator (which tolerates ring=kernel) the blast radius is larger still. This
+    # role reads nothing, changes nothing and tolerates no taint — it can only send what a
+    # grant already authorised. It is also the more honest model: emitting telemetry is not
+    # a developer role on the explorer→governor ladder, it is a different kind of principal.
+    - id: emitter
+      admissible: [egress]
+      tolerations: []
+      note: consent-gated telemetry emission only; cannot discover, implement, verify or operate
   # data-namespace (tenant) tolerations are granted per (principal, tenant) as
   # revocable consent, never as a blanket role property. Likewise data-namespace
   # (region) tolerations are granted per (principal, jurisdiction): a
